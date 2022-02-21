@@ -8,10 +8,6 @@ import {
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   Button,
 } from "reactstrap";
 import wisperLogo from "../assets/images/logos/wisper.png";
@@ -53,7 +49,9 @@ const Navigation = () => {
             <Button color="info">Login</Button>
           </Link>
           <Link className="register-btn" to="/register">
-            <Button>Register</Button>
+            <Button className="btn" outline color="secondary">
+              Register
+            </Button>
           </Link>
         </Collapse>
       </Navbar>

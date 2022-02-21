@@ -41,9 +41,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      console.log(account);
       const response = await register(account);
-      console.log(response);
       authService.loginWithJwt(response.headers["x-auth-token"]);
       setErrors({});
       window.location = "/dashboard";

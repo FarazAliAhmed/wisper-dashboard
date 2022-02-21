@@ -1,228 +1,125 @@
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardGroup,
-  Button,
-  Row,
-  Col,
-} from "reactstrap";
-import bg1 from "../../assets/images/bg/bg1.jpg";
-import bg2 from "../../assets/images/bg/bg2.jpg";
-import bg3 from "../../assets/images/bg/bg3.jpg";
-import bg4 from "../../assets/images/bg/bg4.jpg";
-
+import React from "react";
+import { Card, CardBody, CardTitle, Table, Button } from "reactstrap";
 import FullLayout from "../../layouts/FullLayout";
 
+import { useUser } from "../../context/userContext";
+
 const Documentation = () => {
+  const { user } = useUser();
+  const tableData = [
+    {
+      dataId: "192",
+      network: "Airtel",
+      size: "100.0 MB",
+      duration: "7 days",
+    },
+    {
+      dataId: "193",
+      network: "Airtel",
+      size: "300.0 MB",
+      duration: "7 days",
+    },
+    {
+      dataId: "194",
+      network: "Airtel",
+      size: "500.0 MB",
+      duration: "30 days",
+    },
+    {
+      dataId: "195",
+      network: "Airtel",
+      size: "100.0 MB",
+      duration: "7 days",
+    },
+    {
+      dataId: "196",
+      network: "Airtel",
+      size: "1.0 GB",
+      duration: "30 days",
+    },
+    {
+      dataId: "197",
+      network: "Airtel",
+      size: "2.0 GB",
+      duration: "30 days",
+    },
+    {
+      dataId: "198",
+      network: "Airtel",
+      size: "5.0 GB",
+      duration: "30 days",
+    },
+    {
+      dataId: "199",
+      network: "Airtel",
+      size: "10.0 GB",
+      duration: "30 days",
+    },
+    {
+      dataId: "200",
+      network: "Airtel",
+      size: "15.0 GB",
+      duration: "30 days",
+    },
+    {
+      dataId: "201",
+      network: "Airtel",
+      size: "20.0 GB",
+      duration: "30 days",
+    },
+  ];
+
   return (
     <FullLayout>
       <div>
-        {/* --------------------------------------------------------------------------------*/}
-        {/* Card-1*/}
-        {/* --------------------------------------------------------------------------------*/}
-        <h5 className="mb-3">Basic Card</h5>
-        {/* --------------------------------------------------------------------------------*/}
-        {/* Card-2*/}
-        {/* --------------------------------------------------------------------------------*/}
-        <Row>
-          <h5 className="mb-3 mt-3">Alignment Text</h5>
-          <Col md="6" lg="4">
-            <Card body>
-              <CardTitle tag="h5">Special Title Treatment</CardTitle>
-              <CardText>
-                With supporting text below as a natural lead-in to additional
-                content.
-              </CardText>
-              <div>
-                <Button color="light-warning">Go somewhere</Button>
-              </div>
-            </Card>
-          </Col>
-          <Col md="6" lg="4">
-            <Card body className="text-center">
-              <CardTitle tag="h5">Special Title Treatment</CardTitle>
-              <CardText>
-                With supporting text below as a natural lead-in to additional
-                content.
-              </CardText>
-              <div>
-                <Button color="light-danger">Go somewhere</Button>
-              </div>
-            </Card>
-          </Col>
-          <Col md="6" lg="4">
-            <Card body className="text-end">
-              <CardTitle tag="h5">Special Title Treatment</CardTitle>
-              <CardText>
-                With supporting text below as a natural lead-in to additional
-                content.
-              </CardText>
-              <div>
-                <Button color="light-success">Go somewhere</Button>
-              </div>
-            </Card>
-          </Col>
-        </Row>
-        {/* --------------------------------------------------------------------------------*/}
-        {/* Card-2*/}
-        {/* --------------------------------------------------------------------------------*/}
-        <Row>
-          <h5 className="mb-3 mt-3">Colored Card</h5>
-          <Col md="6" lg="3">
-            <Card body color="primary" inverse>
-              <CardTitle tag="h5">Special Title Treatment</CardTitle>
-              <CardText>
-                With supporting text below as a natural lead-in to additional
-                content.
-              </CardText>
-              <div>
-                <Button>Button</Button>
-              </div>
-            </Card>
-          </Col>
-          <Col md="6" lg="3">
-            <Card body color="info" inverse>
-              <CardTitle tag="h5">Special Title Treatment</CardTitle>
-              <CardText>
-                With supporting text below as a natural lead-in to additional
-                content.
-              </CardText>
-              <div>
-                <Button>Button</Button>
-              </div>
-            </Card>
-          </Col>
-          <Col md="6" lg="3">
-            <Card body color="success" inverse>
-              <CardTitle tag="h5">Special Title Treatment</CardTitle>
-              <CardText>
-                With supporting text below as a natural lead-in to additional
-                content.
-              </CardText>
-              <div>
-                <Button>Button</Button>
-              </div>
-            </Card>
-          </Col>
-          <Col md="6" lg="3">
-            <Card body color="danger" inverse>
-              <CardTitle tag="h5">Special Title Treatment</CardTitle>
-              <CardText>
-                With supporting text below as a natural lead-in to additional
-                content.
-              </CardText>
-              <div>
-                <Button>Button</Button>
-              </div>
-            </Card>
-          </Col>
-          <Col md="6" lg="3">
-            <Card body color="light-warning">
-              <CardTitle tag="h5">Special Title Treatment</CardTitle>
-              <CardText>
-                With supporting text below as a natural lead-in to additional
-                content.
-              </CardText>
-              <div>
-                <Button>Button</Button>
-              </div>
-            </Card>
-          </Col>
-          <Col md="6" lg="3">
-            <Card body color="light-info">
-              <CardTitle tag="h5">Special Title Treatment</CardTitle>
-              <CardText>
-                With supporting text below as a natural lead-in to additional
-                content.
-              </CardText>
-              <div>
-                <Button>Button</Button>
-              </div>
-            </Card>
-          </Col>
-          <Col md="6" lg="3">
-            <Card body color="light-success">
-              <CardTitle tag="h5">Special Title Treatment</CardTitle>
-              <CardText>
-                With supporting text below as a natural lead-in to additional
-                content.
-              </CardText>
-              <div>
-                <Button>Button</Button>
-              </div>
-            </Card>
-          </Col>
-          <Col md="6" lg="3">
-            <Card body color="light-danger">
-              <CardTitle tag="h5">Special Title Treatment</CardTitle>
-              <CardText>
-                With supporting text below as a natural lead-in to additional
-                content.
-              </CardText>
-              <div>
-                <Button>Button</Button>
-              </div>
-            </Card>
-          </Col>
-        </Row>
-        {/* --------------------------------------------------------------------------------*/}
-        {/* Card-Group*/}
-        {/* --------------------------------------------------------------------------------*/}
-        <Row>
-          <h5 className="mb-3 mt-3">Card Group</h5>
-          <Col>
-            <CardGroup>
-              <Card>
-                <CardImg alt="Card image cap" src={bg1} top width="100%" />
-                <CardBody>
-                  <CardTitle tag="h5">Card title</CardTitle>
-                  <CardSubtitle className="mb-2 text-muted" tag="h6">
-                    Card subtitle
-                  </CardSubtitle>
-                  <CardText>
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
-                  </CardText>
-                  <Button>Button</Button>
-                </CardBody>
-              </Card>
-              <Card>
-                <CardImg alt="Card image cap" src={bg2} top width="100%" />
-                <CardBody>
-                  <CardTitle tag="h5">Card title</CardTitle>
-                  <CardSubtitle className="mb-2 text-muted" tag="h6">
-                    Card subtitle
-                  </CardSubtitle>
-                  <CardText>
-                    This card has supporting text below as a natural lead-in to
-                    additional content.
-                  </CardText>
-                  <Button>Button</Button>
-                </CardBody>
-              </Card>
-              <Card>
-                <CardImg alt="Card image cap" src={bg3} top width="100%" />
-                <CardBody>
-                  <CardTitle tag="h5">Card title</CardTitle>
-                  <CardSubtitle className="mb-2 text-muted" tag="h6">
-                    Card subtitle
-                  </CardSubtitle>
-                  <CardText>
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This card has even longer
-                    content than the first to show that equal height action.
-                  </CardText>
-                  <Button>Button</Button>
-                </CardBody>
-              </Card>
-            </CardGroup>
-          </Col>
-        </Row>
+        <Button color="primary" className="mb-3 px-3">
+          API Documentation page
+        </Button>
+        <div className="mb-2">
+          <b>My Authorization Token:</b>
+          <div>{user?.access_token}</div>
+        </div>
+        <div className="mb-4 text-muted" tag="h6">
+          Overview of the Products
+        </div>
+        <Card>
+          <CardBody>
+            <CardTitle tag="h5">Data List</CardTitle>
+
+            <Table
+              striped
+              className="no-wrap mt-3 align-middle"
+              responsive
+              borderless
+            >
+              <thead>
+                <tr>
+                  <th>Data ID</th>
+                  <th>Network</th>
+
+                  {/* <th>Amount</th> */}
+                  <th>Size </th>
+                  <th>Validity</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tableData.map((tdata, index) => (
+                  <tr key={index} className="border-top">
+                    <td>
+                      <div className="d-flex align-items-center py-2">
+                        <h6 className="mb-0">{tdata.dataId}</h6>
+                      </div>
+                    </td>
+                    <td>{tdata.network}</td>
+                    {/* <td>{tdata.amount}</td> */}
+                    <td>{tdata.size}</td>
+                    <td>{tdata.duration}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </CardBody>
+        </Card>
       </div>
     </FullLayout>
   );

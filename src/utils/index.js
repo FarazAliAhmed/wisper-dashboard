@@ -14,8 +14,8 @@ export const validateProperty = (input) => {
   }
   if (name === "username") {
     if (value.trim() === "") return "Username is required";
-    if (value.trim().length < 5)
-      return "Username must be a minimum of 5 characters";
+    if (value.trim().length > 10)
+      return "Username must be a maximum of 10 characters";
   }
   if (name === "name") {
     if (value.trim() === "") return "Name is required";

@@ -29,9 +29,16 @@ export function getCurrentUser() {
   }
 }
 
+export const isLoggedIn = getCurrentUser();
+
 export function getJwt() {
   return localStorage.getItem(tokenKey);
 }
+
+export const whoami = async () => {
+  const result = await http.get(`${apiUrl}/whoami`);
+  return result.data;
+};
 
 export default {
   login,

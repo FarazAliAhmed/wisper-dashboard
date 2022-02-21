@@ -12,10 +12,12 @@ import {
 } from "reactstrap";
 import wisperSmall from "../assets/images/logos/wisper-white.png";
 import user1 from "../assets/images/users/user1.jpg";
+import { useUser } from "../context/userContext";
 
 const Header = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
+  const context = useUser();
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const Handletoggle = () => {
@@ -65,12 +67,11 @@ const Header = () => {
             ></img>
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem header>Info</DropdownItem>
+            <DropdownItem header>{context?.user?.username}</DropdownItem>
             <DropdownItem>My Account</DropdownItem>
             <DropdownItem>Edit Profile</DropdownItem>
             <DropdownItem divider />
             <DropdownItem>My Balance</DropdownItem>
-            <DropdownItem>Inbox</DropdownItem>
             <DropdownItem>
               <Link className="text-decoration-none text-danger" to="/logout">
                 Logout
