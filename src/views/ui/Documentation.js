@@ -77,14 +77,14 @@ const Documentation = () => {
         </Button>
         <div className="mb-2">
           <b>My Authorization Token:</b>
-          <div>{user?.access_token}</div>
+          <div className="text-muted p-3">{user?.access_token}</div>
         </div>
-        <div className="mb-4 text-muted" tag="h6">
-          Overview of the Products
-        </div>
+
         <Card>
           <CardBody>
-            <CardTitle tag="h5">Data List</CardTitle>
+            <CardTitle className="text-center" tag="h5">
+              Data List
+            </CardTitle>
 
             <Table
               striped
