@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getAllTransactions, getBalance } from "../services/dataService";
+import { getAllTransactions, getBalance, getAllPayments } from "../services/dataService";
 
 export const AppStateContext = createContext();
 
@@ -9,20 +9,23 @@ const AppStateProvider = ({ children }) => {
     unit: "",
   });
   const [transactions, setTransactions] = useState([]);
+  const [payments, setPayments] = useState([])
 
   useEffect(() => {
     async function fetchBalance() {
       const balanceRes = await getBalance();
       const transactionRes = await getAllTransactions();
+      const paymentRes = await getAllPayments()
       const { data_volume, data_unit } = balanceRes.data;
       setCurrentBalance({ volume: data_volume, unit: data_unit });
       setTransactions(transactionRes.data);
+      setPayments(paymentRes.data)
     }
     fetchBalance();
   }, []);
 
   return (
-    <AppStateContext.Provider value={{ currentBalance, transactions }}>
+    <AppStateContext.Provider value={{ currentBalance, transactions, payments }}>
       {children}
     </AppStateContext.Provider>
   );

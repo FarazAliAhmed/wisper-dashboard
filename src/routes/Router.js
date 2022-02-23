@@ -19,6 +19,8 @@ const AllocateData = lazy(() => import("../views/ui/AllocateData"));
 const Wallet = lazy(() => import("../views/ui/Wallet"));
 const Account = lazy(() => import("../views/ui/Account"));
 const Documentation = lazy(() => import("../views/ui/Documentation"));
+const Payments = lazy(() => import('../views/ui/Payments'))
+const Transactions = lazy(() => import('../views/ui/Transactions'))
 
 const Routes = () => {
   return (
@@ -29,6 +31,8 @@ const Routes = () => {
         <ProtectedRoute path="/allocate" component={AllocateData} />
         <ProtectedRoute path="/wallet" component={Wallet} />
         <ProtectedRoute path="/account" component={Account} />
+        <ProtectedRoute path="/payments" component={Payments} />
+        <ProtectedRoute path="/transactions" component={Transactions} />
         <ProtectedRoute path="/developers" component={Documentation} />
         <ProtectedRoute path="/logout" component={Logout} />
         <Route exact path="/login" component={Login} />
