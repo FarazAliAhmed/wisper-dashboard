@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   Card,
-  CardText,
-  CardTitle,
   Form,
   FormGroup,
   Label,
@@ -10,40 +8,95 @@ import {
   Button,
   Row,
   Col,
+  FormFeedback,
+  Alert,
 } from "reactstrap";
 import { useUser } from "../../context/userContext";
 
 import FullLayout from "../../layouts/FullLayout";
+import { update } from "../../services/userService";
+import { handleFailedRequest, validateProperty } from "../../utils";
 
 const Account = () => {
-  const [user, setUser] = useState({});
   const context = useUser();
+  const [user, setUser] = useState({
+    name: "",
+    mobile_number: "",
+    address: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [serverResponse, setServerResponse] = useState({
+    status: true,
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const { name, mobile_number, address, email, username, password } =
+    context.user;
+  const reqObj = { name, mobile_number, address, email, username, password };
 
   useEffect(() => {
-    setUser({ ...context.user });
+    setUser(reqObj);
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser({ [name]: value });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+      const body = { ...reqObj, ...user };
+      const response = await update(body);
+      setLoading(false);
+      const { name, mobile_number, address, email, username, password } =
+        response.data;
+      setUser({ name, mobile_number, address, email, username, password });
+      setServerResponse({ status: true, message: "Updated successfully." });
+      setErrors({});
+    } catch (error) {
+      setLoading(false);
+      const { status, message } = handleFailedRequest(error);
+      setUser(reqObj);
+      setServerResponse({ status, message });
+    }
+  };
+
+  const handleChange = ({ currentTarget: input }) => {
+    const validationErrors = { ...errors };
+    const errorMessage = validateProperty(input);
+    if (errorMessage) validationErrors[input.name] = errorMessage;
+    else delete validationErrors[input.name];
+
+    const { name, value } = input;
+    setUser({ ...user, [name]: value });
+    setErrors(validationErrors);
   };
   return (
     <FullLayout>
       <div>
         <h5 className="mb-4 mt-3">User Account</h5>
         <Card body>
-          <Form>
+          {serverResponse.message.length > 0 && (
+            <>
+              {serverResponse.status ? (
+                <Alert color="success">{serverResponse.message}</Alert>
+              ) : (
+                <Alert color="danger">{serverResponse.message}</Alert>
+              )}
+            </>
+          )}
+          <Form onSubmit={handleSubmit}>
             <Row form>
               <Col md={6}>
                 <FormGroup>
                   <Label for="fullName">Full Name</Label>
                   <Input
-                    value={user.name}
                     id="fullName"
-                    name="fullName"
+                    name="name"
+                    value={user.name}
                     onChange={handleChange}
+                    invalid={errors.name}
                     type="text"
                   />
+                  <FormFeedback>{errors.name}</FormFeedback>
                 </FormGroup>
               </Col>
               <Col md={6}>
@@ -54,7 +107,6 @@ const Account = () => {
                     id="username"
                     disabled
                     name="username"
-                    onChange={handleChange}
                     type="username"
                   />
                 </FormGroup>
@@ -68,21 +120,22 @@ const Account = () => {
                     id="email"
                     name="email"
                     placeholder="example@mail.com"
-                    onChange={handleChange}
                     type="email"
                   />
                 </FormGroup>
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="phone">Phone Number</Label>
+                  <Label for="mobile_number">Phone Number</Label>
                   <Input
                     value={user.mobile_number}
-                    id="phone"
-                    name="phone"
+                    invalid={errors.mobile_number}
+                    id="mobile_number"
+                    name="mobile_number"
                     onChange={handleChange}
                     type="number"
                   />
+                  <FormFeedback>{errors.mobile_number}</FormFeedback>
                 </FormGroup>
               </Col>
               <Col md={6}>
@@ -98,7 +151,9 @@ const Account = () => {
                 </FormGroup>
               </Col>
             </Row>
-            <Button color="primary">Update</Button>
+            <Button disabled={loading} type="submit" color="primary">
+              Update
+            </Button>
           </Form>
         </Card>
       </div>

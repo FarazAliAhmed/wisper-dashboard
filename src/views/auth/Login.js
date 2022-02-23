@@ -27,19 +27,18 @@ const Login = () => {
     status: true,
     message: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const errors = validateForm(account);
-    // setErrors(errors);
-
-    // if (formIsValid(errors)) return;
-    // setServerResponse({ status: true });
 
     try {
+      setLoading(true);
       await authService.login(account.email, account.password);
+      setLoading(false);
       window.location = "/dashboard";
     } catch (error) {
+      setLoading(false);
       const { status, message } = handleFailedRequest(error);
 
       setServerResponse({ status, message });
@@ -88,7 +87,7 @@ const Login = () => {
         </FormGroup>
         <div className="d-grid gap-2 mt-4">
           <Button
-            disabled={formIsValid(errors)}
+            disabled={formIsValid(errors) || loading}
             size="lg"
             type="submit"
             className="submit-btn"

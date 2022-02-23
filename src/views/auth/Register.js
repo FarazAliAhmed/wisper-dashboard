@@ -36,16 +36,20 @@ const Register = () => {
     status: true,
     message: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      setLoading(true);
       const response = await register(account);
+      setLoading(false);
       authService.loginWithJwt(response.headers["x-auth-token"]);
       setErrors({});
       window.location = "/dashboard";
     } catch (error) {
+      setLoading(false);
       const { status, message } = handleFailedRequest(error);
 
       setServerResponse({ status, message });
@@ -146,7 +150,7 @@ const Register = () => {
         </FormGroup>
         <div className="d-grid gap-2 mt-4">
           <Button
-            disabled={formIsValid(errors)}
+            disabled={formIsValid(errors) || loading}
             size="lg"
             type="submit"
             className="submit-btn"
