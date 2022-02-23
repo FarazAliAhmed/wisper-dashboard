@@ -40,6 +40,13 @@ export const handleFailedRequest = (errorObj) => {
     };
   }
 
+  if (errorObj.response && errorObj.response.status === 401) {
+    return {
+      status: false,
+      message: errorObj.response.data.message,
+    };
+  }
+
   if (errorObj.response && errorObj.response.status === 500) {
     return {
       status: false,

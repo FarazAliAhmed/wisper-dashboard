@@ -15,7 +15,7 @@ const Login = lazy(() => import("../views/auth/Login.js"));
 const Logout = lazy(() => import("../views/auth/Logout"));
 const Register = lazy(() => import("../views/auth/Register"));
 const Dashboard = lazy(() => import("../views/ui/Dashboard.js"));
-const BuyData = lazy(() => import("../views/ui/BuyData"));
+const AllocateData = lazy(() => import("../views/ui/AllocateData"));
 const Wallet = lazy(() => import("../views/ui/Wallet"));
 const Account = lazy(() => import("../views/ui/Account"));
 const Documentation = lazy(() => import("../views/ui/Documentation"));
@@ -26,7 +26,7 @@ const Routes = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         <ProtectedRoute path="/dashboard" component={Dashboard} />
-        <ProtectedRoute path="/allocate-data" component={BuyData} />
+        <ProtectedRoute path="/allocate" component={AllocateData} />
         <ProtectedRoute path="/wallet" component={Wallet} />
         <ProtectedRoute path="/account" component={Account} />
         <ProtectedRoute path="/developers" component={Documentation} />

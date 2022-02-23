@@ -9,8 +9,5 @@ export async function register(body) {
 
 export async function update(body) {
   const params = body["username"];
-  delete body["_id"];
-  delete body["access_token"];
-  delete body["isAdmin"];
   return http.patch(`${apiEndpoint}/${params}`, body);
 }

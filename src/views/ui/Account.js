@@ -9,7 +9,7 @@ import {
   Row,
   Col,
   FormFeedback,
-  Alert,
+  UncontrolledAlert,
 } from "reactstrap";
 import { useUser } from "../../context/userContext";
 
@@ -44,11 +44,9 @@ const Account = () => {
     try {
       setLoading(true);
       const body = { ...reqObj, ...user };
-      const response = await update(body);
+      await update(body);
       setLoading(false);
-      const { name, mobile_number, address, email, username, password } =
-        response.data;
-      setUser({ name, mobile_number, address, email, username, password });
+      setUser({ ...user });
       setServerResponse({ status: true, message: "Updated successfully." });
       setErrors({});
     } catch (error) {
@@ -77,9 +75,13 @@ const Account = () => {
           {serverResponse.message.length > 0 && (
             <>
               {serverResponse.status ? (
-                <Alert color="success">{serverResponse.message}</Alert>
+                <UncontrolledAlert dismissible color="success">
+                  {serverResponse.message}
+                </UncontrolledAlert>
               ) : (
-                <Alert color="danger">{serverResponse.message}</Alert>
+                <UncontrolledAlert dismissible color="danger">
+                  {serverResponse.message}
+                </UncontrolledAlert>
               )}
             </>
           )}
@@ -87,7 +89,7 @@ const Account = () => {
             <Row form>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="fullName">Full Name</Label>
+                  <Label for="fullName">Business Name</Label>
                   <Input
                     id="fullName"
                     name="name"
