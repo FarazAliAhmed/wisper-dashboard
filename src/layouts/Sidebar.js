@@ -1,8 +1,7 @@
 import { Button, Nav, NavItem } from "reactstrap";
-import Logo from "./Logo";
 import { Link, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getBalance } from "../services/dataService";
+import Logo from "./Logo";
+import { useAppState } from "../context/appContext";
 
 const navigation = [
   {
@@ -43,23 +42,13 @@ const navigation = [
 ];
 
 const Sidebar = () => {
+  const {
+    currentBalance: { volume, unit },
+  } = useAppState();
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
   let location = useLocation();
-  const [currentBalance, setCurrentBalance] = useState({
-    volume: "",
-    unit: "",
-  });
-
-  useEffect(() => {
-    async function fetchBalance() {
-      const res = await getBalance();
-      const { data_volume, data_unit } = res.data;
-      setCurrentBalance({ volume: data_volume, unit: data_unit });
-    }
-    fetchBalance();
-  }, []);
 
   return (
     <div className="p-3">
@@ -73,7 +62,7 @@ const Sidebar = () => {
         ></Button>
       </div>
       <div className="mt-2 text-muted fw-bold">
-        Balance: {currentBalance.volume} {currentBalance.unit}
+        Balance: {volume} {unit}
       </div>
       <div className="pt-4 mt-2">
         <Nav vertical className="sidebarNav">

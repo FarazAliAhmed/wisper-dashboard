@@ -10,6 +10,7 @@ import {
   Col,
   UncontrolledAlert,
 } from "reactstrap";
+import { useUser } from "../../context/userContext";
 
 import FullLayout from "../../layouts/FullLayout";
 import { allocateData } from "../../services/dataService";
@@ -88,15 +89,14 @@ const AllocateData = () => {
     message: "",
   });
   const [loading, setLoading] = useState(false);
+  const { user } = useUser();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(plan);
-
     try {
       setLoading(true);
-      await allocateData(plan);
+      await allocateData(plan, user?.access_token);
       setLoading(false);
       setServerResponse({
         status: true,

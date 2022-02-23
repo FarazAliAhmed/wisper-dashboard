@@ -55,3 +55,12 @@ export const handleFailedRequest = (errorObj) => {
   }
   return { status: false, message: "Something went wrong. Try again later" };
 };
+
+export const totalDataSold = (dataTransactions = []) => {
+  let sum = 0;
+  if (dataTransactions.length === 0) return sum;
+  dataTransactions.forEach((transaction) => {
+    sum += transaction.data_volume;
+  });
+  return sum;
+};

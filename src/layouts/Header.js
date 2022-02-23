@@ -68,10 +68,22 @@ const Header = () => {
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem header>{context?.user?.username}</DropdownItem>
-            <DropdownItem>My Account</DropdownItem>
-            <DropdownItem>Edit Profile</DropdownItem>
+            <DropdownItem>
+              <Link className="text-decoration-none text-dark" to="/dashboard">
+                Dashboard
+              </Link>
+            </DropdownItem>
+            <DropdownItem>
+              <Link className="text-decoration-none text-dark" to="/account">
+                Edit Account
+              </Link>
+            </DropdownItem>
             <DropdownItem divider />
-            <DropdownItem>My Balance</DropdownItem>
+            <DropdownItem>
+              <Link className="text-decoration-none text-dark" to="/allocate">
+                Allocate Data
+              </Link>
+            </DropdownItem>
             <DropdownItem>
               <Link className="text-decoration-none text-danger" to="/logout">
                 Logout

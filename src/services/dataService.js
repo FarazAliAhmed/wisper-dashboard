@@ -1,8 +1,6 @@
 import http from "./httpService";
 import { apiUrl } from "../config.js";
 
-const { REACT_APP_BUSINESS_ACCESS_TOKEN } = process.env;
-
 export async function getAllPlans() {
   try {
     return http.get(`${apiUrl}/plans`);
@@ -19,13 +17,21 @@ export async function getBalance() {
   }
 }
 
-export async function allocateData(body) {
-  const headers = { "x-api-key": REACT_APP_BUSINESS_ACCESS_TOKEN };
+export async function allocateData(body, apiKey) {
+  const headers = { "x-api-key": apiKey };
   const payload = {
     network: "airtel",
-    plan_id: body.planId,
+    plan_id: body.plan_id,
     phone_number: body.phone_number,
   };
 
   return http.post(`${apiUrl}/buy`, payload, { headers });
+}
+
+export async function getAllTransactions() {
+  try {
+    return http.get(`${apiUrl}/transactions`);
+  } catch (error) {
+    return null;
+  }
 }
