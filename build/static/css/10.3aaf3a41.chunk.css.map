@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/views/Home/home.scss"],"names":[],"mappings":"AAAA,YACE,cAAe,CACf,YAAa,CACb,eAAiB,CAClB,cAGC,gBAAiB","file":"10.3aaf3a41.chunk.css","sourcesContent":[".custom-tag {\n  max-width: 100%;\n  height: 500px;\n  background: black;\n}\n\n.register-btn {\n  margin-left: 10px;\n}\n"]}

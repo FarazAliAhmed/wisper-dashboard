@@ -30,6 +30,16 @@ const navigation = [
     icon: "bi bi-person",
   },
   {
+    title: "Payments",
+    href: "/payments",
+    icon: "bi bi-credit-card",
+  },
+  {
+    title: "Transactions",
+    href: "/transactions",
+    icon: "bi bi-cash-stack",
+  },
+  {
     title: "Developer's API",
     href: "/developers",
     icon: "bi bi-code-slash",

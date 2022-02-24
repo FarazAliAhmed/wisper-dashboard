@@ -35,3 +35,11 @@ export async function getAllTransactions() {
     return null;
   }
 }
+
+export async function getAllPayments(){
+  try{
+    return http.get(`${apiUrl}/payments`)
+  }catch(error) {
+    return null;
+  }
+}
