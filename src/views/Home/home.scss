@@ -7,3 +7,23 @@
 .register-btn {
   margin-left: 10px;
 }
+
+header {
+  align-self: center;
+}
+
+header h1 {
+  color: #0579c9;
+}
+
+.hero {
+  display: grid;
+  max-width: 480px;
+  margin: 0 auto;
+  height: 80vh;
+}
+
+.get-started {
+  font-weight: bolder;
+  cursor: pointer;
+}

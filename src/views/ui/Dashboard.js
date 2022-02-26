@@ -1,13 +1,14 @@
 import { Col, Row } from "reactstrap";
 // import SalesChart from "../../components/dashboard/SalesChart";
 // import Feeds from "../../components/dashboard/Feeds";
-import ProjectTables from "../../components/dashboard/ProjectTable";
+// import ProjectTables from "../../components/dashboard/ProjectTable";
 import TopCards from "../../components/dashboard/TopCards";
 import FullLayout from "../../layouts/FullLayout";
 import { useAppState } from "../../context/appContext";
 import { totalDataSold } from "../../utils";
 
 import "../../assets/scss/custom.scss";
+import sterling_logo from "../../assets/images/logos/Sterling_Bank_Logo_Straight.png"
 
 const Dashboard = () => {
   const {
@@ -61,16 +62,17 @@ const Dashboard = () => {
         <Row className="bank-details">
           <Col>
             <div>
-              <b>Account Number:</b>&nbsp; 12345678899
+              <img className="sterling__logo" src={sterling_logo} />
             </div>
             <div>
-              <b>Account Name:</b> &nbsp; Wisper NG
+              <b>Bank:</b> &nbsp; Sterling Bank
             </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col lg="12">
-            <ProjectTables />
+            <div>
+              <b>Account Number:</b>&nbsp; 0014602073
+            </div>
+            <div>
+              <b>Account Name:</b> &nbsp; Alma Management Limited
+            </div>
           </Col>
         </Row>
       </div>
