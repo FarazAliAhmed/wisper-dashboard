@@ -8,65 +8,59 @@ const Documentation = () => {
   const { user } = useUser();
   const tableData = [
     {
-      dataId: "192",
+      dataId: "257",
       network: "Airtel",
       size: "100.0 MB",
       duration: "7 days",
     },
     {
-      dataId: "193",
+      dataId: "258",
       network: "Airtel",
       size: "300.0 MB",
       duration: "7 days",
     },
     {
-      dataId: "194",
+      dataId: "253",
       network: "Airtel",
       size: "500.0 MB",
       duration: "30 days",
     },
     {
-      dataId: "195",
-      network: "Airtel",
-      size: "100.0 MB",
-      duration: "7 days",
-    },
-    {
-      dataId: "196",
+      dataId: "254",
       network: "Airtel",
       size: "1.0 GB",
       duration: "30 days",
     },
     {
-      dataId: "197",
+      dataId: "255",
       network: "Airtel",
       size: "2.0 GB",
       duration: "30 days",
     },
     {
-      dataId: "198",
+      dataId: "256",
       network: "Airtel",
       size: "5.0 GB",
       duration: "30 days",
     },
-    {
-      dataId: "199",
-      network: "Airtel",
-      size: "10.0 GB",
-      duration: "30 days",
-    },
-    {
-      dataId: "200",
-      network: "Airtel",
-      size: "15.0 GB",
-      duration: "30 days",
-    },
-    {
-      dataId: "201",
-      network: "Airtel",
-      size: "20.0 GB",
-      duration: "30 days",
-    },
+    // {
+    //   dataId: "199",
+    //   network: "Airtel",
+    //   size: "10.0 GB",
+    //   duration: "30 days",
+    // },
+    // {
+    //   dataId: "200",
+    //   network: "Airtel",
+    //   size: "15.0 GB",
+    //   duration: "30 days",
+    // },
+    // {
+    //   dataId: "201",
+    //   network: "Airtel",
+    //   size: "20.0 GB",
+    //   duration: "30 days",
+    // },
   ];
 
   return (

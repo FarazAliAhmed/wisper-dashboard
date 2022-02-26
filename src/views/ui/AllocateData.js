@@ -19,47 +19,47 @@ import { handleFailedRequest } from "../../utils";
 const AllocateData = () => {
   const dataPlans = [
     {
-      dataId: "253",
+      dataId: "257",
       network: "Airtel",
       size: "100.0 MB",
       duration: "7 days",
     },
     {
-      dataId: "254",
+      dataId: "258",
       network: "Airtel",
       size: "300.0 MB",
       duration: "7 days",
     },
     {
-      dataId: "255",
+      dataId: "253",
       network: "Airtel",
       size: "500.0 MB",
       duration: "30 days",
     },
+    // {
+    //   dataId: "256",
+    //   network: "Airtel",
+    //   size: "100.0 MB",
+    //   duration: "7 days",
+    // },
     {
-      dataId: "256",
-      network: "Airtel",
-      size: "100.0 MB",
-      duration: "7 days",
-    },
-    {
-      dataId: "257",
+      dataId: "254",
       network: "Airtel",
       size: "1.0 GB",
       duration: "30 days",
     },
     {
-      dataId: "258",
+      dataId: "255",
       network: "Airtel",
       size: "2.0 GB",
       duration: "30 days",
     },
-    // {
-    //   dataId: "259",
-    //   network: "Airtel",
-    //   size: "5.0 GB",
-    //   duration: "30 days",
-    // },
+    {
+      dataId: "256",
+      network: "Airtel",
+      size: "5.0 GB",
+      duration: "30 days",
+    },
     // {
     //   dataId: "300",
     //   network: "Airtel",
