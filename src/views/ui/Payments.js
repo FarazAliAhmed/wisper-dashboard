@@ -6,7 +6,6 @@ import "../../assets/scss/custom.scss";
 
 const Payments = () => {
   const { payments } = useAppState();
-  console.log(payments)
 
   return (
     <FullLayout>
