@@ -1,8 +1,11 @@
 import React from "react";
 import { Card, CardBody, CardTitle, Table, Button } from "reactstrap";
+import { Link } from "react-router-dom"
 import FullLayout from "../../layouts/FullLayout";
 
 import { useUser } from "../../context/userContext";
+
+const docs = "https://documenter.getpostman.com/view/17453703/UVksMZmU"
 
 const Documentation = () => {
   const { user } = useUser();
@@ -66,9 +69,11 @@ const Documentation = () => {
   return (
     <FullLayout>
       <div>
-        <Button color="primary" className="mb-3 px-3">
-          API Documentation page
-        </Button>
+        <a href={docs} target="_blank" >
+          <Button color="primary" className="mb-3 px-3">
+            API Documentation page
+          </Button>
+        </a>
         <div className="mb-2">
           <b>My Authorization Token:</b>
           <div className="text-muted p-3">{user?.access_token}</div>
