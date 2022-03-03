@@ -47,9 +47,9 @@ const Transactions = () => {
                   <td>{tx.data_volume}</td>
                   <td>
                     {tx.status === "processing" ? (
-                      <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
-                    ) : tx.status === "failed" ? (
                       <span className="p-2 bg-warning rounded-circle d-inline-block ms-3"></span>
+                    ) : tx.status === "failed" ? (
+                      <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
                     ) : (
                       <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
                     )}
