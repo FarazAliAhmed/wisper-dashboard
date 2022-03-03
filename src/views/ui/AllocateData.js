@@ -19,66 +19,108 @@ import { handleFailedRequest } from "../../utils";
 const AllocateData = () => {
   const dataPlans = [
     {
-      dataId: "257",
-      network: "Airtel",
-      size: "100.0 MB",
-      duration: "7 days",
+      "dataId": 221,
+      "network": "airtel",
+      "size": "500.0 mb",
+      "duration": "monthly"
     },
     {
-      dataId: "258",
-      network: "Airtel",
-      size: "300.0 MB",
-      duration: "7 days",
+      "dataId": 222,
+      "network": "airtel",
+      "size": "1.0 gb",
+      "duration": "monthly"
     },
     {
-      dataId: "253",
-      network: "Airtel",
-      size: "500.0 MB",
-      duration: "30 days",
-    },
-    // {
-    //   dataId: "256",
-    //   network: "Airtel",
-    //   size: "100.0 MB",
-    //   duration: "7 days",
-    // },
-    {
-      dataId: "254",
-      network: "Airtel",
-      size: "1.0 GB",
-      duration: "30 days",
+      "dataId": 223,
+      "network": "airtel",
+      "size": "2.0 gb",
+      "duration": "monthly"
     },
     {
-      dataId: "255",
-      network: "Airtel",
-      size: "2.0 GB",
-      duration: "30 days",
+      "dataId": 224,
+      "network": "airtel",
+      "size": "5.0 gb",
+      "duration": "monthly"
     },
     {
-      dataId: "256",
-      network: "Airtel",
-      size: "5.0 GB",
-      duration: "30 days",
+      "dataId": 225,
+      "network": "airtel",
+      "size": "100.0 mb",
+      "duration": "7 days"
     },
-    // {
-    //   dataId: "300",
-    //   network: "Airtel",
-    //   size: "10.0 GB",
-    //   duration: "30 days",
-    // },
-    // {
-    //   dataId: "301",
-    //   network: "Airtel",
-    //   size: "15.0 GB",
-    //   duration: "30 days",
-    // },
-    // {
-    //   dataId: "302",
-    //   network: "Airtel",
-    //   size: "20.0 GB",
-    //   duration: "30 days",
-    // },
-  ];
+    {
+      "dataId": 226,
+      "network": "airtel",
+      "size": "300.0 mb",
+      "duration": "7 days"
+    }
+   ]
+
+   
+  // const dataPlans_old = [
+  //   {
+  //     dataId: "257",
+  //     network: "Airtel",
+  //     size: "100.0 MB",
+  //     duration: "7 days",
+  //   },
+  //   {
+  //     dataId: "258",
+  //     network: "Airtel",
+  //     size: "300.0 MB",
+  //     duration: "7 days",
+  //   },
+  //   {
+  //     dataId: "253",
+  //     network: "Airtel",
+  //     size: "500.0 MB",
+  //     duration: "30 days",
+  //   },
+  //   // {
+  //   //   dataId: "256",
+  //   //   network: "Airtel",
+  //   //   size: "100.0 MB",
+  //   //   duration: "7 days",
+  //   // },
+  //   {
+  //     dataId: "254",
+  //     network: "Airtel",
+  //     size: "1.0 GB",
+  //     duration: "30 days",
+  //   },
+  //   {
+  //     dataId: "255",
+  //     network: "Airtel",
+  //     size: "2.0 GB",
+  //     duration: "30 days",
+  //   },
+  //   {
+  //     dataId: "256",
+  //     network: "Airtel",
+  //     size: "5.0 GB",
+  //     duration: "30 days",
+  //   },
+  //   // {
+  //   //   dataId: "300",
+  //   //   network: "Airtel",
+  //   //   size: "10.0 GB",
+  //   //   duration: "30 days",
+  //   // },
+  //   // {
+  //   //   dataId: "301",
+  //   //   network: "Airtel",
+  //   //   size: "15.0 GB",
+  //   //   duration: "30 days",
+  //   // },
+  //   // {
+  //   //   dataId: "302",
+  //   //   network: "Airtel",
+  //   //   size: "20.0 GB",
+  //   //   duration: "30 days",
+  //   // },
+  // ];
+  
+  
   const [plan, setPlan] = useState({
     network: "airtel",
     plan_id: "",
