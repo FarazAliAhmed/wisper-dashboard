@@ -82,7 +82,7 @@ const Sidebar = () => {
       </div>
       <div className="mt-2 text-muted fw-bold">
         {/* Balance: {volume} {unit} */}
-        Balance: {volume ? user?.type == "mega" ? `${volume} ${unit}` : formatDataToNaira(volume) : ""}
+        Balance: {volume ? user?.type === "mega" ? `${volume}`.split(".")[0] + ` ${unit}` : formatDataToNaira(volume) : ""}
       </div>
       <div className="pt-4 mt-2">
         <Nav vertical className="sidebarNav">

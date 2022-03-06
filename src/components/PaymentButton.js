@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import { Button, Form, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, FormText, FormFeedback, Label } from 'reactstrap'
+import { UncontrolledAlert, Button, Form, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, FormText, FormFeedback, Label } from 'reactstrap'
 import {usePaystackPayment} from 'react-paystack'
 import { useUser } from '../context/userContext'
 import { addPayment } from '../services/dataService'
 
 const { REACT_APP_PAYSTACK_PUBLIC_KEY } = process.env
+// const REACT_APP_PAYSTACK_PUBLIC_KEY = process.env.REACT_APP_PAYSTACK_TEST_PUBLIC_KEY
 
 
 
@@ -14,6 +15,7 @@ const PaymentButton = () => {
     const [show, setShow] = useState(false)
     const [price, setPrice] = useState()
     const [invalid, setInvalid] = useState(true)
+    const [notification, setNotification] = useState(null)
 
     useEffect(() => {
         if (parseInt(price) < 1000){
@@ -66,6 +68,8 @@ const PaymentButton = () => {
     }
 
     const onSuccess = () => {
+        toggleShow()
+        setNotification(`Payment Successful. Refresh to see updated Balance`)
         // call backend and add payment to history
         const paymentObject = {
             business_name: user.name,
@@ -73,8 +77,8 @@ const PaymentButton = () => {
             amount: price,
             payment_ref: paymentConfig.reference,
         }
-        addPayment(paymentObject).then(() => {
-            // show alert indicating payment was addedd
+        addPayment(paymentObject).then((response) => {
+            // setNotification(`Payment Successful. Balance: ${response.data.newBalance.data_volume.split(".")[0]}`)
         })
     }
 
@@ -92,6 +96,15 @@ const PaymentButton = () => {
 
     return(
         <>
+            <>
+              { notification ?
+                <UncontrolledAlert dismissible color="success">
+                  {notification}
+                </UncontrolledAlert>
+                :
+                ""
+              }
+            </>
             <Button className="fund-button" onClick={toggleShow}>Fund Account</Button>
             <Modal
                 centered

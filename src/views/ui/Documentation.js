@@ -109,7 +109,7 @@ const tableData = [
   return (
     <FullLayout>
       <div>
-        <a href={docs} target="_blank" >
+        <a href={docs} target="_blank" rel="noreferrer" >
           <Button color="primary" className="mb-3 px-3">
             API Documentation page
           </Button>
