@@ -43,3 +43,11 @@ export async function getAllPayments(){
     return null;
   }
 }
+
+export async function addPayment(payment){
+  try{
+    return http.post(`${apiUrl}/payments`, payment)
+  }catch(error){
+    return null;
+  }
+}

@@ -2,6 +2,8 @@ import { Button, Nav, NavItem } from "reactstrap";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 import { useAppState } from "../context/appContext";
+import { useUser } from "../context/userContext";
+import {formatDataToNaira} from "../utils/index"
 
 const navigation = [
   {
@@ -30,6 +32,11 @@ const navigation = [
     icon: "bi bi-person",
   },
   {
+    title: "Pricing",
+    href: "/pricing",
+    icon: "bi bi-tags",
+  },
+  {
     title: "Payments",
     href: "/payments",
     icon: "bi bi-credit-card",
@@ -55,6 +62,8 @@ const Sidebar = () => {
   const {
     currentBalance: { volume, unit },
   } = useAppState();
+
+  const {user} = useUser();
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
@@ -72,7 +81,8 @@ const Sidebar = () => {
         ></Button>
       </div>
       <div className="mt-2 text-muted fw-bold">
-        Balance: {volume} {unit}
+        {/* Balance: {volume} {unit} */}
+        Balance: {volume ? user?.type == "mega" ? `${volume} ${unit}` : formatDataToNaira(volume) : ""}
       </div>
       <div className="pt-4 mt-2">
         <Nav vertical className="sidebarNav">

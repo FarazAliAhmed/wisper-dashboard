@@ -21,6 +21,7 @@ const Account = lazy(() => import("../views/ui/Account"));
 const Documentation = lazy(() => import("../views/ui/Documentation"));
 const Payments = lazy(() => import('../views/ui/Payments'))
 const Transactions = lazy(() => import('../views/ui/Transactions'))
+const Pricing = lazy(() => import('../views/ui/Pricing'))
 
 const Routes = () => {
   return (
@@ -28,6 +29,7 @@ const Routes = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         <ProtectedRoute path="/dashboard" component={Dashboard} />
+        <ProtectedRoute path="/pricing" component={Pricing} />
         <ProtectedRoute path="/allocate" component={AllocateData} />
         <ProtectedRoute path="/wallet" component={Wallet} />
         <ProtectedRoute path="/account" component={Account} />

@@ -1,7 +1,9 @@
+@import "variables";
+
 .bank-details {
   background-image: url("../images/bg/wisper.jpg");
   margin-bottom: 20px;
-  padding: 80px 0px;
+  padding: 60px 0px;
   color: #fff;
 }
 
@@ -10,4 +12,15 @@
   background-color: #fff;
   padding: 1em;
   margin-bottom: 1em;
+}
+
+.fund-button {
+  width: 12em;
+  // background-image: url("../images/bg/wisper.jpg");
+  background-color: $primary;
+  border: none;
+  border-radius: unset;
+  color: #fff;
+  padding: 1em 0;
+  font-weight: bold;
 }
