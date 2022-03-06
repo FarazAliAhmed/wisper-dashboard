@@ -64,3 +64,13 @@ export const totalDataSold = (dataTransactions = []) => {
   });
   return sum;
 };
+
+
+export const formatDataToNaira = (volume) => {
+  let amount = (volume/1024)*300
+  const currencyString = amount.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'NGN',
+  });
+  return currencyString.replace("NGN", "₦").split(".")[0]
+}

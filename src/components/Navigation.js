@@ -27,12 +27,12 @@ const Navigation = () => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
-            <NavItem>
+            {/* <NavItem>
               <NavLink href="#">About Us</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="#">Services</NavLink>
-            </NavItem>
+            </NavItem> */}
             {/* <UncontrolledDropdown inNavbar nav>
               <DropdownToggle caret nav>
                 Options

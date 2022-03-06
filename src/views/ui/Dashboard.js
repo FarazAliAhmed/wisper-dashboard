@@ -6,15 +6,20 @@ import TopCards from "../../components/dashboard/TopCards";
 import FullLayout from "../../layouts/FullLayout";
 import { useAppState } from "../../context/appContext";
 import { totalDataSold } from "../../utils";
+import TransactionsTable from "../../components/TransactionsTable";
+import {formatDataToNaira} from "../../utils/index"
+import PaymentButton from "../../components/PaymentButton";
+import { useUser } from "../../context/userContext";
 
 import "../../assets/scss/custom.scss";
-import sterling_logo from "../../assets/images/logos/Sterling_Bank_Logo_Straight.png"
+// import sterling_logo from "../../assets/images/logos/Sterling_Bank_Logo_Straight.png"
 
 const Dashboard = () => {
   const {
     currentBalance: { volume, unit },
     transactions,
   } = useAppState();
+  const {user} = useUser();
 
   return (
     <FullLayout>
@@ -23,10 +28,10 @@ const Dashboard = () => {
         <Row>
           <Col sm="6" lg="4">
             <TopCards
-              bg="bg-light-success text-success"
+              bg="bg-light-info text-info"
               title="Profit"
               subtitle="Balance"
-              earning={`${volume} ${unit}`}
+              earning={volume ? user?.type == "mega" ? `${volume} ${unit}` : formatDataToNaira(volume) : ""}
               icon="bi bi-wallet"
             />
           </Col>
@@ -49,17 +54,12 @@ const Dashboard = () => {
             />
           </Col>
         </Row>
-        {/***Sales & Feed***/}
-        {/* <Row>
-          <Col sm="6" lg="6" xl="7" xxl="8">
-            <SalesChart />
+        <Row>
+          <Col>
+            <PaymentButton />
           </Col>
-          <Col sm="6" lg="6" xl="5" xxl="4">
-            <Feeds />
-          </Col>
-        </Row> */}
-        {/***Table ***/}
-        <Row className="bank-details">
+        </Row>
+        {/* <Row className="bank-details">
           <Col>
             <div>
               <img className="sterling__logo" src={sterling_logo} />
@@ -74,6 +74,9 @@ const Dashboard = () => {
               <b>Account Name:</b> &nbsp; Alma Management Limited
             </div>
           </Col>
+        </Row> */}
+        <Row className="mt-4">
+          <TransactionsTable transactions={transactions.slice(-5)} showHeader={false} />
         </Row>
       </div>
     </FullLayout>
