@@ -1,11 +1,11 @@
 import React from "react";
-import { Card, CardBody, CardTitle, Table, Button } from "reactstrap";
+import { Card, CardBody, CardTitle, Table } from "reactstrap";
 import FullLayout from "../../layouts/FullLayout";
 
-import { useUser } from "../../context/userContext";
+// import { useUser } from "../../context/userContext";
 
 const Pricing = () => {
-  const { user } = useUser();
+  // const { user } = useUser();
 
 
 const tableData = [

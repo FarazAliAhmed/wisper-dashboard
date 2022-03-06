@@ -6,8 +6,8 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
-  NavLink,
+  // NavItem,
+  // NavLink,
   Button,
 } from "reactstrap";
 import wisperLogo from "../assets/images/logos/wisper.png";

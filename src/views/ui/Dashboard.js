@@ -31,7 +31,7 @@ const Dashboard = () => {
               bg="bg-light-info text-info"
               title="Profit"
               subtitle="Balance"
-              earning={volume ? user?.type == "mega" ? `${volume} ${unit}` : formatDataToNaira(volume) : ""}
+              earning={volume ? user?.type === "mega" ? `${volume}`.split(".")[0] + ` ${unit}` : formatDataToNaira(volume) : ""}
               icon="bi bi-wallet"
             />
           </Col>
