@@ -16,7 +16,7 @@ import "../../assets/scss/custom.scss";
 
 const Dashboard = () => {
   const {
-    currentBalance: { volume, unit },
+    currentBalance: { volume, unit, cash },
     transactions,
   } = useAppState();
   const {user} = useUser();
@@ -31,7 +31,7 @@ const Dashboard = () => {
               bg="bg-light-info text-info"
               title="Profit"
               subtitle="Balance"
-              earning={volume ? user?.type === "mega" ? `${volume}`.split(".")[0] + ` ${unit}` : formatDataToNaira(volume) : ""}
+              earning={user?.type === "mega" ? `${volume}`.split(".")[0] + ` ${unit}` : ` ${unit}` + `${cash}`.split(".")[0]}
               icon="bi bi-wallet"
             />
           </Col>
