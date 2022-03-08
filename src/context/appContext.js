@@ -16,10 +16,12 @@ const AppStateProvider = ({ children }) => {
       const balanceRes = await getBalance();
       const transactionRes = await getAllTransactions();
       const paymentRes = await getAllPayments()
-      const { data_volume, data_unit } = balanceRes.data;
-      setCurrentBalance({ volume: data_volume, unit: data_unit });
+      const { data_volume, data_unit, wallet_balance } = balanceRes.data;
+      setCurrentBalance({ volume: data_volume, unit: data_unit, cash: wallet_balance });
       setTransactions(transactionRes.data);
       setPayments(paymentRes.data)
+
+      console.log("Balance: ", balanceRes)
     }
     fetchBalance();
   }, []);
