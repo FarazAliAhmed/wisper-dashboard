@@ -20,7 +20,7 @@ export async function getBalance() {
 export async function allocateData(body, apiKey) {
   const headers = { "x-api-key": apiKey };
   const payload = {
-    network: "airtel",
+    network: body.network,
     plan_id: body.plan_id,
     phone_number: body.phone_number,
   };

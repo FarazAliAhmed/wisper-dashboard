@@ -1,9 +1,10 @@
+import React, { useState, useEffect } from "react";
 import { Button, Nav, NavItem } from "reactstrap";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 import { useAppState } from "../context/appContext";
 import { useUser } from "../context/userContext";
-import {formatDataToNaira} from "../utils/index"
+import { getUserBalance } from '../utils'
 
 const navigation = [
   {
@@ -59,15 +60,23 @@ const navigation = [
 ];
 
 const Sidebar = () => {
+  let location = useLocation();
+  const [userBalance, setUserBalance] = useState(0)
+
   const {
-    currentBalance: { volume, unit, cash },
+    currentBalance,
   } = useAppState();
 
   const {user} = useUser();
+
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
-  let location = useLocation();
+
+  useEffect(() => {
+    let balance = getUserBalance(currentBalance, user)
+    setUserBalance(balance)
+  }, [currentBalance, user])
 
   return (
     <div className="p-3">
@@ -82,7 +91,7 @@ const Sidebar = () => {
       </div>
       <div className="mt-2 text-muted fw-bold">
         {/* Balance: {volume} {unit} */}
-        Balance: {user?.type === "mega" ? `${volume}`.split(".")[0] + ` ${unit}` : ` ${unit}` + `${cash}`.split(".")[0]}
+        Balance: {userBalance}
       </div>
       <div className="pt-4 mt-2">
         <Nav vertical className="sidebarNav">

@@ -16,6 +16,11 @@ const TransactionsTable = ({transactions, showHeader}) => {
                   List of Data volume transfer
                 </CardSubtitle> 
 
+                <div className='legend-container'>
+                  <p className='legend'><span className="p-2 bg-success rounded-circle d-inline-block"></span> Successful</p>
+                  <p className='legend'><span className="p-2 bg-warning rounded-circle d-inline-block ms-3"></span> Processing</p>
+                  <p className='legend'><span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span> Failed</p>
+                </div>
                 <Table className="no-wrap mt-3 align-middle" responsive borderless>
                   <thead>
                     <tr>
