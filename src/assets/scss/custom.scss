@@ -24,3 +24,13 @@
   padding: 1em 0;
   font-weight: bold;
 }
+
+.legend-container {
+  display: flex;
+  gap: 0.4em;
+  position: absolute;
+  margin-right: 10px;
+  top: 1.5em;
+  right: 0;
+  font-size: 0.9rem;
+}

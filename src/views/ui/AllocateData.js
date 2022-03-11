@@ -15,121 +15,21 @@ import { useUser } from "../../context/userContext";
 import FullLayout from "../../layouts/FullLayout";
 import { allocateData } from "../../services/dataService";
 import { handleFailedRequest } from "../../utils";
+import dataPlans from "../../utils/plansTable"
 
-const AllocateData = () => {
-  const dataPlans = [
-    {
-      "dataId": 221,
-      "network": "airtel",
-      "size": "500.0 mb",
-      "duration": "monthly"
-    },
-    {
-      "dataId": 222,
-      "network": "airtel",
-      "size": "1.0 gb",
-      "duration": "monthly"
-    },
-    {
-      "dataId": 223,
-      "network": "airtel",
-      "size": "2.0 gb",
-      "duration": "monthly"
-    },
-    {
-      "dataId": 224,
-      "network": "airtel",
-      "size": "5.0 gb",
-      "duration": "monthly"
-    },
-    {
-      "dataId": 225,
-      "network": "airtel",
-      "size": "100.0 mb",
-      "duration": "7 days"
-    },
-    {
-      "dataId": 226,
-      "network": "airtel",
-      "size": "300.0 mb",
-      "duration": "7 days"
-    }
-   ]
-
-   
-  // const dataPlans_old = [
-  //   {
-  //     dataId: "257",
-  //     network: "Airtel",
-  //     size: "100.0 MB",
-  //     duration: "7 days",
-  //   },
-  //   {
-  //     dataId: "258",
-  //     network: "Airtel",
-  //     size: "300.0 MB",
-  //     duration: "7 days",
-  //   },
-  //   {
-  //     dataId: "253",
-  //     network: "Airtel",
-  //     size: "500.0 MB",
-  //     duration: "30 days",
-  //   },
-  //   // {
-  //   //   dataId: "256",
-  //   //   network: "Airtel",
-  //   //   size: "100.0 MB",
-  //   //   duration: "7 days",
-  //   // },
-  //   {
-  //     dataId: "254",
-  //     network: "Airtel",
-  //     size: "1.0 GB",
-  //     duration: "30 days",
-  //   },
-  //   {
-  //     dataId: "255",
-  //     network: "Airtel",
-  //     size: "2.0 GB",
-  //     duration: "30 days",
-  //   },
-  //   {
-  //     dataId: "256",
-  //     network: "Airtel",
-  //     size: "5.0 GB",
-  //     duration: "30 days",
-  //   },
-  //   // {
-  //   //   dataId: "300",
-  //   //   network: "Airtel",
-  //   //   size: "10.0 GB",
-  //   //   duration: "30 days",
-  //   // },
-  //   // {
-  //   //   dataId: "301",
-  //   //   network: "Airtel",
-  //   //   size: "15.0 GB",
-  //   //   duration: "30 days",
-  //   // },
-  //   // {
-  //   //   dataId: "302",
-  //   //   network: "Airtel",
-  //   //   size: "20.0 GB",
-  //   //   duration: "30 days",
-  //   // },
-  // ];
-  
+const AllocateData = () => {  
   
   const [plan, setPlan] = useState({
     network: "airtel",
     plan_id: "",
     phone_number: "",
   });
+
   const [serverResponse, setServerResponse] = useState({
     status: true,
     message: "",
   });
+
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
 
@@ -190,6 +90,9 @@ const AllocateData = () => {
                     <option selected value="airtel">
                       Airtel
                     </option>
+                    <option value="mtn">
+                      MTN
+                    </option>
                   </Input>
                 </FormGroup>
               </Col>
@@ -204,7 +107,7 @@ const AllocateData = () => {
                     type="select"
                   >
                     <option>---Select plan ---</option>
-                    {dataPlans.map((plan) => (
+                    {dataPlans.filter((singlePlan) => singlePlan.network === plan.network).map((plan) => (
                       <option
                         key={`${plan.network}-${plan.dataId}`}
                         value={plan.dataId}

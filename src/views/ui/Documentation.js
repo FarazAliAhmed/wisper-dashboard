@@ -1,110 +1,14 @@
 import React from "react";
 import { Card, CardBody, CardTitle, Table, Button } from "reactstrap";
 import FullLayout from "../../layouts/FullLayout";
-
+import tableData from '../../utils/plansTable'
 import { useUser } from "../../context/userContext";
 
 const docs = "https://documenter.getpostman.com/view/17453703/UVksMZmU"
 
+
 const Documentation = () => {
   const { user } = useUser();
-  
-  // const tableData_old = [
-  //   {
-  //     dataId: "257",
-  //     network: "Airtel",
-  //     size: "100.0 MB",
-  //     duration: "7 days",
-  //   },
-  //   {
-  //     dataId: "258",
-  //     network: "Airtel",
-  //     size: "300.0 MB",
-  //     duration: "7 days",
-  //   },
-  //   {
-  //     dataId: "253",
-  //     network: "Airtel",
-  //     size: "500.0 MB",
-  //     duration: "30 days",
-  //   },
-  //   {
-  //     dataId: "254",
-  //     network: "Airtel",
-  //     size: "1.0 GB",
-  //     duration: "30 days",
-  //   },
-  //   {
-  //     dataId: "255",
-  //     network: "Airtel",
-  //     size: "2.0 GB",
-  //     duration: "30 days",
-  //   },
-  //   {
-  //     dataId: "256",
-  //     network: "Airtel",
-  //     size: "5.0 GB",
-  //     duration: "30 days",
-  //   },
-  //   // {
-  //   //   dataId: "199",
-  //   //   network: "Airtel",
-  //   //   size: "10.0 GB",
-  //   //   duration: "30 days",
-  //   // },
-  //   // {
-  //   //   dataId: "200",
-  //   //   network: "Airtel",
-  //   //   size: "15.0 GB",
-  //   //   duration: "30 days",
-  //   // },
-  //   // {
-  //   //   dataId: "201",
-  //   //   network: "Airtel",
-  //   //   size: "20.0 GB",
-  //   //   duration: "30 days",
-  //   // },
-  // ];
-
-
-const tableData = [
- {
-   "dataId": 221,
-   "network": "airtel",
-   "size": "500.0 mb",
-   "duration": "monthly"
- },
- {
-   "dataId": 222,
-   "network": "airtel",
-   "size": "1.0 gb",
-   "duration": "monthly"
- },
- {
-   "dataId": 223,
-   "network": "airtel",
-   "size": "2.0 gb",
-   "duration": "monthly"
- },
- {
-   "dataId": 224,
-   "network": "airtel",
-   "size": "5.0 gb",
-   "duration": "monthly"
- },
- {
-   "dataId": 225,
-   "network": "airtel",
-   "size": "100.0 mb",
-   "duration": "7 days"
- },
- {
-   "dataId": 226,
-   "network": "airtel",
-   "size": "300.0 mb",
-   "duration": "7 days"
- }
-]
 
   return (
     <FullLayout>

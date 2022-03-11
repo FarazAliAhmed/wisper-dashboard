@@ -1,51 +1,12 @@
 import React from "react";
 import { Card, CardBody, CardTitle, Table } from "reactstrap";
 import FullLayout from "../../layouts/FullLayout";
+import tableData from '../../utils/plansTable'
 
 // import { useUser } from "../../context/userContext";
 
 const Pricing = () => {
   // const { user } = useUser();
-
-
-const tableData = [
-  {
-    "network": "airtel",
-    "size": "100.0 mb",
-    "duration": "7 days",
-    "amount": "₦50"
-  },
-  {
-    "network": "airtel",
-    "size": "300.0 mb",
-    "duration": "7 days",
-    "amount": "₦100"
-  },
- {
-   "network": "airtel",
-   "size": "500.0 mb",
-   "duration": "monthly",
-   "amount": "₦180"
- },
- {
-   "network": "airtel",
-   "size": "1.0 gb",
-   "duration": "monthly",
-   "amount": "₦350"
- },
- {
-   "network": "airtel",
-   "size": "2.0 gb",
-   "duration": "monthly",
-   "amount": "₦700"
- },
- {
-   "network": "airtel",
-   "size": "5.0 gb",
-   "duration": "monthly",
-   "amount": "₦1700"
- },
-]
 
   return (
     <FullLayout>

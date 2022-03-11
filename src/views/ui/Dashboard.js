@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Col, Row } from "reactstrap";
 // import SalesChart from "../../components/dashboard/SalesChart";
 // import Feeds from "../../components/dashboard/Feeds";
@@ -7,19 +8,27 @@ import FullLayout from "../../layouts/FullLayout";
 import { useAppState } from "../../context/appContext";
 import { totalDataSold } from "../../utils";
 import TransactionsTable from "../../components/TransactionsTable";
-import {formatDataToNaira} from "../../utils/index"
+import {getUserBalance} from "../../utils/index"
 import PaymentButton from "../../components/PaymentButton";
 import { useUser } from "../../context/userContext";
 
 import "../../assets/scss/custom.scss";
-// import sterling_logo from "../../assets/images/logos/Sterling_Bank_Logo_Straight.png"
+import sterling_logo from "../../assets/images/logos/Sterling_Bank_Logo_Straight.png"
 
 const Dashboard = () => {
   const {
-    currentBalance: { volume, unit, cash },
+    // currentBalance: { volume, unit, cash },
+    currentBalance,
     transactions,
   } = useAppState();
   const {user} = useUser();
+  
+  const [userBalance, setUserBalance] = useState("")
+
+  useEffect(() => {
+      let balance = getUserBalance(currentBalance, user)
+      setUserBalance(balance)
+  }, [currentBalance, user])
 
   return (
     <FullLayout>
@@ -31,7 +40,7 @@ const Dashboard = () => {
               bg="bg-light-info text-info"
               title="Profit"
               subtitle="Balance"
-              earning={user?.type === "mega" ? `${volume}`.split(".")[0] + ` ${unit}` : ` ${unit}` + `${cash}`.split(".")[0]}
+              earning={userBalance}
               icon="bi bi-wallet"
             />
           </Col>
@@ -54,27 +63,35 @@ const Dashboard = () => {
             />
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <PaymentButton />
-          </Col>
-        </Row>
-        {/* <Row className="bank-details">
-          <Col>
-            <div>
-              <img className="sterling__logo" src={sterling_logo} />
-            </div>
-            <div>
-              <b>Bank:</b> &nbsp; Sterling Bank
-            </div>
-            <div>
-              <b>Account Number:</b>&nbsp; 0014602073
-            </div>
-            <div>
-              <b>Account Name:</b> &nbsp; Alma Management Limited
-            </div>
-          </Col>
-        </Row> */}
+        {
+          user ? 
+            user?.type === "mega" ?
+              <Row className="bank-details">
+                <Col>
+                  <div>
+                    <img className="sterling__logo" src={sterling_logo} />
+                  </div>
+                  <div>
+                    <b>Bank:</b> &nbsp; Sterling Bank
+                  </div>
+                  <div>
+                    <b>Account Number:</b>&nbsp; 0014602073
+                  </div>
+                  <div>
+                    <b>Account Name:</b> &nbsp; Alma Management Limited
+                  </div>
+                </Col>
+                <p className="text-warning">Send payment receipt to admin for validation, after which balance would be credited.</p>
+              </Row>
+            :
+              <Row>
+                <Col>
+                  <PaymentButton />
+                </Col>
+              </Row>
+
+          : ""
+        }
         <Row className="mt-4">
           <TransactionsTable transactions={transactions.slice(-5)} showHeader={false} />
         </Row>

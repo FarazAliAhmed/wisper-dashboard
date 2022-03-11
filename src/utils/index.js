@@ -74,3 +74,8 @@ export const formatDataToNaira = (volume) => {
   });
   return currencyString.replace("NGN", "₦").split(".")[0]
 }
+
+export const getUserBalance = (currentBalance, user) => {
+  const { volume, unit, cash } = currentBalance
+  return user?.type === "mega" ? `${volume}`.split(".")[0] + ` ${unit}` : ` ${unit}` + `${cash}`.split(".")[0]
+}
