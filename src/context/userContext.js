@@ -10,8 +10,6 @@ const UserProvider = ({ children }) => {
     async function fetchUser() {
       const user = await whoami();
       if (user) setUser(user);
-      
-      console.log("User: ", user)
     }
     fetchUser();
   }, []);

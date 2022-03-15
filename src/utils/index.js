@@ -66,16 +66,25 @@ export const totalDataSold = (dataTransactions = []) => {
 };
 
 
-export const formatDataToNaira = (volume) => {
-  let amount = (volume/1024)*300
-  const currencyString = amount.toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'NGN',
-  });
-  return currencyString.replace("NGN", "₦").split(".")[0]
-}
+// export const formatDataToNaira = (volume) => {
+//   let amount = (volume/1024)*300
+//   const currencyString = amount.toLocaleString('en-US', {
+//     style: 'currency',
+//     currency: 'NGN',
+//   });
+//   return currencyString.replace("NGN", "₦").split(".")[0]
+// }
 
-export const getUserBalance = (currentBalance, user) => {
-  const { volume, unit, cash } = currentBalance
-  return user?.type === "mega" ? `${volume}`.split(".")[0] + ` ${unit}` : ` ${unit}` + `${cash}`.split(".")[0]
+// export const getUserBalance = (currentBalance, user) => {
+//   const { volume, unit, cash } = currentBalance
+//   return user?.type === "mega" ? `${volume}`.split(".")[0] + ` ${unit}` : ` ${unit}` + `${cash}`.split(".")[0]
+// }
+
+export const displayBalance = (volume, unit, cash, user) => {
+  console.log(volume, unit, cash, user)
+  if(user.type === "mega"){
+    return `${parseInt(volume)} ${unit}`
+  }else{
+    return `${unit} ${parseInt(cash)}`
+  }
 }

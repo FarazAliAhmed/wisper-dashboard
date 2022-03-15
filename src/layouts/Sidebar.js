@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 import { useAppState } from "../context/appContext";
 import { useUser } from "../context/userContext";
-import { getUserBalance } from '../utils'
+// import { getUserBalance } from '../utils'
 
 const navigation = [
   {
@@ -73,10 +73,10 @@ const Sidebar = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
 
-  useEffect(() => {
-    let balance = getUserBalance(currentBalance, user)
-    setUserBalance(balance)
-  }, [currentBalance, user])
+  // useEffect(() => {
+  //   let balance = getUserBalance(currentBalance, user)
+  //   setUserBalance(balance)
+  // }, [currentBalance, user])
 
   return (
     <div className="p-3">
@@ -91,7 +91,7 @@ const Sidebar = () => {
       </div>
       <div className="mt-2 text-muted fw-bold">
         {/* Balance: {volume} {unit} */}
-        Balance: {userBalance}
+        Balance: 0
       </div>
       <div className="pt-4 mt-2">
         <Nav vertical className="sidebarNav">

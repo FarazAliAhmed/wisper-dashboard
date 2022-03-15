@@ -27,10 +27,24 @@
 
 .legend-container {
   display: flex;
-  gap: 0.4em;
+  gap: 0.8em;
   position: absolute;
   margin-right: 10px;
   top: 1.5em;
   right: 0;
   font-size: 0.9rem;
+  .legend span {
+    padding: 0.5em;
+  }
+  @media (max-width: 570px) {
+    flex-direction: column;
+    position: unset;
+    gap: 0;
+    .legend {
+      margin-bottom: 0.3em;
+    }
+    .legend span {
+      padding: 0.4em;
+    }
+  }
 }

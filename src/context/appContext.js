@@ -5,8 +5,9 @@ export const AppStateContext = createContext();
 
 const AppStateProvider = ({ children }) => {
   const [currentBalance, setCurrentBalance] = useState({
-    volume: "",
+    volume: 0,
     unit: "",
+    cash: 0,
   });
   const [transactions, setTransactions] = useState([]);
   const [payments, setPayments] = useState([])
@@ -16,12 +17,14 @@ const AppStateProvider = ({ children }) => {
       const balanceRes = await getBalance();
       const transactionRes = await getAllTransactions();
       const paymentRes = await getAllPayments()
-      const { data_volume, data_unit, wallet_balance } = balanceRes.data;
-      setCurrentBalance({ volume: data_volume, unit: data_unit, cash: wallet_balance });
+      console.log(balanceRes)
+      setCurrentBalance({ 
+        volume: balanceRes.data.data_volume,
+        unit: balanceRes.data.data_unit,
+        cash: balanceRes.data.wallet_balance
+      });
       setTransactions(transactionRes.data);
       setPayments(paymentRes.data)
-
-      console.log("Balance: ", balanceRes)
     }
     fetchBalance();
   }, []);

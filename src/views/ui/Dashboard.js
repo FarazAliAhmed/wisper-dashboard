@@ -1,14 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row } from "reactstrap";
-// import SalesChart from "../../components/dashboard/SalesChart";
-// import Feeds from "../../components/dashboard/Feeds";
-// import ProjectTables from "../../components/dashboard/ProjectTable";
 import TopCards from "../../components/dashboard/TopCards";
 import FullLayout from "../../layouts/FullLayout";
 import { useAppState } from "../../context/appContext";
-import { totalDataSold } from "../../utils";
+import { totalDataSold, displayBalance } from "../../utils";
 import TransactionsTable from "../../components/TransactionsTable";
-import {getUserBalance} from "../../utils/index"
 import PaymentButton from "../../components/PaymentButton";
 import { useUser } from "../../context/userContext";
 
@@ -16,20 +12,17 @@ import "../../assets/scss/custom.scss";
 import sterling_logo from "../../assets/images/logos/Sterling_Bank_Logo_Straight.png"
 
 const Dashboard = () => {
+  const {user} = useUser();
   const {
-    // currentBalance: { volume, unit, cash },
-    currentBalance,
+    currentBalance: {volume, unit, cash},
     transactions,
   } = useAppState();
-  const {user} = useUser();
+  const [balanceDisplay, setBalanceDisplay] = useState("")
+
+  useEffect(()=>{
+    setBalanceDisplay(displayBalance(volume, unit, cash, user))
+  },[volume, unit, cash])
   
-  const [userBalance, setUserBalance] = useState("")
-
-  useEffect(() => {
-      let balance = getUserBalance(currentBalance, user)
-      setUserBalance(balance)
-  }, [currentBalance, user])
-
   return (
     <FullLayout>
       <div>
@@ -40,7 +33,7 @@ const Dashboard = () => {
               bg="bg-light-info text-info"
               title="Profit"
               subtitle="Balance"
-              earning={userBalance}
+              earning={balanceDisplay}
               icon="bi bi-wallet"
             />
           </Col>

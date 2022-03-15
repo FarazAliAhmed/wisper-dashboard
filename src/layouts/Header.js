@@ -27,7 +27,7 @@ const Header = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
   return (
-    <Navbar color="primary" dark expand="md">
+    <Navbar color="primary" dark expand="xs">
       <div className="d-flex align-items-center">
         <NavbarBrand href="/" className="d-lg-none">
           <img src={wisperSmall} width={80} alt="wisper logo" />
@@ -40,7 +40,7 @@ const Header = () => {
           <i className="bi bi-list"></i>
         </Button>
       </div>
-      <div className="hstack gap-2">
+      {/* <div className="hstack gap-2">
         <Button
           color="primary"
           size="sm"
@@ -53,7 +53,7 @@ const Header = () => {
             <i className="bi bi-three-dots-vertical"></i>
           )}
         </Button>
-      </div>
+      </div> */}
 
       <Collapse navbar isOpen={isOpen}>
         <span className="me-auto"></span>
