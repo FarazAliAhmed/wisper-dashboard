@@ -10,6 +10,7 @@ import {
   Col,
   UncontrolledAlert,
 } from "reactstrap";
+import AllocateButton from "../../components/AllocateButton";
 import { useUser } from "../../context/userContext";
 
 import FullLayout from "../../layouts/FullLayout";
@@ -17,13 +18,15 @@ import { allocateData } from "../../services/dataService";
 import { handleFailedRequest } from "../../utils";
 import dataPlans from "../../utils/plansTable"
 
+const initialState = {
+  network: "airtel",
+  plan_id: "",
+  phone_number: "",
+}
+
 const AllocateData = () => {  
   
-  const [plan, setPlan] = useState({
-    network: "airtel",
-    plan_id: "",
-    phone_number: "",
-  });
+  const [plan, setPlan] = useState(initialState);
 
   const [serverResponse, setServerResponse] = useState({
     status: true,
@@ -34,16 +37,18 @@ const AllocateData = () => {
   const { user } = useUser();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     try {
       setLoading(true);
       await allocateData(plan, user?.access_token);
       setLoading(false);
+      setPlan(initialState)
       setServerResponse({
         status: true,
         message: "Data allocated successfully.",
       });
+      return true
     } catch (error) {
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
@@ -61,7 +66,7 @@ const AllocateData = () => {
       <div>
         <h5 className="mb-4 mt-3">Allocate Data</h5>
         <Card body>
-          {serverResponse.message.length > 0 && (
+          {/* {serverResponse.message.length > 0 && (
             <>
               {serverResponse.status ? (
                 <UncontrolledAlert dismissible color="success">
@@ -73,8 +78,8 @@ const AllocateData = () => {
                 </UncontrolledAlert>
               )}
             </>
-          )}
-          <Form onSubmit={handleSubmit}>
+          )} */}
+          <Form>
             <Row form>
               <Col md={6}>
                 <FormGroup>
@@ -131,9 +136,10 @@ const AllocateData = () => {
                 </FormGroup>
               </Col>
             </Row>
-            <Button disabled={loading} type="submit" color="primary">
+            <AllocateButton setLoading={setLoading} loading={loading} handleSubmit={handleSubmit} plan_id={plan.plan_id} phone_number={plan.phone_number} />
+            {/* <Button disabled={loading} type="submit" color="primary">
               Allocate
-            </Button>
+            </Button> */}
           </Form>
         </Card>
       </div>

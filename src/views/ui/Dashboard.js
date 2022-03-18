@@ -5,7 +5,8 @@ import FullLayout from "../../layouts/FullLayout";
 import { useAppState } from "../../context/appContext";
 import { totalDataSold, displayBalance } from "../../utils";
 import TransactionsTable from "../../components/TransactionsTable";
-import PaymentButton from "../../components/PaymentButton";
+// import PaymentButton from "../../components/PaymentButton";
+import PaymentButtonFw from "../../components/PaymentButtonFw"
 import { useUser } from "../../context/userContext";
 
 import "../../assets/scss/custom.scss";
@@ -79,7 +80,7 @@ const Dashboard = () => {
             :
               <Row>
                 <Col>
-                  <PaymentButton />
+                  <PaymentButtonFw />
                 </Col>
               </Row>
 

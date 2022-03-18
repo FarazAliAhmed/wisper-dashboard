@@ -17,7 +17,6 @@ const AppStateProvider = ({ children }) => {
       const balanceRes = await getBalance();
       const transactionRes = await getAllTransactions();
       const paymentRes = await getAllPayments()
-      console.log(balanceRes)
       setCurrentBalance({ 
         volume: balanceRes.data.data_volume,
         unit: balanceRes.data.data_unit,

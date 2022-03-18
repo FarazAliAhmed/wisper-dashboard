@@ -1,3 +1,6 @@
+import tableData from './plansTable'
+
+
 export const formIsValid = (errorObject) => {
   return Object.keys(errorObject).length > 0;
 };
@@ -81,10 +84,18 @@ export const totalDataSold = (dataTransactions = []) => {
 // }
 
 export const displayBalance = (volume, unit, cash, user) => {
-  console.log(volume, unit, cash, user)
   if(user.type === "mega"){
     return `${parseInt(volume)} ${unit}`
   }else{
     return `${unit} ${parseInt(cash)}`
   }
+}
+
+export const getPlanFromId = (plan_id) => {
+  const id = parseInt(plan_id)
+  const plan = tableData.filter((plan_data) => {
+    console.log(plan_id, plan_data["dataId"])
+    return plan_data["dataId"] === id
+  })
+  return plan[0]
 }

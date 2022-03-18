@@ -14,17 +14,19 @@
   margin-bottom: 1em;
 }
 
+// Component: PaymentButton
 .fund-button {
   width: 12em;
+  border-radius: 5px;
   // background-image: url("../images/bg/wisper.jpg");
   background-color: $primary;
   border: none;
-  border-radius: unset;
   color: #fff;
   padding: 1em 0;
   font-weight: bold;
 }
 
+// Component: TransactionTable
 .legend-container {
   display: flex;
   gap: 0.8em;
@@ -47,4 +49,35 @@
       padding: 0.4em;
     }
   }
+}
+
+// Component: AllocateButton
+.confirm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+.confirm-warn {
+  width: 4em;
+  filter: invert(76%) sepia(21%) saturate(1888%) hue-rotate(355deg)
+    brightness(107%) contrast(111%);
+}
+
+.confirm-cancel {
+  width: 4em;
+  filter: invert(19%) sepia(89%) saturate(7228%) hue-rotate(352deg)
+    brightness(83%) contrast(105%);
+}
+
+.confirm-checked {
+  width: 4em;
+  filter: invert(54%) sepia(13%) saturate(1994%) hue-rotate(68deg)
+    brightness(101%) contrast(92%);
+}
+
+.confirm-footer {
+  display: flex;
+  justify-content: center;
 }
