@@ -1,82 +1,140 @@
-const tableData = [
-    {
-        "dataId": 225,
-        "network": "airtel",
-        "size": "100.0 mb",
-        "duration": "7 days",
-        "amount": "₦50"
-      },
-      {
-        "dataId": 226,
-        "network": "airtel",
-        "size": "300.0 mb",
-        "duration": "7 days",
-        "amount": "₦100"
-      },
-    {
-      "dataId": 221,
-      "network": "airtel",
-      "size": "500.0 mb",
-      "duration": "monthly",
-      "amount": "₦180"
-    },
-    {
-      "dataId": 222,
-      "network": "airtel",
+export const tableDataExt = [
+  {
+      "dataId":"217",
+      "network": "mtn",
+      "amount": "₦220",
+      "plan_type": "gifting",
       "size": "1.0 gb",
-      "duration": "monthly",
-      "amount": "₦350"
-    },
-    {
-      "dataId": 223,
-      "network": "airtel",
+      "duration": "monthly"
+  },
+  {
+      "dataId":"209",
+      "network": "mtn",
+      "amount": "₦440",
+      "plan_type": "gifting",
       "size": "2.0 gb",
-      "duration": "monthly",
-      "amount": "₦700"
-    },
-    {
-      "dataId": 224,
-      "network": "airtel",
+      "duration": "monthly"
+  },
+  {
+      "dataId":"210",
+      "network": "mtn",
+      "amount": "₦660",
+      "plan_type": "gifting",
+      "size": "3.0 gb",
+      "duration": "monthly"
+  },
+  {
+      "dataId":"211",
+      "network": "mtn",
+      "amount": "₦1100",
+      "plan_type": "gifting",
       "size": "5.0 gb",
-      "duration": "monthly",
-      "amount": "₦1700"
-    },
-    {
-        "dataId":"217",
-       "network": "mtn",
-       "amount": "₦210",
-       "size": "1.0 gb",
-       "duration": "monthly"
-    },
-    {
-        "dataId":"209",
-       "network": "mtn",
-       "amount": "₦420",
-       "size": "2.0 gb",
-       "duration": "monthly"
-    },
-    {
-       "dataId":"210",
-       "network": "mtn",
-       "amount": "₦630",
-       "size": "3.0 gb",
-       "duration": "monthly"
-    },
-    {
-       "dataId":"211",
-       "network": "mtn",
-       "amount": "₦1050",
-       "size": "5.0 gb",
-       "duration": "monthly"
-    },
-    {
-       "dataId":"43",
-       "network": "mtn",
-       "amount": "₦2100",
-       "size": "10.0 gb",
-       "duration": "monthly"
-    },
-   ]
+      "duration": "monthly"
+  },
+  {
+      "dataId":"43",
+      "network": "mtn",
+      "amount": "₦2200",
+      "plan_type": "gifting",
+      "size": "10.0 gb",
+      "duration": "monthly"
+  },
+  ]
+
+
+
+
+const tableData = [
+{
+    "dataId": 7,
+    "network": "mtn",
+    "plan_type": "sme",
+    "amount": "₦250",
+    "size": "1.0 gb",
+    "duration": "30 days"
+},
+{
+    "dataId": 8,
+    "network": "mtn",
+    "plan_type": "sme",
+    "amount": "₦500",
+    "size": "2.0 gb",
+    "duration": "30 days"
+},
+{
+    "dataId": 11,
+    "network": "mtn",
+    "plan_type": "sme",
+    "amount": "₦1200",
+    "size": "5.0 gb",
+    "duration": "30 days"
+},
+{
+    "dataId": 44,
+    "network": "mtn",
+    "plan_type": "sme",
+    "amount": "₦750",
+    "size": "3.0 gb",
+    "duration": "30 days"
+},
+{
+    "dataId": 220,
+    "network": "mtn",
+    "plan_type": "sme",
+    "amount": "₦2500",
+    "size": "10.0 gb",
+    "duration": "30 days"
+},
+{
+    "dataId": 221,
+    "network": "airtel",
+    "plan_type": "gifting",
+    "amount": "₦180",
+    "size": "500.0 mb",
+    "duration": "monthly"
+},
+{
+    "dataId": 222,
+    "network": "airtel",
+    "plan_type": "gifting",
+    "amount": "₦350",
+    "size": "1.0 gb",
+    "duration": "monthly"
+},
+{
+    "dataId": 223,
+    "network": "airtel",
+    "plan_type": "gifting",
+    "amount": "₦700",
+    "size": "2.0 gb",
+    "duration": "monthly"
+},
+{
+    "dataId": 224,
+    "network": "airtel",
+    "plan_type": "gifting",
+    "amount": "₦1700",
+    "size": "5.0 gb",
+    "duration": "monthly"
+},
+{
+    "dataId": 225,
+    "network": "airtel",
+    "plan_type": "gifting",
+    "amount": "₦50",
+    "size": "100.0 mb",
+    "duration": "7 days"
+},
+{
+    "dataId": 226,
+    "network": "airtel",
+    "plan_type": "gifting",
+    "amount": "₦100",
+    "size": "300.0 mb",
+    "duration": "7 days"
+},
+]
+
 
 export default tableData
 

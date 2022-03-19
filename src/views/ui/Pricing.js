@@ -1,9 +1,14 @@
 import React from "react";
-import { Card, CardBody, CardTitle, Table } from "reactstrap";
+import { Card, CardBody, CardTitle, Table, CardSubtitle } from "reactstrap";
 import FullLayout from "../../layouts/FullLayout";
-import tableData from '../../utils/plansTable'
+import tableData, { tableDataExt } from '../../utils/plansTable'
 
 // import { useUser } from "../../context/userContext";
+
+const tableDataAll = [
+  ...tableData,
+  ...tableDataExt
+]
 
 const Pricing = () => {
   // const { user } = useUser();
@@ -16,6 +21,9 @@ const Pricing = () => {
             <CardTitle className="text-center" tag="h5">
               Price List
             </CardTitle>
+              <CardSubtitle className="mb-2 d-block text-danger text-center" tag="small">
+                MTN Gifting Data Plans are unavailable for now!
+              </CardSubtitle> 
 
             <Table
               striped
@@ -31,10 +39,11 @@ const Pricing = () => {
                   {/* <th>Amount</th> */}
                   <th>Size </th>
                   <th>Validity</th>
+                  <th>Plan Type</th>
                 </tr>
               </thead>
               <tbody>
-                {tableData.map((tdata, index) => (
+                {tableDataAll.map((tdata, index) => (
                   <tr key={index} className="border-top">
                     <td>
                       <div className="d-flex align-items-center py-2">
@@ -45,6 +54,7 @@ const Pricing = () => {
                     {/* <td>{tdata.amount}</td> */}
                     <td>{tdata.size}</td>
                     <td>{tdata.duration}</td>
+                    <td>{tdata.plan_type.toUpperCase()}</td>
                   </tr>
                 ))}
               </tbody>

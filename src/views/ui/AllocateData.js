@@ -117,7 +117,7 @@ const AllocateData = () => {
                         key={`${plan.network}-${plan.dataId}`}
                         value={plan.dataId}
                       >
-                        {plan.size} ({plan.duration})
+                        {plan.size} ({plan.duration}) - {plan.plan_type}
                       </option>
                     ))}
                   </Input>
