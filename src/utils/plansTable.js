@@ -89,7 +89,7 @@ const tableData = [
     "dataId": 221,
     "network": "airtel",
     "plan_type": "gifting",
-    "amount": "₦180",
+    "amount": "₦200",
     "size": "500.0 mb",
     "duration": "monthly"
 },
@@ -97,7 +97,7 @@ const tableData = [
     "dataId": 222,
     "network": "airtel",
     "plan_type": "gifting",
-    "amount": "₦350",
+    "amount": "₦380",
     "size": "1.0 gb",
     "duration": "monthly"
 },
@@ -105,7 +105,7 @@ const tableData = [
     "dataId": 223,
     "network": "airtel",
     "plan_type": "gifting",
-    "amount": "₦700",
+    "amount": "₦760",
     "size": "2.0 gb",
     "duration": "monthly"
 },
@@ -113,7 +113,7 @@ const tableData = [
     "dataId": 224,
     "network": "airtel",
     "plan_type": "gifting",
-    "amount": "₦1700",
+    "amount": "₦1850",
     "size": "5.0 gb",
     "duration": "monthly"
 },
