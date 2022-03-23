@@ -1,32 +1,52 @@
-import React from 'react'
-import { Card, CardBody, CardTitle, CardSubtitle, Table, Col, Row  } from "reactstrap";
+import React from "react";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Table,
+  Col,
+  Row,
+} from "reactstrap";
 
-const TransactionsTable = ({transactions, showHeader}) => {
-    return(
-        <div>
-        <Row>
-          <Col lg="12">
+const TransactionsTable = ({ transactions, showHeader }) => {
+  return (
+    <div>
+      <Row>
+        <Col lg="12">
           <div>
             <Card>
               <CardBody>
-              {showHeader && 
-                <CardTitle tag="h5">Transactions History</CardTitle>
-              }
+                {showHeader && (
+                  <CardTitle tag="h5">Transactions History</CardTitle>
+                )}
                 <CardSubtitle className="mb-2 text-muted" tag="h6">
                   List of Data volume transfer
-                </CardSubtitle> 
+                </CardSubtitle>
 
-                <div className='legend-container'>
-                  <p className='legend'><span className=" bg-success rounded-circle d-inline-block"></span> Successful</p>
-                  <p className='legend'><span className=" bg-warning rounded-circle d-inline-block"></span> Processing</p>
-                  <p className='legend'><span className=" bg-danger rounded-circle d-inline-block"></span> Failed</p>
+                <div className="legend-container">
+                  <p className="legend">
+                    <span className=" bg-success rounded-circle d-inline-block"></span>{" "}
+                    Successful
+                  </p>
+                  <p className="legend">
+                    <span className=" bg-warning rounded-circle d-inline-block"></span>{" "}
+                    Processing
+                  </p>
+                  <p className="legend">
+                    <span className=" bg-danger rounded-circle d-inline-block"></span>{" "}
+                    Failed
+                  </p>
                 </div>
-                <Table className="no-wrap mt-3 align-middle" responsive borderless>
+                <Table
+                  className="no-wrap mt-3 align-middle"
+                  responsive
+                  borderless
+                >
                   <thead>
                     <tr>
                       <th>Phone Number</th>
                       <th>Volume</th>
-
                       <th>Status</th>
                       <th>Network</th>
                       <th>Date</th>
@@ -55,7 +75,10 @@ const TransactionsTable = ({transactions, showHeader}) => {
                           )}
                         </td>
                         <td>{tx.network_provider}</td>
-                        <td>{tx.created_at.split("T")[0].replaceAll("-", "/")}  {tx.created_at.split("T")[1].substring(0,5)}</td>
+                        <td>
+                          {tx.created_at.split("T")[0].replaceAll("-", "/")}{" "}
+                          {tx.created_at.split("T")[1].substring(0, 5)}
+                        </td>
                         <td>{tx.transaction_ref}</td>
                       </tr>
                     ))}
@@ -64,10 +87,10 @@ const TransactionsTable = ({transactions, showHeader}) => {
               </CardBody>
             </Card>
           </div>
-          </Col>
-        </Row>
-      </div>
-    );
-}
+        </Col>
+      </Row>
+    </div>
+  );
+};
 
 export default TransactionsTable;
