@@ -50,8 +50,8 @@ const AllocateButton = ({loading, setLoading, plan_id, phone_number, handleSubmi
                     Confirm Request
                 </ModalHeader> */}
                 <ModalBody>
-                    <div className='confirm'>
-                        <img src={warning} className="confirm-warn"/>
+                    <div className='confirm text-center'>
+                        <img src={warning} width={50} className="confirm-warn" alt="warn"/>
                         <p className='text-center'>Are you sure you want to send <strong>{plan?.size}</strong> worth <strong>{plan?.amount}</strong> to <strong>{phone_number}</strong></p>
                     </div>
                 </ModalBody>
@@ -76,8 +76,8 @@ const AllocateButton = ({loading, setLoading, plan_id, phone_number, handleSubmi
                 toggle={() => setPrevent(!prevent)}
             >
                 <ModalBody>
-                    <div className='confirm'>
-                        <img src={cancel} className="confirm-cancel"/>
+                    <div className='confirm text-center'>
+                        <img src={cancel} width={50} className="confirm-cancel" alt="confirm"/>
                         <p>You must enter a valid phone number and data plan</p>
                     </div>
                 </ModalBody>
@@ -95,8 +95,8 @@ const AllocateButton = ({loading, setLoading, plan_id, phone_number, handleSubmi
                 toggle={() => setSuccess(!success)}
             >
                 <ModalBody>
-                    <div className='confirm'>
-                        <img src={checked} className="confirm-checked"/>
+                    <div className='confirm text-center'>
+                        <img src={checked} width={50} className="confirm-checked" alt="check"/>
                         <p>Data transafer successful</p>
                     </div>
                 </ModalBody>

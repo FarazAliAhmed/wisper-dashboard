@@ -1,5 +1,5 @@
-import tableData from './plansTable'
-
+import _ from "lodash";
+import tableData from "./plansTable";
 
 export const formIsValid = (errorObject) => {
   return Object.keys(errorObject).length > 0;
@@ -68,7 +68,6 @@ export const totalDataSold = (dataTransactions = []) => {
   return sum;
 };
 
-
 // export const formatDataToNaira = (volume) => {
 //   let amount = (volume/1024)*300
 //   const currencyString = amount.toLocaleString('en-US', {
@@ -84,18 +83,23 @@ export const totalDataSold = (dataTransactions = []) => {
 // }
 
 export const displayBalance = (volume, unit, cash, user) => {
-  if(user.type === "mega"){
-    return `${parseInt(volume)} ${unit}`
-  }else{
-    return `${unit} ${parseInt(cash)}`
+  if (user.type === "mega") {
+    return `${parseInt(volume)} ${unit}`;
+  } else {
+    return `${unit} ${parseInt(cash)}`;
   }
-}
+};
 
 export const getPlanFromId = (plan_id) => {
-  const id = parseInt(plan_id)
+  const id = parseInt(plan_id);
   const plan = tableData.filter((plan_data) => {
-    console.log(plan_id, plan_data["dataId"])
-    return plan_data["dataId"] === id
-  })
-  return plan[0]
+    console.log(plan_id, plan_data["dataId"]);
+    return plan_data["dataId"] === id;
+  });
+  return plan[0];
+};
+
+export function paginate(items, pageNumber, pageSize) {
+  const startIndex = (pageNumber - 1) * pageSize;
+  return _(items).slice(startIndex).take(pageSize).value();
 }

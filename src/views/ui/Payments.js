@@ -39,7 +39,7 @@ const Payments = () => {
                             </div>
                             </div>
                         </td>
-                        <td>{pm.date_of_payment.split("T")[0].replaceAll("-", "/")}  {pm.date_of_payment.split("T")[1].substring(0,5)}</td>
+                        <td>{pm.date_of_payment}</td>
                         <td>{pm.payment_ref}</td>
                         </tr>
                     ))}
