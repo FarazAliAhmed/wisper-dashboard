@@ -32,11 +32,12 @@ const TransactionsTable = ({
   const [isReversed, setIsReversed] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = "7";
+  const pageSize = "10";
 
   useEffect(() => {
-    paginate(transactionsData, currentPage, pageSize);
-  }, [transactionsData, currentPage]);
+    const paginatedData = paginate(transactions, currentPage, pageSize);
+    setTransactionsData(paginatedData);
+  }, [currentPage]);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -125,7 +126,7 @@ const TransactionsTable = ({
                 {showPageSettings && (
                   <>
                     <Row className="justify-content-center mt-4">
-                      <Col lg="6" sm="6">
+                      <Col lg="4" sm="6">
                         <FormGroup>
                           <Input
                             onChange={handleChange}
@@ -246,12 +247,12 @@ const TransactionsTable = ({
                     ))}
                   </tbody>
                 </Table>
-                {/* <Pagination
-                  itemsCount={transactionsData.length}
+                <Pagination
+                  itemsCount={transactions.length}
                   pageSize={pageSize}
                   currentPage={currentPage}
                   onPageChange={handlePageChange}
-                /> */}
+                />
               </CardBody>
             </Card>
           </div>
