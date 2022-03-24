@@ -53,7 +53,7 @@ const Register = () => {
       const { status, message } = handleFailedRequest(error);
 
       setServerResponse({ status, message });
-      console.log(error);
+      // console.log(error);
     }
   };
 

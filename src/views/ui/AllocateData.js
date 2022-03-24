@@ -53,7 +53,7 @@ const AllocateData = () => {
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
       setServerResponse({ status, message });
-      console.log(error);
+      // console.log(error);
     }
   };
 

@@ -16,7 +16,7 @@ const PaymentButton = () => {
     const [invalid, setInvalid] = useState(true)
     const [notification, setNotification] = useState(null)
 
-    console.log(user)
+    // console.log(user)
     useEffect(() => {
         if (parseInt(price) < 1000){
             setInvalid(true)
