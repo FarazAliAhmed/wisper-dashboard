@@ -15,7 +15,7 @@ import sterling_logo from "../../assets/images/logos/Sterling_Bank_Logo_Straight
 const Dashboard = () => {
   const {user} = useUser();
   const {
-    currentBalance: {volume, unit, cash},
+    currentBalance: {volume, unit, cash, mega_wallet},
     transactions,
   } = useAppState();
   const [balanceDisplay, setBalanceDisplay] = useState("")
@@ -56,6 +56,52 @@ const Dashboard = () => {
               icon="bi bi-basket3"
             />
           </Col>
+
+        {/***Mega Wallets***/}
+        {
+          user.type === "mega" &&
+          <>
+            {/* MTN and Airtel Wallets */}
+              <Col sm="6" lg="4">
+                <TopCards
+                  bg="bg-light-info text-info"
+                  title="Profit"
+                  subtitle="MTN SME"
+                  earning={`${mega_wallet.mtn_sme} ${mega_wallet.unit}`}
+                  icon="bi bi-wallet-fill"
+                />
+              </Col>
+              <Col sm="6" lg="4">
+                <TopCards
+                  bg="bg-light-warning text-warning"
+                  title="Refunds"
+                  subtitle="MTN Gifting"
+                  earning={`${mega_wallet.mtn_gifting} ${mega_wallet.unit}`}
+                  icon="bi bi-wallet"
+                />
+              </Col>
+              <Col sm="6" lg="4">
+                <TopCards
+                  bg="bg-light-success text-success"
+                  title="New Project"
+                  subtitle="Airtel"
+                  earning={`${mega_wallet.airtel} ${mega_wallet.unit}`}
+                  icon="bi bi-wallet2"
+                />
+              </Col>
+
+            {/* Glo wallet - Hidden for now */}
+            {/* <Col sm="6" lg="4">
+                  <TopCards
+                    bg="bg-light-info text-info"
+                    title="Profit"
+                    subtitle="GLO"
+                    earning={balanceDisplay}
+                    icon="bi bi-wallet"
+                  />
+                </Col> */}
+          </>
+        }
         </Row>
         {
           user ? 

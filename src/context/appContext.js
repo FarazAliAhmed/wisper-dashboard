@@ -8,6 +8,13 @@ const AppStateProvider = ({ children }) => {
     volume: 0,
     unit: "",
     cash: 0,
+    mega_wallet: {
+      mtn_sme: 0,
+      mtn_gifting: 0,
+      airtel: 0,
+      glo: 0,
+      unit: ""
+    }
   });
   const [transactions, setTransactions] = useState([]);
   const [payments, setPayments] = useState([])
@@ -15,12 +22,20 @@ const AppStateProvider = ({ children }) => {
   useEffect(() => {
     async function fetchBalance() {
       const balanceRes = await getBalance();
+      console.log("Balance: ", balanceRes)
       const transactionRes = await getAllTransactions();
       const paymentRes = await getAllPayments()
       setCurrentBalance({ 
         volume: balanceRes.data.data_volume,
         unit: balanceRes.data.data_unit,
-        cash: balanceRes.data.wallet_balance
+        cash: balanceRes.data.wallet_balance,
+        mega_wallet: {
+          mtn_sme: balanceRes.data.mega_wallet.mtn_sme,
+          mtn_gifting: balanceRes.data.mega_wallet.mtn_gifting,
+          airtel: balanceRes.data.mega_wallet.airtel,
+          glo: balanceRes.data.mega_wallet.glo,
+          unit: balanceRes.data.mega_wallet.unit,
+        }
       });
       setTransactions(transactionRes.data);
       setPayments(paymentRes.data)
