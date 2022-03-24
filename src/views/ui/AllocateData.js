@@ -19,6 +19,8 @@ import { allocateData } from "../../services/dataService";
 import { handleFailedRequest } from "../../utils";
 import dataPlans from "../../utils/plansTable";
 
+import "./../../assets/scss/custom.scss";
+
 const initialState = {
   network: "airtel",
   plan_id: "",
@@ -81,9 +83,9 @@ const AllocateData = () => {
           )} */}
           <Row>
             <Col md={7}>
-              <Form>
+              <Form className="mb-4">
                 <Row form>
-                  <Col md={6}>
+                  <Col md={12}>
                     <FormGroup>
                       <Label for="network">Network Provider</Label>
                       <Input
@@ -101,7 +103,7 @@ const AllocateData = () => {
                       </Input>
                     </FormGroup>
                   </Col>
-                  <Col md={6}>
+                  <Col md={12}>
                     <FormGroup>
                       <Label for="plan_id">Data Plan</Label>
                       <Input
@@ -127,7 +129,7 @@ const AllocateData = () => {
                       </Input>
                     </FormGroup>
                   </Col>
-                  <Col md={6}>
+                  <Col md={12}>
                     <FormGroup>
                       <Label for="phone_number">Phone Number</Label>
                       <Input
@@ -156,13 +158,13 @@ const AllocateData = () => {
             <Col md={5}>
               <div>
                 <p>Code For Data Balance</p>
-                <Card className="shadow-none border border-dark">
+                <Card className="shadow-none code-balance">
                   <CardBody>
-                    <div className="pt-2">MTN [SME] *461*4#</div>
-                    <div className="pt-2">
+                    <div className="py-2 border-bottom">MTN [SME] *461*4#</div>
+                    <div className="py-2 border-bottom">
                       MTN [Gifting] *131*4# or *460*260#
                     </div>
-                    <div className="pt-2">Airtel *140#</div>
+                    <div className="py-2 ">Airtel *140#</div>
                   </CardBody>
                 </Card>
               </div>

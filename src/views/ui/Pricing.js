@@ -53,7 +53,7 @@ const Pricing = () => {
                         <h6 className="mb-0">{tdata.amount}</h6>
                       </div>
                     </td>
-                    <td>{tdata.network}</td>
+                    <td>{tdata.network.toUpperCase()}</td>
                     {/* <td>{tdata.amount}</td> */}
                     <td>{tdata.size}</td>
                     <td>{tdata.duration}</td>
@@ -70,12 +70,12 @@ const Pricing = () => {
             <CardTitle className="text-center" tag="h5">
               WholeSale Price List
             </CardTitle>
-            <CardSubtitle
+            {/*  <CardSubtitle
               className="mb-2 d-block text-danger text-center"
               tag="small"
             >
               MTN Gifting Data Plans are unavailable for now!
-            </CardSubtitle>
+            </CardSubtitle> */}
 
             <Table
               striped
@@ -102,7 +102,7 @@ const Pricing = () => {
                         <h6 className="mb-0">{tdata.price}</h6>
                       </div>
                     </td>
-                    <td>{tdata.network}</td>
+                    <td>{tdata.network.toUpperCase()}</td>
                     {/* <td>{tdata.amount}</td> */}
                     <td>{tdata.package}</td>
                     <td>{tdata.purchase_range}</td>
