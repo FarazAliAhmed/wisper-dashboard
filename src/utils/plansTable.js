@@ -1,190 +1,232 @@
 const tableData = [
-{
-    "dataId": 7,
-    "network": "mtn",
-    "plan_type": "sme",
-    "amount": "₦250",
-    "size": "1.0 gb",
-    "duration": "30 days"
-},
-{
-    "dataId": 8,
-    "network": "mtn",
-    "plan_type": "sme",
-    "amount": "₦500",
-    "size": "2.0 gb",
-    "duration": "30 days"
-},
-{
-    "dataId": 11,
-    "network": "mtn",
-    "plan_type": "sme",
-    "amount": "₦1200",
-    "size": "5.0 gb",
-    "duration": "30 days"
-},
-{
-    "dataId": 44,
-    "network": "mtn",
-    "plan_type": "sme",
-    "amount": "₦750",
-    "size": "3.0 gb",
-    "duration": "30 days"
-},
-{
-    "dataId": 220,
-    "network": "mtn",
-    "plan_type": "sme",
-    "amount": "₦2500",
-    "size": "10.0 gb",
-    "duration": "30 days"
-},
-{
-    "dataId": 221,
-    "network": "airtel",
-    "plan_type": "gifting",
-    "amount": "₦200",
-    "size": "500.0 mb",
-    "duration": "monthly"
-},
-{
-    "dataId": 222,
-    "network": "airtel",
-    "plan_type": "gifting",
-    "amount": "₦380",
-    "size": "1.0 gb",
-    "duration": "monthly"
-},
-{
-    "dataId": 223,
-    "network": "airtel",
-    "plan_type": "gifting",
-    "amount": "₦760",
-    "size": "2.0 gb",
-    "duration": "monthly"
-},
-{
-    "dataId": 224,
-    "network": "airtel",
-    "plan_type": "gifting",
-    "amount": "₦1850",
-    "size": "5.0 gb",
-    "duration": "monthly"
-},
-{
-    "dataId": 225,
-    "network": "airtel",
-    "plan_type": "gifting",
-    "amount": "₦50",
-    "size": "100.0 mb",
-    "duration": "7 days"
-},
-{
-    "dataId": 226,
-    "network": "airtel",
-    "plan_type": "gifting",
-    "amount": "₦100",
-    "size": "300.0 mb",
-    "duration": "7 days"
-},
-{
-    "dataId":"217",
-    "network": "mtn",
-    "amount": "₦220",
-    "plan_type": "gifting",
-    "size": "1.0 gb",
-    "duration": "monthly"
-},
-{
-    "dataId":"209",
-    "network": "mtn",
-    "amount": "₦440",
-    "plan_type": "gifting",
-    "size": "2.0 gb",
-    "duration": "monthly"
-},
-{
-    "dataId":"210",
-    "network": "mtn",
-    "amount": "₦660",
-    "plan_type": "gifting",
-    "size": "3.0 gb",
-    "duration": "monthly"
-},
-{
-    "dataId":"211",
-    "network": "mtn",
-    "amount": "₦1100",
-    "plan_type": "gifting",
-    "size": "5.0 gb",
-    "duration": "monthly"
-},
-{
-    "dataId":"43",
-    "network": "mtn",
-    "amount": "₦2200",
-    "plan_type": "gifting",
-    "size": "10.0 gb",
-    "duration": "monthly"
-},
-]
+  {
+    dataId: 7,
+    network: "mtn",
+    plan_type: "sme",
+    amount: "₦265",
+    size: "1.0 gb",
+    duration: "30 days",
+  },
+  {
+    dataId: 8,
+    network: "mtn",
+    plan_type: "sme",
+    amount: "₦530",
+    size: "2.0 gb",
+    duration: "30 days",
+  },
+  {
+    dataId: 44,
+    network: "mtn",
+    plan_type: "sme",
+    amount: "₦790",
+    size: "3.0 gb",
+    duration: "30 days",
+  },
+  {
+    dataId: 11,
+    network: "mtn",
+    plan_type: "sme",
+    amount: "₦1320",
+    size: "5.0 gb",
+    duration: "30 days",
+  },
+  {
+    dataId: 220,
+    network: "mtn",
+    plan_type: "sme",
+    amount: "₦2600",
+    size: "10.0 gb",
+    duration: "30 days",
+  },
+  {
+    dataId: 225,
+    network: "airtel",
+    plan_type: "gifting",
+    amount: "₦50",
+    size: "100.0 mb",
+    duration: "7 days",
+  },
+  {
+    dataId: 226,
+    network: "airtel",
+    plan_type: "gifting",
+    amount: "₦100",
+    size: "300.0 mb",
+    duration: "7 days",
+  },
+  {
+    dataId: 221,
+    network: "airtel",
+    plan_type: "gifting",
+    amount: "₦200",
+    size: "500.0 mb",
+    duration: "monthly",
+  },
+  {
+    dataId: 222,
+    network: "airtel",
+    plan_type: "gifting",
+    amount: "₦380",
+    size: "1.0 gb",
+    duration: "monthly",
+  },
+  {
+    dataId: 223,
+    network: "airtel",
+    plan_type: "gifting",
+    amount: "₦760",
+    size: "2.0 gb",
+    duration: "monthly",
+  },
+  {
+    dataId: 224,
+    network: "airtel",
+    plan_type: "gifting",
+    amount: "₦1850",
+    size: "5.0 gb",
+    duration: "monthly",
+  },
+  {
+    dataId: "217",
+    network: "mtn",
+    amount: "₦255",
+    plan_type: "gifting",
+    size: "1.0 gb",
+    duration: "monthly",
+  },
+  {
+    dataId: "209",
+    network: "mtn",
+    amount: "₦510",
+    plan_type: "gifting",
+    size: "2.0 gb",
+    duration: "monthly",
+  },
+  {
+    dataId: "210",
+    network: "mtn",
+    amount: "₦765",
+    plan_type: "gifting",
+    size: "3.0 gb",
+    duration: "monthly",
+  },
+  {
+    dataId: "211",
+    network: "mtn",
+    amount: "₦1275",
+    plan_type: "gifting",
+    size: "5.0 gb",
+    duration: "monthly",
+  },
+  {
+    dataId: "43",
+    network: "mtn",
+    amount: "₦2500",
+    plan_type: "gifting",
+    size: "10.0 gb",
+    duration: "monthly",
+  },
+];
 
+export const tableDataWhole = [
+  {
+    dataId: 227,
+    network: "mtn",
+    plan_type: "Cooperate Gifting",
+    price: "₦235/GB",
+    package: "Silver Seller",
+    purchase_range: "1TB - 10TB",
+  },
+  {
+    dataId: 228,
+    network: "mtn",
+    plan_type: "Cooperate Gifting",
+    price: "₦230/GB",
+    package: "Gold Seller",
+    purchase_range: "50TB - 100TB",
+  },
+  {
+    dataId: 229,
+    network: "Airtel",
+    plan_type: "Cooperate Gifting",
+    price: "₦350/GB",
+    package: "Bronze Seller",
+    purchase_range: "1TB - 10TB",
+  },
+  {
+    dataId: 230,
+    network: "Airtel",
+    plan_type: "Cooperate Gifting",
+    price: "₦330/GB",
+    package: "Silver Seller",
+    purchase_range: "10TB - 50TB",
+  },
+  {
+    dataId: 231,
+    network: "Airtel",
+    plan_type: "Cooperate Gifting",
+    price: "₦300/GB",
+    package: "Gold Seller",
+    purchase_range: "50TB - 100TB",
+  },
+];
 
-export default tableData
+export default tableData;
 
-  // const tableData_old = [
-  //   {
-  //     dataId: "257",
-  //     network: "Airtel",
-  //     size: "100.0 MB",
-  //     duration: "7 days",
-  //   },
-  //   {
-  //     dataId: "258",
-  //     network: "Airtel",
-  //     size: "300.0 MB",
-  //     duration: "7 days",
-  //   },
-  //   {
-  //     dataId: "253",
-  //     network: "Airtel",
-  //     size: "500.0 MB",
-  //     duration: "30 days",
-  //   },
-  //   {
-  //     dataId: "254",
-  //     network: "Airtel",
-  //     size: "1.0 GB",
-  //     duration: "30 days",
-  //   },
-  //   {
-  //     dataId: "255",
-  //     network: "Airtel",
-  //     size: "2.0 GB",
-  //     duration: "30 days",
-  //   },
-  //   {
-  //     dataId: "256",
-  //     network: "Airtel",
-  //     size: "5.0 GB",
-  //     duration: "30 days",
-  //   },
-  //   // {
-  //   //   dataId: "199",
-  //   //   network: "Airtel",
-  //   //   size: "10.0 GB",
-  //   //   duration: "30 days",
-  //   // },
-  //   // {
-  //   //   dataId: "200",
-  //   //   network: "Airtel",
-  //   //   size: "15.0 GB",
-  //   //   duration: "30 days",
-  //   // },
-  //   // {
-  //   //   dataId: "201",
-  //   //   network: "Airtel",
-  //   //   size: "20.0 GB",
-  //   //   duration: "30 days",
-  //   // },
-  // ];
+// const tableData_old = [
+//   {
+//     dataId: "257",
+//     network: "Airtel",
+//     size: "100.0 MB",
+//     duration: "7 days",
+//   },
+//   {
+//     dataId: "258",
+//     network: "Airtel",
+//     size: "300.0 MB",
+//     duration: "7 days",
+//   },
+//   {
+//     dataId: "253",
+//     network: "Airtel",
+//     size: "500.0 MB",
+//     duration: "30 days",
+//   },
+//   {
+//     dataId: "254",
+//     network: "Airtel",
+//     size: "1.0 GB",
+//     duration: "30 days",
+//   },
+//   {
+//     dataId: "255",
+//     network: "Airtel",
+//     size: "2.0 GB",
+//     duration: "30 days",
+//   },
+//   {
+//     dataId: "256",
+//     network: "Airtel",
+//     size: "5.0 GB",
+//     duration: "30 days",
+//   },
+//   // {
+//   //   dataId: "199",
+//   //   network: "Airtel",
+//   //   size: "10.0 GB",
+//   //   duration: "30 days",
+//   // },
+//   // {
+//   //   dataId: "200",
+//   //   network: "Airtel",
+//   //   size: "15.0 GB",
+//   //   duration: "30 days",
+//   // },
+//   // {
+//   //   dataId: "201",
+//   //   network: "Airtel",
+//   //   size: "20.0 GB",
+//   //   duration: "30 days",
+//   // },
+// ];

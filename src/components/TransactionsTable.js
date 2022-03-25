@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Pagination from "./Pagination";
+
 import {
   Card,
   CardBody,
@@ -210,7 +211,6 @@ const TransactionsTable = ({
                     <tr>
                       <th>Phone Number</th>
                       <th>Volume</th>
-
                       <th>Status</th>
                       <th>Network</th>
                       <th>Price</th>
