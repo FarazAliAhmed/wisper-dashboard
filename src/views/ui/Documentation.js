@@ -1,11 +1,10 @@
 import React from "react";
 import { Card, CardBody, CardTitle, Table, Button } from "reactstrap";
 import FullLayout from "../../layouts/FullLayout";
-import tableData from '../../utils/plansTable'
+import tableData from "../../utils/plansTable";
 import { useUser } from "../../context/userContext";
 
-const docs = "https://documenter.getpostman.com/view/17453703/UVksMZmU"
-
+const docs = "https://documenter.getpostman.com/view/17453703/UVksMZmU";
 
 const Documentation = () => {
   const { user } = useUser();
@@ -13,7 +12,7 @@ const Documentation = () => {
   return (
     <FullLayout>
       <div>
-        <a href={docs} target="_blank" rel="noreferrer" >
+        <a href={docs} target="_blank" rel="noreferrer">
           <Button color="primary" className="mb-3 px-3">
             API Documentation page
           </Button>
@@ -39,7 +38,7 @@ const Documentation = () => {
                 <tr>
                   <th>Data ID</th>
                   <th>Network</th>
-
+                  <th>Plan Type</th>
                   {/* <th>Amount</th> */}
                   <th>Size </th>
                   <th>Validity</th>
@@ -54,6 +53,7 @@ const Documentation = () => {
                       </div>
                     </td>
                     <td>{tdata.network}</td>
+                    <td>{tdata.plan_type.toUpperCase()}</td>
                     {/* <td>{tdata.amount}</td> */}
                     <td>{tdata.size}</td>
                     <td>{tdata.duration}</td>
