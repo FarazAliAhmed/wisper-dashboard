@@ -1,49 +1,3 @@
-export const tableDataExt = [
-  {
-      "dataId":"217",
-      "network": "mtn",
-      "amount": "₦220",
-      "plan_type": "gifting",
-      "size": "1.0 gb",
-      "duration": "monthly"
-  },
-  {
-      "dataId":"209",
-      "network": "mtn",
-      "amount": "₦440",
-      "plan_type": "gifting",
-      "size": "2.0 gb",
-      "duration": "monthly"
-  },
-  {
-      "dataId":"210",
-      "network": "mtn",
-      "amount": "₦660",
-      "plan_type": "gifting",
-      "size": "3.0 gb",
-      "duration": "monthly"
-  },
-  {
-      "dataId":"211",
-      "network": "mtn",
-      "amount": "₦1100",
-      "plan_type": "gifting",
-      "size": "5.0 gb",
-      "duration": "monthly"
-  },
-  {
-      "dataId":"43",
-      "network": "mtn",
-      "amount": "₦2200",
-      "plan_type": "gifting",
-      "size": "10.0 gb",
-      "duration": "monthly"
-  },
-  ]
-
-
-
-
 const tableData = [
 {
     "dataId": 7,
@@ -132,6 +86,46 @@ const tableData = [
     "amount": "₦100",
     "size": "300.0 mb",
     "duration": "7 days"
+},
+{
+    "dataId":"217",
+    "network": "mtn",
+    "amount": "₦220",
+    "plan_type": "gifting",
+    "size": "1.0 gb",
+    "duration": "monthly"
+},
+{
+    "dataId":"209",
+    "network": "mtn",
+    "amount": "₦440",
+    "plan_type": "gifting",
+    "size": "2.0 gb",
+    "duration": "monthly"
+},
+{
+    "dataId":"210",
+    "network": "mtn",
+    "amount": "₦660",
+    "plan_type": "gifting",
+    "size": "3.0 gb",
+    "duration": "monthly"
+},
+{
+    "dataId":"211",
+    "network": "mtn",
+    "amount": "₦1100",
+    "plan_type": "gifting",
+    "size": "5.0 gb",
+    "duration": "monthly"
+},
+{
+    "dataId":"43",
+    "network": "mtn",
+    "amount": "₦2200",
+    "plan_type": "gifting",
+    "size": "10.0 gb",
+    "duration": "monthly"
 },
 ]
 

@@ -1,14 +1,11 @@
 import React from "react";
 import { Card, CardBody, CardTitle, Table, CardSubtitle } from "reactstrap";
 import FullLayout from "../../layouts/FullLayout";
-import tableData, { tableDataExt } from '../../utils/plansTable'
+import tableData from "../../utils/plansTable";
 
 // import { useUser } from "../../context/userContext";
 
-const tableDataAll = [
-  ...tableData,
-  ...tableDataExt
-]
+const tableDataAll = [...tableData];
 
 const Pricing = () => {
   // const { user } = useUser();
@@ -21,9 +18,12 @@ const Pricing = () => {
             <CardTitle className="text-center" tag="h5">
               Price List
             </CardTitle>
-              <CardSubtitle className="mb-2 d-block text-danger text-center" tag="small">
-                MTN Gifting Data Plans are unavailable for now!
-              </CardSubtitle> 
+            <CardSubtitle
+              className="mb-2 d-block text-danger text-center"
+              tag="small"
+            >
+              MTN Gifting Data Plans are unavailable for now!
+            </CardSubtitle>
 
             <Table
               striped
