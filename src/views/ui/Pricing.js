@@ -18,12 +18,6 @@ const Pricing = () => {
             <CardTitle className="text-center" tag="h5">
               Retail Price List
             </CardTitle>
-            <CardSubtitle
-              className="mb-2 d-block text-danger text-center"
-              tag="small"
-            >
-              MTN Gifting Data Plans are unavailable for now!
-            </CardSubtitle>
 
             <Table
               striped
