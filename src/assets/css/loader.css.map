@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,iBAAiB,CAAC;EAChB,QAAQ,EAAE,QAAQ;EAClB,OAAO,EAAE,IAAI;EACb,MAAM,EAAE,KAAK;EACb,KAAK,EAAE,IAAI;CACZ;;AACD,AAAA,QAAQ,CAAC;EACP,QAAQ,EAAE,QAAQ;EAClB,IAAI,EAAE,gBAAgB;EACtB,GAAG,EAAE,GAAG;EACR,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;EACZ,aAAa,EAAE,GAAG;EAClB,kBAAkB,EAAE,UAAU;EAC9B,UAAU,EAAE,UAAU;EACtB,MAAM,EAAE,qBAAqB;CAC9B",
+    "sources": [
+        "../../layouts/loader/loader.scss"
+    ],
+    "names": [],
+    "file": "loader.css"
+}

@@ -1,0 +1,129 @@
+/*******************/
+/********************/
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap");
+/*******************/
+/********************/
+/*******************/
+/********************/
+/*******************/
+/********************/
+/*******************/
+/********************/
+/*******************/
+/********************/
+/*******************/
+/********************/
+.bank-details {
+  background-image: url("../images/bg/wisper.jpg");
+  margin-bottom: 20px;
+  padding: 60px 0px;
+  color: #fff;
+}
+
+.sterling__logo {
+  width: 12em;
+  background-color: #fff;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+.fund-button {
+  width: 12em;
+  border-radius: 5px;
+  background-color: #0579c9;
+  border: none;
+  color: #fff;
+  padding: 1em 0;
+  font-weight: bold;
+}
+
+.legend-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 0.8em;
+  position: absolute;
+  margin-right: 10px;
+  top: 1.5em;
+  right: 0;
+  font-size: 0.9rem;
+}
+
+.legend-container .legend span {
+  padding: 0.5em;
+}
+
+@media (max-width: 570px) {
+  .legend-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    position: unset;
+    gap: 0;
+  }
+  .legend-container .legend {
+    margin-bottom: 0.3em;
+  }
+  .legend-container .legend span {
+    padding: 0.4em;
+  }
+}
+
+.confirm {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1em;
+}
+
+.confirm-warn {
+  width: 4em;
+  -webkit-filter: invert(76%) sepia(21%) saturate(1888%) hue-rotate(355deg) brightness(107%) contrast(111%);
+          filter: invert(76%) sepia(21%) saturate(1888%) hue-rotate(355deg) brightness(107%) contrast(111%);
+}
+
+.confirm-cancel {
+  width: 4em;
+  -webkit-filter: invert(19%) sepia(89%) saturate(7228%) hue-rotate(352deg) brightness(83%) contrast(105%);
+          filter: invert(19%) sepia(89%) saturate(7228%) hue-rotate(352deg) brightness(83%) contrast(105%);
+}
+
+.confirm-checked {
+  width: 4em;
+  -webkit-filter: invert(54%) sepia(13%) saturate(1994%) hue-rotate(68deg) brightness(101%) contrast(92%);
+          filter: invert(54%) sepia(13%) saturate(1994%) hue-rotate(68deg) brightness(101%) contrast(92%);
+}
+
+.allocate-loading {
+  width: 4em;
+  -webkit-filter: invert(79%) sepia(35%) saturate(776%) hue-rotate(78deg) brightness(85%) contrast(89%);
+          filter: invert(79%) sepia(35%) saturate(776%) hue-rotate(78deg) brightness(85%) contrast(89%);
+}
+
+.confirm-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.code-balance {
+  background: #d3edfa;
+  /* color: rgb(54, 153, 255); */
+}
+/*# sourceMappingURL=custom.css.map */
