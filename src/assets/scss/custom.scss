@@ -77,6 +77,12 @@
     brightness(101%) contrast(92%);
 }
 
+.allocate-loading {
+  width: 4em;
+  filter: invert(79%) sepia(35%) saturate(776%) hue-rotate(78deg)
+    brightness(85%) contrast(89%);
+}
+
 .confirm-footer {
   display: flex;
   justify-content: center;

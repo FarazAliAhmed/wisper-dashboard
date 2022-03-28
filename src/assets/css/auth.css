@@ -1,0 +1,22 @@
+.card-wrap {
+  border-radius: 1.25rem 1.25rem 1.25rem 0px;
+}
+
+header h4 {
+  color: #0579c9;
+}
+
+.submit-btn {
+  border-radius: 0.5rem 0.5rem 0.5rem 0px;
+  font-size: 1rem;
+}
+
+.d-grid .btn {
+  background-color: #0579c9;
+  border: none;
+}
+
+.d-grid .btn:hover {
+  background-color: #0568c9;
+}
+/*# sourceMappingURL=auth.css.map */

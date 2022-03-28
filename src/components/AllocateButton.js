@@ -6,6 +6,7 @@ import { getPlanFromId } from '../utils'
 import warning from '../assets/images/logos/warning.png'
 import cancel from '../assets/images/logos/cancel.png'
 import checked from '../assets/images/logos/checked.png'
+import loadingGIF from '../assets/images/logos/loading2.gif'
 
 
 
@@ -13,6 +14,8 @@ import checked from '../assets/images/logos/checked.png'
 const AllocateButton = ({loading, setLoading, plan_id, phone_number, handleSubmit}) => {
 
     const [success, setSuccess] = useState(false)
+    const [failed, setFailed] = useState(false)
+    const [message, setMessage] = useState("")
     const [prevent, setPrevent] = useState(false)
     const [plan, setPlan] = useState({})
 
@@ -28,8 +31,14 @@ const AllocateButton = ({loading, setLoading, plan_id, phone_number, handleSubmi
 
     const handleAllocate = async () => {
         const status = await handleSubmit()
-        if(status){
+        if(status.status){
             setSuccess(true)
+            setTimeout(() => {
+                setSuccess(false)
+            }, 10000)
+        }else{
+            setMessage(status.message)
+            setFailed(true)
         }
     }
 
@@ -96,12 +105,31 @@ const AllocateButton = ({loading, setLoading, plan_id, phone_number, handleSubmi
             >
                 <ModalBody>
                     <div className='confirm text-center'>
-                        <img src={checked} width={50} className="confirm-checked" alt="check"/>
-                        <p>Data transafer successful</p>
+                        <img src={loadingGIF} className="allocate-loading" alt="loading"/>
+                        <p>Transaction is Processing. Check history page for status.</p>
                     </div>
                 </ModalBody>
                 <ModalFooter className='confirm-footer'>
                 <Button color="secondary" onClick={() => setSuccess(false)}>
+                    Close
+                </Button>
+                </ModalFooter>
+            </Modal>
+
+            {/* Failure On Data sent*/}
+            <Modal
+                centered
+                isOpen={failed}
+                toggle={() => setFailed(!failed)}
+            >
+                <ModalBody>
+                    <div className='confirm text-center'>
+                        <img src={cancel} width={50} className="confirm-cancel" alt="confirm"/>
+                        <p>{message}</p>
+                    </div>
+                </ModalBody>
+                <ModalFooter className='confirm-footer'>
+                <Button color="secondary" onClick={() => setFailed(false)}>
                     Close
                 </Button>
                 </ModalFooter>

@@ -50,12 +50,12 @@ const AllocateData = () => {
         status: true,
         message: "Data allocated successfully.",
       });
-      return true;
+      return {status: true};
     } catch (error) {
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
       setServerResponse({ status, message });
-      // console.log(error);
+      return {status, message};
     }
   };
 
@@ -74,6 +74,7 @@ const AllocateData = () => {
                 <UncontrolledAlert dismissible color="success">
                   {serverResponse.message}
                 </UncontrolledAlert>
+    
               ) : (
                 <UncontrolledAlert dismissible color="danger">
                   {serverResponse.message}
