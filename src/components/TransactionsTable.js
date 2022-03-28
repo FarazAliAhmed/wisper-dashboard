@@ -213,7 +213,7 @@ const TransactionsTable = ({
                       <th>Volume</th>
                       <th>Status</th>
                       <th>Network</th>
-                      <th>Price</th>
+                      {/* <th>Price</th> */}
                       <th>Date</th>
                       <th>Reference</th>
                     </tr>
@@ -240,7 +240,7 @@ const TransactionsTable = ({
                           )}
                         </td>
                         <td>{tx.network_provider}</td>
-                        <td>₦ {tx.data_price}</td>
+                        {/* <td>₦ {tx.data_price}</td> */}
                         <td>{tx.created_at}</td>
                         <td>{tx.transaction_ref}</td>
                       </tr>
