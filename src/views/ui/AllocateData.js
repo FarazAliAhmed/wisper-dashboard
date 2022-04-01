@@ -50,7 +50,7 @@ const AllocateData = () => {
         status: true,
         message: "Data allocated successfully.",
       });
-      return {status: true};
+      return {status: true, message: "Data allocated successfully."};
     } catch (error) {
       setLoading(false);
       const { status, message } = handleFailedRequest(error);

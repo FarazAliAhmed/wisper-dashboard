@@ -1,5 +1,18 @@
 import React, {useState, useEffect} from 'react'
-import { UncontrolledAlert, Button, Form, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, FormText, FormFeedback, Label } from 'reactstrap'
+import { 
+    UncontrolledAlert,
+    Button,
+    Form,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    FormGroup,
+    Input,
+    FormText,
+    FormFeedback,
+    Label
+} from 'reactstrap'
 import { useUser } from '../context/userContext'
 import { getPlanFromId } from '../utils'
 
@@ -14,6 +27,7 @@ import loadingGIF from '../assets/images/logos/loading2.gif'
 const AllocateButton = ({loading, setLoading, plan_id, phone_number, handleSubmit}) => {
 
     const [success, setSuccess] = useState(false)
+    const [confirm, setConfirm] = useState(false)
     const [failed, setFailed] = useState(false)
     const [message, setMessage] = useState("")
     const [prevent, setPrevent] = useState(false)
@@ -23,19 +37,21 @@ const AllocateButton = ({loading, setLoading, plan_id, phone_number, handleSubmi
         const selectedPlan = getPlanFromId(plan_id)
         setPlan(selectedPlan)
         if(plan_id && phone_number){
-            setLoading(!loading)
+            setConfirm(true)
         }else{
             setPrevent(true)
         }
     }
 
     const handleAllocate = async () => {
+        setConfirm(false)
         const status = await handleSubmit()
         if(status.status){
+            setMessage(status.message)
             setSuccess(true)
             setTimeout(() => {
                 setSuccess(false)
-            }, 10000)
+            }, 8000)
         }else{
             setMessage(status.message)
             setFailed(true)
@@ -52,12 +68,9 @@ const AllocateButton = ({loading, setLoading, plan_id, phone_number, handleSubmi
             {/* Confirm Transfer of data to phone number */}
             <Modal
                 centered
-                isOpen={loading}
-                toggle={() => setLoading(!loading)}
+                isOpen={confirm}
+                toggle={() => setConfirm(!confirm)}
             >
-                {/* <ModalHeader toggle={toggleConfirm}>
-                    Confirm Request
-                </ModalHeader> */}
                 <ModalBody>
                     <div className='confirm text-center'>
                         <img src={warning} width={50} className="confirm-warn" alt="warn"/>
@@ -72,11 +85,31 @@ const AllocateButton = ({loading, setLoading, plan_id, phone_number, handleSubmi
                     Yes, Proceed
                 </Button>
                 {' '}
-                <Button onClick={() => setLoading(false)}>
+                <Button onClick={() => setConfirm(false)}>
                     No, Cancel
                 </Button>
                 </ModalFooter>
             </Modal>
+
+            {/* Processing On Data sent*/}
+            <Modal
+                centered
+                isOpen={loading}
+                // toggle={() => setLoading(!loading)}
+            >
+                <ModalBody>
+                    <div className='confirm text-center'>
+                        <img src={loadingGIF} className="allocate-loading" alt="loading"/>
+                        <p>Please wait, transaction is processing.</p>
+                    </div>
+                </ModalBody>
+                {/* <ModalFooter className='confirm-footer'>
+                <Button color="secondary" onClick={() => setLoading(false)}>
+                    Close
+                </Button>
+                </ModalFooter> */}
+            </Modal>
+
 
             {/* Error On empty phone number and plan id */}
             <Modal
@@ -97,6 +130,7 @@ const AllocateButton = ({loading, setLoading, plan_id, phone_number, handleSubmi
                 </ModalFooter>
             </Modal>
 
+
             {/* Success On Data sent*/}
             <Modal
                 centered
@@ -105,8 +139,8 @@ const AllocateButton = ({loading, setLoading, plan_id, phone_number, handleSubmi
             >
                 <ModalBody>
                     <div className='confirm text-center'>
-                        <img src={loadingGIF} className="allocate-loading" alt="loading"/>
-                        <p>Transaction is Processing. Check history page for status.</p>
+                        <img src={checked} className="confirm-checked" alt="success"/>
+                        <p>{message}</p>
                     </div>
                 </ModalBody>
                 <ModalFooter className='confirm-footer'>
