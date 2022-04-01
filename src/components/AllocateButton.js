@@ -44,7 +44,7 @@ const AllocateButton = ({loading, setLoading, plan_id, phone_number, handleSubmi
     }
 
     const handleAllocate = async () => {
-        setConfirm(false)
+        // setConfirm(false)
         const status = await handleSubmit()
         if(status.status){
             setMessage(status.message)
@@ -80,7 +80,10 @@ const AllocateButton = ({loading, setLoading, plan_id, phone_number, handleSubmi
                 <ModalFooter className='confirm-footer'>
                 <Button
                     color="primary"
-                    onClick={handleAllocate}
+                    onClick={() => {
+                        setConfirm(false);
+                        handleAllocate();
+                    }}
                 >
                     Yes, Proceed
                 </Button>

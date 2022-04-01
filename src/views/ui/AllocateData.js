@@ -40,22 +40,18 @@ const AllocateData = () => {
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
-
     try {
       setLoading(true);
       await allocateData(plan, user?.access_token);
       setLoading(false);
       setPlan(initialState);
-      setServerResponse({
-        status: true,
-        message: "Data allocated successfully.",
-      });
       return {status: true, message: "Data allocated successfully."};
-    } catch (error) {
+      // setServerResponse({status: true, message: "Data allocated successfully."});
+    }catch (error) {
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
-      setServerResponse({ status, message });
       return {status, message};
+      // setServerResponse({ status, message });
     }
   };
 
