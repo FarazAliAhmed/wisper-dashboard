@@ -241,7 +241,7 @@ const TransactionsTable = ({
                         </td>
                         <td>{tx.network_provider}</td>
                         {/* <td>₦ {tx.data_price}</td> */}
-                        <td>{tx.created_at}</td>
+                        <td>{Date(Date.parse(tx.created_at)).split("GMT")[0]}</td>
                         <td>{tx.transaction_ref}</td>
                       </tr>
                     ))}

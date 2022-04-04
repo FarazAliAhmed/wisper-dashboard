@@ -37,6 +37,12 @@ const AppStateProvider = ({ children }) => {
           unit: balanceRes.data.mega_wallet.unit,
         }
       });
+      transactionRes.data.sort(function(a, b){
+        const A = Date.parse(a.created_at);
+        const B = Date.parse(b.created_at);
+        if(A > B) return 1;
+        if(A < B) return -1;
+      })
       setTransactions(transactionRes.data);
       setPayments(paymentRes.data)
     }

@@ -94,7 +94,7 @@ export const getPlanFromId = (plan_id) => {
   const id = parseInt(plan_id);
   const plan = tableData.filter((plan_data) => {
     // console.log(plan_id, plan_data["dataId"]);
-    return plan_data["dataId"] === id;
+    return parseInt(plan_data["dataId"]) === id;
   });
   return plan[0];
 };
