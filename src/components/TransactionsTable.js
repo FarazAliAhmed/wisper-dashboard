@@ -38,7 +38,7 @@ const TransactionsTable = ({
   useEffect(() => {
     const paginatedData = paginate(transactions, currentPage, pageSize);
     setTransactionsData(paginatedData);
-  }, [currentPage]);
+  }, [currentPage, transactions]);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -241,7 +241,7 @@ const TransactionsTable = ({
                         </td>
                         <td>{tx.network_provider}</td>
                         {/* <td>₦ {tx.data_price}</td> */}
-                        <td>{Date(Date.parse(tx.created_at)).split("GMT")[0]}</td>
+                        <td>{tx.created_at}</td>
                         <td>{tx.transaction_ref}</td>
                       </tr>
                     ))}
