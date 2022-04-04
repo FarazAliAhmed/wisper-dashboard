@@ -143,7 +143,7 @@ const Dashboard = () => {
 
         <Row className="mt-4">
           <TransactionsTable
-            transactions={transactions.slice(-5)}
+            transactions={transactions.slice(0, 5)}
             showHeader={false}
           />
         </Row>
