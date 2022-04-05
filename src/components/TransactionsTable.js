@@ -185,12 +185,12 @@ const TransactionsTable = ({
                                   <DropdownItem
                                     onClick={() => handleSortByDate("newest")}
                                   >
-                                    Date: New - Old
+                                    Date: Old - New
                                   </DropdownItem>
                                   <DropdownItem
                                     onClick={() => handleSortByDate()}
                                   >
-                                    Date: Old - New
+                                    Date: New - Old
                                   </DropdownItem>
                                 </DropdownMenu>
                               </Dropdown>
