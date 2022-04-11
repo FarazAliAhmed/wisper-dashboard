@@ -23,6 +23,7 @@ const Documentation = lazy(() => import("../views/ui/Documentation"));
 const Payments = lazy(() => import('../views/ui/Payments'))
 const Transactions = lazy(() => import('../views/ui/Transactions'))
 const Pricing = lazy(() => import('../views/ui/Pricing'))
+const Admin = lazy(() => import('./Admin'))
 
 const Routes = () => {
   return (
@@ -30,6 +31,7 @@ const Routes = () => {
       <Suspense fallback={<Loader isLoading={true}/>} >
         <Switch>
           <Route exact path="/" component={Home} />
+          <ProtectedRoute path="/admin" component={Admin} />
           <ProtectedRoute path="/dashboard" component={Dashboard} />
           <ProtectedRoute path="/pricing" component={Pricing} />
           <ProtectedRoute path="/allocate" component={AllocateData} />

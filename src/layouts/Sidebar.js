@@ -59,9 +59,64 @@ const navigation = [
   },
 ];
 
-const Sidebar = () => {
+const adminNav = [
+  {
+    title: "Dashboard",
+    href: "/admin",
+    icon: "bi bi-house",
+  },
+  {
+    title: "Business",
+    href: "/admin/business",
+    icon: "bi bi-person",
+  },
+  {
+    title: "Wallets",
+    href: "/admin/wallet",
+    icon: "bi bi-cash",
+  },
+  {
+    title: "Allocate Data",
+    href: "/admin/allocate",
+    icon: "bi bi-send",
+  },
+  {
+    title: "Payments",
+    href: "/admin/payment",
+    icon: "bi bi-credit-card",
+  },
+  {
+    title: "Transactions",
+    href: "/admin/transaction",
+    icon: "bi bi-cash-stack",
+  },
+  {
+    title: "Pricing",
+    href: "/admin/pricing",
+    icon: "bi bi-tags",
+  },
+  {
+    title: "Account",
+    href: "/admin/account",
+    icon: "bi bi-person",
+  },
+  {
+    title: "Logout",
+    href: "/logout",
+    icon: "bi bi-box-arrow-right",
+  },
+];
+
+const Sidebar = ({isAdmin}) => {
   let location = useLocation();
   const [balanceDisplay, setBalanceDisplay] = useState("")
+  const [nav, setNav] = useState(navigation)
+
+  useEffect(() => {
+    if(isAdmin){
+      setNav(adminNav)
+    }
+  }, [isAdmin])
 
   const {
     currentBalance: {volume, unit, cash},
@@ -93,7 +148,7 @@ const Sidebar = () => {
       </div>
       <div className="pt-4 mt-2">
         <Nav vertical className="sidebarNav">
-          {navigation.map((navi, index) => (
+          {nav.map((navi, index) => (
             <NavItem key={index} className="sidenav-bg">
               <Link
                 to={navi.href}
