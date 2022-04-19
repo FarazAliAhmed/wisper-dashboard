@@ -1,11 +1,13 @@
 import React from "react";
 import { Card, CardBody, CardTitle, Table, CardSubtitle } from "reactstrap";
+import { Link } from "react-router-dom";
 import AdminLayout from "../../layouts/AdminLayout";
-import { useAdmin } from '../../context/adminContext'
-
+import { useAdmin } from "../../context/adminContext";
 
 const Business = () => {
-  const { business } = useAdmin()
+  const { business } = useAdmin();
+
+  console.log(business);
   return (
     <AdminLayout>
       <div>
@@ -42,7 +44,12 @@ const Business = () => {
                   <tr key={index} className="border-top">
                     <td>
                       <div className="d-flex align-items-center py-2">
-                        <h6 className="mb-0">{tdata.name}</h6>
+                        <Link
+                          to={`/admin/business/${tdata._id}`}
+                          className="text-decoration-none"
+                        >
+                          <h6 className="mb-0">{tdata.name}</h6>
+                        </Link>
                       </div>
                     </td>
                     <td>{tdata.username}</td>
@@ -83,7 +90,12 @@ const Business = () => {
                   <tr key={index} className="border-top">
                     <td>
                       <div className="d-flex align-items-center py-2">
-                        <h6 className="mb-0">{tdata.name}</h6>
+                        <Link
+                          to={`/admin/business/${tdata._id}`}
+                          className="text-decoration-none"
+                        >
+                          <h6 className="mb-0">{tdata.name}</h6>
+                        </Link>
                       </div>
                     </td>
                     <td>{tdata.username}</td>

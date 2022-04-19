@@ -91,6 +91,11 @@ const adminNav = [
     icon: "bi bi-cash-stack",
   },
   {
+    title: "Credit & Debit",
+    "href": "/admin/modify-account",
+    icon: "bi bi-wrench"
+  },
+  {
     title: "Pricing",
     href: "/admin/pricing",
     icon: "bi bi-tags",
