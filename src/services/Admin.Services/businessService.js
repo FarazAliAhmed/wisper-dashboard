@@ -72,11 +72,3 @@ export const generateCreditPayment = async (body) => {
     return null;
   }
 };
-
-export const generateDebitTransaction = async (body) => {
-  try {
-    return http.post(`${adminUrl}/transactions`, body);
-  } catch (e) {
-    return null;
-  }
-};

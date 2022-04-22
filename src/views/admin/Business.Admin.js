@@ -7,7 +7,6 @@ import { useAdmin } from "../../context/adminContext";
 const Business = () => {
   const { business } = useAdmin();
 
-  console.log(business);
   return (
     <AdminLayout>
       <div>

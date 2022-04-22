@@ -15,6 +15,7 @@ import AdminLayout from "../../layouts/AdminLayout";
 import {
   creditBusiness,
   debitBusiness,
+  generateCreditPayment,
 } from "../../services/Admin.Services/businessService";
 import { handleFailedRequest } from "../../utils";
 
@@ -24,8 +25,8 @@ const AllocateData = () => {
   const [values, setValues] = useState({
     action_type: "",
     business_id: "",
-    credit_amount: "",
-    debit_amount: "",
+    amount: "",
+    amount_cash: "",
     unit: "money",
     wallet: "",
   });
@@ -45,22 +46,35 @@ const AllocateData = () => {
       if (values.action_type === "credit") {
         const res = await creditBusiness({
           business_id: values.business_id,
-          credit_amount: values.credit_amount,
+          credit_amount: values.amount,
           unit: values.unit,
           wallet: values.wallet,
         });
         response = res.data.message;
-        console.log(response);
+
+        generateCreditPayment({
+          business_id: values.business_id,
+          amount:
+            values.action_type === "credit" && values.unit === "data"
+              ? values.amount_cash
+              : values.amount,
+          payment_ref: "trx-" + Math.floor(Math.random() * 10000000000000000),
+        });
       }
       if (values.action_type === "debit") {
         const res = await debitBusiness({
           business_id: values.business_id,
-          debit_amount: values.debit_amount,
+          debit_amount: values.amount,
           unit: values.unit,
           wallet: values.wallet,
         });
-        response = res.data.message;
+        if (res.status === 401) {
+          response = res.data.message;
+        } else {
+          response = "Data balance updated";
+        }
       }
+
       setLoading(false);
 
       setServerResponse({
@@ -180,14 +194,29 @@ const AllocateData = () => {
                       </Label>
                       <Input
                         required
-                        value={values.credit_amount}
-                        id="credit_amount"
-                        name="credit_amount"
+                        value={values.amount}
+                        id="amount"
+                        name="amount"
                         onChange={handleChange}
                         type="number"
                       />
                     </FormGroup>
                   </Col>
+                  {values.action_type === "credit" && values.unit === "data" && (
+                    <Col md={12}>
+                      <FormGroup>
+                        <Label for="amount_payed">Amount Payed (Cash)</Label>
+                        <Input
+                          required
+                          value={values.amount_cash}
+                          id="amount_cash"
+                          name="amount_cash"
+                          onChange={handleChange}
+                          type="number"
+                        />
+                      </FormGroup>
+                    </Col>
+                  )}
                 </Row>
 
                 <Button disabled={loading} type="submit" color="primary">

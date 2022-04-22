@@ -9,20 +9,13 @@ import {
   Button,
   Row,
   Col,
-  FormFeedback,
-  UncontrolledAlert,
 } from "reactstrap";
 import TopCards from "../../components/dashboard/TopCards";
 
 import AdminLayout from "../../layouts/AdminLayout";
 import { getSingleBusiness } from "../../services/Admin.Services/businessService";
 
-import {
-  displayBalance,
-  handleFailedRequest,
-  totalDataSold,
-  validateProperty,
-} from "../../utils";
+import { displayBalance } from "../../utils";
 
 const Account = (props) => {
   const [business, setBusiness] = useState({});
@@ -72,6 +65,18 @@ const Account = (props) => {
                         id="fullName"
                         value={business?.name}
                         name="name"
+                        type="text"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col md={12}>
+                    <FormGroup>
+                      <Label for="ID">Business ID</Label>
+                      <Input
+                        disabled
+                        id="ID"
+                        value={business?._id}
+                        name="id"
                         type="text"
                       />
                     </FormGroup>
