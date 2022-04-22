@@ -5,10 +5,8 @@ import {
   FormGroup,
   Label,
   Input,
-  Button,
   Row,
   Col,
-  UncontrolledAlert,
   CardBody,
 } from "reactstrap";
 import AllocateButton from "../../components/AllocateButton";
@@ -25,15 +23,17 @@ const initialState = {
   network: "airtel",
   plan_id: "",
   phone_number: "",
+  allocate_for_business: false,
+  business_id: "",
 };
 
 const AllocateData = () => {
   const [plan, setPlan] = useState(initialState);
 
-  const [serverResponse, setServerResponse] = useState({
-    status: true,
-    message: "",
-  });
+  // const [serverResponse, setServerResponse] = useState({
+  //   status: true,
+  //   message: "",
+  // });
 
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
@@ -45,20 +45,26 @@ const AllocateData = () => {
       await allocateData(plan, user?.access_token);
       setLoading(false);
       setPlan(initialState);
-      return {status: true, message: "Data allocated successfully."};
+      return { status: true, message: "Data allocated successfully." };
       // setServerResponse({status: true, message: "Data allocated successfully."});
-    }catch (error) {
+    } catch (error) {
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
-      return {status, message};
+      return { status, message };
       // setServerResponse({ status, message });
     }
   };
 
   const handleChange = ({ currentTarget: input }) => {
-    const { name, value } = input;
+    const { name, type, value, checked } = input;
+
+    if (type === "checkbox") {
+      return setPlan({ ...plan, allocate_for_business: checked });
+    }
+
     setPlan({ ...plan, [name]: value });
   };
+
   return (
     <AdminLayout>
       <div>
@@ -138,6 +144,32 @@ const AllocateData = () => {
                       />
                     </FormGroup>
                   </Col>
+                  <Col md={12}>
+                    <FormGroup check>
+                      <Label check>Allocating for a business?</Label>
+                      <Input
+                        name="allocate_for_business"
+                        onChange={handleChange}
+                        type="checkbox"
+                      />
+                    </FormGroup>
+                  </Col>
+                  {plan?.allocate_for_business && (
+                    <Col md={12}>
+                      <FormGroup>
+                        <Label for="businessId">Business Id</Label>
+                        <Input
+                          onChange={handleChange}
+                          required
+                          name="business_id"
+                          // value={values.business_id}
+                          className="mb-3"
+                          type="text"
+                          placeholder="Enter business Id"
+                        ></Input>
+                      </FormGroup>
+                    </Col>
+                  )}
                 </Row>
 
                 <AllocateButton
