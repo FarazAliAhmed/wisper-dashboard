@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Card,
   Form,
@@ -11,7 +11,6 @@ import {
   Button,
   Row,
   Col,
-  UncontrolledAlert,
   ModalHeader,
 } from "reactstrap";
 
@@ -24,7 +23,6 @@ import {
 import { handleFailedRequest } from "../../utils";
 
 import warning from "../../assets/images/logos/warning.png";
-import cancel from "../../assets/images/logos/cancel.png";
 import checked from "../../assets/images/logos/checked.png";
 import loadingGIF from "../../assets/images/logos/loading2.gif";
 
