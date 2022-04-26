@@ -2,12 +2,17 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import auth from "../services/authService";
 
-const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
+const AdminProtectedRoute = ({
+  path,
+  component: Component,
+  render,
+  ...rest
+}) => {
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (!auth.getCurrentUser())
+        if (!auth.getCurrentUser()) {
           return (
             <Redirect
               to={{
@@ -16,8 +21,9 @@ const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
               }}
             />
           );
-        if (auth.getCurrentUser().isAdmin) {
-          return <Redirect to="/admin" />;
+        }
+        if (!auth.getCurrentUser().isAdmin) {
+          return <Redirect to="/dashboard" />;
         }
         return Component ? <Component {...props} /> : render(props);
       }}
@@ -25,4 +31,4 @@ const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
   );
 };
 
-export default ProtectedRoute;
+export default AdminProtectedRoute;
