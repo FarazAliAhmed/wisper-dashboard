@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   Form,
   FormGroup,
   Label,
   Input,
+  Modal,
+  ModalBody,
+  ModalFooter,
   Button,
   Row,
   Col,
   UncontrolledAlert,
+  ModalHeader,
 } from "reactstrap";
 
 import AdminLayout from "../../layouts/AdminLayout";
@@ -18,6 +22,11 @@ import {
   generateCreditPayment,
 } from "../../services/Admin.Services/businessService";
 import { handleFailedRequest } from "../../utils";
+
+import warning from "../../assets/images/logos/warning.png";
+import cancel from "../../assets/images/logos/cancel.png";
+import checked from "../../assets/images/logos/checked.png";
+import loadingGIF from "../../assets/images/logos/loading2.gif";
 
 import "./../../assets/scss/custom.scss";
 
@@ -32,14 +41,27 @@ const AllocateData = () => {
   });
 
   const [serverResponse, setServerResponse] = useState({
-    status: true,
+    status: false,
     message: "",
   });
 
+  const [isSuccess, setIsSuccess] = useState(false);
+
   const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (
+      values.action_type === "" ||
+      values.business_id === "" ||
+      values.amount === ""
+    ) {
+      return setServerResponse({
+        status: false,
+        message: "Fill the form correctly",
+      });
+    }
     try {
       let response;
       setLoading(true);
@@ -75,16 +97,27 @@ const AllocateData = () => {
         }
       }
 
-      setLoading(false);
+      setIsSuccess(true);
 
       setServerResponse({
         status: true,
         message: response,
       });
+
+      setLoading(false);
+
+      console.log(serverResponse);
     } catch (error) {
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
       setServerResponse({ status, message });
+    } finally {
+      const timeoutId = setTimeout(() => {
+        alert("yes na");
+        setIsSuccess(false);
+      }, 3000);
+
+      clearTimeout(timeoutId);
     }
   };
 
@@ -99,22 +132,57 @@ const AllocateData = () => {
       <div>
         <h5 className="mb-4 mt-3">Credit / Debit Business Account</h5>
         <Card body>
-          {serverResponse.message.length > 0 && (
-            <>
-              {serverResponse.status ? (
-                <UncontrolledAlert dismissible color="success">
-                  {serverResponse.message}
-                </UncontrolledAlert>
-              ) : (
-                <UncontrolledAlert dismissible color="danger">
-                  {serverResponse.message}
-                </UncontrolledAlert>
-              )}
-            </>
-          )}
+          <Modal centered isOpen={isOpen}>
+            <ModalHeader toggle={() => setIsOpen(false)}>Confirm</ModalHeader>
+            <ModalBody>
+              <div className="confirm text-center">
+                {loading ? (
+                  <img
+                    src={loadingGIF}
+                    width={50}
+                    className="confirm-warn"
+                    alt="warn"
+                  />
+                ) : isSuccess ? (
+                  <>
+                    <img
+                      src={checked}
+                      width={50}
+                      className="confirm-success"
+                      alt="success"
+                    />
+                    <p className="text-center">{serverResponse.message}</p>
+                  </>
+                ) : (
+                  <>
+                    <img
+                      src={warning}
+                      width={50}
+                      className="confirm-warn"
+                      alt="warn"
+                    />
+                    <p className="text-center">{serverResponse.message}</p>
+                  </>
+                )}
+                {!loading && !isSuccess && (
+                  <p className="text-center">
+                    Are you sure you want to continue?
+                  </p>
+                )}
+              </div>
+            </ModalBody>
+            {!isSuccess && (
+              <ModalFooter className="confirm-footer">
+                <Button type="submit" color="primary" onClick={handleSubmit}>
+                  Yes, Proceed
+                </Button>{" "}
+                <Button onClick={() => setIsOpen(false)}>No, Cancel</Button>
+              </ModalFooter>
+            )}
+          </Modal>
           <Row>
             <Col md={7}>
-              <Form className="mb-4" onSubmit={handleSubmit}>
+              <Form className="mb-4">
                 <Row form>
                   <Col md={12}>
                     <FormGroup>
@@ -219,7 +287,11 @@ const AllocateData = () => {
                   )}
                 </Row>
 
-                <Button disabled={loading} type="submit" color="primary">
+                <Button
+                  disabled={loading}
+                  onClick={() => setIsOpen(true)}
+                  color="primary"
+                >
                   {values.action_type === "credit"
                     ? "Credit"
                     : values.action_type === "debit"
