@@ -16,6 +16,9 @@ const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
               }}
             />
           );
+        if (auth.getCurrentUser().isAdmin) {
+          return <Redirect to="/admin" />;
+        }
         return Component ? <Component {...props} /> : render(props);
       }}
     />

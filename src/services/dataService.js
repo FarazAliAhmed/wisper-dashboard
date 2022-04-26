@@ -23,6 +23,8 @@ export async function allocateData(body, apiKey) {
     network: body.network,
     plan_id: body.plan_id,
     phone_number: body.phone_number,
+    allocate_for_business: body.allocate_for_business,
+    business_id: body.business_id,
   };
 
   return http.post(`${apiUrl}/buy`, payload, { headers });
@@ -36,18 +38,18 @@ export async function getAllTransactions() {
   }
 }
 
-export async function getAllPayments(){
-  try{
-    return http.get(`${apiUrl}/payments`)
-  }catch(error) {
+export async function getAllPayments() {
+  try {
+    return http.get(`${apiUrl}/payments`);
+  } catch (error) {
     return null;
   }
 }
 
-export async function addPayment(payment){
-  try{
-    return http.post(`${apiUrl}/payments`, payment)
-  }catch(error){
+export async function addPayment(payment) {
+  try {
+    return http.post(`${apiUrl}/payments`, payment);
+  } catch (error) {
     return null;
   }
 }

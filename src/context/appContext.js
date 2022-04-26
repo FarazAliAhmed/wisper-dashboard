@@ -22,7 +22,6 @@ const AppStateProvider = ({ children }) => {
   useEffect(() => {
     async function fetchBalance() {
       const balanceRes = await getBalance();
-      console.log("Balance: ", balanceRes)
       const transactionRes = await getAllTransactions();
       const paymentRes = await getAllPayments()
       setCurrentBalance({ 

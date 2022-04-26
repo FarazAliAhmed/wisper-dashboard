@@ -14,7 +14,7 @@ import wisperSmall from "../assets/images/logos/wisper-white.png";
 import user1 from "../assets/images/users/user1.jpg";
 import { useUser } from "../context/userContext";
 
-const Header = () => {
+const Header = ({isAdmin}) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const context = useUser();
@@ -27,13 +27,13 @@ const Header = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
   return (
-    <Navbar color="primary" dark expand="xs">
+    <Navbar color={isAdmin ? "danger": "primary"} dark expand="xs">
       <div className="d-flex align-items-center">
         <NavbarBrand href="/" className="d-lg-none">
           <img src={wisperSmall} width={80} alt="wisper logo" />
         </NavbarBrand>
         <Button
-          color="primary"
+          color={isAdmin ? "danger": "primary"}
           className="d-lg-none"
           onClick={() => showMobilemenu()}
         >
@@ -69,18 +69,18 @@ const Header = () => {
           <DropdownMenu>
             <DropdownItem header>{context?.user?.username}</DropdownItem>
             <DropdownItem>
-              <Link className="text-decoration-none text-dark" to="/dashboard">
+              <Link className="text-decoration-none text-dark" to={isAdmin ? "/admin" :"/dashboard"}>
                 Dashboard
               </Link>
             </DropdownItem>
             <DropdownItem>
-              <Link className="text-decoration-none text-dark" to="/account">
+              <Link className="text-decoration-none text-dark" to={isAdmin ? "/admin/account" : "/account"}>
                 Edit Account
               </Link>
             </DropdownItem>
             <DropdownItem divider />
             <DropdownItem>
-              <Link className="text-decoration-none text-dark" to="/allocate">
+              <Link className="text-decoration-none text-dark" to={isAdmin ? "/admin/allocate" : "/allocate"}>
                 Allocate Data
               </Link>
             </DropdownItem>

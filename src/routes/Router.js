@@ -6,6 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute.js";
+import AdminProtectedRoute from "../components/AdminProtectedRoute.js";
 import Loader from "../layouts/loader/Loader.js";
 
 /***** Pages ****/
@@ -20,16 +21,18 @@ const AllocateData = lazy(() => import("../views/ui/AllocateData"));
 const Wallet = lazy(() => import("../views/ui/Wallet"));
 const Account = lazy(() => import("../views/ui/Account"));
 const Documentation = lazy(() => import("../views/ui/Documentation"));
-const Payments = lazy(() => import('../views/ui/Payments'))
-const Transactions = lazy(() => import('../views/ui/Transactions'))
-const Pricing = lazy(() => import('../views/ui/Pricing'))
+const Payments = lazy(() => import("../views/ui/Payments"));
+const Transactions = lazy(() => import("../views/ui/Transactions"));
+const Pricing = lazy(() => import("../views/ui/Pricing"));
+const Admin = lazy(() => import("./Admin"));
 
 const Routes = () => {
   return (
     <Router>
-      <Suspense fallback={<Loader isLoading={true}/>} >
+      <Suspense fallback={<Loader isLoading={true} />}>
         <Switch>
           <Route exact path="/" component={Home} />
+          <AdminProtectedRoute path="/admin" component={Admin} />
           <ProtectedRoute path="/dashboard" component={Dashboard} />
           <ProtectedRoute path="/pricing" component={Pricing} />
           <ProtectedRoute path="/allocate" component={AllocateData} />

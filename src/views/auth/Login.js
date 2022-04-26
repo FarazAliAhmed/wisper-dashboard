@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import AuthLayout from "../../layouts/AuthLayout";
-import authService from "../../services/authService";
+import authService, { getCurrentUser } from "../../services/authService";
 import {
   formIsValid,
   validateProperty,
@@ -36,7 +36,12 @@ const Login = () => {
       setLoading(true);
       await authService.login(account.email, account.password);
       setLoading(false);
-      window.location = "/dashboard";
+      const user = getCurrentUser();
+      if (user.isAdmin) {
+        window.location = "/admin";
+      } else {
+        window.location = "/dashboard";
+      }
     } catch (error) {
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
