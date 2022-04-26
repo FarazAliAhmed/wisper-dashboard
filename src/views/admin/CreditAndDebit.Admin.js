@@ -78,7 +78,8 @@ const AllocateData = () => {
             values.action_type === "credit" && values.unit === "data"
               ? values.amount_cash
               : values.amount,
-          payment_ref: "trx-" + Math.floor(Math.random() * 10000000000000000),
+          payment_ref:
+            "AD-trx-" + Math.floor(Math.random() * 10000000000000000),
         });
       }
       if (values.action_type === "debit") {
