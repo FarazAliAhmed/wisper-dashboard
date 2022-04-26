@@ -111,13 +111,6 @@ const AllocateData = () => {
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
       setServerResponse({ status, message });
-    } finally {
-      const timeoutId = setTimeout(() => {
-        alert("yes na");
-        setIsSuccess(false);
-      }, 3000);
-
-      clearTimeout(timeoutId);
     }
   };
 
