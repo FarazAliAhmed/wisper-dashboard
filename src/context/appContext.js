@@ -1,5 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getAllTransactions, getBalance, getAllPayments } from "../services/dataService";
+import {
+  getAllTransactions,
+  getBalance,
+  getAllPayments,
+} from "../services/dataService";
+import { getMainBalance } from "../services/Admin.Services/businessService";
 
 export const AppStateContext = createContext();
 
@@ -13,18 +18,21 @@ const AppStateProvider = ({ children }) => {
       mtn_gifting: 0,
       airtel: 0,
       glo: 0,
-      unit: ""
-    }
+      unit: "",
+    },
+    mtn_balance: "",
+    airtel_balance: "",
   });
   const [transactions, setTransactions] = useState([]);
-  const [payments, setPayments] = useState([])
+  const [payments, setPayments] = useState([]);
 
   useEffect(() => {
     async function fetchBalance() {
       const balanceRes = await getBalance();
       const transactionRes = await getAllTransactions();
-      const paymentRes = await getAllPayments()
-      setCurrentBalance({ 
+      const paymentRes = await getAllPayments();
+      const mainBalance = await getMainBalance();
+      setCurrentBalance({
         volume: balanceRes.data.data_volume,
         unit: balanceRes.data.data_unit,
         cash: balanceRes.data.wallet_balance,
@@ -34,22 +42,26 @@ const AppStateProvider = ({ children }) => {
           airtel: balanceRes.data.mega_wallet.airtel,
           glo: balanceRes.data.mega_wallet.glo,
           unit: balanceRes.data.mega_wallet.unit,
-        }
+        },
+        mtn_balance: mainBalance.data.balance.account_1,
+        airtel_balance: mainBalance.data.balance.account_2,
       });
-      transactionRes.data.sort(function(a, b){
+      transactionRes.data.sort(function (a, b) {
         const A = Date.parse(a.created_at);
         const B = Date.parse(b.created_at);
-        if(A > B) return -1;
-        if(A < B) return 1;
-      })
+        if (A > B) return -1;
+        if (A < B) return 1;
+      });
       setTransactions(transactionRes.data);
-      setPayments(paymentRes.data)
+      setPayments(paymentRes.data);
     }
     fetchBalance();
   }, []);
 
   return (
-    <AppStateContext.Provider value={{ currentBalance, transactions, payments }}>
+    <AppStateContext.Provider
+      value={{ currentBalance, transactions, payments }}
+    >
       {children}
     </AppStateContext.Provider>
   );

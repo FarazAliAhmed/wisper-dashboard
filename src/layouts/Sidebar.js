@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 import { useAppState } from "../context/appContext";
 import { useUser } from "../context/userContext";
-import { displayBalance } from '../utils'
+import { displayBalance } from "../utils";
 
 const navigation = [
   {
@@ -92,8 +92,8 @@ const adminNav = [
   },
   {
     title: "Credit & Debit",
-    "href": "/admin/modify-account",
-    icon: "bi bi-wrench"
+    href: "/admin/modify-account",
+    icon: "bi bi-wrench",
   },
   {
     title: "Pricing",
@@ -112,30 +112,30 @@ const adminNav = [
   },
 ];
 
-const Sidebar = ({isAdmin}) => {
+const Sidebar = ({ isAdmin }) => {
   let location = useLocation();
-  const [balanceDisplay, setBalanceDisplay] = useState("")
-  const [nav, setNav] = useState(navigation)
+  const [balanceDisplay, setBalanceDisplay] = useState("");
+  const [nav, setNav] = useState(navigation);
 
   useEffect(() => {
-    if(isAdmin){
-      setNav(adminNav)
+    if (isAdmin) {
+      setNav(adminNav);
     }
-  }, [isAdmin])
+  }, [isAdmin]);
 
   const {
-    currentBalance: {volume, unit, cash},
+    currentBalance: { volume, unit, cash, mtn_balance, airtel_balance },
   } = useAppState();
 
-  const {user} = useUser();
+  const { user } = useUser();
 
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
 
-  useEffect(()=>{
-    setBalanceDisplay(displayBalance(volume, unit, cash, user))
-  },[volume, unit, cash])
+  useEffect(() => {
+    setBalanceDisplay(displayBalance(volume, unit, cash, user));
+  }, [volume, unit, cash]);
 
   return (
     <div className="p-3">
@@ -148,9 +148,8 @@ const Sidebar = ({isAdmin}) => {
           onClick={() => showMobilemenu()}
         ></Button>
       </div>
-      <div className="mt-2 text-muted fw-bold">
-        Balance: {balanceDisplay}
-      </div>
+      <div className="mt-2 text-muted fw-bold">MTN: {mtn_balance} MB</div>
+      <div className="mt-2 text-muted fw-bold">AIRTEL: {airtel_balance} MB</div>
       <div className="pt-4 mt-2">
         <Nav vertical className="sidebarNav">
           {nav.map((navi, index) => (

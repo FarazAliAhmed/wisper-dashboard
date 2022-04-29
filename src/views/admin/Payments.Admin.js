@@ -1,53 +1,121 @@
-import { Card, CardBody, CardTitle, CardSubtitle, Table, Col, Row  } from "reactstrap";
+import React, { useState, useEffect } from "react";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Table,
+  Col,
+  Row,
+  FormGroup,
+  Input,
+  CardText,
+} from "reactstrap";
 import AdminLayout from "../../layouts/AdminLayout";
 import { useAdmin } from "../../context/adminContext";
 
 import "../../assets/scss/custom.scss";
 
 const Payments = () => {
-  const { payment } = useAdmin()
+  const { payment: payments } = useAdmin();
+  const [searchValue, setSearchValue] = useState("");
+  const [paymentData, setPaymentData] = useState([]);
+
+  useEffect(() => {
+    setPaymentData(payments);
+  }, []);
+  const handleChange = (e) => {
+    const val = e.target.value;
+    setSearchValue(val);
+
+    if (e.target.value === "") return setPaymentData(payments);
+
+    const results = payments.filter(
+      (payment) =>
+        payment._id.includes(val) || payment.payment_ref.includes(val)
+    );
+
+    setPaymentData(results);
+  };
 
   return (
     <AdminLayout>
       <div>
+        <Row className="justify-content-center mt-4">
+          <Col lg="4" sm="6">
+            <FormGroup>
+              <Input
+                onChange={handleChange}
+                value={searchValue}
+                name="search"
+                placeholder="Search"
+                type="text"
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+
+        {searchValue.length > 0 && (
+          <Card className="mb-3">
+            <CardBody>
+              <Row className="justify-content-center align-items-center">
+                <Col>
+                  <CardText className="text-muted" tag="h6">
+                    {paymentData.length} Search Result(s)
+                  </CardText>
+                </Col>
+              </Row>
+            </CardBody>
+          </Card>
+        )}
+
         <Row>
           <Col lg="12">
-          <div>
-            <Card>
+            <div>
+              <Card>
                 <CardBody>
-                <CardTitle tag="h5">Payments History</CardTitle>
-                <CardSubtitle className="mb-2 text-muted" tag="h6">
+                  <CardTitle tag="h5">Payments History</CardTitle>
+                  <CardSubtitle className="mb-2 text-muted" tag="h6">
                     List of all payments made to Wisper
-                </CardSubtitle>
+                  </CardSubtitle>
 
-                <Table className="no-wrap mt-3 align-middle" responsive borderless>
+                  <Table
+                    className="no-wrap mt-3 align-middle"
+                    responsive
+                    borderless
+                  >
                     <thead>
-                    <tr>
+                      <tr>
+                        <th>S/N</th>
+                        <th>Business ID</th>
                         <th>Amount</th>
                         <th>Date of Payment</th>
 
                         <th>Payment Reference</th>
-                    </tr>
+                      </tr>
                     </thead>
                     <tbody>
-                    {payment && payment.reverse().map((pm, index) => (
-                        <tr key={index} className="border-top">
-                        <td>
-                            <div className="d-flex align-items-center p-2">
-                            <div className="ms-3">
-                                <h6 className="mb-0">{pm.amount}</h6>
-                            </div>
-                            </div>
-                        </td>
-                        <td>{pm.date_of_payment.split(" GMT")[0]}</td>
-                        <td>{pm.payment_ref}</td>
-                        </tr>
-                    ))}
+                      {paymentData &&
+                        paymentData.reverse().map((pm, index) => (
+                          <tr key={index} className="border-top">
+                            <td>{index}</td>
+                            <td>{pm.business_id}</td>
+                            <td>
+                              <div className="d-flex align-items-center p-2">
+                                <div className="ms-3">
+                                  <h6 className="mb-0">{pm.amount}</h6>
+                                </div>
+                              </div>
+                            </td>
+                            <td>{pm.date_of_payment.split(" GMT")[0]}</td>
+                            <td>{pm.payment_ref}</td>
+                          </tr>
+                        ))}
                     </tbody>
-                </Table>
+                  </Table>
                 </CardBody>
-            </Card>
-        </div>
+              </Card>
+            </div>
           </Col>
         </Row>
       </div>

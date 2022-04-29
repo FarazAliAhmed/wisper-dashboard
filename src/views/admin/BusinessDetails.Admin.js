@@ -13,17 +13,31 @@ import {
 import TopCards from "../../components/dashboard/TopCards";
 
 import AdminLayout from "../../layouts/AdminLayout";
-import { getSingleBusiness } from "../../services/Admin.Services/businessService";
+import TransactionsTable from "../../components/TransactionsTable";
 
-import { displayBalance } from "../../utils";
+import {
+  getSingleBusiness,
+  makeAdmin,
+  removeAdmin,
+} from "../../services/Admin.Services/businessService";
+
+import {
+  displayBalance,
+  getBusinessTransactionFromAllTransactions,
+} from "../../utils";
+import { useAdmin } from "../../context/adminContext";
 
 const Account = (props) => {
   const [business, setBusiness] = useState({});
   const [balanceDisplay, setBalanceDisplay] = useState("");
+  const [isAdmin, setIsAdmin] = useState();
+  const [loading, setLoading] = useState(false);
 
   const businessId = props.match.params.businessId;
 
   const mega_wallet = business?.balance?.mega_wallet;
+
+  const { transaction } = useAdmin();
 
   useEffect(() => {
     async function fetchBusinessDetails() {
@@ -41,14 +55,39 @@ const Account = (props) => {
       );
     }
     fetchBusinessDetails();
+    setIsAdmin(business.isAdmin);
   }, []);
+
+  const handleRemoveAdmin = async () => {
+    setLoading(true);
+    await removeAdmin(business.email);
+    setLoading(false);
+    setIsAdmin(false);
+  };
+
+  const handleMakeAdmin = async () => {
+    setLoading(true);
+    await makeAdmin(business.email);
+    setLoading(false);
+    setIsAdmin(true);
+  };
 
   return (
     <AdminLayout>
       <Link to="/admin/business">
         <Button color="primary">Back</Button>
-      </Link>
-
+      </Link>{" "}
+      &nbsp;
+      {isAdmin && (
+        <Button disabled={loading} onClick={handleRemoveAdmin} color="danger">
+          {loading ? "Please wait..." : "Remove from admin"}
+        </Button>
+      )}
+      {!isAdmin && (
+        <Button disabled={loading} onClick={handleMakeAdmin} color="success">
+          {loading ? "Please wait..." : "Make admin"}
+        </Button>
+      )}
       <div>
         <h5 className="mb-4 mt-3">Business Account</h5>
 
@@ -233,6 +272,17 @@ const Account = (props) => {
               )}
             </Row>
           </Col>
+        </Row>
+
+        <Row className="mt-4">
+          <h5 className="mb-4 mt-3">Business Transactions</h5>
+          <TransactionsTable
+            transactions={getBusinessTransactionFromAllTransactions(
+              transaction,
+              businessId
+            )}
+            showHeader={false}
+          />
         </Row>
       </div>
     </AdminLayout>

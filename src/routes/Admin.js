@@ -5,6 +5,7 @@ import Loader from "../layouts/loader/Loader.js";
 
 import AdminProtectedRoute from "../components/AdminProtectedRoute.js";
 import AdminProvider from "../context/adminContext";
+import Login from "../views/auth/Login.js";
 
 const Home = lazy(() => import("../views/Home"));
 const Logout = lazy(() => import("../views/auth/Logout"));
@@ -58,6 +59,7 @@ const AdminRoutes = () => {
                 component={Transactions}
               />
               <AdminProtectedRoute path="/admin/account" component={Account} />
+              <AdminProtectedRoute exact path="/login" component={Login} />
               <AdminProtectedRoute path="/logout" component={Logout} />
             </Switch>
           </Suspense>

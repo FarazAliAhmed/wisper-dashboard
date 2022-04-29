@@ -1,13 +1,12 @@
 import AdminLayout from "../../layouts/AdminLayout";
-import { useAppState } from "../../context/appContext";
-import { useAdmin } from '../../context/adminContext'
+import { useAdmin } from "../../context/adminContext";
 import TransactionsTable from "../../components/TransactionsTable";
 
 import "../../assets/scss/custom.scss";
 
 const Transactions = () => {
-  const { transaction: transactions } = useAdmin()
-
+  const { transaction: transactions } = useAdmin();
+  console.log(transactions);
   return (
     <AdminLayout>
       <TransactionsTable

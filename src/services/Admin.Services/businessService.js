@@ -49,6 +49,14 @@ export const getAdmins = async () => {
   }
 };
 
+export const getMainBalance = async () => {
+  try {
+    return http.get(`${adminUrl}/api/balance`);
+  } catch (e) {
+    return null;
+  }
+};
+
 export const creditBusiness = async (body) => {
   try {
     return http.post(`${adminUrl}/credit`, body);
@@ -68,6 +76,22 @@ export const debitBusiness = async (body) => {
 export const generateCreditPayment = async (body) => {
   try {
     return http.post(`${adminUrl}/payments`, body);
+  } catch (e) {
+    return null;
+  }
+};
+
+export const removeAdmin = async (email) => {
+  try {
+    return http.post(`${adminUrl}/admin/remove`, { email });
+  } catch (e) {
+    return null;
+  }
+};
+
+export const makeAdmin = async (email) => {
+  try {
+    return http.delete(`${adminUrl}/admin/create`, { email });
   } catch (e) {
     return null;
   }

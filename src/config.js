@@ -1,6 +1,10 @@
+const IS_DEV_ENV = process.env.NODE_ENV === "development";
+
 module.exports = {
-  // apiUrl: "http://localhost:5000/api",
-  apiUrl: "https://wisper-reseller.herokuapp.com/api",
-  // adminUrl: "http://localhost:5000/api/admin",
-  adminUrl: "https://wisper-reseller.herokuapp.com/api/admin",
+  apiUrl: IS_DEV_ENV
+    ? "http://localhost:5000/api"
+    : "https://wisper-reseller.herokuapp.com/api",
+  adminUrl: IS_DEV_ENV
+    ? "http://localhost:5000/api/admin"
+    : "https://wisper-reseller.herokuapp.com/api/admin",
 };

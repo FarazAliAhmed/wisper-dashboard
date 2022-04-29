@@ -103,3 +103,12 @@ export function paginate(items, pageNumber, pageSize) {
   const startIndex = (pageNumber - 1) * pageSize;
   return _(items).slice(startIndex).take(pageSize).value();
 }
+
+export function getBusinessTransactionFromAllTransactions(
+  allTransactions = [],
+  businessID
+) {
+  return allTransactions.filter(
+    (transaction) => transaction?.business_id === businessID
+  );
+}
