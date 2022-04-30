@@ -82,9 +82,18 @@ export const totalDataSold = (dataTransactions = []) => {
 //   return user?.type === "mega" ? `${volume}`.split(".")[0] + ` ${unit}` : ` ${unit}` + `${cash}`.split(".")[0]
 // }
 
-export const displayBalance = (volume, unit, cash, user) => {
+export const displayBalance = (volume, unit, cash, mega_wallet, user) => {
   if (user.type === "mega") {
-    return `${parseInt(volume)} ${unit}`;
+    const totalArray = Object.values(mega_wallet)
+    const totalBalance = totalArray.reduce((prev, curr) => {
+      if(typeof curr == "string"){
+        return prev
+      }else{
+        return prev + curr
+      }
+    }, 0)
+    console.log(totalBalance)
+    return `${totalBalance} ${unit}`;
   } else {
     return `${unit} ${parseInt(cash)}`;
   }

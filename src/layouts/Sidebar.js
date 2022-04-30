@@ -4,8 +4,11 @@ import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 import { useAppState } from "../context/appContext";
 import { useUser } from "../context/userContext";
+import { useAdmin } from "../context/adminContext"
 import { displayBalance } from "../utils";
 
+
+// Businesses Navigation Bar
 const navigation = [
   {
     title: "Dashboard",
@@ -59,6 +62,8 @@ const navigation = [
   },
 ];
 
+
+// Admin Navigation Bar
 const adminNav = [
   {
     title: "Dashboard",
@@ -116,6 +121,10 @@ const Sidebar = ({ isAdmin }) => {
   let location = useLocation();
   const [balanceDisplay, setBalanceDisplay] = useState("");
   const [nav, setNav] = useState(navigation);
+  const [adminBalance, setAdminBalance] = useState({
+    mtn_balance: "",
+    airtel_balance: "",
+  })
 
   useEffect(() => {
     if (isAdmin) {
@@ -124,17 +133,18 @@ const Sidebar = ({ isAdmin }) => {
   }, [isAdmin]);
 
   const {
-    currentBalance: { volume, unit, cash, mtn_balance, airtel_balance },
+    currentBalance: { volume, unit, cash, mega_wallet },
   } = useAppState();
 
   const { user } = useUser();
-
+  const adminContext = useAdmin();  
+  console.log(adminContext)
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
 
   useEffect(() => {
-    setBalanceDisplay(displayBalance(volume, unit, cash, user));
+    setBalanceDisplay(displayBalance(volume, unit, cash, mega_wallet, user));
   }, [volume, unit, cash]);
 
   return (
@@ -148,8 +158,15 @@ const Sidebar = ({ isAdmin }) => {
           onClick={() => showMobilemenu()}
         ></Button>
       </div>
-      <div className="mt-2 text-muted fw-bold">MTN: {mtn_balance} MB</div>
-      <div className="mt-2 text-muted fw-bold">AIRTEL: {airtel_balance} MB</div>
+      {
+        user && user.isAdmin ?
+        <>
+          <div className="mt-2 text-muted fw-bold">MTN: {!!adminContext ? adminContext.mainBalance.mtn_balance : ""} MB</div>
+          <div className="mt-2 text-muted fw-bold">AIRTEL: {!!adminContext ? adminContext.mainBalance.airtel_balance : ""} MB</div>
+        </> : <>
+        <div className="mt-2 text-muted fw-bold">TOTAL: {balanceDisplay}</div>
+        </>
+      }
       <div className="pt-4 mt-2">
         <Nav vertical className="sidebarNav">
           {nav.map((navi, index) => (

@@ -16,21 +16,19 @@ import "../../assets/scss/custom.scss";
 
 const Dashboard = () => {
   const { user } = useUser();
-  const { transaction, business, payment } = useAdmin();
+  const { transaction, business, payment, mainBalance } = useAdmin();
   const {
     currentBalance: {
       volume,
       unit,
       cash,
       mega_wallet,
-      mtn_balance,
-      airtel_balance,
     },
   } = useAppState();
   const [balanceDisplay, setBalanceDisplay] = useState("");
 
   useEffect(() => {
-    setBalanceDisplay(displayBalance(volume, unit, cash, user));
+    setBalanceDisplay(displayBalance(volume, unit, cash, mega_wallet, user));
   }, [volume, unit, cash]);
 
   return (
@@ -43,7 +41,7 @@ const Dashboard = () => {
               bg="bg-light-info text-info"
               title="Profit"
               subtitle="MTN (MAIN BALANCE)"
-              earning={`${mtn_balance} MB`}
+              earning={`${mainBalance.mtn_balance} MB`}
               icon="bi bi-wallet-fill"
             />
           </Col>
@@ -52,7 +50,7 @@ const Dashboard = () => {
               bg="bg-light-success text-success"
               title="New Project"
               subtitle="Airtel (MAIN BALANCE)"
-              earning={`${airtel_balance} MB`}
+              earning={`${mainBalance.airtel_balance} MB`}
               icon="bi bi-wallet2"
             />
           </Col>

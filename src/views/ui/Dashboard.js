@@ -22,7 +22,7 @@ const Dashboard = () => {
   const [balanceDisplay, setBalanceDisplay] = useState("");
 
   useEffect(() => {
-    setBalanceDisplay(displayBalance(volume, unit, cash, user));
+    setBalanceDisplay(displayBalance(volume, unit, cash, mega_wallet, user));
   }, [volume, unit, cash]);
 
   return (

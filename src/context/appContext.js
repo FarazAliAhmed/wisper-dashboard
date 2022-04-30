@@ -4,7 +4,7 @@ import {
   getBalance,
   getAllPayments,
 } from "../services/dataService";
-import { getMainBalance } from "../services/Admin.Services/businessService";
+// import { getMainBalance } from "../services/Admin.Services/businessService";
 
 export const AppStateContext = createContext();
 
@@ -20,18 +20,23 @@ const AppStateProvider = ({ children }) => {
       glo: 0,
       unit: "",
     },
-    mtn_balance: "",
-    airtel_balance: "",
+    // mtn_balance: "",
+    // airtel_balance: "",
   });
   const [transactions, setTransactions] = useState([]);
   const [payments, setPayments] = useState([]);
 
   useEffect(() => {
     async function fetchBalance() {
-      const balanceRes = await getBalance();
-      const transactionRes = await getAllTransactions();
-      const paymentRes = await getAllPayments();
-      const mainBalance = await getMainBalance();
+      const results = await Promise.all([
+        getBalance(),
+        getAllTransactions(),
+        getAllPayments()
+      ])
+      const balanceRes = results[0] 
+      const transactionRes = results[1] 
+      const paymentRes = results[2] 
+      // const mainBalance = await getMainBalance();
       setCurrentBalance({
         volume: balanceRes.data.data_volume,
         unit: balanceRes.data.data_unit,
@@ -43,8 +48,8 @@ const AppStateProvider = ({ children }) => {
           glo: balanceRes.data.mega_wallet.glo,
           unit: balanceRes.data.mega_wallet.unit,
         },
-        mtn_balance: mainBalance.data.balance.account_1,
-        airtel_balance: mainBalance.data.balance.account_2,
+        // mtn_balance: mainBalance.data.balance.account_1,
+        // airtel_balance: mainBalance.data.balance.account_2,
       });
       transactionRes.data.sort(function (a, b) {
         const A = Date.parse(a.created_at);
