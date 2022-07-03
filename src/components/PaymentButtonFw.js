@@ -8,7 +8,7 @@ const { REACT_APP_FLUTTERWAVE_PUBLIC_KEY } = process.env
 
 
 
-const PaymentButton = () => {
+const PaymentButtonFw = () => {
 
     const { user } = useUser()
     const [show, setShow] = useState(false)
@@ -18,7 +18,7 @@ const PaymentButton = () => {
 
     // console.log(user)
     useEffect(() => {
-        if (parseInt(price) < 1000){
+        if (parseInt(price) < 2500){
             setInvalid(true)
         }else {
             setInvalid(false)
@@ -105,7 +105,7 @@ const PaymentButton = () => {
                             </Label>
                             <Input type="number" id="price" name="price" onChange={setAmount} invalid={invalid} />
                             <FormFeedback>
-                                Amount must be at least ₦1,000
+                                Amount must be at least ₦2,500
                             </FormFeedback>
                             <FormText>
                                 Enter an amount to fund wallet with
@@ -131,4 +131,4 @@ const PaymentButton = () => {
     );
 }
 
-export default PaymentButton
+export default PaymentButtonFw

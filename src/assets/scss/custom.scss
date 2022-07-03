@@ -51,6 +51,21 @@
   }
 }
 
+.receipt-button {
+  border-radius: 5px;
+  background-color: rgb(0, 161, 0);
+  border: none;
+  color: #fff;
+  // width: 12em;
+  // padding: 1em 0;
+  // font-weight: bold;
+}
+
+
+.receipt-font {
+  font-size: 1rem;
+  line-height: 2rem;
+}
 // Component: AllocateButton
 .confirm {
   display: flex;
