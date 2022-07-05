@@ -7,12 +7,15 @@ import cancel from "../assets/images/logos/cancel.png";
 import checked from "../assets/images/logos/checked.png";
 import loadingGIF from "../assets/images/logos/loading2.gif";
 
+import { useAppState } from '../context/appContext'
+
 const AllocateButton = ({
   loading,
   setLoading,
   plan_id,
   phone_number,
   handleSubmit,
+  plans,
 }) => {
   const [success, setSuccess] = useState(false);
   const [confirm, setConfirm] = useState(false);
@@ -22,7 +25,7 @@ const AllocateButton = ({
   const [plan, setPlan] = useState({});
 
   const handleSend = () => {
-    const selectedPlan = getPlanFromId(plan_id);
+    const selectedPlan = getPlanFromId(plan_id, plans);
     setPlan(selectedPlan);
     if (plan_id && phone_number) {
       setConfirm(true);
@@ -34,6 +37,7 @@ const AllocateButton = ({
   const handleAllocate = async () => {
     // setConfirm(false)
     const status = await handleSubmit();
+    console.log({status})
     if (status.status) {
       setMessage(status.message);
       setSuccess(true);
@@ -59,8 +63,9 @@ const AllocateButton = ({
           <div className="confirm text-center">
             <img src={warning} width={50} className="confirm-warn" alt="warn" />
             <p className="text-center">
-              Are you sure you want to send <strong>{plan?.size}</strong> worth{" "}
-              <strong>{plan?.amount}</strong> to <strong>{phone_number}</strong>
+              Are you sure you want to send <strong>{plan?.size}</strong> 
+              {/* worth{" "} <strong>{plan?.amount}</strong>  */}
+              {" "} to <strong>{phone_number}</strong>
             </p>
           </div>
         </ModalBody>

@@ -154,6 +154,7 @@ const AllocateData = () => {
                   handleSubmit={handleSubmit}
                   plan_id={plan.plan_id}
                   phone_number={plan.phone_number}
+                  plans={plans}
                 />
                 {/* <Button disabled={loading} type="submit" color="primary">
               Allocate

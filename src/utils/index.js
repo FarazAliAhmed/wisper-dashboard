@@ -1,5 +1,5 @@
 import _ from "lodash";
-import tableData from "./plansTable";
+// import tableData from "./plansTable";
 
 export const formIsValid = (errorObject) => {
   return Object.keys(errorObject).length > 0;
@@ -39,7 +39,7 @@ export const handleFailedRequest = (errorObj) => {
   if (errorObj.response && errorObj.response.status === 400) {
     return {
       status: false,
-      message: errorObj.response.data,
+      message: errorObj.response.data.message,
     };
   }
 
@@ -99,8 +99,9 @@ export const displayBalance = (volume, unit, cash, mega_wallet, user) => {
   }
 };
 
-export const getPlanFromId = (plan_id) => {
+export const getPlanFromId = (plan_id, plans) => {
   const id = parseInt(plan_id);
+  const tableData = parseDataPlans(plans)
   const plan = tableData.filter((plan_data) => {
     // console.log(plan_id, plan_data["dataId"]);
     return parseInt(plan_data["dataId"]) === id;
