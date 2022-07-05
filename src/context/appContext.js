@@ -3,6 +3,7 @@ import {
   getAllTransactions,
   getBalance,
   getAllPayments,
+  getAllPlans,
 } from "../services/dataService";
 // import { getMainBalance } from "../services/Admin.Services/businessService";
 
@@ -25,17 +26,20 @@ const AppStateProvider = ({ children }) => {
   });
   const [transactions, setTransactions] = useState([]);
   const [payments, setPayments] = useState([]);
+  const [plans, setPlans] = useState([]);
 
   useEffect(() => {
     async function fetchBalance() {
       const results = await Promise.all([
         getBalance(),
         getAllTransactions(),
-        getAllPayments()
+        getAllPayments(),
+        getAllPlans(),
       ])
       const balanceRes = results[0] 
       const transactionRes = results[1] 
       const paymentRes = results[2] 
+      const planRes = results[3]
       // const mainBalance = await getMainBalance();
       setCurrentBalance({
         volume: balanceRes.data.data_volume,
@@ -59,13 +63,14 @@ const AppStateProvider = ({ children }) => {
       });
       setTransactions(transactionRes.data);
       setPayments(paymentRes.data);
+      setPlans(planRes.data.plan);
     }
     fetchBalance();
   }, []);
 
   return (
     <AppStateContext.Provider
-      value={{ currentBalance, transactions, payments }}
+      value={{ currentBalance, transactions, payments, plans }}
     >
       {children}
     </AppStateContext.Provider>

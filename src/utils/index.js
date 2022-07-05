@@ -121,3 +121,44 @@ export function getBusinessTransactionFromAllTransactions(
     (transaction) => transaction?.business_id === businessID
   );
 }
+
+// Currently being used in application
+// {
+//   dataId: 234,
+//   network: "mtn",
+//   plan_type: "sme",
+//   amount: "₦245",
+//   size: "1.0 gb",
+//   duration: "30 days",
+// },
+
+
+// What is fetched from the backend
+// id: "626b0cc4e2e545785a5399a3"
+// network: "mtn"
+// plan_id: 206
+// plan_type: "gifting"
+// price: 2400
+// size: "10 gb"
+// unit: "gb"
+// validity: "monthly"
+// volume: 10
+// __v: 0
+// _id: "626b0cc4e2e545785a5399a3"
+
+
+export function parseDataPlans(plans){
+  const formated_plans = plans.map(plan => {
+    return {
+      dataId: plan['plan_id'],
+      network: plan['network'],
+      plan_type: plan['plan_type'],
+      amount: plan['price'],
+      size: `${plan['volume']}.0 ${plan['unit']}`,
+      // size: "1.0 gb",
+      duration: plan['validity'],
+    }
+  })
+
+  return formated_plans;
+}

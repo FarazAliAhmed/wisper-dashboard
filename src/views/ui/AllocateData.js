@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   Form,
@@ -13,11 +13,12 @@ import {
 } from "reactstrap";
 import AllocateButton from "../../components/AllocateButton";
 import { useUser } from "../../context/userContext";
+import { useAppState } from "../../context/appContext";
 
 import FullLayout from "../../layouts/FullLayout";
 import { allocateData } from "../../services/dataService";
-import { handleFailedRequest } from "../../utils";
-import dataPlans from "../../utils/plansTable";
+import { handleFailedRequest, parseDataPlans } from "../../utils";
+// import dataPlans from "../../utils/plansTable";
 
 import "./../../assets/scss/custom.scss";
 
@@ -37,6 +38,13 @@ const AllocateData = () => {
 
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
+
+  const { plans } = useAppState()
+  const dataPlans = parseDataPlans(plans)
+
+  // useEffect(() => {
+  //   parseDataPlans(plans)
+  // }, [])
 
   const handleSubmit = async (e) => {
     // e.preventDefault();

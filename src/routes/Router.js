@@ -34,7 +34,7 @@ const Routes = () => {
           <Route exact path="/" component={Home} />
           <AdminProtectedRoute path="/admin" component={Admin} />
           <ProtectedRoute path="/dashboard" component={Dashboard} />
-          <ProtectedRoute path="/pricing" component={Pricing} />
+          <ProtectedRoute path="/packages" component={Pricing} />
           <ProtectedRoute path="/allocate" component={AllocateData} />
           <ProtectedRoute path="/wallet" component={Wallet} />
           <ProtectedRoute path="/account" component={Account} />

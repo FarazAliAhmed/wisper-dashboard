@@ -226,11 +226,11 @@ const TransactionsTable = ({
                     <tr>
                       <th>Phone Number</th>
                       <th>Volume</th>
-                      <th>Price</th>
                       <th>Status</th>
                       <th>Network</th>
                       <th>Date</th>
                       <th>Receipt</th>
+                      {/* <th>Price</th> */}
                       {/* <th>Reference</th> */}
                       {/* <th>Price</th> */}
                     </tr>
@@ -247,7 +247,7 @@ const TransactionsTable = ({
                           </div>
                         </td>
                         <td>{tx.data_volume}</td>
-                        <td>{tx.price || "-"}</td>
+                        {/* <td>{tx.price || "-"}</td> */}
                         <td>
                           {tx.status === "processing" ? (
                             <span className="p-2 bg-warning rounded-circle d-inline-block ms-3"></span>

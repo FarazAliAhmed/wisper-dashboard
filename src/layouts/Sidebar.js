@@ -36,10 +36,15 @@ const navigation = [
     icon: "bi bi-person",
   },
   {
-    title: "Pricing",
-    href: "/pricing",
+    title: "Packages",
+    href: "/packages",
     icon: "bi bi-tags",
   },
+  // {
+  //   title: "Pricing",
+  //   href: "/pricing",
+  //   icon: "bi bi-tags",
+  // },
   {
     title: "Payments",
     href: "/payments",
@@ -138,7 +143,6 @@ const Sidebar = ({ isAdmin }) => {
 
   const { user } = useUser();
   const adminContext = useAdmin();  
-  console.log(adminContext)
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
