@@ -5,6 +5,7 @@ import {
   PaginationItem,
   PaginationLink,
 } from "reactstrap";
+import "./../assets/scss/custom.scss";
 
 const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
   const pagesCount = Math.ceil(itemsCount / pageSize);

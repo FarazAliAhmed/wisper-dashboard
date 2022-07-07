@@ -126,4 +126,13 @@
   background: #d3edfa;
   /* color: rgb(54, 153, 255); */
 }
+
+.pagination{
+  flex-wrap: wrap;
+}
+
+/* .pagination li{
+  flex: 1;
+  max-width: 36px;
+} */
 /*# sourceMappingURL=custom.css.map */

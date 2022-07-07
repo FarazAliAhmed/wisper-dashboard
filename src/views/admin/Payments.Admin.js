@@ -7,11 +7,13 @@ import {
   Table,
   Col,
   Row,
+  Button,
   FormGroup,
   Input,
   CardText,
 } from "reactstrap";
 import AdminLayout from "../../layouts/AdminLayout";
+import PaymentReceipt from "../../components/PaymentReceipt";
 import { useAdmin } from "../../context/adminContext";
 
 import "../../assets/scss/custom.scss";
@@ -24,6 +26,21 @@ const Payments = () => {
   useEffect(() => {
     setPaymentData(payments);
   }, []);
+
+  const [show, setShow] = useState(false)
+  const [receiptdata, setReceiptData] = useState({
+    ...paymentData[0]
+  })
+
+  const toggleShow = () => {
+    setShow(!show)
+  }
+
+  const showReceipt = (receiptdata) => {
+    setReceiptData(receiptdata)
+    toggleShow()
+  }
+
   const handleChange = (e) => {
     const val = e.target.value;
     setSearchValue(val);
@@ -109,6 +126,9 @@ const Payments = () => {
                             </td>
                             <td>{pm.date_of_payment.split(" GMT")[0]}</td>
                             <td>{pm.payment_ref}</td>
+                            <td>
+                          <Button className="receipt-button" onClick={() => showReceipt(pm)}>View</Button>
+                        </td>
                           </tr>
                         ))}
                     </tbody>
@@ -119,6 +139,7 @@ const Payments = () => {
           </Col>
         </Row>
       </div>
+      <PaymentReceipt show={show} receiptData={receiptdata} toggleShow={toggleShow} />
     </AdminLayout>
   );
 };
