@@ -36,19 +36,19 @@ const TransactionsTable = ({
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = "20";
 
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   const [receiptdata, setReceiptData] = useState({
-    ...transactionsData[0]
-  })
+    ...transactionsData[0],
+  });
 
   const toggleShow = () => {
-    setShow(!show)
-  }
+    setShow(!show);
+  };
 
   const showReceipt = (receiptdata) => {
-    setReceiptData(receiptdata)
-    toggleShow()
-  }
+    setReceiptData(receiptdata);
+    toggleShow();
+  };
 
   useEffect(() => {
     const paginatedData = paginate(transactions, currentPage, pageSize);
@@ -129,10 +129,10 @@ const TransactionsTable = ({
                     <span className=" bg-success rounded-circle d-inline-block"></span>{" "}
                     Successful
                   </p>
-                  <p className="legend">
+                  {/*   <p className="legend">
                     <span className=" bg-warning rounded-circle d-inline-block"></span>{" "}
                     Processing
-                  </p>
+                  </p> */}
                   <p className="legend">
                     <span className=" bg-danger rounded-circle d-inline-block"></span>{" "}
                     Failed
@@ -187,11 +187,11 @@ const TransactionsTable = ({
                                   >
                                     Success
                                   </DropdownItem>
-                                  <DropdownItem
+                                  {/*    <DropdownItem
                                     onClick={() => handleFilter("processing")}
                                   >
                                     Processing
-                                  </DropdownItem>
+                                  </DropdownItem> */}
                                   <DropdownItem
                                     onClick={() => handleFilter("failed")}
                                   >
@@ -260,7 +260,12 @@ const TransactionsTable = ({
                         <td>{tx.network_provider}</td>
                         <td>{tx.created_at}</td>
                         <td>
-                          <Button className="receipt-button" onClick={() => showReceipt(tx)}>View</Button>
+                          <Button
+                            className="receipt-button"
+                            onClick={() => showReceipt(tx)}
+                          >
+                            View
+                          </Button>
                         </td>
                         {/* <td>₦ {tx.data_price}</td> */}
                         {/* <td>{tx.transaction_ref}</td> */}
@@ -268,8 +273,12 @@ const TransactionsTable = ({
                     ))}
                   </tbody>
                 </Table>
-                
-                <TransactionReceipt show={show} receiptData={receiptdata} toggleShow={toggleShow} />
+
+                <TransactionReceipt
+                  show={show}
+                  receiptData={receiptdata}
+                  toggleShow={toggleShow}
+                />
                 <Pagination
                   itemsCount={transactions.length}
                   pageSize={pageSize}

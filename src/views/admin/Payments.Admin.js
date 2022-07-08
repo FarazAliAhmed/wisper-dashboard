@@ -20,6 +20,7 @@ import "../../assets/scss/custom.scss";
 
 const Payments = () => {
   const { payment: payments } = useAdmin();
+  console.log(payments);
   const [searchValue, setSearchValue] = useState("");
   const [paymentData, setPaymentData] = useState([]);
 
