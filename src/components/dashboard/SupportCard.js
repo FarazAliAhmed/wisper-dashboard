@@ -15,27 +15,15 @@ const SupportCard = () => {
               Whatsapp
             </p>
           </Col>
-          <Col sm="12" md="4" lg="3">
-            <Link
-              to={{
-                pathname: "https://chat.whatsapp.com/GKt0Eb5tvtK1mATZQKovIR",
-              }}
-              target="_blank"
-            >
-              <Button color="primary " className="btn-block">
-                Whatsapp Us
-              </Button>
-            </Link>
-
+          <Col sm="12" md="4" lg="3" className="chat-btn">
             <Link
               to={{
                 pathname: "https://wa.me/message/V5ZBZYUNYXSXC1",
               }}
               target="_blank"
             >
-              {" "}
-              <Button color="primary" className="mt-2 btn-block">
-                Join Our Whatsapp Group
+              <Button color="primary " className="btn-block">
+                Chat with Us
               </Button>
             </Link>
           </Col>
