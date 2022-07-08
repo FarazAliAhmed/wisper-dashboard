@@ -1,13 +1,18 @@
 import React from "react";
 import { Card, CardBody, CardTitle, Table, Button } from "reactstrap";
 import FullLayout from "../../layouts/FullLayout";
-import tableData from "../../utils/plansTable";
+// import tableData from "../../utils/plansTable";
 import { useUser } from "../../context/userContext";
+import { useAppState } from '../../context/appContext'
+import { parseDataPlans } from '../../utils'
 
 const docs = "https://documenter.getpostman.com/view/17453703/UVksMZmU";
 
 const Documentation = () => {
   const { user } = useUser();
+  const { plans } =  useAppState()
+
+  const tableData = parseDataPlans(plans)
 
   return (
     <FullLayout>
@@ -45,7 +50,10 @@ const Documentation = () => {
                 </tr>
               </thead>
               <tbody>
-                {tableData.map((tdata, index) => (
+                {tableData
+                  .sort((a, b) => a['network'].localeCompare(b['network']))
+                  .sort((a,b) => a['plan_type'].localeCompare(b['plan_type']))
+                  .map((tdata, index) => (
                   <tr key={index} className="border-top">
                     <td>
                       <div className="d-flex align-items-center py-2">
