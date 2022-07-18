@@ -25,7 +25,8 @@ const Pricing = () => {
         <div className="table-row table-head">
           <div className="table-cell first-cell">
             <div className="logo_table">
-              <img src="/img/logo 1.png" alt="VNEt" />
+              {/* <img src="/img/logo 1.png" alt="VNEt" /> */}
+              <img src={mtnLogo} alt="MTN" />
             </div>
           </div>
           <div className="table-cell">
@@ -55,7 +56,8 @@ const Pricing = () => {
         <div className="table-row table-head">
           <div className="table-cell first-cell">
             <div className="logo_table">
-              <img src="./img/logo 3.png" alt="VNEt" />
+              {/* <img src="./img/logo 3.png" alt="VNEt" /> */}
+              <img src={airtelLogo} alt="Airtel" />
             </div>
           </div>
           <div className="table-cell">
@@ -84,7 +86,8 @@ const Pricing = () => {
       <div className="table-row table-head">
         <div className="table-cell first-cell">
           <div className="logo_table">
-            <img src="./img/logo 1.png" alt="VNEt" />
+            {/* <img src="./img/logo 1.png" alt="VNEt" /> */}
+            <img src={mtnLogo} alt="MTN" />
           </div>
         </div>
         <div className="table-cell">

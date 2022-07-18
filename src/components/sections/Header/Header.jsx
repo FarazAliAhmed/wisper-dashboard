@@ -44,7 +44,7 @@ const Header = () => {
           <div className="links">
             <ul>
               <li>
-                <a href="#  " onClick={() => handleClick(false)}>
+                <a href="#" onClick={() => handleClick(false)}>
                   Home
                 </a>
               </li>
@@ -67,12 +67,17 @@ const Header = () => {
                   Get In Touch
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/register">
                   <Button color="info" className="get-started">
                     GET STARTED
                   </Button>
                 </Link>
+              </li> */}
+              <li>
+                <a href="/register" color="info" className="active">
+                  GET STARTED
+                </a>
               </li>
             </ul>
           </div>
