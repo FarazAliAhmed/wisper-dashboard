@@ -33,6 +33,7 @@ const AdminProvider = ({ children }) => {
         getAdmins(),
         getMainBalance(),
       ]);
+      
       setBusiness(result[0].data);
       setPayment(result[1].data);
       setTransaction(result[2].data);

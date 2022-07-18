@@ -107,7 +107,18 @@
   width: 100%;
 }
 
+.chat-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .code-balance {
   background: rgb(211, 237, 250);
   /* color: rgb(54, 153, 255); */
+}
+
+.pagination {
+  flex-wrap: wrap;
+  margin-top: 1rem;
 }

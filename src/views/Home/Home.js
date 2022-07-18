@@ -1,9 +1,16 @@
 import React from "react";
-import { Redirect, Link } from "react-router-dom";
-import { Container, Button } from "reactstrap";
+import { Redirect } from "react-router-dom";
 
 import { getCurrentUser } from "../../services/authService";
-import Navigation from "../../components/Navigation";
+
+import {
+  About,
+  Cta,
+  Footer,
+  Header,
+  Partners,
+  Pricing,
+} from "../../components/sections";
 
 import "./home.scss";
 
@@ -16,7 +23,7 @@ const Home = () => {
   }
 
   return (
-    <div className="home-wrapper">
+    /* <div className="home-wrapper">
       <Container fluid>
         <Navigation />
       </Container>
@@ -34,7 +41,16 @@ const Home = () => {
           </Link>
         </header>
       </div>
-    </div>
+    </div> */
+
+    <main className="App">
+      <Header />
+      <About />
+      <Pricing />
+      <Cta />
+      <Partners />
+      <Footer />
+    </main>
   );
 };
 
