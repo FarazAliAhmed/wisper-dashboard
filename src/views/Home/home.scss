@@ -1415,6 +1415,49 @@ colume.about .column-1:before {
   animation: scale 1.2s ease-out infinite 1s;
 }
 
+.about ul {
+  padding-left: 0;
+}
+
+.about ul li {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.about ul li::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* font-family: FontAwesome; */
+  content: "\2192";
+  color: #007bff;
+}
+
+.footer ul {
+  padding-left: 0;
+}
+
+.footer .title-sm {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+}
+
+.footer-about .text,
+.footer .footer-newstletter .text {
+  font-size: 1rem;
+  color: #888;
+}
+
+.footer li a {
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.footer li a:hover {
+  color: #0579c9;
+}
+
 @keyframes scale {
   0% {
     transform: translate(-50%, -50%) scale(1);
@@ -1654,6 +1697,10 @@ colume.about .column-1:before {
     top: 13px;
   }
 
+  .about ul {
+    padding-left: 0;
+  }
+
   .about .points {
     width: 230px;
     left: 65%;
@@ -1790,6 +1837,12 @@ colume.about .column-1:before {
 
   .footer {
     padding: 4rem 0;
+  }
+
+  .footer ul,
+  .footer li {
+    padding: 0;
+    margin: 0;
   }
 
   .footer-links a {
@@ -2079,7 +2132,7 @@ colume.about .column-1:before {
     grid-template-columns: repeat(2, 1fr);
     max-width: 500px;
     margin: 0 auto;
-    text-align: center;
+    text-align: left;
   }
 
   .footer-about {
@@ -2430,7 +2483,7 @@ img {
   color: var(--main-color);
   font-size: 1.15rem;
   font-weight: 500;
-  text-transform: uppercase;
+  text-transform: capitalize;
   letter-spacing: 3px;
 }
 
@@ -2495,32 +2548,39 @@ header {
 
 nav {
   width: 100%;
-  position: relative;
+  position: fixed;
+  top: 0;
   z-index: 50;
+  background: #fff;
 }
 
 nav .container {
   display: flex;
   justify-content: space-between;
-  height: 6rem;
+  height: auto;
   align-items: center;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
 }
 
 .logo {
-  width: 80px;
+  min-width: 120px;
   display: flex;
   align-items: center;
 }
 
 .logo_footer {
-  width: 150px;
-  padding: 0 1.7rem;
+  width: 15%;
+  min-width: 150px;
+  /* padding: 0 1.7rem; */
   display: flex;
   align-items: center;
+  margin-bottom: 2rem;
 }
 
 .links ul {
   display: flex;
+  margin-bottom: 0;
 }
 
 .links a {
@@ -2528,7 +2588,7 @@ nav .container {
   padding: 0.9rem 1.2rem;
   color: var(--dark-one);
   font-size: 1.05rem;
-  text-transform: uppercase;
+  text-transform: capitalize;
   font-weight: 500;
   line-height: 1;
   transition: 0.3s;
@@ -2617,8 +2677,10 @@ nav.open .links {
 }
 
 .header-title {
-  font-size: 3.8rem;
-  line-height: 0.8;
+  font-size: 3.5rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  font-weight: 700;
   color: var(--dark-one);
 }
 
@@ -3180,6 +3242,24 @@ header .circle {
   transition: 0.3s;
 }
 
+.social-media {
+  display: flex;
+}
+
+.social-media a {
+  background: #007bff;
+  width: 2.7rem;
+  height: 2.7rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-media a i {
+  color: #fff;
+}
+
 .input-arrow {
   color: #fff;
   background-color: var(--main-color);
@@ -3199,16 +3279,17 @@ header .circle {
 }
 
 .bottom-footer {
-  margin-top: 5.5rem;
-  padding: 0 1.7rem;
+  margin-top: 3rem;
+  padding: 1.7rem 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-top: 1px solid #888;
 }
 
 .copyright .text {
   color: #7b7b7b;
-  font-size: 1.2rem;
+  font-size: 1rem;
   display: inline-block;
   text-align: center;
 }
@@ -3244,7 +3325,7 @@ header .circle {
 .social-media a {
   color: #7b7b7b;
   font-size: 1.3rem;
-  margin-right: 0.4rem;
+  margin-right: 0.7rem;
   transition: 0.3s;
 }
 
@@ -3425,6 +3506,17 @@ header .circle {
     font-size: 0.7rem;
     padding: 0.7rem 1.7rem;
     margin-left: 0.6rem;
+  }
+
+  nav .links a.active {
+    font-size: 1rem;
+    margin: 0;
+    padding: 1rem 0;
+  }
+
+  nav .links a {
+    font-size: 1rem;
+    padding: 1rem 0;
   }
 
   .header-title {
@@ -3743,7 +3835,7 @@ header .circle {
   }
 
   .header-content {
-    margin-top: 1rem;
+    margin-top: 6rem;
   }
 
   .header-title {
@@ -3956,7 +4048,6 @@ header .circle {
     grid-template-columns: repeat(2, 1fr);
     max-width: 500px;
     margin: 0 auto;
-    text-align: center;
   }
 
   .footer-about {
@@ -4182,7 +4273,7 @@ a {
 }
 .brand-carousel {
   background: #fff6f6;
-  margin-top: 15%;
+  margin-top: 3rem;
 }
 .owl-dots {
   text-align: center;

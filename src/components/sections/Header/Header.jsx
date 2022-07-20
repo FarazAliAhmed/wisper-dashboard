@@ -49,19 +49,19 @@ const Header = () => {
                 </a>
               </li>
               <li>
-                <a href="#" onClick={() => handleClick(false)}>
+                <a href="#about" onClick={() => handleClick(false)}>
                   About
                 </a>
               </li>
               <li>
-                <a href="#" onClick={() => handleClick(false)}>
-                  Services
+                <a href="#pricing" onClick={() => handleClick(false)}>
+                  Pricing
                 </a>
               </li>
               <li>
                 <a
                   href="https://wa.me/message/V5ZBZYUNYXSXC1"
-                  className="active"
+                  /*   className="active" */
                   onClick={() => handleClick(false)}
                 >
                   Get In Touch
@@ -76,7 +76,7 @@ const Header = () => {
               </li> */}
               <li>
                 <a href="/register" color="info" className="active">
-                  GET STARTED
+                  Log In
                 </a>
               </li>
             </ul>
@@ -91,17 +91,18 @@ const Header = () => {
       <div className="header-content">
         <div className="container grid-2">
           <div className="column-1">
-            <h1 className="header-title">Wisper Reseller</h1>
-            <br />
-            <h1 className="header-title" aling="center">
-              {" "}
-              Platform
+            <h1 className="header-title">
+              Wisper Reseller <br /> Platform
             </h1>
+
             <p className="text">
               Enjoy easy integration, cheaper pricing, and fast data allocation
               with wisper reseller API. Join our community of resellers and
               enjoy the best rate on data resale.
             </p>
+            <a href="/register" color="info" className="btn">
+              GET STARTED
+            </a>
           </div>
 
           <div className="column-2 image">

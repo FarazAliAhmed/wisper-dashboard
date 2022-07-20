@@ -11,7 +11,7 @@ const mtnCGAll = [...planData.mtnCG];
 
 const Pricing = () => {
   return (
-    <section>
+    <section id="pricing">
       <div>
         <div className="container">
           <div className="section-header">

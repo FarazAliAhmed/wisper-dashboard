@@ -35,11 +35,11 @@ const Footer = () => {
                   Chat Support on WhatsApp
                 </a>
               </li>
-              <li>
+              {/*  <li>
                 <a href="https://chat.whatsapp.com/GKt0Eb5tvtK1mATZQKovIR">
                   Join Reseller WhatsApp Group
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a href="https://documenter.getpostman.com/view/17453703/UVksMZmU">
                   API Documentation
@@ -65,28 +65,32 @@ const Footer = () => {
             <p className="text">
               Warri Address: 301, Warri Sapele road, Delta State, Nigeria.
             </p>
-            <p className="text">
+            {/*             <p className="text">
               Lagos Address: Plot 1193, Kasumu Ekemode, Victoria Island, 101241,
               Lagos.
+            </p> */}
+            <p className="text">
+              Email Address:{" "}
+              <a href="mailto: contact@wisper.ng">contact@wisper.ng</a> and{" "}
+              <a href="mailto: support@wisper.ng">support@wisper.ng</a>
             </p>
             <p className="text">
-              Email Address: contact@wisper.ng and support@wisper.ng
+              Tel: <a href="tel:+2348039255522">+2348039255522</a> ,{" "}
+              <a href="tel:+2349057790907">+2349057790907</a> .
             </p>
-            <p className="text">Tel: +2348039255522, +2349057790907.</p>
           </div>
         </div>
 
         <div className="bottom-footer">
           <div className="copyright">
             <p className="text">
-              Copyright&copy;2020 All rights reserved
-              <span>Wisper</span>
+              <span>Wisper</span> &copy; 2022 All rights reserved
             </p>
           </div>
 
           <div className="followme-wrap">
             <div className="followme">
-              <h3>Social Links</h3>
+              {/*  <h3>Social Links</h3> */}
               <span className="footer-line"></span>
               <div className="social-media">
                 <a href="https://web.facebook.com/wispercom">
@@ -104,11 +108,11 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="back-btn-wrap">
+            {/*  <div className="back-btn-wrap">
               <a href="#" className="back-btn">
                 <i className="fas fa-chevron-up"></i>
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
