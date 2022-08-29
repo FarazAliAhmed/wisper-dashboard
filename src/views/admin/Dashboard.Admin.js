@@ -40,7 +40,16 @@ const Dashboard = () => {
             <TopCards
               bg="bg-light-info text-info"
               title="Profit"
-              subtitle="MTN (MAIN BALANCE)"
+              subtitle="SIMSERVER"
+              earning={`₦ ${mainBalance.simserver}`}
+              icon="bi bi-wallet2"
+            />
+          </Col>
+          <Col sm="6" lg="4">
+            <TopCards
+              bg="bg-light-info text-info"
+              title="Profit"
+              subtitle="MTN (FASTLINK)"
               earning={`${mainBalance.mtn_balance} MB`}
               icon="bi bi-wallet-fill"
             />
@@ -49,7 +58,7 @@ const Dashboard = () => {
             <TopCards
               bg="bg-light-success text-success"
               title="New Project"
-              subtitle="Airtel (MAIN BALANCE)"
+              subtitle="Airtel (FASTLINK)"
               earning={`${mainBalance.airtel_balance} MB`}
               icon="bi bi-wallet2"
             />

@@ -10,7 +10,6 @@ import {
 
 function TransactionReceipt({receiptData, show, toggleShow}){
 
-    console.log({receiptData})
     return (
         <div>
             <Modal
@@ -81,7 +80,6 @@ const validityDate = ({created_at, volume}) => {
 
 const TransactionMessage = ({status, volume, phone_number, created_at}) => {
     const valid_until = validityDate({created_at, volume})
-    console.log({valid_until})
 
     if(status == "success"){
         return (

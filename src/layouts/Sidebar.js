@@ -56,7 +56,7 @@ const navigation = [
     icon: "bi bi-cash-stack",
   },
   {
-    title: "Developer's API",
+    title: "API Settings",
     href: "/developers",
     icon: "bi bi-code-slash",
   },
@@ -106,9 +106,19 @@ const adminNav = [
     icon: "bi bi-wrench",
   },
   {
-    title: "Pricing",
-    href: "/admin/pricing",
+    title: "Packages",
+    href: "/admin/packages",
     icon: "bi bi-tags",
+  },
+  // {
+  //   title: "Pricing",
+  //   href: "/admin/pricing",
+  //   icon: "bi bi-tags",
+  // },
+  {
+    title: "API Settings",
+    href: "/admin/developers",
+    icon: "bi bi-code-slash",
   },
   {
     title: "Account",
@@ -153,7 +163,7 @@ const Sidebar = ({ isAdmin }) => {
 
   return (
     <div className="p-3">
-      <div className="d-flex align-items-center">
+      <div className="d-flex align-items-center justify-content-between">
         <Logo />
         <Button
           close
@@ -165,8 +175,9 @@ const Sidebar = ({ isAdmin }) => {
       {
         user && user.isAdmin ?
         <>
-          <div className="mt-2 text-muted fw-bold">MTN: {!!adminContext ? adminContext.mainBalance.mtn_balance : ""} MB</div>
-          <div className="mt-2 text-muted fw-bold">AIRTEL: {!!adminContext ? adminContext.mainBalance.airtel_balance : ""} MB</div>
+          <div className="mt-2 text-muted fw-bold">SS.1 ~ {!!adminContext ? adminContext.mainBalance.simserver : ""} ₦</div>
+          <div className="mt-2 text-muted fw-bold">FL.1 ~ {!!adminContext ? adminContext.mainBalance.mtn_balance : ""} MB</div>
+          <div className="mt-2 text-muted fw-bold">FL.2 ~ {!!adminContext ? adminContext.mainBalance.airtel_balance : ""} MB</div>
         </> : <>
         <div className="mt-2 text-muted fw-bold">TOTAL: {balanceDisplay}</div>
         </>

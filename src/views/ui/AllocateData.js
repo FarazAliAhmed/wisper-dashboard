@@ -5,11 +5,11 @@ import {
   FormGroup,
   Label,
   Input,
-  Button,
   Row,
   Col,
-  UncontrolledAlert,
   CardBody,
+  // UncontrolledAlert,
+  // Button,
 } from "reactstrap";
 import AllocateButton from "../../components/AllocateButton";
 import { useUser } from "../../context/userContext";
@@ -31,10 +31,10 @@ const initialState = {
 const AllocateData = () => {
   const [plan, setPlan] = useState(initialState);
 
-  const [serverResponse, setServerResponse] = useState({
-    status: true,
-    message: "",
-  });
+  // const [serverResponse, setServerResponse] = useState({
+  //   status: true,
+  //   message: "",
+  // });
 
   const [loading, setLoading] = useState(false);
   const { user } = useUser();

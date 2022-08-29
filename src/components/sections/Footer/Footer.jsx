@@ -24,12 +24,12 @@ const Footer = () => {
           <div className="grid-4-col footer-links">
             <h3 className="title-sm">Useful Links</h3>
             <ul>
-              <li>
+              {/* <li>
                 <a href="http://wwww.wisper.ng/">Home</a>
               </li>
               <li>
                 <a href="https://wa.me/message/V5ZBZYUNYXSXC1">About us</a>
-              </li>
+              </li> */}
               <li>
                 <a href="https://wa.me/message/V5ZBZYUNYXSXC1">
                   Chat Support on WhatsApp

@@ -4,7 +4,7 @@ const Cta = () => {
   return (
     <section className="hireme" id="hireme">
       <div className="container">
-        <h3 className="title">Call To Actions</h3>
+        <h3 className="title">Get Started Now</h3>
         <p className="text">
           Get Started with Wisper Reseller Platform and start selling data at
           affordable rates.

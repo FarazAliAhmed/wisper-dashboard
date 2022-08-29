@@ -97,7 +97,7 @@ const Login = () => {
             type="submit"
             className="submit-btn"
           >
-            SUBMIT
+            Login
           </Button>
 
           <small className="text-center text-muted mt-3">

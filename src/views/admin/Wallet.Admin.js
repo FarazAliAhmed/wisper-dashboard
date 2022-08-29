@@ -5,7 +5,6 @@ import { useAdmin } from "../../context/adminContext";
 
 const Wallet = () => {
   const { wallet } = useAdmin();
-  console.log(wallet);
   return (
     <AdminLayout>
       <div>

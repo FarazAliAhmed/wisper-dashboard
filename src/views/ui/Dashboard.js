@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row } from "reactstrap";
+
+import "../../assets/scss/custom.scss";
 import TopCards from "../../components/dashboard/TopCards";
 import SupportCard from "../../components/dashboard/SupportCard";
 import FullLayout from "../../layouts/FullLayout";
-import { useAppState } from "../../context/appContext";
+import sterling_logo from "../../assets/images/logos/Sterling_Bank_Logo_Straight.png";
+
 import { totalDataSold, displayBalance } from "../../utils";
 import TransactionsTable from "../../components/TransactionsTable";
-// import PaymentButton from "../../components/PaymentButton";
 import PaymentButtonFw from "../../components/PaymentButtonFw";
+
+import { useAppState } from "../../context/appContext";
 import { useUser } from "../../context/userContext";
 
-import "../../assets/scss/custom.scss";
-import sterling_logo from "../../assets/images/logos/Sterling_Bank_Logo_Straight.png";
+// import PaymentButton from "../../components/PaymentButton";
 
 const Dashboard = () => {
   const { user } = useUser();

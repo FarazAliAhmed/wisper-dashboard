@@ -23,6 +23,7 @@ const Pricing = lazy(() => import("../views/admin/Pricing.Admin"));
 const Transactions = lazy(() => import("../views/admin/Transactions.Admin"));
 const Wallet = lazy(() => import("../views/admin/Wallet.Admin"));
 const Account = lazy(() => import("../views/admin/Account.Admin"));
+const Documentation = lazy(() => import("../views/admin/Documentation.Admin"));
 
 const AdminRoutes = () => {
   return (
@@ -52,7 +53,8 @@ const AdminRoutes = () => {
                 component={Allocate}
               />
               <AdminProtectedRoute path="/admin/payment" component={Payments} />
-              <AdminProtectedRoute path="/admin/pricing" component={Pricing} />
+              <AdminProtectedRoute path="/admin/packages" component={Pricing} />
+              <AdminProtectedRoute path="/admin/developers" component={Documentation} />
               <AdminProtectedRoute path="/admin/wallet" component={Wallet} />
               <AdminProtectedRoute
                 path="/admin/transaction"

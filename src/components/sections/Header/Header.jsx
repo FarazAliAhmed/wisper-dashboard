@@ -75,7 +75,7 @@ const Header = () => {
                 </Link>
               </li> */}
               <li>
-                <a href="/register" color="info" className="active">
+                <a href="/login" color="info" className="active">
                   Log In
                 </a>
               </li>

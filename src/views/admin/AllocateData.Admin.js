@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./../../assets/scss/custom.scss";
 import {
   Card,
   Form,
@@ -10,14 +11,14 @@ import {
   CardBody,
 } from "reactstrap";
 import AllocateButton from "../../components/AllocateButton";
+import { useAppState } from "../../context/appContext";
 import { useUser } from "../../context/userContext";
 
 import AdminLayout from "../../layouts/AdminLayout";
 import { allocateData } from "../../services/dataService";
-import { handleFailedRequest } from "../../utils";
-import dataPlans from "../../utils/plansTable";
+import { handleFailedRequest, parseDataPlans } from "../../utils";
+// import dataPlans from "../../utils/plansTable";
 
-import "./../../assets/scss/custom.scss";
 
 const initialState = {
   network: "airtel",
@@ -29,6 +30,9 @@ const initialState = {
 
 const AllocateData = () => {
   const [plan, setPlan] = useState(initialState);
+
+  const { plans } = useAppState()
+  const dataPlans = parseDataPlans(plans)
 
   // const [serverResponse, setServerResponse] = useState({
   //   status: true,
@@ -178,6 +182,7 @@ const AllocateData = () => {
                   handleSubmit={handleSubmit}
                   plan_id={plan.plan_id}
                   phone_number={plan.phone_number}
+                  plans={plans}
                 />
                 {/* <Button disabled={loading} type="submit" color="primary">
               Allocate
