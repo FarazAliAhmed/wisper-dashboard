@@ -6,7 +6,6 @@ import "../../assets/scss/custom.scss";
 
 const Transactions = () => {
   const { transaction: transactions } = useAdmin();
-  console.log(transactions);
   return (
     <AdminLayout>
       <TransactionsTable

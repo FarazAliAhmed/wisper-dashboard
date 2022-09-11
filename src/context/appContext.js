@@ -4,6 +4,7 @@ import {
   getBalance,
   getAllPayments,
   getAllPlans,
+  getMaintenance,
 } from "../services/dataService";
 // import { getMainBalance } from "../services/Admin.Services/businessService";
 
@@ -27,6 +28,14 @@ const AppStateProvider = ({ children }) => {
   const [transactions, setTransactions] = useState([]);
   const [payments, setPayments] = useState([]);
   const [plans, setPlans] = useState([]);
+  const [maintenance, setMaintenance] = useState({
+    "mtn_sme": false,
+    "mtn_gifting": false,
+    "airtel": false,
+    "glo": false,
+    "9mobile": false,
+    "notice": null,
+  })
 
   useEffect(() => {
     async function fetchBalance() {
@@ -35,11 +44,14 @@ const AppStateProvider = ({ children }) => {
         getAllTransactions(),
         getAllPayments(),
         getAllPlans(),
+        getMaintenance(),
       ])
       const balanceRes = results[0] 
       const transactionRes = results[1] 
       const paymentRes = results[2] 
       const planRes = results[3]
+      const maintenanceRes = results[4]
+      
       // const mainBalance = await getMainBalance();
       setCurrentBalance({
         volume: balanceRes.data.data_volume,
@@ -55,22 +67,25 @@ const AppStateProvider = ({ children }) => {
         // mtn_balance: mainBalance.data.balance.account_1,
         // airtel_balance: mainBalance.data.balance.account_2,
       });
+
       transactionRes.data.sort(function (a, b) {
         const A = Date.parse(a.created_at);
         const B = Date.parse(b.created_at);
         if (A > B) return -1;
         if (A < B) return 1;
       });
+
       setTransactions(transactionRes.data);
       setPayments(paymentRes.data);
       setPlans(planRes.data.plan);
+      setMaintenance(maintenanceRes.data.maintenance)
     }
     fetchBalance();
   }, []);
 
   return (
     <AppStateContext.Provider
-      value={{ currentBalance, transactions, payments, plans }}
+      value={{ currentBalance, transactions, payments, plans, maintenance, setMaintenance }}
     >
       {children}
     </AppStateContext.Provider>

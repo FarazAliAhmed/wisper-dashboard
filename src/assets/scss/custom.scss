@@ -118,6 +118,21 @@
   /* color: rgb(54, 153, 255); */
 }
 
+.notice-success {
+  background: #d5f3f2;
+  color: #002e2c;
+}
+
+.notice-warning {
+  background: #f8ecdc;
+  color: #492f00;
+}
+
+.notice-error {
+  background: #f8dddd;
+  color: #430007;
+}
+
 .pagination {
   flex-wrap: wrap;
   margin-top: 1rem;

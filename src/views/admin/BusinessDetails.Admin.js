@@ -19,6 +19,9 @@ import {
   getSingleBusiness,
   makeAdmin,
   removeAdmin,
+  makeActive,
+  disableAccount,
+  setAccountType,
 } from "../../services/Admin.Services/businessService";
 
 import {
@@ -31,6 +34,8 @@ const Account = (props) => {
   const [business, setBusiness] = useState({});
   const [balanceDisplay, setBalanceDisplay] = useState("");
   const [isAdmin, setIsAdmin] = useState();
+  const [active, setActive] = useState();
+  const [type, setType] = useState();
   const [loading, setLoading] = useState(false);
 
   const businessId = props.match.params.businessId;
@@ -43,19 +48,22 @@ const Account = (props) => {
     async function fetchBusinessDetails() {
       const res = await getSingleBusiness(businessId);
       setBusiness({ ...res.data.business, balance: { ...res.data.balance } });
+      setActive(res.data.business.active);
+      setIsAdmin(res.data.business.isAdmin);
+      setType(res.data.business.type)
 
-      const { data_volume, data_unit, wallet_balance } = res.data.balance;
+      const { data_volume, data_unit, wallet_balance, mega_wallet } = res.data.balance;
       setBalanceDisplay(
         displayBalance(
           data_volume,
           data_unit,
           wallet_balance,
+          mega_wallet,
           res.data.business
         )
       );
     }
     fetchBusinessDetails();
-    setIsAdmin(business.isAdmin);
   }, []);
 
   const handleRemoveAdmin = async () => {
@@ -72,6 +80,34 @@ const Account = (props) => {
     setIsAdmin(true);
   };
 
+  const handleSetActive = async () => {
+    setLoading(true);
+    await makeActive(business._id);
+    setLoading(false);
+    setActive(true);
+  }
+
+  const handleRemoveActive = async () => {
+    setLoading(true);
+    await disableAccount(business._id);
+    setLoading(false);
+    setActive(false);
+  }
+
+  const handleSetTypeLite = async () => {
+    setLoading(true);
+    await setAccountType("lite", business._id);
+    setLoading(false);
+    setType("lite");
+  }
+
+  const handleSetTypeMega = async () => {
+    setLoading(true);
+    await setAccountType("mega", business._id);
+    setLoading(false);
+    setType("mega");
+  }
+
   return (
     <AdminLayout>
       <Link to="/admin/business">
@@ -86,6 +122,28 @@ const Account = (props) => {
       {!isAdmin && (
         <Button disabled={loading} onClick={handleMakeAdmin} color="success">
           {loading ? "Please wait..." : "Make admin"}
+        </Button>
+      )}
+      &nbsp;
+      {active && (
+        <Button disabled={loading} onClick={handleRemoveActive} color="warning">
+          {loading ? "Please wait..." : "Disable Account"}
+        </Button>
+      )}
+      {!active && (
+        <Button disabled={loading} onClick={handleSetActive} color="info">
+          {loading ? "Please wait..." : "Enable Account"}
+        </Button>
+      )}
+      &nbsp;
+      {type === "lite" && (
+        <Button disabled={loading} onClick={handleSetTypeMega} color="dark">
+          {loading ? "Please wait..." : "Make Mega"}
+        </Button>
+      )}
+      {type === "mega" && (
+        <Button disabled={loading} onClick={handleSetTypeLite} color="primary">
+          {loading ? "Please wait..." : "Make Lite"}
         </Button>
       )}
       <div>

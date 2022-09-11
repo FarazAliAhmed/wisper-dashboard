@@ -20,13 +20,13 @@ import "../../assets/scss/custom.scss";
 
 const Payments = () => {
   const { payment: payments } = useAdmin();
-  console.log(payments);
+  
   const [searchValue, setSearchValue] = useState("");
   const [paymentData, setPaymentData] = useState([]);
 
   useEffect(() => {
     setPaymentData(payments);
-  }, []);
+  }, [payments]);
 
   const [show, setShow] = useState(false)
   const [receiptdata, setReceiptData] = useState({
@@ -114,7 +114,7 @@ const Payments = () => {
                     </thead>
                     <tbody>
                       {paymentData &&
-                        paymentData.reverse().map((pm, index) => (
+                        paymentData.map((pm, index) => (
                           <tr key={index} className="border-top">
                             <td>{index}</td>
                             <td>{pm.business_id}</td>

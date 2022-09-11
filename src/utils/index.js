@@ -83,7 +83,7 @@ export const totalDataSold = (dataTransactions = []) => {
 // }
 
 export const displayBalance = (volume, unit, cash, mega_wallet, user) => {
-  if (user.type === "mega") {
+  if (user?.type === "mega") {
     const totalArray = Object.values(mega_wallet)
     const totalBalance = totalArray.reduce((prev, curr) => {
       if(typeof curr == "string"){
@@ -92,7 +92,7 @@ export const displayBalance = (volume, unit, cash, mega_wallet, user) => {
         return prev + curr
       }
     }, 0)
-    console.log(totalBalance)
+
     return `${totalBalance} ${unit}`;
   } else {
     return `${unit} ${parseInt(cash)}`;
@@ -163,3 +163,11 @@ export function parseDataPlans(plans){
 
   return formated_plans;
 }
+
+export const plan_types = [
+  'mtn_sme',
+  'mtn_gifting',
+  'airtel',
+  'glo',
+  '9mobile'
+]

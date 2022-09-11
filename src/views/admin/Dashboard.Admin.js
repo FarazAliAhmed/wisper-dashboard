@@ -8,6 +8,7 @@ import { useAppState } from "../../context/appContext";
 import { useAdmin } from "../../context/adminContext";
 import { useUser } from "../../context/userContext";
 import "../../assets/scss/custom.scss";
+import AdminControls from "../../components/AdminControls";
 
 // import SupportCard from "../../components/dashboard/SupportCard";
 // import PaymentButton from "../../components/PaymentButton";
@@ -40,7 +41,7 @@ const Dashboard = () => {
             <TopCards
               bg="bg-light-info text-info"
               title="Profit"
-              subtitle="SIMSERVER"
+              subtitle="SIMSERVER WALLET"
               earning={`₦ ${mainBalance.simserver}`}
               icon="bi bi-wallet2"
             />
@@ -134,6 +135,9 @@ const Dashboard = () => {
                 </Col> */}
             </>
           )}
+        </Row>
+        <Row>
+          <AdminControls />
         </Row>
         <Row className="mt-4">
           <TransactionsTable

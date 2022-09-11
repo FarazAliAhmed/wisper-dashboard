@@ -68,27 +68,27 @@ const Header = ({isAdmin}) => {
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem header>{context?.user?.username}</DropdownItem>
-            <DropdownItem>
               <Link className="text-decoration-none text-dark" to={isAdmin ? "/admin" :"/dashboard"}>
+            <DropdownItem className="text-dark">
                 Dashboard
-              </Link>
             </DropdownItem>
-            <DropdownItem>
+              </Link>
               <Link className="text-decoration-none text-dark" to={isAdmin ? "/admin/account" : "/account"}>
+            <DropdownItem className="text-dark">
                 Edit Account
-              </Link>
             </DropdownItem>
+              </Link>
             <DropdownItem divider />
-            <DropdownItem>
               <Link className="text-decoration-none text-dark" to={isAdmin ? "/admin/allocate" : "/allocate"}>
+            <DropdownItem className="text-dark">
                 Allocate Data
-              </Link>
             </DropdownItem>
-            <DropdownItem>
+              </Link>
               <Link className="text-decoration-none text-danger" to="/logout">
+            <DropdownItem className="text-danger">
                 Logout
-              </Link>
             </DropdownItem>
+              </Link>
           </DropdownMenu>
         </Dropdown>
       </Collapse>
