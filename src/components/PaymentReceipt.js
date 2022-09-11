@@ -10,7 +10,6 @@ import {
 
 function PaymentReceipt({receiptData, show, toggleShow}){
 
-    console.log({receiptData})
     return (
         <div>
             <Modal
@@ -81,7 +80,6 @@ const validityDate = ({created_at, volume}) => {
 
 const PaymentMessage = ({status, volume, business_id, paid_on}) => {
     const valid_until = validityDate({paid_on, volume})
-    console.log({valid_until})
 
         return (
             <p>

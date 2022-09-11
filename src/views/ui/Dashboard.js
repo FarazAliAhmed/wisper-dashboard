@@ -13,6 +13,7 @@ import PaymentButtonFw from "../../components/PaymentButtonFw";
 
 import { useAppState } from "../../context/appContext";
 import { useUser } from "../../context/userContext";
+import AdminNotifier from "../../components/AdminNotifier";
 
 // import PaymentButton from "../../components/PaymentButton";
 
@@ -21,6 +22,7 @@ const Dashboard = () => {
   const {
     currentBalance: { volume, unit, cash, mega_wallet },
     transactions,
+    maintenance,
   } = useAppState();
   const [balanceDisplay, setBalanceDisplay] = useState("");
 
@@ -32,6 +34,11 @@ const Dashboard = () => {
     <FullLayout>
       <div>
         {/***Top Cards***/}
+        {maintenance.notice && 
+          <Row>
+            <AdminNotifier maintenance={maintenance}/>
+          </Row>
+        }
         <Row>
           <Col sm="6" lg="4">
             <TopCards

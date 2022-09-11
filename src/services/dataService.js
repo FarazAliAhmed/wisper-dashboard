@@ -53,3 +53,27 @@ export async function addPayment(payment) {
     return null;
   }
 }
+
+export async function getMaintenance(){
+  try{
+    return http.get(`${apiUrl}/maintenance`)
+  }catch(e){
+    return null
+  }
+}
+
+export async function saveWebhook(webhook){
+  try{
+    return http.post(`${apiUrl}/url/webhook`, {url: webhook})
+  }catch(e){
+    return null
+  }
+}
+
+export async function saveCallback(callback){
+  try{
+    return http.post(`${apiUrl}/url/callback`, {url: callback})
+  }catch(e){
+    return null
+  }
+}

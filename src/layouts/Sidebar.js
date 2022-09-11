@@ -165,12 +165,14 @@ const Sidebar = ({ isAdmin }) => {
     <div className="p-3">
       <div className="d-flex align-items-center justify-content-between">
         <Logo />
-        <Button
-          close
-          size="sm"
-          className="ms-auto d-lg-none"
-          onClick={() => showMobilemenu()}
-        ></Button>
+        <span className="d-md-none">
+          <Button
+            close
+            size="sm"
+            className="ms-auto"
+            onClick={() => showMobilemenu()}
+          ></Button>
+        </span>
       </div>
       {
         user && user.isAdmin ?

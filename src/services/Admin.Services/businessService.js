@@ -96,3 +96,27 @@ export const makeAdmin = async (email) => {
     return null;
   }
 };
+
+export const makeActive = async (account_id) => {
+  try{
+    return http.get(`${adminUrl}/account/enable/${account_id}`)
+  }catch(e){
+    return null
+  }
+}
+
+export const disableAccount = async (account_id) => {
+  try{
+    return http.get(`${adminUrl}/account/disable/${account_id}`)
+  }catch(e){
+    return null
+  }
+}
+
+export const setAccountType = (type, account_id) => {
+  try{
+    return http.post(`${adminUrl}/account/type`, { type, account_id })
+  }catch(e){
+    return null
+  }
+}

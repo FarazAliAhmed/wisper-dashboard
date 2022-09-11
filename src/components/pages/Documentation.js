@@ -4,6 +4,8 @@ import { useUser } from "../../context/userContext";
 import { useAppState } from '../../context/appContext'
 import { parseDataPlans } from '../../utils'
 
+import { saveCallback, saveWebhook } from '../../services/dataService'
+
 // import FullLayout from "../../layouts/FullLayout";
 // import tableData from "../../utils/plansTable";
 
@@ -13,10 +15,27 @@ const Documentation = () => {
   const { user } = useUser();
   const { plans } =  useAppState()
 
+  const [loading, setLoading] = useState(false)
   const [webhook, setWebhook] = useState()
   const [callback, setCallback] = useState()
 
   const tableData = parseDataPlans(plans)
+
+  const handleSaveWebhook = () => {
+    if(webhook){
+      setLoading(true)
+      saveWebhook(webhook)
+      setLoading(false)
+    }
+  }
+  
+  const handleSaveCallback = () => {
+    if(callback){
+      setLoading(true)
+      saveCallback(callback)
+      setLoading(false)
+    }
+  }
 
   return (
       <div>
@@ -54,8 +73,9 @@ const Documentation = () => {
 
             <Button
               color="info"
+              disabled={loading}
               style={{padding: ".2em 2.2em", margin: ".8em 0"}}
-              onClick={() => {}}
+              onClick={handleSaveWebhook}
             >
               Save
             </Button>{" "}
@@ -77,8 +97,9 @@ const Documentation = () => {
 
             <Button
               color="info"
+              disabled={loading}
               style={{padding: ".2em 2.2em", margin: ".8em 0"}}
-              onClick={() => {}}
+              onClick={handleSaveCallback}
             >
               Save
             </Button>{" "}
