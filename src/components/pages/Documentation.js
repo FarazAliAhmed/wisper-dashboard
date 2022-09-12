@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Card, CardBody, CardTitle, Table, Button, Input } from "reactstrap";
+import React, { useState, useEffect } from "react";
+import { Card, CardBody, CardTitle, Table, Button, Input, UncontrolledAlert } from "reactstrap";
 import { useUser } from "../../context/userContext";
 import { useAppState } from '../../context/appContext'
 import { parseDataPlans } from '../../utils'
@@ -19,26 +19,40 @@ const Documentation = () => {
   const [webhook, setWebhook] = useState()
   const [callback, setCallback] = useState()
 
+  useEffect(() => {
+    setWebhook(user?.webhook)
+    setCallback(user?.callback)
+  }, [user])
+
   const tableData = parseDataPlans(plans)
 
   const handleSaveWebhook = () => {
-    if(webhook){
-      setLoading(true)
-      saveWebhook(webhook)
-      setLoading(false)
-    }
+    saveWebhook(webhook || " ")
+    showNotice()
   }
   
   const handleSaveCallback = () => {
-    if(callback){
-      setLoading(true)
-      saveCallback(callback)
+    saveCallback(callback || " ")
+    showNotice()
+  }
+
+  const showNotice = () => {
+    setLoading(true)
+    setTimeout(() => {
       setLoading(false)
-    }
+    }, 3000)
   }
 
   return (
       <div>
+        <>
+          {loading && (
+              <UncontrolledAlert dismissible color="success">
+              Updated Successfully
+              </UncontrolledAlert>
+  
+          )}
+        </>
         <a href={docs} target="_blank" rel="noreferrer">
           <Button color="primary" className="mb-3 px-3">
             API Documentation
@@ -63,7 +77,7 @@ const Documentation = () => {
           <b>Webhook URL:</b>
           <div className="text-muted p-3 d-flex align-items-center flex-column flex-lg-row">
             <Input
-              value={user?.webhook}
+              value={webhook}
               id="webhook"
               name="webhook"
               onChange={(e) => setWebhook(e.target.value)}
@@ -73,7 +87,6 @@ const Documentation = () => {
 
             <Button
               color="info"
-              disabled={loading}
               style={{padding: ".2em 2.2em", margin: ".8em 0"}}
               onClick={handleSaveWebhook}
             >
@@ -87,7 +100,7 @@ const Documentation = () => {
           <b>Callback URL:</b>
           <div className="text-muted p-3 d-flex align-items-center flex-column flex-lg-row">
             <Input
-              value={user?.callback}
+              value={callback}
               id="callback"
               name="callback"
               onChange={(e) => setCallback(e.target.value)}
@@ -97,7 +110,6 @@ const Documentation = () => {
 
             <Button
               color="info"
-              disabled={loading}
               style={{padding: ".2em 2.2em", margin: ".8em 0"}}
               onClick={handleSaveCallback}
             >
