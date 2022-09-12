@@ -27,12 +27,12 @@ const Documentation = () => {
   const tableData = parseDataPlans(plans)
 
   const handleSaveWebhook = () => {
-    saveWebhook(webhook || " ")
+    saveWebhook(webhook)
     showNotice()
   }
   
   const handleSaveCallback = () => {
-    saveCallback(callback || " ")
+    saveCallback(callback)
     showNotice()
   }
 
