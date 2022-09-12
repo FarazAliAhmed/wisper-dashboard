@@ -62,7 +62,7 @@ export async function getMaintenance(){
   }
 }
 
-export async function saveWebhook(webhook){
+export async function saveWebhook(webhook=" "){
   try{
     return http.post(`${apiUrl}/url/webhook`, {url: webhook})
   }catch(e){
@@ -70,7 +70,7 @@ export async function saveWebhook(webhook){
   }
 }
 
-export async function saveCallback(callback){
+export async function saveCallback(callback=" "){
   try{
     return http.post(`${apiUrl}/url/callback`, {url: callback})
   }catch(e){
