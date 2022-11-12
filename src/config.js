@@ -10,6 +10,8 @@
 // };
 
 module.exports = {
-  apiUrl: "https://wisper-reseller.herokuapp.com/api",
-  adminUrl: "https://wisper-reseller.herokuapp.com/api/admin",
+  // apiUrl: "https://wisper-reseller.herokuapp.com/api",
+apiUrl: "http://wisper-reseller-api-1238548262.us-east-1.elb.amazonaws.com/api",
+  // adminUrl: "https://wisper-reseller.herokuapp.com/api/admin",
+adminUrl: "http://wisper-reseller-api-1238548262.us-east-1.elb.amazonaws.com/api/admin",
 };
