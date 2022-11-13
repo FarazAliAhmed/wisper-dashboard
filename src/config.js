@@ -11,7 +11,7 @@
 
 module.exports = {
   // apiUrl: "https://wisper-reseller.herokuapp.com/api",
-apiUrl: "http://wisper-reseller-api-1238548262.us-east-1.elb.amazonaws.com/api",
+apiUrl: "https://api.wisper.ng/api",
   // adminUrl: "https://wisper-reseller.herokuapp.com/api/admin",
-adminUrl: "http://wisper-reseller-api-1238548262.us-east-1.elb.amazonaws.com/api/admin",
+adminUrl: "https://api.wisper.ng/api/admin",
 };
