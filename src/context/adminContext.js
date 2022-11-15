@@ -32,20 +32,22 @@ const AdminProvider = ({ children }) => {
         getTransactions(),
         getWallets(),
         getAdmins(),
-        getMainBalance(),
+        // getMainBalance(),
       ]);
       
-      setBusiness(result[0].data);
-      setPayment(result[1].data);
-      setTransaction(result[2].data);
-      setWallet(result[3].data);
-      setAdmins(result[4].data);
+      setBusiness(result[0]?.data);
+      setPayment(result[1]?.data);
+      setTransaction(result[2]?.data);
+      setWallet(result[3]?.data);
+      setAdmins(result[4]?.data);
 
-      setMainBalance({
-        mtn_balance: result[5].data.balance.account_1,
-        airtel_balance: result[5].data.balance.account_2,
-        simserver: result[5].data.simserver.account_1,
-      });
+      if(result[5]){
+        setMainBalance({
+          mtn_balance: result[5].data.balance.account_1,
+          airtel_balance: result[5].data.balance.account_2,
+          simserver: result[5].data.simserver.account_1,
+        });
+      }
     }
     loadAdmin();
   }, []);

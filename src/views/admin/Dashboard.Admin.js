@@ -7,7 +7,7 @@ import TransactionsTable from "../../components/TransactionsTable";
 import { useAppState } from "../../context/appContext";
 import { useAdmin } from "../../context/adminContext";
 import { useUser } from "../../context/userContext";
-import "../../assets/scss/custom.scss";
+// import "../../assets/scss/custom.scss";
 import AdminControls from "../../components/AdminControls";
 
 // import SupportCard from "../../components/dashboard/SupportCard";
