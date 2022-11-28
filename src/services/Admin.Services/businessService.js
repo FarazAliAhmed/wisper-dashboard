@@ -1,5 +1,5 @@
 import http from "../httpService";
-import { adminUrl } from "../../config";
+import { adminUrl, adminUrlV2 } from "../../config";
 
 export const getBusinesses = async () => {
   try {
@@ -118,5 +118,23 @@ export const setAccountType = (type, account_id) => {
     return http.post(`${adminUrl}/account/type`, { type, account_id })
   }catch(e){
     return null
+  }
+}
+
+export async function getAllTransactionsV2({limit, offset} = {limit: 50, offset: 0}) {
+  try {
+    const transactions = await http.get(`${adminUrlV2}/transactions?limit=${limit}&offset=${offset}`);
+    return transactions.data;
+  } catch (error) {
+    return [];
+  }
+}
+
+export async function FilterTransactionsV2(filter, {limit, offset} = {limit: 50, offset: 0}) {
+  try {
+    const transactions = await http.post(`${adminUrlV2}/transactions/filter?limit=${limit}&offset=${offset}`, filter);
+    return transactions.data;
+  } catch (error) {
+    return [];
   }
 }

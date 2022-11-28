@@ -1,5 +1,5 @@
 import http from "./httpService";
-import { apiUrl } from "../config.js";
+import { apiUrl, apiUrlV2 } from "../config.js";
 
 export async function getAllPlans() {
   try {
@@ -35,6 +35,25 @@ export async function getAllTransactions() {
     return http.get(`${apiUrl}/transactions`);
   } catch (error) {
     return null;
+  }
+}
+
+export async function getAllTransactionsV2({limit, offset} = {limit: 50, offset: 0}) {
+  try {
+    const transactions = await http.get(`${apiUrlV2}/transactions?limit=${limit}&offset=${offset}`);
+    console.log({transactions})
+    return transactions.data;
+  } catch (error) {
+    return [];
+  }
+}
+
+export async function FilterTransactionsV2(filter, {limit, offset} = {limit: 50, offset: 0}) {
+  try {
+    const transactions = await http.post(`${apiUrlV2}/transactions/filter?limit=${limit}&offset=${offset}`, filter);
+    return transactions.data;
+  } catch (error) {
+    return [];
   }
 }
 

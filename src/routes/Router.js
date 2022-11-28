@@ -25,6 +25,7 @@ const Payments = lazy(() => import("../views/ui/Payments"));
 const Transactions = lazy(() => import("../views/ui/Transactions"));
 const Pricing = lazy(() => import("../views/ui/Pricing"));
 const Admin = lazy(() => import("./Admin"));
+const TransactionsV2 = lazy(() => import('../views/ui/TransactionsV2'));
 
 const Routes = () => {
   return (
@@ -39,7 +40,8 @@ const Routes = () => {
           <ProtectedRoute path="/wallet" component={Wallet} />
           <ProtectedRoute path="/account" component={Account} />
           <ProtectedRoute path="/payments" component={Payments} />
-          <ProtectedRoute path="/transactions" component={Transactions} />
+          {/* <ProtectedRoute path="/transactions" component={Transactions} /> */}
+          <ProtectedRoute path="/transactions" component={TransactionsV2} />
           <ProtectedRoute path="/developers" component={Documentation} />
           <ProtectedRoute path="/logout" component={Logout} />
           <Route exact path="/login" component={Login} />
