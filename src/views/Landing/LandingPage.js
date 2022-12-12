@@ -26,10 +26,10 @@ const LandingPage = () => {
         </Container>
         <div className="hero">
             <header className="pb-4 text-center">
-            <h1>Automated Solution for Data Resellers</h1>
+            <h1>Automated Data Solution for Schools</h1>
             <p>
-                Enjoy easy integration, Cheap rates and fast data allocation with
-                Wisper reseller API.
+                Enjoy easy integration and fast data allocation with
+                Wisper Edusuit API.
             </p>
             <Link to="/register">
                 <Button color="info" className="get-started">

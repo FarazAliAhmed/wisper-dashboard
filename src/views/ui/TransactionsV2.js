@@ -45,6 +45,12 @@ const TransactionsV2 = () => {
     fetchT()
   }, [])
 
+  useEffect(() => {
+    const date_str = new Date(`${date.start_date} ${date.start_time}`).toLocaleString()
+    const date_end = new Date(`${date.end_date} ${date.end_time}`).toLocaleString()
+    setFilter({...filter, date: [date_str || undefined, date_end || undefined]})
+  }, [date])
+
   // Below section has to do with filtering through the data
 
   const handleChange = (event) => {
@@ -53,8 +59,6 @@ const TransactionsV2 = () => {
 
   const handleDate = (event) => {
     setDate({...date, [event.target.name]: event.target.value})
-    const date_str = new Date(`${date.start_date} ${date.start_time}`).toLocaleString()
-    setFilter({...filter, date: date_str || undefined})
   }
 
   const clearFilter = () => {
@@ -332,6 +336,10 @@ const TransactionsV2 = () => {
                     <div className="py-2 border-bottom">
                       <i className="bi bi-chevron-double-right"></i>
                       {" "}Entering a Transacions Reference will ignore all other fields
+                    </div>
+                    <div className="py-2 border-bottom">
+                      <i className="bi bi-chevron-double-right"></i>
+                      {" "}Please note that the format in the date picker field is <strong>month</strong>/date/year
                     </div>
                     <div className="py-2 border-bottom">
                       <i className="bi bi-chevron-double-right"></i>

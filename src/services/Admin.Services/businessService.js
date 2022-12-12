@@ -126,7 +126,7 @@ export async function getAllTransactionsV2({limit, offset} = {limit: 50, offset:
     const transactions = await http.get(`${adminUrlV2}/transactions?limit=${limit}&offset=${offset}`);
     return transactions.data;
   } catch (error) {
-    return [];
+    return { data: [] };
   }
 }
 
@@ -135,6 +135,6 @@ export async function FilterTransactionsV2(filter, {limit, offset} = {limit: 50,
     const transactions = await http.post(`${adminUrlV2}/transactions/filter?limit=${limit}&offset=${offset}`, filter);
     return transactions.data;
   } catch (error) {
-    return [];
+    return { data: [] };
   }
 }

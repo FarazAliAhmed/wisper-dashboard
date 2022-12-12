@@ -44,7 +44,7 @@ export async function getAllTransactionsV2({limit, offset} = {limit: 50, offset:
     console.log({transactions})
     return transactions.data;
   } catch (error) {
-    return [];
+    return { data: [] };
   }
 }
 
@@ -53,7 +53,7 @@ export async function FilterTransactionsV2(filter, {limit, offset} = {limit: 50,
     const transactions = await http.post(`${apiUrlV2}/transactions/filter?limit=${limit}&offset=${offset}`, filter);
     return transactions.data;
   } catch (error) {
-    return [];
+    return { data: [] };
   }
 }
 
