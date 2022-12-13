@@ -46,9 +46,11 @@ const TransactionsV2 = () => {
   }, [])
 
   useEffect(() => {
-    const date_str = new Date(`${date.start_date} ${date.start_time}`).toLocaleString()
-    const date_end = new Date(`${date.end_date} ${date.end_time}`).toLocaleString()
-    setFilter({...filter, date: [date_str || undefined, date_end || undefined]})
+    if(!Object.values(date).includes(undefined)){
+      const date_str = new Date(`${date.start_date} ${date.start_time}`).toLocaleString()
+      const date_end = new Date(`${date.end_date} ${date.end_time}`).toLocaleString()
+      setFilter({...filter, date: [date_str || undefined, date_end || undefined]})
+    }
   }, [date])
 
   // Below section has to do with filtering through the data
