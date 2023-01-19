@@ -93,6 +93,7 @@ const TransactionsV2 = () => {
         const resp = await FilterTransactionsV2(cFilter, pagination);
         setTransactions(resp.data);
         setLoading(false);
+        setIsOpen(false);
       }
     }
     fetchT()
@@ -145,7 +146,7 @@ const TransactionsV2 = () => {
         className="mb-4"
       >
         <Form>
-          <Row>
+          <Row className="d-flex flex-column-reverse flex-md-row">
             <Col>
               <Row>
                 <Col>
@@ -379,45 +380,52 @@ const TransactionsV2 = () => {
 
       <div>
         <Form>
-          <InputGroup>
-            <InputGroupText>
-              Records:
-            </InputGroupText>
-            <Input
-              id="limit"
-              name="limit"
-              placeholder="No. of Records to Fetch"
-              type="number"
-              value={pagination['limit'] ?? ""}
-              onChange={handlePagination}
-            />
-            <InputGroupText>
-              Skip:
-            </InputGroupText>
-            <Input
-              id="offset"
-              name="offset"
-              placeholder="No. of Records to Skip"
-              type="number"
-              className="d-inline-block"
-              value={pagination['offset'] ?? ""}
-              onChange={handlePagination}
-            />
-            <Button
-              onClick={fetchWithPaginate}
-              color="primary"
-              className="px-4 py-2 ms-4"
-            >
-              Fetch
-            </Button>
-            <Button
-              onClick={clearPagination}
-              color="secondary"
-              className="px-3 py-2 ms-2"
-            >
-              Reset
-            </Button>
-          </InputGroup>
+          <p>Enter in the number of records you want to fetch</p>
+          <div className="d-flex gap-2 flex-column flex-md-row">
+            <InputGroup className="mb-2">
+              <InputGroupText>
+                Records:
+              </InputGroupText>
+              <Input
+                id="limit"
+                name="limit"
+                placeholder="No. of Records to Fetch"
+                type="number"
+                value={pagination['limit'] ?? ""}
+                onChange={handlePagination}
+              />
+            </InputGroup>
+            <InputGroup className="mb-2">
+              <InputGroupText>
+                Skip:
+              </InputGroupText>
+              <Input
+                id="offset"
+                name="offset"
+                placeholder="No. of Records to Skip"
+                type="number"
+                className="d-inline-block"
+                value={pagination['offset'] ?? ""}
+                onChange={handlePagination}
+              />
+            </InputGroup>
+            <InputGroup className="mb-2 justify-content-start gap-3">
+              <Button
+                onClick={fetchWithPaginate}
+                color="primary"
+                className="px-4 py-1"
+              >
+                Fetch
+              </Button>
+              <Button
+                onClick={clearPagination}
+                color="secondary"
+                className="px-3 py-1"
+              >
+                Reset
+              </Button>
+            </InputGroup>
+          </div>
         </Form>
       </div>
     </AdminLayout>
