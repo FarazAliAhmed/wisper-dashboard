@@ -83,7 +83,7 @@ export const generateCreditPayment = async (body) => {
 
 export const removeAdmin = async (email) => {
   try {
-    return http.post(`${adminUrl}/admin/remove`, { email });
+    return http.delete(`${adminUrl}/admin/remove`, { email });
   } catch (e) {
     return null;
   }
@@ -91,7 +91,7 @@ export const removeAdmin = async (email) => {
 
 export const makeAdmin = async (email) => {
   try {
-    return http.delete(`${adminUrl}/admin/create`, { email });
+    return http.post(`${adminUrl}/admin/create`, { email });
   } catch (e) {
     return null;
   }
