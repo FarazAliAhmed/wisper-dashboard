@@ -101,15 +101,15 @@ const Dashboard = () => {
               </Col>
 
               {/* Glo wallet - Hidden for now */}
-              {/* <Col sm="6" lg="4">
+              <Col sm="6" lg="4">
                   <TopCards
                     bg="bg-light-info text-info"
                     title="Profit"
                     subtitle="GLO"
-                    earning={balanceDisplay}
+                    earning={`${mega_wallet.glo} ${mega_wallet.unit}`}
                     icon="bi bi-wallet"
                   />
-                </Col> */}
+                </Col>
             </>
           )}
         </Row>
