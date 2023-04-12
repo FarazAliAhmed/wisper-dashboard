@@ -108,6 +108,7 @@ const AllocateData = () => {
                         </option>
                         <option value="glo">GLO</option>
                         <option value="mtn">MTN</option>
+                        <option value="9mobile">9MOBILE</option>
                       </Input>
                     </FormGroup>
                   </Col>

@@ -10,6 +10,8 @@
 // };
 
 module.exports = {
+  // apiUrl: "http://localhost:5000/api",
+  // apiUrlV2: "https://localhost:5000/api/v2",
   apiUrl: "https://wisper-reseller.herokuapp.com/api",
   apiUrlV2: "https://wisper-reseller.herokuapp.com/api/v2",
 // apiUrl: "https://api.wisper.ng/api",
