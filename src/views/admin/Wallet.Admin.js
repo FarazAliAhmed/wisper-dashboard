@@ -37,6 +37,7 @@ const Wallet = () => {
                   <th>MTN:Gifting (MB)</th>
                   <th>Airtel (MB)</th>
                   <th>Glo (MB)</th>
+                  <th>9Mobile (MB)</th>
                 </tr>
               </thead>
               <tbody>
@@ -55,6 +56,7 @@ const Wallet = () => {
                     <td>{tdata.mega_wallet.mtn_gifting}</td>
                     <td>{tdata.mega_wallet.airtel}</td>
                     <td>{tdata.mega_wallet.glo}</td>
+                    <td>{tdata.mega_wallet["9mobile"]}</td>
                   </tr>
                 ))}
               </tbody>

@@ -102,12 +102,23 @@ const Dashboard = () => {
 
               {/* Glo wallet - Hidden for now */}
               <Col sm="6" lg="4">
+                <TopCards
+                  bg="bg-light-info text-info"
+                  title="Profit"
+                  subtitle="GLO"
+                  earning={`${mega_wallet.glo} ${mega_wallet.unit}`}
+                  icon="bi bi-wallet"
+                />
+              </Col>
+
+               {/* 9Mobile wallet */}
+               <Col sm="6" lg="4">
                   <TopCards
                     bg="bg-light-info text-info"
                     title="Profit"
-                    subtitle="GLO"
-                    earning={`${mega_wallet.glo} ${mega_wallet.unit}`}
-                    icon="bi bi-wallet"
+                    subtitle="9 Mobile"
+                    earning={`${mega_wallet["9mobile"]} ${mega_wallet.unit}`}
+                    icon="bi bi-wallet-fill"
                   />
                 </Col>
             </>
