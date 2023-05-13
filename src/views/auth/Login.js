@@ -22,6 +22,7 @@ import "./auth.scss";
 
 const Login = () => {
   const [account, setAccount] = useState({ email: "", password: "" });
+  const [msgError, setMsgError] = useState("")
   const [errors, setErrors] = useState({});
   const [serverResponse, setServerResponse] = useState({
     status: true,
@@ -43,6 +44,8 @@ const Login = () => {
         window.location = "/dashboard";
       }
     } catch (error) {
+      setMsgError("Invalid credentials Try again")
+      console.log(error)
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
 
@@ -64,9 +67,12 @@ const Login = () => {
 
   return (
     <AuthLayout headTitle="Login" tagline="Login to continue.">
-      {!serverResponse.status && (
-        <Alert color="danger">{serverResponse.message}</Alert>
+      {msgError && (
+        <Alert color="danger">{msgError}</Alert>
       )}
+      {/* {!serverResponse.status && (
+        <Alert color="danger">{serverResponse.message}</Alert>
+      )} */}
       <Form onSubmit={handleSubmit}>
         <FormGroup className="mb-3">
           <Label>Email address</Label>
