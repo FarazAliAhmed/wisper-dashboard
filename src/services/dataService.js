@@ -1,6 +1,8 @@
 import http from "./httpService";
 import { apiUrl, apiUrlV2 } from "../config.js";
 
+
+
 export async function getAllPlans() {
   try {
     return http.get(`${apiUrl}/plans`);
@@ -37,6 +39,24 @@ export async function getAllTransactions() {
     return null;
   }
 }
+
+export async function getSingleTrx(id) {
+  try {
+    return http.get(`${apiUrl}/trxSingle/${id}`);
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getSingleSold(id) {
+  try {
+    return http.get(`${apiUrl}/totalDataSingle/${id}`);
+  } catch (error) {
+    return null;
+  }
+}
+
+
 
 export async function getAllTransactionsV2({limit, offset} = {limit: 50, offset: 0}) {
   try {

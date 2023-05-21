@@ -41,6 +41,22 @@ export const getTransactions = async () => {
   }
 };
 
+export const getAllTrx = async () => {
+  try {
+    return http.get(`${adminUrl}/trxAll`);
+  } catch (e) {
+    return null;
+  }
+};
+
+export const getAllSold = async () => {
+  try {
+    return http.get(`${adminUrl}/totalDataAll`);
+  } catch (e) {
+    return null;
+  }
+};
+
 export const getAdmins = async () => {
   try {
     return http.get(`${adminUrl}/admins`);

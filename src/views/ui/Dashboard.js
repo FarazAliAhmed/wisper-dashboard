@@ -23,6 +23,8 @@ const Dashboard = () => {
     currentBalance: { volume, unit, cash, mega_wallet },
     transactions,
     maintenance,
+    singleTrx, 
+    singleSold
   } = useAppState();
   const [balanceDisplay, setBalanceDisplay] = useState("");
 
@@ -57,7 +59,7 @@ const Dashboard = () => {
               bg="bg-light-danger text-danger"
               title="Refunds"
               subtitle="Total transactions "
-              earning={`${transactions.length}`}
+              earning={`${singleTrx}`}
               icon="bi bi-coin"
             />
           </Col>
@@ -66,7 +68,7 @@ const Dashboard = () => {
               bg="bg-light-warning text-warning"
               title="New Project"
               subtitle="Total data sold"
-              earning={totalDataSold(transactions)}
+              earning={singleSold}
               icon="bi bi-basket3"
             />
           </Col>

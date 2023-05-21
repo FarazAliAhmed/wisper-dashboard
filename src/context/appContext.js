@@ -5,7 +5,10 @@ import {
   getAllPayments,
   getAllPlans,
   getMaintenance,
+  getSingleTrx,
+  getSingleSold
 } from "../services/dataService";
+import { useUser } from "./userContext";
 // import { getMainBalance } from "../services/Admin.Services/businessService";
 
 export const AppStateContext = createContext();
@@ -27,6 +30,8 @@ const AppStateProvider = ({ children }) => {
     // airtel_balance: "",
   });
   const [transactions, setTransactions] = useState([]);
+  const [singleTrx, setSingleTrx] = useState(0)
+  const [singleSold, setSingleSold] = useState(0)
   const [payments, setPayments] = useState([]);
   const [plans, setPlans] = useState([]);
   const [maintenance, setMaintenance] = useState({
@@ -38,6 +43,8 @@ const AppStateProvider = ({ children }) => {
     "notice": null,
   })
 
+  const { user } = useUser();
+
   useEffect(() => {
     async function fetchBalance() {
       const results = await Promise.all([
@@ -46,13 +53,22 @@ const AppStateProvider = ({ children }) => {
         getAllPayments(),
         getAllPlans(),
         getMaintenance(),
+        getSingleTrx(user?._id),
+        getSingleSold(user?._id)
       ])
       const balanceRes = results[0] 
       const transactionRes = results[1] 
       const paymentRes = results[2] 
       const planRes = results[3]
       const maintenanceRes = results[4]
+
+      // setSingleTrx(results[5]?.data.transactionCount)
+      // setSingleSold(results[6]?.data.totalDataSold)
       
+// console.log(user?._id)
+// console.log(results[5])
+// console.log(results[6])
+
       // const mainBalance = await getMainBalance();
       setCurrentBalance({
         volume: balanceRes.data.data_volume,
@@ -83,11 +99,11 @@ const AppStateProvider = ({ children }) => {
       setMaintenance(maintenanceRes.data.maintenance)
     }
     fetchBalance();
-  }, []);
+  }, [user]);
 
   return (
     <AppStateContext.Provider
-      value={{ currentBalance, transactions, payments, plans, maintenance, setMaintenance }}
+      value={{ currentBalance, transactions, payments, plans, maintenance, setMaintenance, singleTrx, singleSold }}
     >
       {children}
     </AppStateContext.Provider>

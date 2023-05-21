@@ -17,7 +17,7 @@ import AdminControls from "../../components/AdminControls";
 
 const Dashboard = () => {
   const { user } = useUser();
-  const { transaction, business, payment, mainBalance } = useAdmin();
+  const { transaction, business, payment, mainBalance, allTrx, allSold  } = useAdmin();
   const {
     currentBalance: {
       volume,
@@ -69,7 +69,7 @@ const Dashboard = () => {
               bg="bg-light-danger text-danger"
               title="Refunds"
               subtitle="Total transactions "
-              earning={`${transaction.length}`}
+              earning={`${allTrx}`}
               icon="bi bi-coin"
             />
           </Col>
@@ -78,7 +78,7 @@ const Dashboard = () => {
               bg="bg-light-warning text-warning"
               title="New Project"
               subtitle="Total data sold"
-              earning={`${totalDataSold(transaction)} MB`}
+              earning={`${allSold} MB`}
               icon="bi bi-basket3"
             />
           </Col>

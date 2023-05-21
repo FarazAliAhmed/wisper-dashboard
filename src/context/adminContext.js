@@ -5,7 +5,9 @@ import {
   getTransactions,
   getWallets,
   getAdmins,
-  getMainBalance
+  getMainBalance,
+  getAllTrx,
+  getAllSold
 } from "../services/Admin.Services/businessService";
 const AdminContext = createContext();
 
@@ -18,6 +20,8 @@ const AdminProvider = ({ children }) => {
   const [transaction, setTransaction] = useState([]);
   const [payment, setPayment] = useState([]);
   const [admins, setAdmins] = useState([]);
+  const [allTrx, setAllTrx] = useState(0)
+  const [allSold, setAllSold] = useState(0)
   const [mainBalance, setMainBalance] = useState({
     mtn_balance: "",
     airtel_balance: "",
@@ -32,6 +36,8 @@ const AdminProvider = ({ children }) => {
         getTransactions(),
         getWallets(),
         getAdmins(),
+        getAllTrx(),
+        getAllSold()
         // getMainBalance(),
       ]);
       
@@ -40,6 +46,11 @@ const AdminProvider = ({ children }) => {
       setTransaction(result[2]?.data);
       setWallet(result[3]?.data);
       setAdmins(result[4]?.data);
+      setAllTrx(result[5]?.data.totalTransactions)
+      setAllSold(result[6]?.data.totalDataSold)
+
+      // console.log(result[5])
+      // console.log(result[6])
 
       if(result[5]){
         setMainBalance({
@@ -53,7 +64,7 @@ const AdminProvider = ({ children }) => {
   }, []);
   return (
     <AdminContext.Provider
-      value={{ business, wallet, transaction, payment, admins, mainBalance }}
+      value={{ business, wallet, transaction, payment, admins, mainBalance, allTrx, allSold }}
     >
       {children}
     </AdminContext.Provider>
