@@ -40,6 +40,7 @@ const Dashboard = () => {
           </Row>
         }
         <Row>
+        {user.type != "mega" && (
           <Col sm="6" lg="4">
             <TopCards
               bg="bg-light-info text-info"
@@ -49,6 +50,8 @@ const Dashboard = () => {
               icon="bi bi-wallet"
             />
           </Col>
+        )
+         }
           <Col sm="6" lg="4">
             <TopCards
               bg="bg-light-danger text-danger"
@@ -72,7 +75,7 @@ const Dashboard = () => {
           {user.type === "mega" && (
             <>
               {/* MTN and Airtel Wallets */}
-              <Col sm="6" lg="4">
+              {/* <Col sm="6" lg="4">
                 <TopCards
                   bg="bg-light-info text-info"
                   title="Profit"
@@ -80,12 +83,12 @@ const Dashboard = () => {
                   earning={`${mega_wallet.mtn_sme} ${mega_wallet.unit}`}
                   icon="bi bi-wallet-fill"
                 />
-              </Col>
+              </Col> */}
               <Col sm="6" lg="4">
                 <TopCards
                   bg="bg-light-warning text-warning"
                   title="Refunds"
-                  subtitle="MTN Gifting"
+                  subtitle="MTN"
                   earning={`${mega_wallet.mtn_gifting} ${mega_wallet.unit}`}
                   icon="bi bi-wallet"
                 />
@@ -124,33 +127,31 @@ const Dashboard = () => {
             </>
           )}
         </Row>
-        <Row>
-          <Col lg="12">
-            <SupportCard />
-          </Col>
-        </Row>
+       
         {user ? (
           user?.type === "mega" ? (
-            <Row className="bank-details">
-              <Col>
-                <div>
-                  <img className="sterling__logo" src={sterling_logo} alt="" />
-                </div>
-                <div>
-                  <b>Bank:</b> &nbsp; Sterling Bank
-                </div>
-                <div>
-                  <b>Account Number:</b>&nbsp; 0014602073
-                </div>
-                <div>
-                  <b>Account Name:</b> &nbsp; Alma Management Limited
-                </div>
-              </Col>
-              <p className="text-warning">
-                Send payment receipt to admin for validation, after which
-                balance would be credited.
-              </p>
-            </Row>
+            // <Row className="bank-details">
+            //   {/* <Col>
+            //     <div>
+            //       <img className="sterling__logo" src={sterling_logo} alt="" />
+            //     </div>
+            //     <div>
+            //       <b>Bank:</b> &nbsp; Sterling Bank
+            //     </div>
+            //     <div>
+            //       <b>Account Number:</b>&nbsp; 0014602073
+            //     </div>
+            //     <div>
+            //       <b>Account Name:</b> &nbsp; Alma Management Limited
+            //     </div>
+            //   </Col>
+            //   <p className="text-warning">
+            //     Send payment receipt to admin for validation, after which
+            //     balance would be credited.
+            //   </p> */}
+            // </Row>
+            <div>
+              </div>
           ) : (
             <Row>
               <Col>
@@ -167,6 +168,11 @@ const Dashboard = () => {
             transactions={transactions.slice(0, 5)}
             showHeader={false}
           />
+        </Row>
+        <Row>
+          <Col lg="12">
+            <SupportCard />
+          </Col>
         </Row>
       </div>
     </FullLayout>

@@ -9,23 +9,21 @@ const SupportCard = () => {
       <CardBody>
         <Row>
           <Col sm="12" md="8" lg="9">
-            <CardTitle tag="h5">Support Team</CardTitle>
+            <CardTitle tag="h5">Contact Support</CardTitle>
             <p>
-              Have anything to say to us? Please contact our Support Team on
-              Whatsapp
+            Get in touch with our support team
             </p>
           </Col>
           <Col sm="12" md="4" lg="3" className="chat-btn">
-            <Link
-              to={{
-                pathname: "https://wa.me/message/V5ZBZYUNYXSXC1",
-              }}
+            <a
+            className="cursor-pointer"
+             href="mailto:support@wisper.ng?subject=Support Inquiry&body=Hello%20Wisper%20Support%2C%0D%0A%0D%0AI%20need%20assistance%20with%3A%0D%0A%0D%0A%0D%0AThank%20you%21"
               target="_blank"
             >
               <Button color="primary " className="btn-block">
-                Chat with Us
+              Send Message
               </Button>
-            </Link>
+            </a>
           </Col>
         </Row>
       </CardBody>

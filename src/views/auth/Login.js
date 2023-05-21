@@ -44,7 +44,7 @@ const Login = () => {
         window.location = "/dashboard";
       }
     } catch (error) {
-      setMsgError("Invalid credentials Try again")
+      setMsgError("Email or password incorrect")
       console.log(error)
       setLoading(false);
       const { status, message } = handleFailedRequest(error);

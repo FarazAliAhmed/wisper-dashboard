@@ -121,7 +121,7 @@ const TransactionsTable = ({
                   <CardTitle tag="h5">Transactions History</CardTitle>
                 )}
                 <CardSubtitle className="mb-2 text-muted" tag="h6">
-                  List of Data volume transfer
+                Recent Transactions
                 </CardSubtitle>
 
                 <div className="legend-container">

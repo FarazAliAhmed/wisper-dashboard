@@ -181,8 +181,9 @@ const Sidebar = ({ isAdmin }) => {
           <div className="mt-2 text-muted fw-bold">FL.1 ~ {!!adminContext ? adminContext.mainBalance.mtn_balance : ""} MB</div>
           <div className="mt-2 text-muted fw-bold">FL.2 ~ {!!adminContext ? adminContext.mainBalance.airtel_balance : ""} MB</div>
         </> : <>
-        <div className="mt-2 text-muted fw-bold">TOTAL: {balanceDisplay}</div>
-        </>
+        <div></div>
+        {/* <div className="mt-2 text-muted fw-bold">TOTAL: {balanceDisplay}</div> */}
+        </> 
       }
       <div className="pt-4 mt-2">
         <Nav vertical className="sidebarNav">
