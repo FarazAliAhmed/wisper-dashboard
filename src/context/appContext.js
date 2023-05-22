@@ -64,6 +64,7 @@ const AppStateProvider = ({ children }) => {
 
       // setSingleTrx(results[5]?.data.transactionCount)
       // setSingleSold(results[6]?.data.totalDataSold)
+      // djdhhd
       
 // console.log(user?._id)
 // console.log(results[5])
