@@ -9,7 +9,13 @@ import { useAdmin } from "../../context/adminContext";
 import { useUser } from "../../context/userContext";
 // import "../../assets/scss/custom.scss";
 import AdminControls from "../../components/AdminControls";
-
+import glo from '../../assets/dashboard/glo.svg'
+import mtn1 from '../../assets/dashboard/mtn 1.svg'
+import mob9 from '../../assets/dashboard/mob9.svg'
+import airtel from '../../assets/dashboard/airtel.svg'
+import tranIcon from '../../assets/dashboard/transa.svg'
+import wallIcon from '../../assets/dashboard/walle.svg'
+// 
 // import SupportCard from "../../components/dashboard/SupportCard";
 // import PaymentButton from "../../components/PaymentButton";
 // import PaymentButtonFw from "../../components/PaymentButtonFw";
@@ -43,7 +49,7 @@ const Dashboard = () => {
               title="Profit"
               subtitle="SIMSERVER WALLET"
               earning={`₦ ${mainBalance.simserver}`}
-              icon="bi bi-wallet2"
+              icon={wallIcon}
             />
           </Col>
           <Col sm="6" lg="4">
@@ -52,7 +58,7 @@ const Dashboard = () => {
               title="Profit"
               subtitle="MTN (FASTLINK)"
               earning={`${mainBalance.mtn_balance} MB`}
-              icon="bi bi-wallet-fill"
+              icon={mtn1}
             />
           </Col>
           <Col sm="6" lg="4">
@@ -61,7 +67,7 @@ const Dashboard = () => {
               title="New Project"
               subtitle="Airtel (FASTLINK)"
               earning={`${mainBalance.airtel_balance} MB`}
-              icon="bi bi-wallet2"
+              icon={airtel}
             />
           </Col>
           <Col sm="6" lg="4">
@@ -70,7 +76,7 @@ const Dashboard = () => {
               title="Refunds"
               subtitle="Total transactions "
               earning={`${allTrx}`}
-              icon="bi bi-coin"
+              icon={tranIcon}
             />
           </Col>
           <Col sm="6" lg="4">
@@ -79,7 +85,7 @@ const Dashboard = () => {
               title="New Project"
               subtitle="Total data sold"
               earning={`${allSold} MB`}
-              icon="bi bi-basket3"
+              icon={wallIcon}
             />
           </Col>
           <Col sm="6" lg="4">
@@ -88,7 +94,7 @@ const Dashboard = () => {
               title="Profit"
               subtitle="Balance (You)"
               earning={balanceDisplay}
-              icon="bi bi-wallet"
+              icon={tranIcon}
             />
           </Col>
           {/***Mega Wallets***/}
@@ -101,7 +107,7 @@ const Dashboard = () => {
                   title="Profit"
                   subtitle="MTN SME (You)"
                   earning={`${mega_wallet.mtn_sme} ${mega_wallet.unit}`}
-                  icon="bi bi-wallet-fill"
+                  icon={mtn1}
                 />
               </Col>
               <Col sm="6" lg="4">
@@ -110,7 +116,7 @@ const Dashboard = () => {
                   title="Refunds"
                   subtitle="MTN Gifting (You)"
                   earning={`${mega_wallet.mtn_gifting} ${mega_wallet.unit}`}
-                  icon="bi bi-wallet"
+                  icon={mtn1}
                 />
               </Col>
               <Col sm="6" lg="4">
@@ -119,7 +125,7 @@ const Dashboard = () => {
                   title="New Project"
                   subtitle="Airtel (You)"
                   earning={`${mega_wallet.airtel} ${mega_wallet.unit}`}
-                  icon="bi bi-wallet2"
+                  icon={airtel}
                 />
               </Col>
 
@@ -130,7 +136,7 @@ const Dashboard = () => {
                     title="Profit"
                     subtitle="GLO"
                     earning={`${mega_wallet.glo} ${mega_wallet.unit}`}
-                    icon="bi bi-wallet"
+                    icon={glo}
                   />
                 </Col>
             </>

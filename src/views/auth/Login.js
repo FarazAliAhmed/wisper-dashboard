@@ -112,6 +112,12 @@ const Login = () => {
               Signup
             </Link>
           </small>
+          <small className="text-center text-muted mt-1">
+           Can't remember your password?{" "}
+            <Link to="/forgot-password" className="text-center text-decoration-none d-block">
+              Forgot Password
+            </Link>
+          </small>
         </div>
       </Form>
     </AuthLayout>
