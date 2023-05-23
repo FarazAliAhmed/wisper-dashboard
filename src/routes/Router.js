@@ -8,6 +8,9 @@ import {
 import ProtectedRoute from "../components/ProtectedRoute.js";
 import AdminProtectedRoute from "../components/AdminProtectedRoute.js";
 import Loader from "../layouts/loader/Loader.js";
+import ForgotPassword from "../views/auth/ForgotPassword.jsx";
+import SetPassword from "../views/auth/SetPassword.jsx";
+import CheckEmail from "../views/auth/CheckEmail.jsx";
 
 /***** Pages ****/
 
@@ -45,6 +48,9 @@ const Routes = () => {
           <ProtectedRoute path="/developers" component={Documentation} />
           <ProtectedRoute path="/logout" component={Logout} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/forgot-password" component={ForgotPassword} />
+          <Route exact path="/check-email" component={CheckEmail} />
+          <Route exact path="/reset-password/:email/:token" component={SetPassword} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/not-found" component={NotFound} />
           <Redirect to="/not-found" />

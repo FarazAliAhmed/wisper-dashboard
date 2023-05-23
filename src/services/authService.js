@@ -1,6 +1,7 @@
 import jwtDecode from "jwt-decode";
 import http from "./httpService";
 import { apiUrl } from "../config.js";
+import axios from "axios";
 
 const apiEndpoint = apiUrl + "/auth/";
 const tokenKey = "token";
@@ -11,6 +12,39 @@ export async function login(email, password) {
   const { data: jwt } = await http.post(apiEndpoint, { email, password });
   localStorage.setItem(tokenKey, jwt);
 }
+
+const forgotPassword = async (email, url) => {
+ 
+  try {
+    const res  = await axios.post(`${apiUrl}/forgot_password`, { email, url });
+    
+    if(res.data.status == "User Does Not Exists!!!"){
+      return false
+    }
+    return true
+    // Handle the response data
+  } catch (error) {
+    console.error(error);
+    return false
+    // Handle the error
+  }
+};
+
+const resetPassword = async (password, email, token) => {
+ 
+  try {
+   const res = await axios.post(`${apiUrl}/reset_password/${email}/${token}`, { password });
+
+    if(res.data.status == "User Not Exists!!"){
+      return false
+    }
+    return true
+  } catch (error) {
+    console.error(error);
+    return false
+    // Handle the error
+  }
+};
 
 export function loginWithJwt(jwt) {
   localStorage.setItem(tokenKey, jwt);
@@ -46,4 +80,6 @@ export default {
   logout,
   getCurrentUser,
   getJwt,
+  forgotPassword,
+  resetPassword
 };
