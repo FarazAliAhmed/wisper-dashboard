@@ -46,7 +46,7 @@ const ForgotPassword = () => {
       console.log("res", res)
      
       if(res){
-        window.location = "/check-email";
+        window.location = `/check-email/${account.email}`;
       }else{
         setMsgError("Ensure email exists on database")
         throw new Error("Link Expired");

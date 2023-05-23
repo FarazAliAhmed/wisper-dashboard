@@ -49,7 +49,7 @@ const Routes = () => {
           <ProtectedRoute path="/logout" component={Logout} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/forgot-password" component={ForgotPassword} />
-          <Route exact path="/check-email" component={CheckEmail} />
+          <Route exact path="/check-email/:email" component={CheckEmail} />
           <Route exact path="/reset-password/:email/:token" component={SetPassword} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/not-found" component={NotFound} />
