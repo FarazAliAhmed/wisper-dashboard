@@ -74,10 +74,9 @@ const AllocateData = () => {
 
         generateCreditPayment({
           business_id: values.business_id,
-          amount:
-            values.action_type === "credit" && values.unit === "data"
-              ? values.amount_cash
-              : values.amount,
+          volume: values.amount,
+          amount:values.amount_cash,
+          wallet:values.wallet,
           payment_ref:
             "AD-trx-" + Math.floor(Math.random() * 10000000000000000),
         });
@@ -251,7 +250,7 @@ const AllocateData = () => {
                           : values.action_type === "debit"
                           ? "Debit"
                           : ""}{" "}
-                        Amount
+                        Data volume
                       </Label>
                       <Input
                         required
