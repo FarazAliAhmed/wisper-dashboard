@@ -36,7 +36,7 @@ const Payments = () => {
   useEffect(() => {
     const filteredData = showWithVolume ? payments.filter(item => item.hasOwnProperty('volume')) : payments.filter(item => !item.hasOwnProperty("volume"));
     setPaymentData(filteredData);
-  }, [payments]);
+  }, [showWithVolume]);
 
   const [show, setShow] = useState(false)
   const [receiptdata, setReceiptData] = useState({
