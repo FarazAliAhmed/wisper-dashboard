@@ -63,7 +63,9 @@ const Payments = () => {
         payment._id.includes(val) || payment.payment_ref.includes(val) || payment.username.includes(val)
     );
 
-    setPaymentData(results);
+    const filteredData = showWithVolume ? results.filter(item => item.hasOwnProperty('volume')) : results.filter(item => !item.hasOwnProperty("volume"));
+
+    setPaymentData(filteredData);
   };
 
   return (
