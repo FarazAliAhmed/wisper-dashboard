@@ -73,7 +73,7 @@ const AllocateData = () => {
         
         response = res.data.message;
 
-        const genCred = generateCreditPayment({
+        const genCred = await generateCreditPayment({
           business_id: values.business_id,
           volume: values.amount,
           amount:values.amount_cash,
