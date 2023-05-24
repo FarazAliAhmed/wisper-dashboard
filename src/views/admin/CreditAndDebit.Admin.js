@@ -70,9 +70,10 @@ const AllocateData = () => {
           unit: values.unit,
           wallet: values.wallet,
         });
+        
         response = res.data.message;
 
-        generateCreditPayment({
+        const genCred = generateCreditPayment({
           business_id: values.business_id,
           volume: values.amount,
           amount:values.amount_cash,
@@ -80,6 +81,8 @@ const AllocateData = () => {
           payment_ref:
             "AD-trx-" + Math.floor(Math.random() * 10000000000000000),
         });
+
+        console.log("genCred", genCred)
       }
       if (values.action_type === "debit") {
         const res = await debitBusiness({
