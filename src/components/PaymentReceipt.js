@@ -23,7 +23,7 @@ function PaymentReceipt({receiptData, show, toggleShow}){
                     Payment Receipt
                 </ModalHeader>
                 <ModalBody>
-                    <Alert
+                    {/* <Alert
                         className="receipt-font"
                         color= "success"
                     >
@@ -33,12 +33,14 @@ function PaymentReceipt({receiptData, show, toggleShow}){
                             business_id={receiptData.business_id}
                             paid_on={receiptData.date_of_payment}
                         />
-                    </Alert>
+                    </Alert> */}
                         {/* Data Volume :<strong> {receiptData.data_volume} MB </strong> <br /> */}
                         {/* Recipient :<strong> {receiptData.phone_number} </strong> <br /> */}
                         Business ID : <strong> {receiptData.business_id} </strong> <br />
+                       Username : <strong> {receiptData.username} </strong> <br />
                         Date :<strong> {receiptData.date_of_payment} </strong> <br />
                         Amount :<strong> {receiptData.amount} </strong> <br />
+                        Data Volume :<strong> {receiptData.volume} </strong> <br />
                         Reference Code:<strong>
                             <Button
                                 color="info"
