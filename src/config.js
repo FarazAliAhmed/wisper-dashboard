@@ -11,19 +11,19 @@
 
 module.exports = {
   // // Test URL
-  apiUrl: "http://localhost:5000/api",
-  adminUrl: "http://localhost:5000/api/admin",
+  // apiUrl: "http://localhost:5000/api",
+  // adminUrl: "http://localhost:5000/api/admin",
  
   // apiUrlV2: "https://localhost:5000/api/v2",
 
 
   // REAL URL
   
-  // apiUrl: "https://wisper-reseller.herokuapp.com/api",
+  apiUrl: "https://wisper-reseller.herokuapp.com/api",
 
   apiUrlV2: "https://wisper-reseller.herokuapp.com/api/v2",
 // apiUrl: "https://api.wisper.ng/api",
-  // adminUrl: "https://wisper-reseller.herokuapp.com/api/admin",
+  adminUrl: "https://wisper-reseller.herokuapp.com/api/admin",
   adminUrlV2: "https://wisper-reseller.herokuapp.com/api/v2/admin",
 // adminUrl: "https://api.wisper.ng/api/admin",
 };
