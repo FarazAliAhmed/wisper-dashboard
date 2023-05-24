@@ -129,6 +129,7 @@ const Payments = () => {
                         <th>Date of Payment</th>
                         <th>Amount (₦)</th>
                         {showWithVolume &&   <th>Data Volume</th>}
+                        {showWithVolume &&   <th>Data Wallet</th>}
                         <th>Payment Reference</th>
                         <th>More</th>
                       </tr>
@@ -143,6 +144,7 @@ const Payments = () => {
                             <td>{pm.date_of_payment.split(" GMT")[0]}</td>
                             <td>₦ {pm.amount}</td>
                             {showWithVolume &&  <td>{pm.volume}</td>}
+                            {showWithVolume &&  <td>{pm.wallet}</td>}
                             <td>{pm.payment_ref}</td>                          
                             
                             <td>
