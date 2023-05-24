@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 const Payments = () => {
   const { payments:payments } = useAppState();
 
-  console.log(payments)
+  // console.log(payments)
 
   
   const [paymentData, setPaymentData] = useState([]);
