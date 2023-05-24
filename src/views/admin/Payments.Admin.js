@@ -23,9 +23,17 @@ const Payments = () => {
   
   const [searchValue, setSearchValue] = useState("");
   const [paymentData, setPaymentData] = useState([]);
+  const [showWithVolume, setShowWithVolume] = useState(true);
+
+  
+
+  const handleToggle = () => {
+    setShowWithVolume(prevState => !prevState);
+  };
 
   useEffect(() => {
-    setPaymentData(payments);
+    const filteredData = showWithVolume ? payments.filter(item => item.hasOwnProperty('username')) : payments.filter(item => !item.hasOwnProperty("username"));
+    setPaymentData(filteredData);
   }, [payments]);
 
   const [show, setShow] = useState(false)
@@ -50,7 +58,7 @@ const Payments = () => {
 
     const results = payments.filter(
       (payment) =>
-        payment._id.includes(val) || payment.payment_ref.includes(val)
+        payment._id.includes(val) || payment.payment_ref.includes(val) || payment.username.includes(val)
     );
 
     setPaymentData(results);
@@ -92,7 +100,12 @@ const Payments = () => {
             <div>
               <Card>
                 <CardBody>
-                  <CardTitle tag="h5">Payments History</CardTitle>
+                  <CardTitle tag="h5" style={{width:"100%", display:"flex", justifyContent:"space-between"}}>
+                    <h5>Payments History</h5>
+                    <Button className="receipt-button" style={{background:`${showWithVolume ? "red":"green"}`}} onClick={handleToggle}>
+                      {showWithVolume ? "Old Trx" :"New Trx"}
+                       </Button>
+                  </CardTitle>
                   <CardSubtitle className="mb-2 text-muted" tag="h6">
                     List of all payments made to Wisper
                   </CardSubtitle>
@@ -106,10 +119,12 @@ const Payments = () => {
                       <tr>
                         <th>S/N</th>
                         <th>Business ID</th>
-                        <th>Amount</th>
+                       {showWithVolume &&  <th>Username</th>}
                         <th>Date of Payment</th>
-
+                        <th>Amount</th>
+                        {showWithVolume &&   <th>Data Volume</th>}
                         <th>Payment Reference</th>
+                        <th>More</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -118,15 +133,12 @@ const Payments = () => {
                           <tr key={index} className="border-top">
                             <td>{index}</td>
                             <td>{pm.business_id}</td>
-                            <td>
-                              <div className="d-flex align-items-center p-2">
-                                <div className="ms-3">
-                                  <h6 className="mb-0">{pm.amount}</h6>
-                                </div>
-                              </div>
-                            </td>
+                            {showWithVolume &&  <td>{pm.username}</td>}
                             <td>{pm.date_of_payment.split(" GMT")[0]}</td>
-                            <td>{pm.payment_ref}</td>
+                            <td>{pm.amount}</td>
+                            {showWithVolume &&  <td>{pm.volume}</td>}
+                            <td>{pm.payment_ref}</td>                          
+                            
                             <td>
                           <Button className="receipt-button" onClick={() => showReceipt(pm)}>View</Button>
                         </td>
