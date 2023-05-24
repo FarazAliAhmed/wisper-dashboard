@@ -39,7 +39,7 @@ function PaymentReceipt({receiptData, show, toggleShow}){
                         Business ID : <strong> {receiptData.business_id} </strong> <br />
                        Username : <strong> {receiptData.username} </strong> <br />
                         Date :<strong> {receiptData.date_of_payment} </strong> <br />
-                        Amount :<strong> {receiptData.amount} </strong> <br />
+                        Amount :<strong>₦ {receiptData.amount} </strong> <br />
                         Data Volume :<strong> {receiptData.volume} </strong> <br />
                         Reference Code:<strong>
                             <Button

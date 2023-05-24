@@ -127,7 +127,7 @@ const Payments = () => {
                         <th>Business ID</th>
                        {showWithVolume &&  <th>Username</th>}
                         <th>Date of Payment</th>
-                        <th>Amount</th>
+                        <th>Amount (₦)</th>
                         {showWithVolume &&   <th>Data Volume</th>}
                         <th>Payment Reference</th>
                         <th>More</th>
@@ -141,7 +141,7 @@ const Payments = () => {
                             <td>{pm.business_id}</td>
                             {showWithVolume &&  <td>{pm.username}</td>}
                             <td>{pm.date_of_payment.split(" GMT")[0]}</td>
-                            <td>{pm.amount}</td>
+                            <td>₦ {pm.amount}</td>
                             {showWithVolume &&  <td>{pm.volume}</td>}
                             <td>{pm.payment_ref}</td>                          
                             

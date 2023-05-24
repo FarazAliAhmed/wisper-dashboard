@@ -253,7 +253,7 @@ const AllocateData = () => {
                           : values.action_type === "debit"
                           ? "Debit"
                           : ""}{" "}
-                        Data volume
+                        Data Volume Being Added (MB)
                       </Label>
                       <Input
                         required
@@ -268,7 +268,7 @@ const AllocateData = () => {
                   {values.action_type === "credit" && values.unit === "data" && (
                     <Col md={12}>
                       <FormGroup>
-                        <Label for="amount_payed">Amount Payed (Cash)</Label>
+                        <Label for="amount_payed">Amount Paid by User (Naria)</Label>
                         <Input
                           required
                           value={values.amount_cash}

@@ -52,7 +52,7 @@ const Payments = () => {
                     <thead>
                       <tr>
                         <th>S/N</th>
-                        <th>Amount</th>
+                        <th>Amount (₦)</th>
                         <th>Date of Payment</th>
                         {showWithVolume &&   <th>Data Volume</th>}
                         <th>Payment Reference</th>
@@ -63,7 +63,7 @@ const Payments = () => {
                         paymentData.map((pm, index) => (
                           <tr key={index} className="border-top">
                             <td>{index}</td>
-                            <td>{pm.amount}</td>
+                            <td>₦ {pm.amount}</td>
                             <td>{pm.date_of_payment.split(" GMT")[0]}</td>
 
                             {showWithVolume &&  <td>{pm.volume}</td>}
