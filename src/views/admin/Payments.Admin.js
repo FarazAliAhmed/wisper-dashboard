@@ -60,7 +60,9 @@ const Payments = () => {
 
     const results = payments.filter(
       (payment) =>
-        payment._id.includes(val) || payment.payment_ref.includes(val) || payment.username.includes(val)
+        payment._id === val ||
+        payment.payment_ref === val ||
+        payment.username === val
     );
 
     const filteredData = showWithVolume ? results.filter(item => item.hasOwnProperty('volume')) : results.filter(item => !item.hasOwnProperty("volume"));
