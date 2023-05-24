@@ -64,10 +64,10 @@ const Payments = () => {
                         paymentData.map((pm, index) => (
                           <tr key={index} className="border-top">
                             <td>{index}</td>
-                            <td>₦ {pm.amount}</td>
+                            {showWithVolume ? <td>{pm.amount}</td> :  <td>₦{pm.amount}</td>}
                             <td>{pm.date_of_payment.split(" GMT")[0]}</td>
 
-                            {showWithVolume &&  <td>{pm.volume}</td>}
+                            {showWithVolume &&  <td>{pm.volume}MB</td>}
                             {showWithVolume &&  <td>{pm.wallet}</td>}
 
                             <td>{pm.payment_ref}</td>                          
