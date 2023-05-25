@@ -134,7 +134,7 @@ const Documentation = () => {
                 <tr>
                   <th>Data ID</th>
                   <th>Network</th>
-                  <th>Plan Type</th>
+                  {/* <th>Plan Type</th> */}
                   {/* <th>Amount</th> */}
                   <th>Size </th>
                   <th>Validity</th>
@@ -152,7 +152,7 @@ const Documentation = () => {
                       </div>
                     </td>
                     <td>{tdata.network}</td>
-                    <td>{tdata.plan_type.toUpperCase()}</td>
+                    {/* <td>{tdata.plan_type.toUpperCase()}</td> */}
                     {/* <td>{tdata.amount}</td> */}
                     <td>{tdata.size}</td>
                     <td>{tdata.duration}</td>

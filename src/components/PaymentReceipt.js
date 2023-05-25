@@ -41,6 +41,7 @@ function PaymentReceipt({receiptData, show, toggleShow}){
                         Date :<strong> {receiptData.date_of_payment} </strong> <br />
                         Amount :<strong>₦ {receiptData.amount} </strong> <br />
                         Data Volume :<strong> {receiptData.volume} </strong> <br />
+                        status :<strong> Successful </strong> <br />
                         Reference Code:<strong>
                             <Button
                                 color="info"

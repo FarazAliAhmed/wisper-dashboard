@@ -107,14 +107,14 @@ const Payments = () => {
               <Card>
                 <CardBody>
                   <CardTitle tag="h5" style={{width:"100%", display:"flex", justifyContent:"space-between"}}>
-                    <h5>Payments History</h5>
+                  <h5>Payment and Data Allocation History</h5>
                     <Button className="receipt-button" style={{background:`${showWithVolume ? "red":"green"}`}} onClick={handleToggle}>
                       {showWithVolume ? "Old Trx" :"New Trx"}
                        </Button>
                   </CardTitle>
                   <CardSubtitle className="mb-2 text-muted" tag="h6">
-                    List of all payments made to Wisper
-                  </CardSubtitle>
+                  List of all payments and data allocation made to Wisper acccount
+                </CardSubtitle>
 
                   <Table
                     className="no-wrap mt-3 align-middle"
@@ -142,7 +142,7 @@ const Payments = () => {
                             <td>{pm.business_id}</td>
                             {showWithVolume &&  <td>{pm.username}</td>}
                             <td>{pm.date_of_payment.split(" GMT")[0]}</td>
-                            {showWithVolume ? <td>{pm.amount}</td> :  <td>₦{pm.amount}</td>}
+                            {showWithVolume ? <td>₦{pm.amount}</td> :  <td>{pm.amount}MB</td>}
 
                             {showWithVolume &&  <td>{pm.volume}MB</td>}
                             {showWithVolume &&  <td>{pm.wallet}</td>}

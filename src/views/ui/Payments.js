@@ -35,13 +35,13 @@ const Payments = () => {
             <Card>
                 <CardBody>
                 <CardTitle tag="h5" style={{width:"100%", display:"flex", justifyContent:"space-between"}}>
-                    <h5>Payments History</h5>
+                    <h5>Payment and Data Allocation History</h5>
                     <Button className="receipt-button" style={{background:`${showWithVolume ? "red":"green"}`}} onClick={handleToggle}>
                       {showWithVolume ? "Old Trx" :"New Trx"}
                        </Button>
                   </CardTitle>
                 <CardSubtitle className="mb-2 text-muted" tag="h6">
-                    List of all payments made to Wisper
+                    List of all payments and data allocation made to Wisper acccount
                 </CardSubtitle>
 
                 <Table
@@ -52,7 +52,7 @@ const Payments = () => {
                     <thead>
                       <tr>
                         <th>S/N</th>
-                        <th>Amount (₦)</th>
+                        {showWithVolume ? <th>Amount (₦)</th> : <th>Amount (MB)</th> }
                         <th>Date of Payment</th>
                         {showWithVolume &&   <th>Data Volume</th>}
                         {showWithVolume &&   <th>Data Wallet</th>}
@@ -64,7 +64,7 @@ const Payments = () => {
                         paymentData.map((pm, index) => (
                           <tr key={index} className="border-top">
                             <td>{index}</td>
-                            {showWithVolume ? <td>{pm.amount}</td> :  <td>₦{pm.amount}</td>}
+                            {showWithVolume ? <td>₦{pm.amount}</td> :  <td>{pm.amount}MB</td>}
                             <td>{pm.date_of_payment.split(" GMT")[0]}</td>
 
                             {showWithVolume &&  <td>{pm.volume}MB</td>}
