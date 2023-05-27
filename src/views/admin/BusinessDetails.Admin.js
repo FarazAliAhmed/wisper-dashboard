@@ -14,6 +14,10 @@ import TopCards from "../../components/dashboard/TopCards";
 
 import AdminLayout from "../../layouts/AdminLayout";
 import TransactionsTable from "../../components/TransactionsTable";
+import glo from '../../assets/dashboard/glo.svg'
+import mtn1 from '../../assets/dashboard/mtn 1.svg'
+import mob9 from '../../assets/dashboard/mob9.svg'
+import airtel from '../../assets/dashboard/airtel.svg'
 
 import {
   getSingleBusiness,
@@ -288,7 +292,7 @@ const Account = (props) => {
               {business.type === "mega" && (
                 <>
                   {/* MTN and Airtel Wallets */}
-                  <Col sm="6" lg="9">
+                  {/* <Col sm="6" lg="9">
                     <TopCards
                       bg="bg-light-info text-info"
                       title="Profit"
@@ -296,14 +300,14 @@ const Account = (props) => {
                       earning={`${mega_wallet.mtn_sme} ${mega_wallet.unit}`}
                       icon="bi bi-wallet-fill"
                     />
-                  </Col>
+                  </Col> */}
                   <Col sm="6" lg="9">
                     <TopCards
                       bg="bg-light-warning text-warning"
                       title="Refunds"
                       subtitle="MTN Gifting"
                       earning={`${mega_wallet.mtn_gifting} ${mega_wallet.unit}`}
-                      icon="bi bi-wallet"
+                      icon={mtn1}
                     />
                   </Col>
                   <Col sm="6" lg="9">
@@ -312,7 +316,7 @@ const Account = (props) => {
                       title="New Project"
                       subtitle="Airtel"
                       earning={`${mega_wallet.airtel} ${mega_wallet.unit}`}
-                      icon="bi bi-wallet2"
+                      icon={airtel}
                     />
                   </Col>
 
@@ -323,7 +327,7 @@ const Account = (props) => {
                       title="Profit"
                       subtitle="GLO"
                       earning={`${mega_wallet.glo} ${mega_wallet.unit}`}
-                      icon="bi bi-wallet-fill"
+                      icon={glo}
                     />
                   </Col>
                   
@@ -334,7 +338,7 @@ const Account = (props) => {
                       title="Profit"
                       subtitle="9Mobile"
                       earning={`${mega_wallet["9mobile"]} ${mega_wallet.unit}`}
-                      icon="bi bi-wallet2"
+                      icon={mob9}
                     />
                   </Col>
                 </>

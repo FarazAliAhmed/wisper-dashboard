@@ -15,6 +15,7 @@ import {
 import AdminLayout from "../../layouts/AdminLayout";
 import PaymentReceipt from "../../components/PaymentReceipt";
 import { useAdmin } from "../../context/adminContext";
+import { Link } from "react-router-dom";
 
 import "../../assets/scss/custom.scss";
 
@@ -139,7 +140,15 @@ const Payments = () => {
                         paymentData.map((pm, index) => (
                           <tr key={index} className="border-top">
                             <td>{index}</td>
-                            <td><a href={`/admin/business/${pm.business_id}`}>{pm.business_id}</a></td>
+                            <td> 
+                        <Link
+                            to={`/admin/business/${pm.business_id}`}
+                            className="text-decoration-none"
+                          >
+                            {pm.business_id}
+
+                            </Link>
+                            </td>
                             {showWithVolume &&  <td>{pm.username}</td>}
                             <td>{pm.date_of_payment.split(" GMT")[0]}</td>
                             {showWithVolume ? <td>₦{pm.amount}</td> :  <td>{pm.amount}MB</td>}
