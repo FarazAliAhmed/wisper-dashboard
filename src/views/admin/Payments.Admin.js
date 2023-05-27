@@ -139,7 +139,7 @@ const Payments = () => {
                         paymentData.map((pm, index) => (
                           <tr key={index} className="border-top">
                             <td>{index}</td>
-                            <td>{pm.business_id}</td>
+                            <td><a href={`/admin/business/${pm.business_id}`}>{pm.business_id}</a></td>
                             {showWithVolume &&  <td>{pm.username}</td>}
                             <td>{pm.date_of_payment.split(" GMT")[0]}</td>
                             {showWithVolume ? <td>₦{pm.amount}</td> :  <td>{pm.amount}MB</td>}
