@@ -246,7 +246,7 @@ const TransactionsTable = ({
                             </div>
                           </div>
                         </td>
-                        <td>{tx.data_volume}</td>
+                        <td>{tx.data_volume/1000} GB</td>
                         {/* <td>{tx.price || "-"}</td> */}
                         <td>
                           {tx.status === "processing" ? (

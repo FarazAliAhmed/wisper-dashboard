@@ -74,7 +74,7 @@ const Dashboard = () => {
               bg="bg-light-warning text-warning"
               title="New Project"
               subtitle="Total data sold"
-              earning={singleSold}
+              earning={`{singleSold/1000} GB`}
               icon={wallIcon}
             />
           </Col>
@@ -97,7 +97,7 @@ const Dashboard = () => {
                   bg="bg-light-warning text-warning"
                   title="Refunds"
                   subtitle="MTN"
-                  earning={`${mega_wallet.mtn_gifting} ${mega_wallet.unit}`}
+                  earning={`${mega_wallet.mtn_gifting/1000} GB`}
                   icon={mtn1}
                 />
               </Col>
@@ -106,7 +106,7 @@ const Dashboard = () => {
                   bg="bg-light-success text-success"
                   title="New Project"
                   subtitle="Airtel"
-                  earning={`${mega_wallet.airtel} ${mega_wallet.unit}`}
+                  earning={`${mega_wallet.airtel/1000} GB`}
                   icon={airtel}
                 />
               </Col>
@@ -117,7 +117,7 @@ const Dashboard = () => {
                   bg="bg-light-info text-info"
                   title="Profit"
                   subtitle="GLO"
-                  earning={`${mega_wallet.glo} ${mega_wallet.unit}`}
+                  earning={`${mega_wallet.glo/1000} GB`}
                   icon={glo}
                 />
               </Col>
@@ -128,7 +128,7 @@ const Dashboard = () => {
                     bg="bg-light-info text-info"
                     title="Profit"
                     subtitle="9 Mobile"
-                    earning={`${mega_wallet["9mobile"]} ${mega_wallet.unit}`}
+                    earning={`${mega_wallet["9mobile"]/1000} GB`}
                     icon={mob9}
                   />
                 </Col>

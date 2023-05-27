@@ -48,7 +48,7 @@ const Dashboard = () => {
               bg="bg-light-info text-info"
               title="Profit"
               subtitle="SIMSERVER WALLET"
-              earning={`₦ ${mainBalance.simserver}`}
+              earning={`₦ ${mainBalance.simserver/1000} GB`}
               icon={wallIcon}
             />
           </Col>
@@ -57,7 +57,7 @@ const Dashboard = () => {
               bg="bg-light-info text-info"
               title="Profit"
               subtitle="MTN (FASTLINK)"
-              earning={`${mainBalance.mtn_balance} MB`}
+              earning={`${mainBalance.mtn_balance/1000} GB`}
               icon={mtn1}
             />
           </Col>
@@ -66,7 +66,7 @@ const Dashboard = () => {
               bg="bg-light-success text-success"
               title="New Project"
               subtitle="Airtel (FASTLINK)"
-              earning={`${mainBalance.airtel_balance} MB`}
+              earning={`${mainBalance.airtel_balance/1000} GB`}
               icon={airtel}
             />
           </Col>
@@ -84,7 +84,7 @@ const Dashboard = () => {
               bg="bg-light-warning text-warning"
               title="New Project"
               subtitle="Total data sold"
-              earning={`${allSold} MB`}
+              earning={`${allSold/1000} GB`}
               icon={wallIcon}
             />
           </Col>
@@ -93,7 +93,7 @@ const Dashboard = () => {
               bg="bg-light-info text-info"
               title="Profit"
               subtitle="Balance (You)"
-              earning={balanceDisplay}
+              earning={`${balanceDisplay/1000} GB`}
               icon={tranIcon}
             />
           </Col>
@@ -106,7 +106,8 @@ const Dashboard = () => {
                   bg="bg-light-info text-info"
                   title="Profit"
                   subtitle="MTN SME (You)"
-                  earning={`${mega_wallet.mtn_sme} ${mega_wallet.unit}`}
+                  earning={`${mega_wallet.mtn_sme/1000} GB`}
+                  // earning={`${mega_wallet.mtn_sme} ${mega_wallet.unit}`}
                   icon={mtn1}
                 />
               </Col>
@@ -115,7 +116,7 @@ const Dashboard = () => {
                   bg="bg-light-warning text-warning"
                   title="Refunds"
                   subtitle="MTN Gifting (You)"
-                  earning={`${mega_wallet.mtn_gifting} ${mega_wallet.unit}`}
+                  earning={`${mega_wallet.mtn_gifting/1000} GB`}
                   icon={mtn1}
                 />
               </Col>
@@ -124,7 +125,7 @@ const Dashboard = () => {
                   bg="bg-light-success text-success"
                   title="New Project"
                   subtitle="Airtel (You)"
-                  earning={`${mega_wallet.airtel} ${mega_wallet.unit}`}
+                  earning={`${mega_wallet.airtel/1000} GB`}
                   icon={airtel}
                 />
               </Col>
@@ -135,7 +136,7 @@ const Dashboard = () => {
                     bg="bg-light-info text-info"
                     title="Profit"
                     subtitle="GLO"
-                    earning={`${mega_wallet.glo} ${mega_wallet.unit}`}
+                    earning={`${mega_wallet.glo/1000} GB`}
                     icon={glo}
                   />
                 </Col>
