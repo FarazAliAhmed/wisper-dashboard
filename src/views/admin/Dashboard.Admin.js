@@ -48,7 +48,7 @@ const Dashboard = () => {
               bg="bg-light-info text-info"
               title="Profit"
               subtitle="SIMSERVER WALLET"
-              earning={`₦ ${mainBalance.simserver/1000} GB`}
+              earning={`₦ ${mainBalance.simserver/1000}`}
               icon={wallIcon}
             />
           </Col>
@@ -93,7 +93,7 @@ const Dashboard = () => {
               bg="bg-light-info text-info"
               title="Profit"
               subtitle="Balance (You)"
-              earning={`${balanceDisplay/1000} GB`}
+              earning={`${balanceDisplay}`}
               icon={tranIcon}
             />
           </Col>
