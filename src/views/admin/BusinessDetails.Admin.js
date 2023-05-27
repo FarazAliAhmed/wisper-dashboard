@@ -18,6 +18,8 @@ import glo from '../../assets/dashboard/glo.svg'
 import mtn1 from '../../assets/dashboard/mtn 1.svg'
 import mob9 from '../../assets/dashboard/mob9.svg'
 import airtel from '../../assets/dashboard/airtel.svg'
+import tranIcon from '../../assets/dashboard/transa.svg'
+import wallIcon from '../../assets/dashboard/walle.svg'
 
 import {
   getSingleBusiness,
@@ -266,7 +268,7 @@ const Account = (props) => {
                   title="Profit"
                   subtitle="Balance"
                   earning={balanceDisplay}
-                  icon="bi bi-wallet"
+                  icon={wallIcon}
                 />
               </Col>
               {/* <Col sm="6" lg="9">
