@@ -74,7 +74,7 @@ const Dashboard = () => {
               bg="bg-light-warning text-warning"
               title="New Project"
               subtitle="Total data sold"
-              earning={`{singleSold/1000} GB`}
+              earning={`${singleSold/1000} GB`}
               icon={wallIcon}
             />
           </Col>
