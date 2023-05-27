@@ -103,7 +103,8 @@ const TransactionsTable = ({
     const results = transactions.filter(
       (transaction) =>
         transaction.phone_number === searchValue ||
-        transaction.transaction_ref === searchValue
+        transaction.transaction_ref === searchValue ||
+        transaction.business_id === searchValue 
     );
 
     setTransactionsData(results);
