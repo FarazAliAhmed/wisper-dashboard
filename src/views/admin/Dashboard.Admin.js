@@ -57,7 +57,7 @@ const Dashboard = () => {
               bg="bg-light-info text-info"
               title="Profit"
               subtitle="9MOBILE (OGDAMS)"
-              earning={`${mainBalance.mob9 || 0} GB`}
+              earning={`₦ ${mainBalance.mob9 || 0}`}
               icon={mob9}
             />
           </Col>
