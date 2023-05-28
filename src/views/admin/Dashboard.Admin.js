@@ -47,21 +47,21 @@ const Dashboard = () => {
             <TopCards
               bg="bg-light-info text-info"
               title="Profit"
-              subtitle="SIMSERVER WALLET"
-              earning={`₦ ${mainBalance.simserver/1000}`}
-              icon={wallIcon}
+              subtitle="ABISUBPORTAL WALLET"
+              earning={`₦ ${mainBalance.mtn|| 0}`}
+              icon={mtn1}
             />
           </Col>
           <Col sm="6" lg="4">
             <TopCards
               bg="bg-light-info text-info"
               title="Profit"
-              subtitle="MTN (FASTLINK)"
-              earning={`${mainBalance.mtn_balance/1000} GB`}
-              icon={mtn1}
+              subtitle="9MOBILE (OGDAMS)"
+              earning={`${mainBalance.mob9 || 0} GB`}
+              icon={mob9}
             />
           </Col>
-          <Col sm="6" lg="4">
+          {/* <Col sm="6" lg="4">
             <TopCards
               bg="bg-light-success text-success"
               title="New Project"
@@ -69,7 +69,7 @@ const Dashboard = () => {
               earning={`${mainBalance.airtel_balance/1000} GB`}
               icon={airtel}
             />
-          </Col>
+          </Col> */}
           <Col sm="6" lg="4">
             <TopCards
               bg="bg-light-danger text-danger"

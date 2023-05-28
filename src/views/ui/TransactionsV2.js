@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import FullLayout from "../../layouts/FullLayout";
 import TransactionsTable from "../../components/TransactionsTable";
 import { getAllTransactionsV2, FilterTransactionsV2 } from '../../services/dataService'
-
 import {
   Form,
   FormGroup,
@@ -39,26 +38,11 @@ const TransactionsV2 = () => {
   });
 
   useEffect(() => {
-    // const fetchT = async () => {
-    //   await fetchWithPaginate()
-    // }
     const fetchT = async () => {
-      if (!loading) {
-        setLoading(true);
-        const cFilter = cleanFilter(filter);
-        try {
-          const resp = await FilterTransactionsV2(cFilter, pagination);
-          setTransactions(resp.data);
-          setLoading(false);
-          setIsOpen(false);
-        } catch (error) {
-          console.log(error)
-        }
-      }
-    };
-    
+      await fetchWithPaginate()
+    }
     fetchT()
-  }, [filter, loading, pagination])
+  }, [])
 
   useEffect(() => {
     if(!Object.values(date).includes(undefined)){
@@ -66,7 +50,7 @@ const TransactionsV2 = () => {
       const date_end = new Date(`${date.end_date} ${date.end_time}`).toLocaleString()
       setFilter({...filter, date: [date_str || undefined, date_end || undefined]})
     }
-  }, [date, filter])
+  }, [date])
 
   // Below section has to do with filtering through the data
 

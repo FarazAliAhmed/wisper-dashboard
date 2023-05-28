@@ -5,7 +5,7 @@ import {
   getTransactions,
   getWallets,
   getAdmins,
-  // getMainBalance,
+  getMainBalance,
   getAllTrx,
   getAllSold
 } from "../services/Admin.Services/businessService";
@@ -38,7 +38,7 @@ const AdminProvider = ({ children }) => {
         getAdmins(),
         getAllTrx(),
         getAllSold(),
-        // getMainBalance(),
+        getMainBalance(),
       ]);
       
       setBusiness(result[0]?.data);
@@ -53,7 +53,7 @@ const AdminProvider = ({ children }) => {
       // console.log(result[6])
 
       if(result[6]){
-// console.log("result 7", result[7])
+console.log("result 7", result[7])
 
         // setMainBalance({
         //   mtn_balance: result[5]?.data.balance.account_1,
@@ -63,11 +63,7 @@ const AdminProvider = ({ children }) => {
 
         // jdjd
       
-        setMainBalance({
-          mtn_balance: 0,
-          airtel_balance: 0,
-          simserver: 0,
-        });
+        setMainBalance(result[7]?.data);
 
         
       }

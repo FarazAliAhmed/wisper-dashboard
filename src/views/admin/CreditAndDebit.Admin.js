@@ -75,7 +75,7 @@ const AllocateData = () => {
 
         const genCred = await generateCreditPayment({
           business_id: values.business_id,
-          volume: values.amount,
+          volume: values.amount * 1024,
           amount:values.amount_cash,
           wallet:values.wallet,
           payment_ref:
@@ -87,7 +87,7 @@ const AllocateData = () => {
       if (values.action_type === "debit") {
         const res = await debitBusiness({
           business_id: values.business_id,
-          debit_amount: values.amount,
+          debit_amount: values.amount * 1024,
           unit: values.unit,
           wallet: values.wallet,
         });
@@ -253,7 +253,7 @@ const AllocateData = () => {
                           : values.action_type === "debit"
                           ? "Debit"
                           : ""}{" "}
-                        Data Volume Being Added (MB)
+                        Data Volume Being Added (GB)
                       </Label>
                       <Input
                         required
