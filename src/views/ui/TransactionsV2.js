@@ -39,11 +39,26 @@ const TransactionsV2 = () => {
   });
 
   useEffect(() => {
+    // const fetchT = async () => {
+    //   await fetchWithPaginate()
+    // }
     const fetchT = async () => {
-      await fetchWithPaginate()
-    }
+      if (!loading) {
+        setLoading(true);
+        const cFilter = cleanFilter(filter);
+        try {
+          const resp = await FilterTransactionsV2(cFilter, pagination);
+          setTransactions(resp.data);
+          setLoading(false);
+          setIsOpen(false);
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    };
+    
     fetchT()
-  }, [])
+  }, [filter, loading, pagination])
 
   useEffect(() => {
     if(!Object.values(date).includes(undefined)){
@@ -51,7 +66,7 @@ const TransactionsV2 = () => {
       const date_end = new Date(`${date.end_date} ${date.end_time}`).toLocaleString()
       setFilter({...filter, date: [date_str || undefined, date_end || undefined]})
     }
-  }, [date])
+  }, [date, filter])
 
   // Below section has to do with filtering through the data
 
@@ -112,7 +127,7 @@ const TransactionsV2 = () => {
   const fetchWithPaginate = async () => {
     const cleanFil = cleanFilter(filter)
     if(Object.keys(cleanFil).length > 0){
-      await queryDatabase()
+      queryDatabase()
     }else {
       if(!loading){
         setLoading(true)
