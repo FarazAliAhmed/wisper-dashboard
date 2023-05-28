@@ -32,12 +32,12 @@ const Wallet = () => {
                   <th>Business ID</th>
                   <th>Business Name</th>
                   <th>Cash (₦)</th>
-                  <th>Walet Balance (MB)</th>
-                  <th>MTN:SME (MB)</th>
-                  <th>MTN:Gifting (MB)</th>
-                  <th>Airtel (MB)</th>
-                  <th>Glo (MB)</th>
-                  <th>9Mobile (MB)</th>
+                  <th>Walet Balance (GB)</th>
+                  <th>MTN:SME (GB)</th>
+                  <th>MTN:Gifting (GB)</th>
+                  <th>Airtel (GB)</th>
+                  <th>Glo (GB)</th>
+                  <th>9Mobile (GB)</th>
                 </tr>
               </thead>
               <tbody>
@@ -52,11 +52,11 @@ const Wallet = () => {
                     <td>{tdata.business?.name}</td>
                     <td>{tdata.data_volume}</td>
                     <td>{`${tdata.wallet_balance}`.split(".")[0]}</td>
-                    <td>{tdata.mega_wallet.mtn_sme}</td>
-                    <td>{tdata.mega_wallet.mtn_gifting}</td>
-                    <td>{tdata.mega_wallet.airtel}</td>
-                    <td>{tdata.mega_wallet.glo}</td>
-                    <td>{tdata.mega_wallet["9mobile"]}</td>
+                    <td>{tdata.mega_wallet.mtn_sme/1000}</td>
+                    <td>{tdata.mega_wallet.mtn_gifting/1000}</td>
+                    <td>{tdata.mega_wallet.airtel/1000}</td>
+                    <td>{tdata.mega_wallet.glo/1000}</td>
+                    <td>{tdata.mega_wallet["9mobile"]/1000}</td>
                   </tr>
                 ))}
               </tbody>

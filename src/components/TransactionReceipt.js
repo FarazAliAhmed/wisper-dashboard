@@ -85,7 +85,7 @@ const TransactionMessage = ({status, volume, phone_number, created_at}) => {
         return (
             <p>
                 OK <br />
-                You have successfully gifted <strong>{volume} MB</strong> worth of data to <strong>{phone_number}</strong>,
+                You have successfully gifted <strong>{volume/1000} GB</strong> worth of data to <strong>{phone_number}</strong>,
                 valid till {valid_until}
             </p>
         )
@@ -93,7 +93,7 @@ const TransactionMessage = ({status, volume, phone_number, created_at}) => {
         return (
             <p>
                 Failed <br />
-                Dear customer, transfer of <strong>{volume} MB</strong>  to <strong>{phone_number}</strong> was not successful. Please try again.
+                Dear customer, transfer of <strong>{volume/1000} GB</strong>  to <strong>{phone_number}</strong> was not successful. Please try again.
             </p>
         )
     }

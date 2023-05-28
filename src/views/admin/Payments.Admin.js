@@ -128,7 +128,7 @@ const Payments = () => {
                         <th>Business ID</th>
                        {showWithVolume &&  <th>Username</th>}
                         <th>Date of Payment</th>
-                        <th>Amount (₦)</th>
+                        {showWithVolume ?  <th>Amount (₦)</th> :  <th>Amount</th>}
                         {showWithVolume &&   <th>Data Volume</th>}
                         {showWithVolume &&   <th>Data Wallet</th>}
                         <th>Payment Reference</th>
@@ -151,10 +151,10 @@ const Payments = () => {
                             </td>
                             {showWithVolume &&  <td>{pm.username}</td>}
                             <td>{pm.date_of_payment.split(" GMT")[0]}</td>
-                            {showWithVolume ? <td>₦{pm.amount}</td> :  <td>{pm.amount}MB</td>}
+                            {showWithVolume ? <td>₦{pm.amount}</td> :  <td>{pm.amount/1000}GB</td>}
 
-                            {showWithVolume &&  <td>{pm.volume}MB</td>}
-                            {showWithVolume &&  <td>{pm.wallet}</td>}
+                            {showWithVolume &&  <td>{pm.volume/1000}GB</td>}
+                            {showWithVolume &&  <td>{pm.wallet != "mtn_gifting" ? <>{pm.wallet}</> : "MTN"}</td>}
                             <td>{pm.payment_ref}</td>                          
                             
                             <td>
