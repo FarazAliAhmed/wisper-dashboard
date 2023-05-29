@@ -41,7 +41,9 @@ const AdminProvider = ({ children }) => {
         getMainBalance(),
       ]);
       
-      setBusiness(result[0]?.data);
+      if(result[0]){
+        setBusiness(result[0]?.data);
+      }
       setPayment(result[1]?.data);
       setTransaction(result[2]?.data);
       setWallet(result[3]?.data);
@@ -52,21 +54,11 @@ const AdminProvider = ({ children }) => {
       console.log(result[2], "transaction admin")
       // console.log(result[6])
 
-      if(result[6]){
-console.log("result 7", result[7])
-
-        // setMainBalance({
-        //   mtn_balance: result[5]?.data.balance.account_1,
-        //   airtel_balance: result[5]?.data.balance.account_2,
-        //   simserver: result[5]?.data.simserver.account_1,
-        // });
-
-        // jdjd
-      
-        setMainBalance(result[7]?.data);
-
-        
+      if(result[7]){
+        console.log("result 7", result[7])
+        setMainBalance(result[7]?.data);  
       }
+
     }
     loadAdmin();
   }, []);

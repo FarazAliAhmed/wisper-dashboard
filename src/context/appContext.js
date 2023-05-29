@@ -71,23 +71,31 @@ const AppStateProvider = ({ children }) => {
 // console.log(results[6])
 
       // const mainBalance = await getMainBalance();
-      setCurrentBalance({
-        volume: balanceRes.data.data_volume,
-        unit: balanceRes.data.data_unit,
-        cash: balanceRes.data.wallet_balance,
-        mega_wallet: {
-          mtn_sme: balanceRes.data.mega_wallet.mtn_sme,
-          mtn_gifting: balanceRes.data.mega_wallet.mtn_gifting,
-          airtel: balanceRes.data.mega_wallet.airtel,
-          glo: balanceRes.data.mega_wallet.glo,
-          "9mobile": balanceRes.data.mega_wallet["9mobile"],
-          unit: balanceRes.data.mega_wallet.unit,
-        },
-        // mtn_balance: mainBalance.data.balance.account_1,
-        // airtel_balance: mainBalance.data.balance.account_2,
-      });
+      if(balanceRes){
+        setCurrentBalance({
+          volume: balanceRes.data.data_volume,
+          unit: balanceRes.data.data_unit,
+          cash: balanceRes.data.wallet_balance,
+          mega_wallet: {
+            mtn_sme: balanceRes.data.mega_wallet.mtn_sme,
+            mtn_gifting: balanceRes.data.mega_wallet.mtn_gifting,
+            airtel: balanceRes.data.mega_wallet.airtel,
+            glo: balanceRes.data.mega_wallet.glo,
+            "9mobile": balanceRes.data.mega_wallet["9mobile"],
+            unit: balanceRes.data.mega_wallet.unit,
+          },
+          // mtn_balance: mainBalance.data.balance.account_1,
+          // airtel_balance: mainBalance.data.balance.account_2,
+        });
+      }
 
+     if(transactionRes){
       transactionRes.data.sort(function (a, b) {
+        const A = Date.parse(a.created_at);
+        const B = Date.parse(b.created_at);
+        if (A > B) return -1;
+        if (A < B) return 1;
+      }); transactionRes.data.sort(function (a, b) {
         const A = Date.parse(a.created_at);
         const B = Date.parse(b.created_at);
         if (A > B) return -1;
@@ -95,11 +103,24 @@ const AppStateProvider = ({ children }) => {
       });
 
       setTransactions(transactionRes.data);
-      setPayments(paymentRes.data);
-      setPlans(planRes.data.plan);
-      setMaintenance(maintenanceRes.data.maintenance)
+     }
+
+      if(paymentRes){
+        setPayments(paymentRes.data);
+      }
+
+      if(planRes){
+        setPlans(planRes.data.plan);
+      }
+
+      if(maintenanceRes){
+        setMaintenance(maintenanceRes.data.maintenance)
+      }
+
     }
-    fetchBalance();
+    if(user){
+      fetchBalance();
+    }
   }, [user]);
 
   return (

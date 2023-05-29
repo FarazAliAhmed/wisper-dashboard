@@ -11,6 +11,8 @@ import Loader from "../layouts/loader/Loader.js";
 import ForgotPassword from "../views/auth/ForgotPassword.jsx";
 import SetPassword from "../views/auth/SetPassword.jsx";
 import CheckEmail from "../views/auth/CheckEmail.jsx";
+import CheckEmailConfirm from "../views/auth/CheckEmailConfirm.jsx";
+import ConfirmEmail from "../views/auth/ConfirmEmail.jsx";
 
 /***** Pages ****/
 
@@ -50,6 +52,8 @@ const Routes = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/forgot-password" component={ForgotPassword} />
           <Route exact path="/check-email/:email" component={CheckEmail} />
+          <Route exact path="/check-email-confirm/:email" component={CheckEmailConfirm} />
+          <Route exact path="/confirm-email" component={ConfirmEmail} />
           <Route exact path="/reset-password/:email/:token" component={SetPassword} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/not-found" component={NotFound} />
