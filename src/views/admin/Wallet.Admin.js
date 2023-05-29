@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardBody, CardTitle, Table, CardSubtitle } from "reactstrap";
 import AdminLayout from "../../layouts/AdminLayout";
 import { useAdmin } from "../../context/adminContext";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const Wallet = () => {
   const { wallet } = useAdmin();
@@ -32,7 +33,7 @@ const Wallet = () => {
                   <th>Business ID</th>
                   <th>Business Name</th>
                   <th>Cash (₦)</th>
-                  <th>Walet Balance (GB)</th>
+                  <th>Wallet Balance (₦)</th>
                   <th>MTN:SME (GB)</th>
                   <th>MTN:Gifting (GB)</th>
                   <th>Airtel (GB)</th>
@@ -46,10 +47,17 @@ const Wallet = () => {
                     <td>{index}</td>
                     <td>
                       <div className="d-flex align-items-center py-2">
-                        <h6 className="mb-0">{tdata.business?._id}</h6>
+                        <h6 className="mb-0">
+                        <Link
+                          to={`/admin/business/${tdata.business?._id}`}
+                            className="text-decoration-none"
+                          >
+                            {tdata.business?._id}
+                          </Link>
+                          </h6>
                       </div>
                     </td>
-                    <td>{tdata.business?.name}</td>
+                    <td> {tdata.business?.name} </td>
                     <td>{tdata.data_volume}</td>
                     <td>{`${tdata.wallet_balance}`.split(".")[0]}</td>
                     <td>{tdata.mega_wallet.mtn_sme/1000}</td>

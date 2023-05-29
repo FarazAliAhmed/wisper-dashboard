@@ -27,6 +27,9 @@ const TransactionsTable = ({
   showPageSettings = false,
 }) => {
   const [transactionsData, setTransactionsData] = useState([...transactions]);
+
+console.log(transactions)
+
   const [isOpen, setIsOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchValue, setSearchValue] = useState("");

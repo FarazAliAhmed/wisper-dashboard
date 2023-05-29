@@ -275,7 +275,7 @@ const AllocateData = () => {
                           : values.action_type === "debit"
                           ? "Debit"
                           : ""}{" "}
-                        Data Volume Being Added (GB)
+                      {values.unit == "data" ?  "Data Volume Being Added (GB)" : "Credit Amount Being added in Naira"}
                       </Label>
                       <Input
                         required

@@ -50,6 +50,8 @@ const Account = (props) => {
 
   const { transaction } = useAdmin();
 
+  console.log(transaction)
+
   useEffect(() => {
     async function fetchBusinessDetails() {
       const res = await getSingleBusiness(businessId);
@@ -356,7 +358,7 @@ const Account = (props) => {
               transaction,
               businessId
             )}
-            showHeader={false}
+            showHeader={true}
           />
         </Row>
       </div>
