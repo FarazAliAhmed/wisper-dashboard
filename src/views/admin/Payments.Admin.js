@@ -22,7 +22,7 @@ import "../../assets/scss/custom.scss";
 const Payments = () => {
   const { payment: payments } = useAdmin();
 
-  // console.log(payments)
+  console.log(payments)
   
   const [searchValue, setSearchValue] = useState("");
   const [paymentData, setPaymentData] = useState([]);
@@ -63,7 +63,8 @@ const Payments = () => {
       (payment) =>
         payment._id === val ||
         payment.payment_ref === val ||
-        payment.username === val
+        payment.username === val ||
+        payment.business_id === val 
     );
 
     const filteredData = showWithVolume ? results.filter(item => item.hasOwnProperty('volume')) : results.filter(item => !item.hasOwnProperty("volume"));

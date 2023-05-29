@@ -41,6 +41,8 @@ function PaymentReceipt({receiptData, show, toggleShow}){
                         Date :<strong> {receiptData.date_of_payment} </strong> <br />
                         Amount :<strong>₦ {receiptData.amount} </strong> <br />
                         Data Volume :<strong> {receiptData.volume/1000} GB </strong> <br />
+                        Old Balance :<strong>  </strong> <br />
+                        New Balance :<strong>  </strong> <br />
                         status :<strong> Successful </strong> <br />
                         Reference Code:<strong>
                             <Button
