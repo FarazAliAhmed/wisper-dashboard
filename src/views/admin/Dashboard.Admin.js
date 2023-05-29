@@ -140,6 +140,16 @@ const Dashboard = () => {
                     icon={glo}
                   />
                 </Col>
+
+                <Col sm="6" lg="4">
+                  <TopCards
+                    bg="bg-light-info text-info"
+                    title="Profit"
+                    subtitle="9 Mobile"
+                    earning={`${mega_wallet["9mobile"]/1000} GB`}
+                    icon={mob9}
+                  />
+                </Col>
             </>
           )}
         </Row>

@@ -19,6 +19,7 @@ import {
   creditBusiness,
   debitBusiness,
   generateCreditPayment,
+  getSingleBusiness,
 } from "../../services/Admin.Services/businessService";
 import { handleFailedRequest } from "../../utils";
 
@@ -47,6 +48,7 @@ const AllocateData = () => {
 
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [business, setBusiness] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,12 +63,26 @@ const AllocateData = () => {
       });
     }
     try {
+    // start of getting user details
+    const businessId = values.business_id;    
+
+    const mega_user = await getSingleBusiness(businessId);
+    setBusiness({ ...mega_user.data.business, balance: { ...mega_user.data.balance } });
+    
+    const mega_wallet = mega_user.data.balance?.mega_wallet;
+
+    console.log((values.amount * 1000) + (mega_wallet[values.wallet]), "ajhu")
+
+    // end of getting user details
+
+    if(mega_user){
+
       let response;
       setLoading(true);
       if (values.action_type === "credit") {
         const res = await creditBusiness({
           business_id: values.business_id,
-          credit_amount: values.amount,
+          credit_amount: values.amount * 1000,
           unit: values.unit,
           wallet: values.wallet,
         });
@@ -75,9 +91,11 @@ const AllocateData = () => {
 
         const genCred = await generateCreditPayment({
           business_id: values.business_id,
-          volume: values.amount * 1024,
+          volume: values.amount * 1000,
           amount:values.amount_cash,
           wallet:values.wallet,
+          old: mega_wallet[values.wallet],
+          new: (values.amount * 1000) + (mega_wallet[values.wallet]),
           payment_ref:
             "AD-trx-" + Math.floor(Math.random() * 10000000000000000),
         });
@@ -87,7 +105,7 @@ const AllocateData = () => {
       if (values.action_type === "debit") {
         const res = await debitBusiness({
           business_id: values.business_id,
-          debit_amount: values.amount * 1024,
+          debit_amount: values.amount * 1000,
           unit: values.unit,
           wallet: values.wallet,
         });
@@ -108,7 +126,11 @@ const AllocateData = () => {
       setLoading(false);
 
       console.log(serverResponse);
+    }
+
+    
     } catch (error) {
+      console.log(error)
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
       setServerResponse({ status, message });
@@ -268,7 +290,7 @@ const AllocateData = () => {
                   {values.action_type === "credit" && values.unit === "data" && (
                     <Col md={12}>
                       <FormGroup>
-                        <Label for="amount_payed">Amount Paid by User (Naria)</Label>
+                        <Label for="amount_payed">Amount Paid by User (Naira)</Label>
                         <Input
                           required
                           value={values.amount_cash}

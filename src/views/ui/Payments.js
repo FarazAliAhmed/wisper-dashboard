@@ -4,6 +4,7 @@ import { useAppState } from "../../context/appContext";
 
 import "../../assets/scss/custom.scss";
 import { useEffect, useState } from "react";
+import PaymentReceipt from "../../components/PaymentReceipt";
 
 const Payments = () => {
   const { payments:payments } = useAppState();
@@ -13,12 +14,25 @@ const Payments = () => {
   
   const [paymentData, setPaymentData] = useState([]);
   const [showWithVolume, setShowWithVolume] = useState(true);
+  const [show, setShow] = useState(false)
 
-  
+  const [receiptdata, setReceiptData] = useState({
+    ...paymentData[0]
+  })
+
 
   const handleToggle = () => {
     setShowWithVolume(prevState => !prevState);
   };
+
+  const toggleShow = () => {
+    setShow(!show)
+  }
+
+  const showReceipt = (receiptdata) => {
+    setReceiptData(receiptdata)
+    toggleShow()
+  }
 
   useEffect(() => {
     const filteredData = showWithVolume ? payments.filter(item => item.hasOwnProperty('volume')) : payments.filter(item => !item.hasOwnProperty("volume"));
@@ -73,8 +87,8 @@ const Payments = () => {
                             <td>{pm.payment_ref}</td>                          
                             
                             <td>
-                         
-                        </td>
+                            {showWithVolume &&  <Button className="receipt-button" onClick={() => showReceipt(pm)}>View</Button> }
+                            </td>
                           </tr>
                         ))}
                     </tbody>
@@ -85,6 +99,7 @@ const Payments = () => {
           </Col>
         </Row>
       </div>
+        <PaymentReceipt show={show} receiptData={receiptdata} toggleShow={toggleShow} />
     </FullLayout>
   );
 };
