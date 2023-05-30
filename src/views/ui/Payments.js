@@ -69,6 +69,7 @@ const Payments = () => {
                         {showWithVolume ? <th>Amount (₦)</th> : <th>Amount (MB)</th> }
                         <th>Date of Payment</th>
                         {showWithVolume &&   <th>Data Volume</th>}
+                        {showWithVolume &&   <th>Payment Status</th>}
                         {showWithVolume &&   <th>Data Wallet</th>}
                         <th>Payment Reference</th>
                       </tr>
@@ -82,6 +83,18 @@ const Payments = () => {
                             <td>{pm.date_of_payment.split(" GMT")[0]}</td>
 
                             {showWithVolume &&  <td>{pm.volume/1000}GB</td>}
+
+                            {showWithVolume && pm.pay_type ? 
+                             (
+                                  <td>
+                                   {pm.pay_type == "credit"  ? 
+                                        <p style={{color:"red"}}>On Credit</p> 
+                                              :
+                                       <p style={{color:"green"}}>Paid</p>
+                                    }
+                                  </td>
+                             ) : <h1></h1>}     
+
                             {showWithVolume &&  <td>{pm.wallet != "mtn_gifting" ? <>{pm.wallet}</> : "MTN"}</td>}
 
                             <td>{pm.payment_ref}</td>                          

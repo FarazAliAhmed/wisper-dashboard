@@ -166,8 +166,8 @@ const Payments = () => {
                         {showWithVolume ?  <th>Amount (₦)</th> :  <th>Amount</th>}
                         {showWithVolume &&   <th>Data Volume</th>}
                         {showWithVolume &&   <th>Data Wallet</th>}
-                        <th>Payment Reference</th>
                         {showWithVolume &&   <th>Pay Type</th>}
+                        <th>Payment Reference</th>
                         <th>More</th>
                       </tr>
                     </thead>
@@ -191,16 +191,19 @@ const Payments = () => {
 
                             {showWithVolume &&  <td>{pm.volume/1000}GB</td>}
                             {showWithVolume &&  <td>{pm.wallet != "mtn_gifting" ? <>{pm.wallet}</> : "MTN"}</td>}
-                            <td>{pm.payment_ref}</td>  
 
-                             {showWithVolume && pm.pay_type ? 
+                            {showWithVolume && pm.pay_type ? 
                              (
                                   <td>
-                                     <Button className="receipt-button" style={{background:`${pm.pay_type == "credit"  ? "purple":"grey"}`}} onClick={() => handlePayType(pm.pay_type == "credit" ? "paid": "credit", pm.payment_ref)}>
+                                     <Button className="receipt-button" style={{background:`${pm.pay_type == "credit"  ? "red":"green"}`}} onClick={() => handlePayType(pm.pay_type == "credit" ? "paid": "credit", pm.payment_ref)}>
                                       {pm.pay_type}
                                      </Button>
                                   </td>
-                             ) : <h1></h1>}                        
+                             ) : <h1></h1>}     
+
+                            <td>{pm.payment_ref}</td>  
+
+                                               
                             
                             <td>
                           <Button className="receipt-button" onClick={() => showReceipt(pm)}>View</Button>
