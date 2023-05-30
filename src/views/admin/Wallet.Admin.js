@@ -32,7 +32,7 @@ const Wallet = () => {
                   <th>S/N</th>
                   <th>Business ID</th>
                   <th>Business Name</th>
-                  <th>Cash (₦)</th>
+                  {/* <th>Cash (₦)</th> */}
                   <th>Wallet Balance (₦)</th>
                   <th>MTN:SME (GB)</th>
                   <th>MTN:Gifting (GB)</th>
@@ -58,7 +58,7 @@ const Wallet = () => {
                       </div>
                     </td>
                     <td> {tdata.business?.name} </td>
-                    <td>{tdata.data_volume}</td>
+                    {/* <td>{tdata.data_volume}</td> */}
                     <td>{`${tdata.wallet_balance}`.split(".")[0]}</td>
                     <td>{tdata.mega_wallet.mtn_sme/1000}</td>
                     <td>{tdata.mega_wallet.mtn_gifting/1000}</td>
