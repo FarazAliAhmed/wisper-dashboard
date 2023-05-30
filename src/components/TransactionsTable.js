@@ -27,6 +27,9 @@ const TransactionsTable = ({
   showPageSettings = false,
 }) => {
   const [transactionsData, setTransactionsData] = useState([...transactions]);
+
+// console.log(transactions)
+
   const [isOpen, setIsOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchValue, setSearchValue] = useState("");
@@ -103,7 +106,8 @@ const TransactionsTable = ({
     const results = transactions.filter(
       (transaction) =>
         transaction.phone_number === searchValue ||
-        transaction.transaction_ref === searchValue
+        transaction.transaction_ref === searchValue ||
+        transaction.business_id === searchValue 
     );
 
     setTransactionsData(results);
@@ -246,7 +250,7 @@ const TransactionsTable = ({
                             </div>
                           </div>
                         </td>
-                        <td>{tx.data_volume}</td>
+                        <td>{tx.data_volume/1000} GB</td>
                         {/* <td>{tx.price || "-"}</td> */}
                         <td>
                           {tx.status === "processing" ? (

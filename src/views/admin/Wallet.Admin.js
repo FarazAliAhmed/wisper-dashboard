@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardBody, CardTitle, Table, CardSubtitle } from "reactstrap";
 import AdminLayout from "../../layouts/AdminLayout";
 import { useAdmin } from "../../context/adminContext";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const Wallet = () => {
   const { wallet } = useAdmin();
@@ -31,13 +32,13 @@ const Wallet = () => {
                   <th>S/N</th>
                   <th>Business ID</th>
                   <th>Business Name</th>
-                  <th>Cash (₦)</th>
-                  <th>Walet Balance (MB)</th>
-                  <th>MTN:SME (MB)</th>
-                  <th>MTN:Gifting (MB)</th>
-                  <th>Airtel (MB)</th>
-                  <th>Glo (MB)</th>
-                  <th>9Mobile (MB)</th>
+                  {/* <th>Cash (₦)</th> */}
+                  <th>Wallet Balance (₦)</th>
+                  <th>MTN:SME (GB)</th>
+                  <th>MTN:Gifting (GB)</th>
+                  <th>Airtel (GB)</th>
+                  <th>Glo (GB)</th>
+                  <th>9Mobile (GB)</th>
                 </tr>
               </thead>
               <tbody>
@@ -46,17 +47,24 @@ const Wallet = () => {
                     <td>{index}</td>
                     <td>
                       <div className="d-flex align-items-center py-2">
-                        <h6 className="mb-0">{tdata.business?._id}</h6>
+                        <h6 className="mb-0">
+                        <Link
+                          to={`/admin/business/${tdata.business?._id}`}
+                            className="text-decoration-none"
+                          >
+                            {tdata.business?._id}
+                          </Link>
+                          </h6>
                       </div>
                     </td>
-                    <td>{tdata.business?.name}</td>
-                    <td>{tdata.data_volume}</td>
+                    <td> {tdata.business?.name} </td>
+                    {/* <td>{tdata.data_volume}</td> */}
                     <td>{`${tdata.wallet_balance}`.split(".")[0]}</td>
-                    <td>{tdata.mega_wallet.mtn_sme}</td>
-                    <td>{tdata.mega_wallet.mtn_gifting}</td>
-                    <td>{tdata.mega_wallet.airtel}</td>
-                    <td>{tdata.mega_wallet.glo}</td>
-                    <td>{tdata.mega_wallet["9mobile"]}</td>
+                    <td>{tdata.mega_wallet.mtn_sme/1000}</td>
+                    <td>{tdata.mega_wallet.mtn_gifting/1000}</td>
+                    <td>{tdata.mega_wallet.airtel/1000}</td>
+                    <td>{tdata.mega_wallet.glo/1000}</td>
+                    <td>{tdata.mega_wallet["9mobile"]/1000}</td>
                   </tr>
                 ))}
               </tbody>

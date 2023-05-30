@@ -19,6 +19,7 @@ import {
   creditBusiness,
   debitBusiness,
   generateCreditPayment,
+  getSingleBusiness,
 } from "../../services/Admin.Services/businessService";
 import { handleFailedRequest } from "../../utils";
 
@@ -36,6 +37,7 @@ const AllocateData = () => {
     amount_cash: "",
     unit: "money",
     wallet: "",
+    pay_type:""
   });
 
   const [serverResponse, setServerResponse] = useState({
@@ -47,6 +49,9 @@ const AllocateData = () => {
 
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [business, setBusiness] = useState({});
+  const [businessName, setBusinessName] = useState("")
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,30 +66,52 @@ const AllocateData = () => {
       });
     }
     try {
+    // start of getting user details
+    const businessId = values.business_id;    
+
+    const mega_user = await getSingleBusiness(businessId);
+    setBusiness({ ...mega_user.data.business, balance: { ...mega_user.data.balance } });
+    
+    const mega_wallet = mega_user.data.balance?.mega_wallet;
+
+    // console.log((values.amount * 1000) + (mega_wallet[values.wallet]), "ajhu")
+
+    // end of getting user details
+
+    if(mega_user){
+
+      // console.log(values)
+
       let response;
       setLoading(true);
       if (values.action_type === "credit") {
         const res = await creditBusiness({
           business_id: values.business_id,
-          credit_amount: values.amount,
+          credit_amount: values.amount * 1000,
           unit: values.unit,
           wallet: values.wallet,
         });
+        
         response = res.data.message;
 
-        generateCreditPayment({
+        const genCred = await generateCreditPayment({
           business_id: values.business_id,
-          volume: values.amount,
+          volume: values.amount * 1000,
           amount:values.amount_cash,
           wallet:values.wallet,
+          old: mega_wallet[values.wallet],
+          new: (values.amount * 1000) + (mega_wallet[values.wallet]),
+          pay_type: values.pay_type,
           payment_ref:
             "AD-trx-" + Math.floor(Math.random() * 10000000000000000),
         });
+
+        console.log("genCred", genCred)
       }
       if (values.action_type === "debit") {
         const res = await debitBusiness({
           business_id: values.business_id,
-          debit_amount: values.amount,
+          debit_amount: values.amount * 1000,
           unit: values.unit,
           wallet: values.wallet,
         });
@@ -105,18 +132,37 @@ const AllocateData = () => {
       setLoading(false);
 
       console.log(serverResponse);
+    }
+
+    
     } catch (error) {
+      console.log(error)
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
       setServerResponse({ status, message });
     }
   };
 
-  const handleChange = ({ currentTarget: input }) => {
+  const handleChange = async ({ currentTarget: input }) => {
     const { name, value } = input;
 
     setValues({ ...values, [name]: value });
+
+    if(name == "business_id" && value.length == 24){
+      console.log("value", value)
+      const businessId = value;    
+  
+      const mega_user = await getSingleBusiness(businessId);
+
+      if(mega_user) {
+        // console.log("mega user", mega_user?.data.balance.business.name)
+        setBusinessName(mega_user?.data.balance.business.name)
+      }
+    }
+
+
   };
+
 
   return (
     <AdminLayout>
@@ -156,9 +202,18 @@ const AllocateData = () => {
                   </>
                 )}
                 {!loading && !isSuccess && (
+                 <>
+                  <p className="text-center">
+                   You are about to {values.action_type} <span style={{fontWeight:"bold"}}>{businessName} </span>
+                   
+                    with
+                    {values.amount  > 999 ? <span style={{fontWeight:"bold"}}> {values.amount / 1000} TB</span> 
+                    : <span style={{fontWeight:"bold"}}> {values.amount} GB</span>} 
+                  </p>
                   <p className="text-center">
                     Are you sure you want to continue?
                   </p>
+                  </>
                 )}
               </div>
             </ModalBody>
@@ -207,6 +262,19 @@ const AllocateData = () => {
                   </Col>
                   <Col md={12}>
                     <FormGroup>
+                      <Label for="businessId">Business Name</Label>
+                      <Input
+                        disabled
+                        required
+                        value={businessName}
+                        className="mb-3"
+                        type="text"
+                        placeholder="Business Name"
+                      ></Input>
+                    </FormGroup>
+                  </Col>
+                  <Col md={12}>
+                    <FormGroup>
                       <Label for="unit">Business Type</Label>
                       <Input
                         onChange={handleChange}
@@ -250,7 +318,7 @@ const AllocateData = () => {
                           : values.action_type === "debit"
                           ? "Debit"
                           : ""}{" "}
-                        Data volume
+                      {values.unit == "data" ?  "Data Volume Being Added (GB)" : "Credit Amount Being added in Naira"}
                       </Label>
                       <Input
                         required
@@ -263,9 +331,28 @@ const AllocateData = () => {
                     </FormGroup>
                   </Col>
                   {values.action_type === "credit" && values.unit === "data" && (
+                      <>
                     <Col md={12}>
                       <FormGroup>
-                        <Label for="amount_payed">Amount Payed (Cash)</Label>
+                        <Label for="unit">Payment Type</Label>
+                        <Input
+                          onChange={handleChange}
+                          name="pay_type"
+                          className="mb-3"
+                          type="select"
+                          required
+                        >
+                          <option selected>--- Select Payment type ---</option>
+                          <option value="paid">Paid</option>
+                          <option value="credit">Credit</option>
+                        </Input>
+                      </FormGroup>
+
+                    </Col>
+
+                    <Col md={12}>
+                      <FormGroup>
+                        <Label for="amount_payed">Amount Paid by User (Naira)</Label>
                         <Input
                           required
                           value={values.amount_cash}
@@ -276,6 +363,9 @@ const AllocateData = () => {
                         />
                       </FormGroup>
                     </Col>
+
+                      </>
+                   
                   )}
                 </Row>
 

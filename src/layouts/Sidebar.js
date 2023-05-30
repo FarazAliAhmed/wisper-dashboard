@@ -175,15 +175,15 @@ const Sidebar = ({ isAdmin }) => {
         </span>
       </div>
       {
-        user && user.isAdmin ?
-        <>
-          <div className="mt-2 text-muted fw-bold">SS.1 ~ {!!adminContext ? adminContext.mainBalance.simserver : ""} ₦</div>
-          <div className="mt-2 text-muted fw-bold">FL.1 ~ {!!adminContext ? adminContext.mainBalance.mtn_balance : ""} MB</div>
-          <div className="mt-2 text-muted fw-bold">FL.2 ~ {!!adminContext ? adminContext.mainBalance.airtel_balance : ""} MB</div>
-        </> : <>
-        <div></div>
-        {/* <div className="mt-2 text-muted fw-bold">TOTAL: {balanceDisplay}</div> */}
-        </> 
+        // user && user.isAdmin ?
+        // <>
+        //   <div className="mt-2 text-muted fw-bold">SS.1 ~ {!!adminContext ? adminContext.mainBalance.simserver : ""} ₦</div>
+        //   <div className="mt-2 text-muted fw-bold">FL.1 ~ {!!adminContext ? adminContext.mainBalance.mtn_balance : ""} MB</div>
+        //   <div className="mt-2 text-muted fw-bold">FL.2 ~ {!!adminContext ? adminContext.mainBalance.airtel_balance : ""} MB</div>
+        // </> : <>
+        // <div></div>
+        // {/* <div className="mt-2 text-muted fw-bold">TOTAL: {balanceDisplay}</div> */}
+        // </> 
       }
       <div className="pt-4 mt-2">
         <Nav vertical className="sidebarNav">

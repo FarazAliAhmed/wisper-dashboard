@@ -5,7 +5,8 @@ import { apiUrl, apiUrlV2 } from "../config.js";
 
 export async function getAllPlans() {
   try {
-    return http.get(`${apiUrl}/plans`);
+    const res = await http.get(`${apiUrl}/plans`);
+    return res
   } catch (error) {
     return null;
   }
@@ -13,7 +14,8 @@ export async function getAllPlans() {
 
 export async function getBalance() {
   try {
-    return http.get(`${apiUrl}/balance`);
+    const res = await http.get(`${apiUrl}/balance`);
+    return res
   } catch (error) {
     return null;
   }
@@ -29,12 +31,14 @@ export async function allocateData(body, apiKey) {
     business_id: body.business_id,
   };
 
-  return http.post(`${apiUrl}/buy`, payload, { headers });
+  const res = await http.post(`${apiUrl}/buy`, payload, { headers });
+  return res
 }
 
 export async function getAllTransactions() {
   try {
-    return http.get(`${apiUrl}/transactions`);
+    const res = await http.get(`${apiUrl}/transactions`);
+    return res
   } catch (error) {
     return null;
   }
@@ -42,7 +46,8 @@ export async function getAllTransactions() {
 
 export async function getSingleTrx(id) {
   try {
-    return http.get(`${apiUrl}/trxSingle/${id}`);
+    const res = await http.get(`${apiUrl}/trxSingle/${id}`);
+    return res
   } catch (error) {
     return null;
   }
@@ -50,7 +55,8 @@ export async function getSingleTrx(id) {
 
 export async function getSingleSold(id) {
   try {
-    return http.get(`${apiUrl}/totalDataSingle/${id}`);
+    const res = await http.get(`${apiUrl}/totalDataSingle/${id}`);
+    return res
   } catch (error) {
     return null;
   }
@@ -79,7 +85,8 @@ export async function FilterTransactionsV2(filter, {limit, offset} = {limit: 50,
 
 export async function getAllPayments() {
   try {
-    return http.get(`${apiUrl}/payments`);
+    const res = await http.get(`${apiUrl}/payments`);
+    return res
   } catch (error) {
     return null;
   }
@@ -87,7 +94,8 @@ export async function getAllPayments() {
 
 export async function addPayment(payment) {
   try {
-    return http.post(`${apiUrl}/payments`, payment);
+    const res = await http.post(`${apiUrl}/payments`, payment);
+    return res
   } catch (error) {
     return null;
   }
@@ -95,7 +103,8 @@ export async function addPayment(payment) {
 
 export async function getMaintenance(){
   try{
-    return http.get(`${apiUrl}/maintenance`)
+    const res = await http.get(`${apiUrl}/maintenance`)
+    return res
   }catch(e){
     return null
   }
@@ -103,7 +112,8 @@ export async function getMaintenance(){
 
 export async function saveWebhook(webhook=" "){
   try{
-    return http.post(`${apiUrl}/url/webhook`, {url: webhook})
+    const res = await http.post(`${apiUrl}/url/webhook`, {url: webhook})
+    return res
   }catch(e){
     return null
   }
@@ -111,7 +121,8 @@ export async function saveWebhook(webhook=" "){
 
 export async function saveCallback(callback=" "){
   try{
-    return http.post(`${apiUrl}/url/callback`, {url: callback})
+    const res = await http.post(`${apiUrl}/url/callback`, {url: callback})
+    return res
   }catch(e){
     return null
   }

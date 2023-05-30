@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import FullLayout from "../../layouts/FullLayout";
 import TransactionsTable from "../../components/TransactionsTable";
 import { getAllTransactionsV2, FilterTransactionsV2 } from '../../services/dataService'
-
 import {
   Form,
   FormGroup,
@@ -112,7 +111,7 @@ const TransactionsV2 = () => {
   const fetchWithPaginate = async () => {
     const cleanFil = cleanFilter(filter)
     if(Object.keys(cleanFil).length > 0){
-      await queryDatabase()
+      queryDatabase()
     }else {
       if(!loading){
         setLoading(true)
