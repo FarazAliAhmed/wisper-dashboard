@@ -202,9 +202,18 @@ const AllocateData = () => {
                   </>
                 )}
                 {!loading && !isSuccess && (
+                 <>
+                  <p className="text-center">
+                   You are about to {values.action_type} <span style={{fontWeight:"bold"}}>{businessName} </span>
+                   
+                    with
+                    {values.amount  > 1000 ? <span style={{fontWeight:"bold"}}>{values.amount / 1000} TB</span> 
+                    : <span style={{fontWeight:"bold"}}> {values.amount / 1000} GB</span>} 
+                  </p>
                   <p className="text-center">
                     Are you sure you want to continue?
                   </p>
+                  </>
                 )}
               </div>
             </ModalBody>
