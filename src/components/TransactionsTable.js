@@ -28,7 +28,7 @@ const TransactionsTable = ({
 }) => {
   const [transactionsData, setTransactionsData] = useState([...transactions]);
 
-console.log(transactions)
+// console.log(transactions)
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");

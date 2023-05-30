@@ -50,7 +50,7 @@ const Account = (props) => {
 
   const { transaction } = useAdmin();
 
-  console.log(transaction)
+  // console.log(transaction)
 
   useEffect(() => {
     async function fetchBusinessDetails() {

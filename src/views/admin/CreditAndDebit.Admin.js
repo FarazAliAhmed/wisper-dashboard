@@ -37,6 +37,7 @@ const AllocateData = () => {
     amount_cash: "",
     unit: "money",
     wallet: "",
+    pay_type:""
   });
 
   const [serverResponse, setServerResponse] = useState({
@@ -49,6 +50,8 @@ const AllocateData = () => {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [business, setBusiness] = useState({});
+  const [businessName, setBusinessName] = useState("")
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -71,11 +74,13 @@ const AllocateData = () => {
     
     const mega_wallet = mega_user.data.balance?.mega_wallet;
 
-    console.log((values.amount * 1000) + (mega_wallet[values.wallet]), "ajhu")
+    // console.log((values.amount * 1000) + (mega_wallet[values.wallet]), "ajhu")
 
     // end of getting user details
 
     if(mega_user){
+
+      // console.log(values)
 
       let response;
       setLoading(true);
@@ -96,6 +101,7 @@ const AllocateData = () => {
           wallet:values.wallet,
           old: mega_wallet[values.wallet],
           new: (values.amount * 1000) + (mega_wallet[values.wallet]),
+          pay_type: values.pay_type,
           payment_ref:
             "AD-trx-" + Math.floor(Math.random() * 10000000000000000),
         });
@@ -137,11 +143,26 @@ const AllocateData = () => {
     }
   };
 
-  const handleChange = ({ currentTarget: input }) => {
+  const handleChange = async ({ currentTarget: input }) => {
     const { name, value } = input;
 
     setValues({ ...values, [name]: value });
+
+    if(name == "business_id" && value.length == 24){
+      console.log("value", value)
+      const businessId = value;    
+  
+      const mega_user = await getSingleBusiness(businessId);
+
+      if(mega_user) {
+        // console.log("mega user", mega_user?.data.balance.business.name)
+        setBusinessName(mega_user?.data.balance.business.name)
+      }
+    }
+
+
   };
+
 
   return (
     <AdminLayout>
@@ -232,6 +253,19 @@ const AllocateData = () => {
                   </Col>
                   <Col md={12}>
                     <FormGroup>
+                      <Label for="businessId">Business Name</Label>
+                      <Input
+                        disabled
+                        required
+                        value={businessName}
+                        className="mb-3"
+                        type="text"
+                        placeholder="Business Name"
+                      ></Input>
+                    </FormGroup>
+                  </Col>
+                  <Col md={12}>
+                    <FormGroup>
                       <Label for="unit">Business Type</Label>
                       <Input
                         onChange={handleChange}
@@ -288,6 +322,25 @@ const AllocateData = () => {
                     </FormGroup>
                   </Col>
                   {values.action_type === "credit" && values.unit === "data" && (
+                      <>
+                    <Col md={12}>
+                      <FormGroup>
+                        <Label for="unit">Payment Type</Label>
+                        <Input
+                          onChange={handleChange}
+                          name="pay_type"
+                          className="mb-3"
+                          type="select"
+                          required
+                        >
+                          <option selected>--- Select Payment type ---</option>
+                          <option value="paid">Paid</option>
+                          <option value="credit">Credit</option>
+                        </Input>
+                      </FormGroup>
+
+                    </Col>
+
                     <Col md={12}>
                       <FormGroup>
                         <Label for="amount_payed">Amount Paid by User (Naira)</Label>
@@ -301,6 +354,9 @@ const AllocateData = () => {
                         />
                       </FormGroup>
                     </Col>
+
+                      </>
+                   
                   )}
                 </Row>
 

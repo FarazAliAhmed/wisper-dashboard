@@ -133,6 +133,18 @@ export const generateCreditPayment = async (body) => {
   }
 };
 
+export const updatePayType = async (body) => {
+  try {
+    const res =  await http.post(`${adminUrl}/update_payment_type`, body);
+
+    return res
+  
+  } catch (e) {
+    return null;
+  }
+};
+
+
 export const removeAdmin = async (email) => {
   try {
     const res =  await http.delete(`${adminUrl}/admin/remove/${email}`);

@@ -43,6 +43,7 @@ function PaymentReceipt({receiptData, show, toggleShow}){
                         Data Volume :<strong> {receiptData.volume/1000} GB </strong> <br />
                         Old Balance :<strong> {receiptData.old/1000} GB </strong> <br />
                         New Balance :<strong> {receiptData.new/1000} GB </strong> <br />
+                        {receiptData.pay_type && <> Pay Status :<strong> {receiptData.pay_type} </strong> <br /> </> }
                         status :<strong> Successful </strong> <br />
                         Reference Code:<strong>
                             <Button

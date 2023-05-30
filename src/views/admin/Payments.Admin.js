@@ -19,10 +19,15 @@ import { Link } from "react-router-dom";
 
 import "../../assets/scss/custom.scss";
 
+import {
+  updatePayType
+} from "../../services/Admin.Services/businessService";
+import axios from "axios";
+
 const Payments = () => {
   const { payment: payments } = useAdmin();
 
-  console.log(payments)
+  // console.log(payments)
   
   const [searchValue, setSearchValue] = useState("");
   const [paymentData, setPaymentData] = useState([]);
@@ -71,6 +76,35 @@ const Payments = () => {
 
     setPaymentData(filteredData);
   };
+
+
+   const handlePayType = async (type, id) => {
+// console.log(type, id)
+
+      try {
+        // const genCred = await updatePayType({
+        //   business_id: id,
+        //   pay_type: type
+        // });
+    
+
+        const genCred = await axios.post(
+          "https://wisper-reseller.herokuapp.com/api/admin/update_payment_type",
+          {
+            ref: id,
+            payType: type,
+          }
+        );
+
+        window.location = "/admin/payment"
+
+        console.log("upt pay type", genCred)
+      
+      } catch (error) {
+        console.log(error)
+      }
+    
+   }
 
   return (
     <AdminLayout>
@@ -133,6 +167,7 @@ const Payments = () => {
                         {showWithVolume &&   <th>Data Volume</th>}
                         {showWithVolume &&   <th>Data Wallet</th>}
                         <th>Payment Reference</th>
+                        {showWithVolume &&   <th>Pay Type</th>}
                         <th>More</th>
                       </tr>
                     </thead>
@@ -156,7 +191,16 @@ const Payments = () => {
 
                             {showWithVolume &&  <td>{pm.volume/1000}GB</td>}
                             {showWithVolume &&  <td>{pm.wallet != "mtn_gifting" ? <>{pm.wallet}</> : "MTN"}</td>}
-                            <td>{pm.payment_ref}</td>                          
+                            <td>{pm.payment_ref}</td>  
+
+                             {showWithVolume && pm.pay_type ? 
+                             (
+                                  <td>
+                                     <Button className="receipt-button" style={{background:`${pm.pay_type == "credit"  ? "purple":"grey"}`}} onClick={() => handlePayType(pm.pay_type == "credit" ? "paid": "credit", pm.payment_ref)}>
+                                      {pm.pay_type}
+                                     </Button>
+                                  </td>
+                             ) : <h1></h1>}                        
                             
                             <td>
                           <Button className="receipt-button" onClick={() => showReceipt(pm)}>View</Button>
