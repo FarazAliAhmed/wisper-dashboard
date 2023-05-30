@@ -207,8 +207,8 @@ const AllocateData = () => {
                    You are about to {values.action_type} <span style={{fontWeight:"bold"}}>{businessName} </span>
                    
                     with
-                    {values.amount  > 1000 ? <span style={{fontWeight:"bold"}}>{values.amount / 1000} TB</span> 
-                    : <span style={{fontWeight:"bold"}}> {values.amount / 1000} GB</span>} 
+                    {values.amount  > 1000 ? <span style={{fontWeight:"bold"}}> {values.amount / 1000} TB</span> 
+                    : <span style={{fontWeight:"bold"}}> {values.amount} GB</span>} 
                   </p>
                   <p className="text-center">
                     Are you sure you want to continue?
