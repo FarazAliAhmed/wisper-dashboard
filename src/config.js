@@ -35,7 +35,7 @@ const { REACT_APP_DB_URL } = process.env
 
 module.exports = {
   // // Test URL
-  apiUrl: "http://localhost:5000/api",
+  // apiUrl: "http://localhost:5000/api",
   // adminUrl: "http://localhost:5000/api/admin",
  
   // apiUrlV2: "https://localhost:5000/api/v2",
@@ -43,7 +43,7 @@ module.exports = {
 
   // REAL URL
   
-  // apiUrl: `${REACT_APP_DB_URL}/api`,
+  apiUrl: `${REACT_APP_DB_URL}/api`,
 
   apiUrlV2: `${REACT_APP_DB_URL}/api/v2`,
 // apiUrl: "https://api.wisper.ng/api",
