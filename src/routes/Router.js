@@ -13,6 +13,7 @@ import SetPassword from "../views/auth/SetPassword.jsx";
 import CheckEmail from "../views/auth/CheckEmail.jsx";
 import CheckEmailConfirm from "../views/auth/CheckEmailConfirm.jsx";
 import ConfirmEmail from "../views/auth/ConfirmEmail.jsx";
+import PricingUser from "../components/pages/PricingUser.js";
 
 /***** Pages ****/
 
@@ -29,6 +30,7 @@ const Documentation = lazy(() => import("../views/ui/Documentation"));
 const Payments = lazy(() => import("../views/ui/Payments"));
 const Transactions = lazy(() => import("../views/ui/Transactions"));
 const Pricing = lazy(() => import("../views/ui/Pricing"));
+const ViewPricing = lazy(() => import("../views/ui/ViewPricing"));
 const Admin = lazy(() => import("./Admin"));
 const TransactionsV2 = lazy(() => import('../views/ui/TransactionsV2'));
 
@@ -40,7 +42,8 @@ const Routes = () => {
           <Route exact path="/" component={Home} />
           <AdminProtectedRoute path="/admin" component={Admin} />
           <ProtectedRoute path="/dashboard" component={Dashboard} />
-          <ProtectedRoute path="/packages" component={Pricing} />
+          {/* <ProtectedRoute path="/packages/:id" component={Pricing} /> */}
+          <ProtectedRoute path="/packages" component={ViewPricing} />
           <ProtectedRoute path="/allocate" component={AllocateData} />
           <ProtectedRoute path="/wallet" component={Wallet} />
           <ProtectedRoute path="/account" component={Account} />

@@ -12,7 +12,9 @@ import tableData, { tableDataWhole } from "../../utils/plansTable";
 const Pricing = () => {
   // const { user } = useUser();
   const { plans } = useAppState()
-  const tableDataAll = parseDataPlans(plans);
+  const tableDataAll = plans;
+
+  console.log(tableDataAll)
 
   return (
     <div>
@@ -42,12 +44,15 @@ const Pricing = () => {
                 <th>Network</th>
                 <th>Size </th>
                 <th>Validity</th>
+                <th>Price</th>
                 {/* <th>Plan Type</th> */}
+                
+
             </tr>
             </thead>
             <tbody>
             {tableDataAll
-                .sort((a, b) => a['network'].localeCompare(b['network']))
+                ?.sort((a, b) => a['network'].localeCompare(b['network']))
                 .map((tdata, index) => (
                 <tr key={index} className="border-top">
                 {/* <td>
@@ -58,8 +63,11 @@ const Pricing = () => {
                 {/* <td>{tdata.amount}</td> */}
                 <td>{tdata.network.toUpperCase()}</td>
                 <td>{tdata.size}</td>
-                <td>{tdata.duration}</td>
+                <td>{tdata.validity}</td>
+                <td>{tdata.price}</td>
                 {/* <td>{tdata.plan_type.toUpperCase()}</td> */}
+                
+
                 </tr>
             ))}
             </tbody>

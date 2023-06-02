@@ -52,7 +52,7 @@ const AppStateProvider = ({ children }) => {
         getBalance(),
         getAllTransactions(),
         getAllPayments(),
-        getAllPlans(),
+        getAllPlans(user?._id),
         getMaintenance(),
         getSingleTrx(user?._id),
         getSingleSold(user?._id)
@@ -110,7 +110,7 @@ const AppStateProvider = ({ children }) => {
       }
 
       if(planRes){
-        setPlans(planRes.data.plan);
+        setPlans(planRes.data);
       }
 
       if(maintenanceRes){

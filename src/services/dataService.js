@@ -3,9 +3,10 @@ import { apiUrl, apiUrlV2 } from "../config.js";
 
 
 
-export async function getAllPlans() {
+export async function getAllPlans(userId) {
   try {
-    const res = await http.get(`${apiUrl}/plans`);
+    const res = await http.get(`${apiUrl}/plans_user/${userId}`);
+    console.log(res)
     return res
   } catch (error) {
     return null;
