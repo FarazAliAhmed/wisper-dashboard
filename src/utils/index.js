@@ -148,6 +148,7 @@ export function getBusinessTransactionFromAllTransactions(
 // _id: "626b0cc4e2e545785a5399a3"
 
 
+
 export function parseDataPlans(plans){
   const formated_plans = plans.map(plan => {
     return {
@@ -158,6 +159,41 @@ export function parseDataPlans(plans){
       size: `${plan['volume']}.0 ${plan['unit']}`,
       // size: "1.0 gb",
       duration: plan['validity'],
+    }
+  })
+
+  return formated_plans;
+}
+
+
+export function parseDataPlansUser(plans){
+  const formated_plans = plans.map(plan => {
+    return {
+      dataId: plan['plan_id'],
+      network: plan['network'],
+      plan_type: plan['plan_type'],
+      amount: plan['price'],
+      size: `${plan['volume']}.0 ${plan['unit']}`,
+      // size: "1.0 gb",
+      duration: plan['validity'],
+    }
+  })
+
+  return formated_plans;
+}
+
+
+export function parseDataAllocatePlans(plans){
+  const formated_plans = plans.map(plan => {
+    return {
+      volume: plan['volume'],
+      id: plan['plan_id'],
+      error: false,
+      size: `${plan['volume']}.0 ${plan['unit']}`,
+      validity: plan['validity'],
+      price: plan['price'],
+      network: plan['network'],
+      plan_type: plan['plan_type'],
     }
   })
 

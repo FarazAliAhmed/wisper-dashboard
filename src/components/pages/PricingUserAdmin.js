@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardBody, CardTitle, Table, CardSubtitle } from "reactstrap";
-import {  parseDataPlansUser } from "../../utils"
+import { parseDataPlans } from "../../utils"
 import { useAppState } from "../../context/appContext"
 
 import tableData, { tableDataWhole } from "../../utils/plansTable";
@@ -16,10 +16,8 @@ const PricingUser = ({businessId}) => {
     const jwtToken = localStorage.getItem("token");
 
   // const { user } = useUser();
-  const { plansUser } = useAppState()
-  const tableDataAll = parseDataPlansUser(plansUser);
-
-  console.log("tableData", tableDataAll)
+  const { plans } = useAppState()
+  const tableDataAll = parseDataPlans(plans);
 
   const [business, setBusiness] = useState({});
   const [userPlans, setUserPlans] = useState([]);
@@ -248,4 +246,3 @@ const PricingUser = ({businessId}) => {
 };
 
 export default PricingUser;
-

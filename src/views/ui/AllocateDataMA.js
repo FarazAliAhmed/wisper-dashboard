@@ -17,7 +17,7 @@ import { useAppState } from "../../context/appContext";
 
 import FullLayout from "../../layouts/FullLayout";
 import { allocateData } from "../../services/dataService";
-import { handleFailedRequest, parseDataAllocatePlans, parseDataPlans } from "../../utils";
+import { handleFailedRequest, parseDataPlans } from "../../utils";
 // import dataPlans from "../../utils/plansTable";
 
 import "./../../assets/scss/custom.scss";
@@ -28,7 +28,7 @@ const initialState = {
   phone_number: "",
 };
 
-const AllocateData = () => {
+const AllocateDataMA = () => {
   const [plan, setPlan] = useState(initialState);
 
   // const [serverResponse, setServerResponse] = useState({
@@ -39,10 +39,8 @@ const AllocateData = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
 
-  const { plansUser } = useAppState()
-  const dataPlans = parseDataAllocatePlans(plansUser)
-
-  // console.log("dataPlans", dataPlans)
+  const { plans } = useAppState()
+  const dataPlans = parseDataPlans(plans)
 
   // useEffect(() => {
   //   parseDataPlans(plans)
@@ -67,34 +65,12 @@ const AllocateData = () => {
 
   const handleChange = ({ currentTarget: input }) => {
     const { name, value } = input;
-
-    // console.log("name", name)
-    // console.log("value", value)
-    
-    // console.log(dataPlans)
-    // Assuming the object array is called 'dataPlans'
-    const matchedItem = dataPlans.find(item => item.id == value);
-  
-    console.log(matchedItem)
-    
-    if (matchedItem && name === 'plan_id') {
-      const { volume, price } = matchedItem;
-      const updatedPlan = { ...plan, [name]: value, volume, price };
-      setPlan(updatedPlan);
-      console.log('Updated Plan:', updatedPlan);
-    } else {
-      setPlan({ ...plan, [name]: value });
-      console.log('Updated Plan:', plan); // Log the original plan object
-    }
+    setPlan({ ...plan, [name]: value });
   };
-  
-  
-  
-
   return (
     <FullLayout>
       <div>
-        <h5 className="mb-4 mt-3">Allocate Data</h5>
+        <h5 className="mb-4 mt-3">Allocate Data Mega</h5>
         <Card body>
           {/* {serverResponse.message.length > 0 && (
             <>
@@ -151,14 +127,13 @@ const AllocateData = () => {
                           )
                           .map((plan) => (
                             <option
-                              key={`${plan.network}-${plan.id}`}
-                              value={plan.id}
+                              key={`${plan.network}-${plan.dataId}`}
+                              value={plan.dataId}
                             >
-                              {plan.size} ({plan.validity}) - {plan.plan_type}
+                              {plan.size} ({plan.duration}) - {plan.plan_type}
                             </option>
                           ))}
                       </Input>
-                      
                     </FormGroup>
                   </Col>
                   <Col md={12}>
@@ -171,7 +146,6 @@ const AllocateData = () => {
                         onChange={handleChange}
                         type="number"
                       />
-                     
                     </FormGroup>
                   </Col>
                 </Row>
@@ -182,7 +156,7 @@ const AllocateData = () => {
                   handleSubmit={handleSubmit}
                   plan_id={plan.plan_id}
                   phone_number={plan.phone_number}
-                  plans={plansUser}
+                  plans={plans}
                 />
                 {/* <Button disabled={loading} type="submit" color="primary">
               Allocate
@@ -210,4 +184,4 @@ const AllocateData = () => {
   );
 };
 
-export default AllocateData;
+export default AllocateDataMA;

@@ -14,6 +14,8 @@ import CheckEmail from "../views/auth/CheckEmail.jsx";
 import CheckEmailConfirm from "../views/auth/CheckEmailConfirm.jsx";
 import ConfirmEmail from "../views/auth/ConfirmEmail.jsx";
 import PricingUser from "../components/pages/PricingUser.js";
+import { useUser } from "../context/userContext.js";
+import AllocateDataMA from "../views/ui/AllocateDataMA.js";
 
 /***** Pages ****/
 
@@ -35,6 +37,10 @@ const Admin = lazy(() => import("./Admin"));
 const TransactionsV2 = lazy(() => import('../views/ui/TransactionsV2'));
 
 const Routes = () => {
+  const {user} = useUser()
+
+  // console.log("user router", user)
+
   return (
     <Router>
       <Suspense fallback={<Loader isLoading={true} />}>
@@ -44,7 +50,8 @@ const Routes = () => {
           <ProtectedRoute path="/dashboard" component={Dashboard} />
           {/* <ProtectedRoute path="/packages/:id" component={Pricing} /> */}
           <ProtectedRoute path="/packages" component={ViewPricing} />
-          <ProtectedRoute path="/allocate" component={AllocateData} />
+         {user?.type == "mega" ? <ProtectedRoute path="/allocate" component={AllocateDataMA} />
+          : <ProtectedRoute path="/allocate" component={AllocateData} /> }
           <ProtectedRoute path="/wallet" component={Wallet} />
           <ProtectedRoute path="/account" component={Account} />
           <ProtectedRoute path="/payments" component={Payments} />

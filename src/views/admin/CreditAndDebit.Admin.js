@@ -87,7 +87,7 @@ const AllocateData = () => {
       if (values.action_type === "credit") {
         const res = await creditBusiness({
           business_id: values.business_id,
-          credit_amount: values.amount * 1000,
+          credit_amount: values.unit == "data" ? values.amount * 1000 : values.amount,
           unit: values.unit,
           wallet: values.wallet,
         });
@@ -100,7 +100,7 @@ const AllocateData = () => {
           amount:values.amount_cash,
           wallet:values.wallet,
           old: mega_wallet[values.wallet],
-          new: (values.amount * 1000) + (mega_wallet[values.wallet]),
+          new: values.unit == "data" ? (values.amount * 1000) + (mega_wallet[values.wallet]) : values.amount,
           pay_type: values.pay_type,
           payment_ref:
             "AD-trx-" + Math.floor(Math.random() * 10000000000000000),
@@ -111,7 +111,7 @@ const AllocateData = () => {
       if (values.action_type === "debit") {
         const res = await debitBusiness({
           business_id: values.business_id,
-          debit_amount: values.amount * 1000,
+          debit_amount: values.unit == "data" ? values.amount * 1000 : values.amount,
           unit: values.unit,
           wallet: values.wallet,
         });
@@ -204,11 +204,23 @@ const AllocateData = () => {
                 {!loading && !isSuccess && (
                  <>
                   <p className="text-center">
-                   You are about to {values.action_type} <span style={{fontWeight:"bold"}}>{businessName} </span>
+                  
+                   {values.unit == "data" ? 
                    
-                    with
-                    {values.amount  > 999 ? <span style={{fontWeight:"bold"}}> {values.amount / 1000} TB</span> 
-                    : <span style={{fontWeight:"bold"}}> {values.amount} GB</span>} 
+                   <>
+
+                      You are about to {values.action_type} <span style={{fontWeight:"bold"}}>{businessName} </span>
+                    
+                      with
+                      {values.amount  > 999 ? <span style={{fontWeight:"bold"}}> {values.amount / 1000} TB</span> 
+                      : <span style={{fontWeight:"bold"}}> {values.amount} GB</span>} 
+                   </> : 
+                   <>
+                    You are about to fund <span style={{fontWeight:"bold"}}>{businessName} </span>
+                   
+                   with ₦{values.amount} 
+                   </>
+                   }
                   </p>
                   <p className="text-center">
                     Are you sure you want to continue?

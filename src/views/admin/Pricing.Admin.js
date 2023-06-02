@@ -1,7 +1,7 @@
 import React from "react";
 import AdminLayout from '../../layouts/AdminLayout'
 // import _Pricing from '../../components/pages/Pricing'
-import PricingUser from "../../components/pages/PricingUser";
+import PricingUserAdmin from "../../components/pages/PricingUserAdmin";
 import { useParams } from 'react-router-dom';
 
 const Pricing = () => {
@@ -10,7 +10,7 @@ const Pricing = () => {
 
   return (
     <AdminLayout>
-      <PricingUser businessId={id} />
+      <PricingUserAdmin businessId={id} />
     </AdminLayout>
   );
 };

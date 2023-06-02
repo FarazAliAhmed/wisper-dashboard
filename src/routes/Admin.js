@@ -8,6 +8,7 @@ import AdminProvider from "../context/adminContext";
 import Login from "../views/auth/Login.js";
 import PricingUser from "../components/pages/PricingUser.js";
 import ViewPricing from "../views/admin/ViewPricing.js";
+import AllocateDataMA from "../views/ui/AllocateDataMA.js";
 
 const Home = lazy(() => import("../views/Home"));
 const Logout = lazy(() => import("../views/auth/Logout"));
@@ -53,7 +54,7 @@ const AdminRoutes = () => {
               />
               <AdminProtectedRoute
                 path="/admin/allocate"
-                component={Allocate}
+                component={AllocateDataMA}
               />
               <AdminProtectedRoute path="/admin/payment" component={Payments} />
               <AdminProtectedRoute path="/admin/user_packages/:id" component={Pricing} />

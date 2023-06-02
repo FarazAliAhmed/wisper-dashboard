@@ -51,11 +51,11 @@ const AdminProvider = ({ children }) => {
       setAllTrx(result[5]?.data.totalTransactions)
       setAllSold(result[6]?.data.totalDataSold)
 
-      console.log(result[2], "transaction admin")
+      // console.log(result[2], "transaction admin")
       // console.log(result[6])
 
       if(result[7]){
-        console.log("result 7", result[7])
+        // console.log("result 7", result[7])
         setMainBalance(result[7]?.data);  
       }
 
