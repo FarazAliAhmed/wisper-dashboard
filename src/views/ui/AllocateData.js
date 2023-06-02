@@ -70,6 +70,7 @@ const AllocateData = () => {
 
     // console.log("name", name)
     // console.log("value", value)
+    // console.log("value", value)
     
     // console.log(dataPlans)
     // Assuming the object array is called 'dataPlans'
