@@ -8,7 +8,7 @@ import {
   FormFeedback,
   Alert,
 } from "reactstrap";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import AuthLayout from "../../layouts/AuthLayout";
 import authService, { getCurrentUser } from "../../services/authService";
 import {
@@ -19,8 +19,13 @@ import {
 } from "../../utils";
 
 import "./auth.scss";
+import { ToastContainer, toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
+
 
 const ForgotPassword = () => {
+  const history = useHistory();
+
   const [account, setAccount] = useState({ email: "" });
   const [msgError, setMsgError] = useState("")
   const [errors, setErrors] = useState({});
@@ -43,17 +48,33 @@ const ForgotPassword = () => {
       const res =  await authService.forgotPassword(account.email, baseURL);
       setLoading(false);
 
-      console.log("res", res)
+      // console.log("res", res)
+
+      
      
       if(res){
-        window.location = `/check-email/${account.email}`;
+        toast.success('Password Rest Link Sent', {
+          position: toast.POSITION.TOP_RIGHT
+        });
+
+        setTimeout(() => {
+          
+          history.push( `/check-email/${account.email}`);
+        }, 4000);
+        // window.location = `/check-email/${account.email}`;
       }else{
+        toast.error('Ensure email exists on database', {
+          position: toast.POSITION.TOP_RIGHT
+        });
         setMsgError("Ensure email exists on database")
         throw new Error("Link Expired");
       }
       // window.location = "/verfiyEmail";
       
     } catch (error) {
+      toast.error('An error occured check email and try again', {
+        position: toast.POSITION.TOP_RIGHT
+      });
       setMsgError("Email does not exist on our database")
       console.log(error)
       setLoading(false);
@@ -77,6 +98,7 @@ const ForgotPassword = () => {
 
   return (
     <AuthLayout headTitle="Forgot Password" tagline="Provide your information to set a new password for your account">
+      <ToastContainer />
       {msgError && (
         <Alert color="danger">{msgError}</Alert>
       )}

@@ -17,11 +17,16 @@ import {
   // validateForm,
   handleFailedRequest,
 } from "../../utils";
-import { withRouter } from 'react-router-dom';
+// import { withRouter } from 'react-router-dom';
 import "./auth.scss";
 import confirmed from '../../assets/dashboard/confirmed.svg'
+import { ToastContainer, toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
+
 
 const ConfirmEmail = ({match}) => {
+  const history = useHistory();
+
   const [account, setAccount] = useState({ password: "", cpassword: "" });
   const [msgError, setMsgError] = useState("")
   const [errors, setErrors] = useState({});
@@ -47,13 +52,23 @@ const ConfirmEmail = ({match}) => {
       console.log("res", res)
       
       if(res){
-        window.location = "/login";
+        toast.success('Password Changed', {
+          position: toast.POSITION.TOP_RIGHT
+        });
+        history.push('/login');
+        // window.location = "/login";
       }else{
+        toast.error('Link Expired', {
+          position: toast.POSITION.TOP_RIGHT
+        });
         setMsgError("Link Expired")
         throw new Error("Link Expired");
       }
      
     } catch (error) {
+      toast.error('An error occured', {
+        position: toast.POSITION.TOP_RIGHT
+      });
       console.log(error)
       setMsgError("Email or password incorrect")
       console.log(error)
@@ -82,6 +97,7 @@ const ConfirmEmail = ({match}) => {
 
   return (
     <AuthLayout >
+      <ToastContainer />
       {msgError && (
         <Alert color="danger">{msgError}</Alert>
       )}
