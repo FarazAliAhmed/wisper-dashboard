@@ -57,7 +57,7 @@ const Pricing = () => {
                 <th>Network</th>
                 <th>Size </th>
                 <th>Validity</th>
-               {!user?.isAdmin && ( <th>Price</th>)}
+               {!user?.isAdmin && ( <th>Price (₦)</th>)}
                 {/* <th>Plan Type</th> */}
                 
 
@@ -78,7 +78,7 @@ const Pricing = () => {
                 <td>{tdata.network.toUpperCase()}</td>
                 <td>{tdata.size}</td>
                 <td>{tdata.validity}</td>
-                {!user?.isAdmin && (<td>{tdata.price}</td>)}
+                {!user?.isAdmin && (<td>₦{tdata.price}</td>)}
                 {/* <td>{tdata.plan_type.toUpperCase()}</td> */}
                 
 

@@ -121,7 +121,7 @@ const PricingUser = ({businessId}) => {
 
                 <th>Network</th>
                 <th>Size </th>
-                <th>Price</th>
+                <th>Price (₦)</th>
                 <th>Validity</th>
                 {/* <th>Plan Type</th> */}
                 <th>Set Amount</th>
@@ -150,7 +150,7 @@ const PricingUser = ({businessId}) => {
                             const matchingPlan = userPlans.find(obj => obj.plan_id === tdata.dataId);
                             if (matchingPlan) {
                                 const price = matchingPlan.price;
-                                return price;
+                                return "₦"+price;
                               } else {
                                 return 0;
                               }

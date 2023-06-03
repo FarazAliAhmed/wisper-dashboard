@@ -92,13 +92,13 @@ const AllocateData = () => {
     // Assuming the object array is called 'dataPlans'
     const matchedItem = dataPlans.find(item => item.id == value);
   
-    // console.log(matchedItem)
+    // console.log("matchedItem", matchedItem)
     
     if (matchedItem && name === 'plan_id') {
-      const { volume, price } = matchedItem;
-      const updatedPlan = { ...plan, [name]: value, volume, price };
+      const { size, price } = matchedItem;
+      const updatedPlan = { ...plan, [name]: value, volume:size, price };
       setPlan(updatedPlan);
-      // console.log('Updated Plan:', updatedPlan);
+      console.log('Updated Plan:', updatedPlan);
     } else {
       setPlan({ ...plan, [name]: value });
       // console.log('Updated Plan:', plan); // Log the original plan object
