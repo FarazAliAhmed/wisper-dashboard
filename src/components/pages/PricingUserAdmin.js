@@ -7,6 +7,7 @@ import tableData, { tableDataWhole } from "../../utils/plansTable";
 import { getSingleBusiness } from "../../services/Admin.Services/businessService";
 import { adminUrl } from "../../config";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -63,19 +64,28 @@ const PricingUser = ({businessId}) => {
         validity,
       };
 
-      console.log(newPlan)
+      // console.log(newPlan)
   
       const response = await axios.post(`${adminUrl}/plans_user/${businessId}`, newPlan);
+      
+
+      toast.success('Plan Created!', {
+        position: toast.POSITION.TOP_RIGHT
+      });
 
       console.log(response)
       setUserPlans(response.data);
     } catch (error) {
-      console.error('Error:', error.response.data.error);
+      toast.error('Error Occured Try Again!!!', {
+        position: toast.POSITION.TOP_RIGHT
+      });
+  
+      // console.error('Error:', error.response.data.error);
     }
   };
   
   // Update a plan for a user
-  const updatePlanUser = async (planId, price) => {
+  const updatePlanUser = async (planId, price, dataId) => {
     try {
     const newPlan = {
         price
@@ -83,10 +93,21 @@ const PricingUser = ({businessId}) => {
 
     const response = await axios.post(`${adminUrl}/plans_user/${businessId}/${planId}`, newPlan);
 
-    console.log(response)
+    // console.log(response)
+    document.getElementById(`myInput${dataId}`).value = "";
+
+    toast.info('Price Updated', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+
       setUserPlans(response.data);
     } catch (error) {
-      console.error('Error:', error.response.data.error);
+      document.getElementById(`myInput${dataId}`).value = "";
+      // console.error('Error:', error.response.data.error);
+
+      toast.error('Error Occured Try Again!!!', {
+        position: toast.POSITION.TOP_RIGHT
+      });
     }
   };
 
@@ -95,6 +116,7 @@ const PricingUser = ({businessId}) => {
   return (
     <div>
     <Card>
+    <ToastContainer />
         <CardBody>
         <CardTitle className="text-center" tag="h5">
         {business?.name && <>Packages for {business?.name} </>}
@@ -119,7 +141,7 @@ const PricingUser = ({businessId}) => {
 
                 <th>Network</th>
                 <th>Size </th>
-                <th>Price</th>
+                <th>Price (₦)</th>
                 <th>Validity</th>
                 {/* <th>Plan Type</th> */}
                 <th>Set Amount</th>
@@ -148,7 +170,7 @@ const PricingUser = ({businessId}) => {
                             const matchingPlan = userPlans.find(obj => obj.plan_id === tdata.dataId);
                             if (matchingPlan) {
                                 const price = matchingPlan.price;
-                                return price;
+                                return "₦" + price;
                               } else {
                                 return 0;
                               }
@@ -183,8 +205,8 @@ const PricingUser = ({businessId}) => {
                                 <form
                                     onSubmit={(e) => {
                                         e.preventDefault();
-                                        updatePlanUser(matchingPlan._id, newPrice);
-                                        document.getElementById(`myInput${tdata.dataId}`).value = "";
+                                        updatePlanUser(matchingPlan._id, newPrice, tdata.dataId);
+
                                     }}
                                     >
                                     <button type="submit"

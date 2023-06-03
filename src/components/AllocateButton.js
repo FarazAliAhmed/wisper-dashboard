@@ -38,14 +38,14 @@ const AllocateButton = ({
     // setConfirm(false)
     const status = await handleSubmit();
     console.log({status})
-    if (status.status) {
-      setMessage(status.message);
+    if (status?.status) {
+      setMessage(status?.message);
       setSuccess(true);
       setTimeout(() => {
         setSuccess(false);
-      }, 8000);
+      }, 5000);
     } else {
-      setMessage(status.message);
+      setMessage(status?.message || "You do not have a price for this data plan");
       setFailed(true);
     }
   };

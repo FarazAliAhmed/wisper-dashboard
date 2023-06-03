@@ -5,6 +5,7 @@ import { useAppState } from "../../context/appContext"
 
 import tableData, { tableDataWhole } from "../../utils/plansTable";
 import { useUser } from "../../context/userContext";
+import packImg from '../../assets/images/users/packages.svg'
 
 // import FullLayout from "../../layouts/FullLayout";
 // import { useUser } from "../../context/userContext";
@@ -21,6 +22,7 @@ const Pricing = () => {
       setTableDataAll(plans)
     } else {
       setTableDataAll(plansUser)
+      console.log(plansUser.length)
     }
    }, [user])
    
@@ -47,6 +49,7 @@ const Pricing = () => {
             borderless
         >
             <thead>
+            {plansUser.length != 0 && (
             <tr>
                 {/* <th>Price</th> */}
                 {/* <th>Amount</th> */}
@@ -59,6 +62,7 @@ const Pricing = () => {
                 
 
             </tr>
+            )}
             </thead>
             <tbody>
             {tableDataAll
@@ -81,7 +85,19 @@ const Pricing = () => {
                 </tr>
             ))}
             </tbody>
+
         </Table>
+        {plansUser.length == 0 && (
+                <div className="col-12 flex text-center px-4 pb-4">
+                    
+                <img src={packImg} style={{width:"200px"}} />
+
+                <h5 className="mb-4">
+                Apologies for any confusion. We are currently in the process of setting up data pricing for your account. Please check back shortly for the updated pricing information. Thank you for your patience.
+                </h5>
+
+                </div>
+            )}
         </CardBody>
     </Card>
 

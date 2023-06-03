@@ -49,10 +49,12 @@ const Register = () => {
       setErrors({});
       window.location = "/dashboard";
     } catch (error) {
+
+      
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
 
-      setServerResponse({ status, message });
+      setServerResponse({ status, message:"User Already Registered" });
       // console.log(error);
     }
   };

@@ -21,6 +21,7 @@ import { handleFailedRequest, parseDataAllocatePlans, parseDataPlans } from "../
 // import dataPlans from "../../utils/plansTable";
 
 import "./../../assets/scss/custom.scss";
+import { ToastContainer, toast } from 'react-toastify';
 
 const initialState = {
   network: "airtel",
@@ -52,12 +53,27 @@ const AllocateData = () => {
     // e.preventDefault();
     try {
       setLoading(true);
+
+      // console.log("plan", plan)
+
+
+     if(plan.price){
       await allocateData(plan, user?.access_token);
       setLoading(false);
       setPlan(initialState);
       return {status: true, message: "Data allocated successfully."};
+     } else {
+        toast.info('Contact Admin To Set Plan Price', {
+          position: toast.POSITION.TOP_RIGHT
+        });
+        setLoading(false);
+        return
+     }
       // setServerResponse({status: true, message: "Data allocated successfully."});
     }catch (error) {
+      toast.error('An Error Occured Try Again', {
+        position: toast.POSITION.TOP_RIGHT
+      });
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
       return {status, message};
@@ -76,16 +92,16 @@ const AllocateData = () => {
     // Assuming the object array is called 'dataPlans'
     const matchedItem = dataPlans.find(item => item.id == value);
   
-    console.log(matchedItem)
+    // console.log(matchedItem)
     
     if (matchedItem && name === 'plan_id') {
       const { volume, price } = matchedItem;
       const updatedPlan = { ...plan, [name]: value, volume, price };
       setPlan(updatedPlan);
-      console.log('Updated Plan:', updatedPlan);
+      // console.log('Updated Plan:', updatedPlan);
     } else {
       setPlan({ ...plan, [name]: value });
-      console.log('Updated Plan:', plan); // Log the original plan object
+      // console.log('Updated Plan:', plan); // Log the original plan object
     }
   };
   
@@ -95,6 +111,7 @@ const AllocateData = () => {
   return (
     <FullLayout>
       <div>
+      <ToastContainer />
         <h5 className="mb-4 mt-3">Allocate Data</h5>
         <Card body>
           {/* {serverResponse.message.length > 0 && (
