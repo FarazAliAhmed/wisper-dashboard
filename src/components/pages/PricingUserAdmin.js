@@ -162,7 +162,7 @@ const PricingUser = ({businessId}) => {
                
                 {userPlans.find(obj => obj.plan_id == tdata.dataId) ?
                 <td>
-                    <input type="text" onChange={(e) => setNewPrice(e.target.value)}/>
+                    <input type="text" id={`myInput${tdata.dataId}`} onChange={(e) => setNewPrice(e.target.value)}/>
                 </td>
                 :
                 <td>
@@ -184,6 +184,7 @@ const PricingUser = ({businessId}) => {
                                     onSubmit={(e) => {
                                         e.preventDefault();
                                         updatePlanUser(matchingPlan._id, newPrice);
+                                        document.getElementById(`myInput${tdata.dataId}`).value = "";
                                     }}
                                     >
                                     <button type="submit"
