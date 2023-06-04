@@ -39,6 +39,7 @@ module.exports = {
   // adminUrl: "http://localhost:5000/api/admin",
  
   // apiUrlV2: "https://localhost:5000/api/v2",
+  // apiUrlV2: "https://localhost:5000/api/v2",
 
 
   // REAL URL
