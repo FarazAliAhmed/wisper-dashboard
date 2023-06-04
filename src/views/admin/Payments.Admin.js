@@ -32,7 +32,7 @@ const Payments = () => {
   const [searchValue, setSearchValue] = useState("");
   const [paymentData, setPaymentData] = useState([]);
   const [showWithVolume, setShowWithVolume] = useState(true);
-
+  const [filteredData, setFilteredData] = useState([])
   
 
   const handleToggle = () => {
@@ -40,8 +40,33 @@ const Payments = () => {
   };
 
   useEffect(() => {
-    const filteredData = showWithVolume ? payments.filter(item => item.hasOwnProperty('volume')) : payments.filter(item => !item.hasOwnProperty("volume"));
-    setPaymentData(filteredData);
+    // const filteredData = showWithVolume ? payments.filter(item => item.hasOwnProperty('volume')) : payments.filter(item => !item.hasOwnProperty("volume"));
+   
+    const getFilteredTransactions = () => {
+      const cutoffDate = new Date("2023-05-31");
+      
+      return payments.filter(transaction => {
+        const paymentDate = new Date(transaction.date_of_payment);
+        return paymentDate > cutoffDate;
+      });
+    };
+    
+    const getOldTransactions = () => {
+      const cutoffDate = new Date("2023-05-31");
+      
+      return payments.filter(transaction => {
+        const paymentDate = new Date(transaction.date_of_payment);
+        return paymentDate < cutoffDate;
+      });
+    };
+    
+    const transactionsToDisplay = showWithVolume ? getFilteredTransactions() : getOldTransactions;
+
+
+    setFilteredData(transactionsToDisplay);
+
+
+
   }, [showWithVolume, payments]);
 
   const [show, setShow] = useState(false)
@@ -161,7 +186,7 @@ const Payments = () => {
                       <tr>
                         <th>S/N</th>
                         <th>Business ID</th>
-                       {showWithVolume &&  <th>Username</th>}
+                         <th>Username</th>
                         <th>Date of Payment</th>
                         {showWithVolume ?  <th>Amount (₦)</th> :  <th>Amount</th>}
                         {showWithVolume &&   <th>Data Volume</th>}
@@ -172,8 +197,8 @@ const Payments = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {paymentData &&
-                        paymentData.map((pm, index) => (
+                      {filteredData &&
+                        filteredData.map((pm, index) => (
                           <tr key={index} className="border-top">
                             <td>{index}</td>
                             <td> 
@@ -185,21 +210,21 @@ const Payments = () => {
 
                             </Link>
                             </td>
-                            {showWithVolume &&  <td>{pm.username}</td>}
+                            {pm.username ?  <td>{pm.username}</td> : <td></td>}
                             <td>{pm.date_of_payment.split(" GMT")[0]}</td>
                             {showWithVolume ? <td>₦{pm.amount}</td> :  <td>{pm.amount/1000}GB</td>}
 
                             {showWithVolume &&  <td>{pm.volume/1000}GB</td>}
                             {showWithVolume &&  <td>{pm.wallet != "mtn_gifting" ? <>{pm.wallet}</> : "MTN"}</td>}
 
-                            {showWithVolume && pm.pay_type ? 
-                             (
+                            {showWithVolume && 
+                           
                                   <td>
                                      <Button className="receipt-button" style={{background:`${pm.pay_type == "credit"  ? "red":"green"}`}} onClick={() => handlePayType(pm.pay_type == "credit" ? "paid": "credit", pm.payment_ref)}>
                                       {pm.pay_type}
                                      </Button>
                                   </td>
-                             ) : <h1></h1>}     
+                            }    
 
                             <td>{pm.payment_ref}</td>  
 

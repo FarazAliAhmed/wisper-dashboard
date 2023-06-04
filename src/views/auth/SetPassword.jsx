@@ -19,8 +19,13 @@ import {
 } from "../../utils";
 import { withRouter } from 'react-router-dom';
 import "./auth.scss";
+import { ToastContainer, toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 
 const SetPassword = ({match}) => {
+  const history = useHistory();
+
+  
   const [account, setAccount] = useState({ password: "", cpassword: "" });
   const [msgError, setMsgError] = useState("")
   const [errors, setErrors] = useState({});
@@ -46,15 +51,28 @@ const SetPassword = ({match}) => {
       console.log("res", res)
       
       if(res){
-        window.location = "/login";
+        toast.success('Password Changed', {
+          position: toast.POSITION.TOP_RIGHT
+        });
+       
+        setTimeout(() => {
+          history.push('/login');
+        }, 4000);
+        // window.location = "/login";
       }else{
+        toast.error('Link Expired', {
+          position: toast.POSITION.TOP_RIGHT
+        });
         setMsgError("Link Expired")
         throw new Error("Link Expired");
       }
      
     } catch (error) {
+      toast.error('An error occured', {
+        position: toast.POSITION.TOP_RIGHT
+      });
       console.log(error)
-      setMsgError("Email or password incorrect")
+      setMsgError("An error occured")
       console.log(error)
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
@@ -81,6 +99,7 @@ const SetPassword = ({match}) => {
 
   return (
     <AuthLayout headTitle="Set new password" tagline="Please  set a new password for your account">
+      <ToastContainer/>
       {msgError && (
         <Alert color="danger">{msgError}</Alert>
       )}

@@ -6,6 +6,17 @@ import { apiUrl, apiUrlV2 } from "../config.js";
 export async function getAllPlans() {
   try {
     const res = await http.get(`${apiUrl}/plans`);
+    // console.log(res)
+    return res
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getAllPlansUser(userId) {
+  try {
+    const res = await http.get(`${apiUrl}/plans_user/${userId}`);
+    // console.log("plans user", res)
     return res
   } catch (error) {
     return null;
@@ -23,13 +34,19 @@ export async function getBalance() {
 
 export async function allocateData(body, apiKey) {
   const headers = { "x-api-key": apiKey };
+
+  console.log("body", body)
   const payload = {
     network: body.network,
     plan_id: body.plan_id,
     phone_number: body.phone_number,
     allocate_for_business: body.allocate_for_business,
     business_id: body.business_id,
+    price: body.price,
+    volume: body.volume
   };
+
+  
 
   const res = await http.post(`${apiUrl}/buy`, payload, { headers });
   return res

@@ -15,6 +15,7 @@ const Payments = () => {
   const [paymentData, setPaymentData] = useState([]);
   const [showWithVolume, setShowWithVolume] = useState(true);
   const [show, setShow] = useState(false)
+  const [filteredData, setFilteredData] = useState([])
 
   const [receiptdata, setReceiptData] = useState({
     ...paymentData[0]
@@ -35,8 +36,34 @@ const Payments = () => {
   }
 
   useEffect(() => {
-    const filteredData = showWithVolume ? payments.filter(item => item.hasOwnProperty('volume')) : payments.filter(item => !item.hasOwnProperty("volume"));
-    setPaymentData(filteredData);
+    // const filteredData = showWithVolume ? payments.filter(item => item.hasOwnProperty('volume')) : payments.filter(item => !item.hasOwnProperty("volume"));
+    // setPaymentData(filteredData);
+
+    
+    const getFilteredTransactions = () => {
+      const cutoffDate = new Date("2023-05-31");
+      
+      return payments.filter(transaction => {
+        const paymentDate = new Date(transaction.date_of_payment);
+        return paymentDate > cutoffDate;
+      });
+    };
+    
+    const getOldTransactions = () => {
+      const cutoffDate = new Date("2023-05-31");
+      
+      return payments.filter(transaction => {
+        const paymentDate = new Date(transaction.date_of_payment);
+        return paymentDate < cutoffDate;
+      });
+    };
+    
+    const transactionsToDisplay = showWithVolume ? getFilteredTransactions() : getOldTransactions;
+
+
+    setFilteredData(transactionsToDisplay);
+    
+
   }, [showWithVolume, payments]);
 
 
@@ -75,8 +102,8 @@ const Payments = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {paymentData &&
-                        paymentData.map((pm, index) => (
+                      {filteredData &&
+                        filteredData.map((pm, index) => (
                           <tr key={index} className="border-top">
                             <td>{index}</td>
                             {showWithVolume ? <td>₦{pm.amount}</td> :  <td>{pm.amount/1000}GB</td>}
@@ -84,8 +111,8 @@ const Payments = () => {
 
                             {showWithVolume &&  <td>{pm.volume/1000}GB</td>}
 
-                            {showWithVolume && pm.pay_type ? 
-                             (
+                            {showWithVolume &&  
+                            
                                   <td>
                                    {pm.pay_type == "credit"  ? 
                                         <p style={{color:"red"}}>On Credit</p> 
@@ -93,7 +120,7 @@ const Payments = () => {
                                        <p style={{color:"green"}}>Paid</p>
                                     }
                                   </td>
-                             ) : <h1></h1>}     
+                             }     
 
                             {showWithVolume &&  <td>{pm.wallet != "mtn_gifting" ? <>{pm.wallet}</> : "MTN"}</td>}
 

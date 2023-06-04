@@ -56,6 +56,18 @@ export const getTransactions = async () => {
   }
 };
 
+
+export async function getAllPlansUser(userId) {
+  try {
+    const res = await http.get(`${adminUrl}/plans_user/${userId}`);
+    console.log(res)
+    return res
+  } catch (error) {
+    return null;
+  }
+}
+
+
 export const getAllTrx = async () => {
   try {
     const res =  await http.get(`${adminUrl}/trxAll`);

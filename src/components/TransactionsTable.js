@@ -20,6 +20,7 @@ import {
 } from "reactstrap";
 import { paginate } from "../utils";
 import TransactionReceipt from "./TransactionReceipt";
+import { useUser } from "../context/userContext";
 
 const TransactionsTable = ({
   transactions,
@@ -28,7 +29,7 @@ const TransactionsTable = ({
 }) => {
   const [transactionsData, setTransactionsData] = useState([...transactions]);
 
-// console.log(transactions)
+  const {user} = useUser()
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
@@ -229,7 +230,8 @@ const TransactionsTable = ({
                   <thead>
                     <tr>
                       <th>Phone Number</th>
-                      <th>Volume</th>
+                     {user?.type == "lite" && user?.isAdmin == false ?  <th>Price</th> :  <th>Volume</th>}
+                     {user?.type == "lite" && <th>Volume</th> }
                       <th>Status</th>
                       <th>Network</th>
                       <th>Date</th>
@@ -250,7 +252,10 @@ const TransactionsTable = ({
                             </div>
                           </div>
                         </td>
-                        <td>{tx.data_volume/1000} GB</td>
+                        {user?.type == "lite" && user?.isAdmin == false ? <td> ₦{tx.data_volume} </td> : <td>{tx.data_volume/1000} GB</td>}
+
+                       {user?.type == "lite" && <td>{tx.lite_volume || "0 mb"}</td> }
+
                         {/* <td>{tx.price || "-"}</td> */}
                         <td>
                           {tx.status === "processing" ? (

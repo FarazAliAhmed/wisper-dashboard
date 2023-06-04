@@ -6,7 +6,8 @@ import {
   getAllPlans,
   getMaintenance,
   getSingleTrx,
-  getSingleSold
+  getSingleSold,
+  getAllPlansUser
 } from "../services/dataService";
 import { useUser } from "./userContext";
 // import { getMainBalance } from "../services/Admin.Services/businessService";
@@ -35,6 +36,7 @@ const AppStateProvider = ({ children }) => {
   const [singleSold, setSingleSold] = useState(0)
   const [payments, setPayments] = useState([]);
   const [plans, setPlans] = useState([]);
+  const [plansUser, setPlansUser] = useState([]);
   const [maintenance, setMaintenance] = useState({
     "mtn_sme": false,
     "mtn_gifting": false,
@@ -55,13 +57,17 @@ const AppStateProvider = ({ children }) => {
         getAllPlans(),
         getMaintenance(),
         getSingleTrx(user?._id),
-        getSingleSold(user?._id)
+        getSingleSold(user?._id),
+        getAllPlansUser(user?._id)
       ])
       const balanceRes = results[0] 
       const transactionRes = results[1] 
       const paymentRes = results[2] 
       const planRes = results[3]
       const maintenanceRes = results[4]
+      const planResUser = results[7]
+
+      console.log("result 1", results[1])
 
       // setSingleTrx(results[5]?.data.transactionCount)
       // setSingleSold(results[6]?.data.totalDataSold)
@@ -104,6 +110,7 @@ const AppStateProvider = ({ children }) => {
       });
 
       setTransactions(transactionRes.data);
+      console.log("transactionRes", transactionRes)
      }
 
       if(paymentRes){
@@ -112,6 +119,11 @@ const AppStateProvider = ({ children }) => {
 
       if(planRes){
         setPlans(planRes.data.plan);
+      }
+      
+      if(planResUser){
+        // console.log("planResUser", planResUser)
+        setPlansUser(planResUser.data);
       }
 
       if(maintenanceRes){
@@ -126,7 +138,7 @@ const AppStateProvider = ({ children }) => {
 
   return (
     <AppStateContext.Provider
-      value={{ currentBalance, transactions, payments, plans, maintenance, setMaintenance, singleTrx, singleSold }}
+      value={{ currentBalance, transactions, payments, plans, plansUser, maintenance, setMaintenance, singleTrx, singleSold }}
     >
       {children}
     </AppStateContext.Provider>

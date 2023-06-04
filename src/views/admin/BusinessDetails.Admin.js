@@ -149,6 +149,11 @@ const Account = (props) => {
           {loading ? "Please wait..." : "Make Mega"}
         </Button>
       )}
+      {type === "lite" && (
+        <Button className="mx-2" disabled={loading} onClick={() => window.location.href = `/admin/user_packages/${businessId}`} color="primary">
+          {loading ? "Please wait..." : "Pricing"}
+        </Button>
+      )}
       {type === "mega" && (
         <Button disabled={loading} onClick={handleSetTypeLite} color="primary">
           {loading ? "Please wait..." : "Make Lite"}

@@ -7,8 +7,13 @@ import {
     ModalFooter,
     ModalHeader,
 } from 'reactstrap'
+import { useUser } from "../context/userContext";
+
 
 function TransactionReceipt({receiptData, show, toggleShow}){
+
+    const {user} = useUser()
+
 
     return (
         <div>
@@ -27,12 +32,23 @@ function TransactionReceipt({receiptData, show, toggleShow}){
                         className="receipt-font"
                         color={receiptData.status == "success" ? "success" : "danger"}
                     >
+
+        {user?.type == "lite" ?
+                        <TransactionMessage
+                            status={receiptData.status}
+                            volume={receiptData.lite_volume}
+                            phone_number={receiptData.phone_number}
+                            created_at={receiptData.created_at}
+                        />
+                        :
                         <TransactionMessage
                             status={receiptData.status}
                             volume={receiptData.data_volume}
                             phone_number={receiptData.phone_number}
                             created_at={receiptData.created_at}
                         />
+
+        }
                     </Alert>
                         {/* Data Volume :<strong> {receiptData.data_volume} MB </strong> <br /> */}
                         {/* Recipient :<strong> {receiptData.phone_number} </strong> <br /> */}
@@ -80,12 +96,15 @@ const validityDate = ({created_at, volume}) => {
 
 const TransactionMessage = ({status, volume, phone_number, created_at}) => {
     const valid_until = validityDate({created_at, volume})
+    const {user} = useUser()
+
 
     if(status == "success"){
         return (
             <p>
                 OK <br />
-                You have successfully gifted <strong>{volume/1000} GB</strong> worth of data to <strong>{phone_number}</strong>,
+                You have successfully credited <strong>{user?.type == "lite" ? <>{volume} </> : <>{volume/1000} GB</>}</strong>
+                 worth of data to <strong>{phone_number}</strong>,
                 valid till {valid_until}
             </p>
         )
