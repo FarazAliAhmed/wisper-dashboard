@@ -84,16 +84,17 @@ export const totalDataSold = (dataTransactions = []) => {
 
 export const displayBalance = (volume, unit, cash, mega_wallet, user) => {
   if (user?.type === "mega") {
-    const totalArray = Object.values(mega_wallet)
+    const totalArray = Object.values(mega_wallet);
     const totalBalance = totalArray.reduce((prev, curr) => {
-      if(typeof curr == "string"){
-        return prev
-      }else{
-        return prev + curr
+      if (typeof curr == "string") {
+        return prev;
+      } else {
+        return prev + curr;
       }
-    }, 0)
+    }, 0);
 
-    return `${totalBalance} ${unit}`;
+    console.log(`${totalBalance / 1000} GB`);
+    return `${totalBalance / 1000} GB`;
   } else {
     return `${unit} ${parseInt(cash)}`;
   }
@@ -101,7 +102,7 @@ export const displayBalance = (volume, unit, cash, mega_wallet, user) => {
 
 export const getPlanFromId = (plan_id, plans) => {
   const id = parseInt(plan_id);
-  const tableData = parseDataPlans(plans)
+  const tableData = parseDataPlans(plans);
   const plan = tableData.filter((plan_data) => {
     // console.log(plan_id, plan_data["dataId"]);
     return parseInt(plan_data["dataId"]) === id;
@@ -133,7 +134,6 @@ export function getBusinessTransactionFromAllTransactions(
 //   duration: "30 days",
 // },
 
-
 // What is fetched from the backend
 // id: "626b0cc4e2e545785a5399a3"
 // network: "mtn"
@@ -147,63 +147,59 @@ export function getBusinessTransactionFromAllTransactions(
 // __v: 0
 // _id: "626b0cc4e2e545785a5399a3"
 
-
-
-export function parseDataPlans(plans){
-  const formated_plans = plans.map(plan => {
+export function parseDataPlans(plans) {
+  const formated_plans = plans.map((plan) => {
     return {
-      dataId: plan['plan_id'],
-      network: plan['network'],
-      plan_type: plan['plan_type'],
-      amount: plan['price'],
-      size: `${plan['volume']}.0 ${plan['unit']}`,
+      dataId: plan["plan_id"],
+      network: plan["network"],
+      plan_type: plan["plan_type"],
+      amount: plan["price"],
+      size: `${plan["volume"]}.0 ${plan["unit"]}`,
       // size: "1.0 gb",
-      duration: plan['validity'],
-    }
-  })
+      duration: plan["validity"],
+    };
+  });
 
   return formated_plans;
 }
 
-
-export function parseDataPlansUser(plans){
-  const formated_plans = plans.map(plan => {
+export function parseDataPlansUser(plans) {
+  const formated_plans = plans.map((plan) => {
     return {
-      dataId: plan['plan_id'],
-      network: plan['network'],
-      plan_type: plan['plan_type'],
-      amount: plan['price'],
-      size: `${plan['volume']}.0 ${plan['unit']}`,
+      dataId: plan["plan_id"],
+      network: plan["network"],
+      plan_type: plan["plan_type"],
+      amount: plan["price"],
+      size: `${plan["volume"]}.0 ${plan["unit"]}`,
       // size: "1.0 gb",
-      duration: plan['validity'],
-    }
-  })
+      duration: plan["validity"],
+    };
+  });
 
   return formated_plans;
 }
 
-
-export function parseDataAllocatePlans(plans){
-  const formated_plans = plans.map(plan => {
+export function parseDataAllocatePlans(plans) {
+  const formated_plans = plans.map((plan) => {
     return {
-      volume: plan['volume'],
-      id: plan['plan_id'],
+      volume: plan["volume"],
+      id: plan["plan_id"],
       error: false,
-      size: `${plan['volume']}.0 ${plan['unit']}`,
-      validity: plan['validity'],
-      price: plan['price'],
-      network: plan['network'],
-      plan_type: plan['plan_type'],
-    }
-  })
+      size: `${plan["volume"]}.0 ${plan["unit"]}`,
+      validity: plan["validity"],
+      price: plan["price"],
+      network: plan["network"],
+      plan_type: plan["plan_type"],
+    };
+  });
 
   return formated_plans;
 }
 
 export const plan_types = [
-  'mtn_sme',
-  'mtn_gifting',
-  'airtel',
-  'glo',
-  '9mobile'
-]
+  "mtn_sme",
+  "mtn_gifting",
+  "airtel",
+  "glo",
+  "9mobile",
+];

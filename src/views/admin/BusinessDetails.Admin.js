@@ -75,6 +75,8 @@ const Account = (props) => {
     fetchBusinessDetails();
   }, []);
 
+  console.log("bal", balanceDisplay);
+
   const handleRemoveAdmin = async () => {
     setLoading(true);
     await removeAdmin(business.email);
