@@ -14,12 +14,12 @@ import PaymentButtonFw from "../../components/PaymentButtonFw";
 import { useAppState } from "../../context/appContext";
 import { useUser } from "../../context/userContext";
 import AdminNotifier from "../../components/AdminNotifier";
-import glo from '../../assets/dashboard/glo.svg'
-import mtn1 from '../../assets/dashboard/mtn 1.svg'
-import mob9 from '../../assets/dashboard/mob9.svg'
-import airtel from '../../assets/dashboard/airtel.svg'
-import tranIcon from '../../assets/dashboard/transa.svg'
-import wallIcon from '../../assets/dashboard/walle.svg'
+import glo from "../../assets/dashboard/glo.svg";
+import mtn1 from "../../assets/dashboard/mtn 1.svg";
+import mob9 from "../../assets/dashboard/mob9.svg";
+import airtel from "../../assets/dashboard/airtel.svg";
+import tranIcon from "../../assets/dashboard/transa.svg";
+import wallIcon from "../../assets/dashboard/walle.svg";
 
 // import PaymentButton from "../../components/PaymentButton";
 
@@ -29,8 +29,8 @@ const Dashboard = () => {
     currentBalance: { volume, unit, cash, mega_wallet },
     transactions,
     maintenance,
-    singleTrx, 
-    singleSold
+    singleTrx,
+    singleSold,
   } = useAppState();
   const [balanceDisplay, setBalanceDisplay] = useState("");
 
@@ -42,24 +42,27 @@ const Dashboard = () => {
     <FullLayout>
       <div>
         {/***Top Cards***/}
-        {maintenance.notice && 
+        {maintenance.notice && (
           <Row>
-            <AdminNotifier maintenance={maintenance}/>
+            <AdminNotifier maintenance={maintenance} />
           </Row>
-        }
+        )}
         <Row>
-        {user.type != "mega" && (
-          <Col sm="6" lg="4">
-            <TopCards
-              bg="bg-light-info text-info"
-              title="Profit"
-              subtitle="Balance"
-              earning={balanceDisplay}
-              icon={wallIcon}
-            />
-          </Col>
-        )
-         }
+          {user.type != "mega" && (
+            <Col sm="6" lg="4">
+              <TopCards
+                bg="bg-light-info text-info"
+                title="Profit"
+                subtitle="Balance"
+                earning={
+                  balanceDisplay.toLowerCase() == "0 mb"
+                    ? "₦ 0"
+                    : balanceDisplay
+                }
+                icon={wallIcon}
+              />
+            </Col>
+          )}
           <Col sm="6" lg="4">
             <TopCards
               bg="bg-light-danger text-danger"
@@ -74,7 +77,7 @@ const Dashboard = () => {
               bg="bg-light-warning text-warning"
               title="New Project"
               subtitle="Total data sold"
-              earning={`${singleSold/1000} GB`}
+              earning={`${singleSold / 1000} GB`}
               icon={wallIcon}
             />
           </Col>
@@ -97,7 +100,7 @@ const Dashboard = () => {
                   bg="bg-light-warning text-warning"
                   title="Refunds"
                   subtitle="MTN"
-                  earning={`${mega_wallet.mtn_gifting/1000} GB`}
+                  earning={`${mega_wallet.mtn_gifting / 1000} GB`}
                   icon={mtn1}
                 />
               </Col>
@@ -106,7 +109,7 @@ const Dashboard = () => {
                   bg="bg-light-success text-success"
                   title="New Project"
                   subtitle="Airtel"
-                  earning={`${mega_wallet.airtel/1000} GB`}
+                  earning={`${mega_wallet.airtel / 1000} GB`}
                   icon={airtel}
                 />
               </Col>
@@ -117,25 +120,25 @@ const Dashboard = () => {
                   bg="bg-light-info text-info"
                   title="Profit"
                   subtitle="GLO"
-                  earning={`${mega_wallet.glo/1000} GB`}
+                  earning={`${mega_wallet.glo / 1000} GB`}
                   icon={glo}
                 />
               </Col>
 
-               {/* 9Mobile wallet */}
-               <Col sm="6" lg="4">
-                  <TopCards
-                    bg="bg-light-info text-info"
-                    title="Profit"
-                    subtitle="9 Mobile"
-                    earning={`${mega_wallet["9mobile"]/1000} GB`}
-                    icon={mob9}
-                  />
-                </Col>
+              {/* 9Mobile wallet */}
+              <Col sm="6" lg="4">
+                <TopCards
+                  bg="bg-light-info text-info"
+                  title="Profit"
+                  subtitle="9 Mobile"
+                  earning={`${mega_wallet["9mobile"] / 1000} GB`}
+                  icon={mob9}
+                />
+              </Col>
             </>
           )}
         </Row>
-       
+
         {user ? (
           user?.type === "mega" ? (
             // <Row className="bank-details">
@@ -158,8 +161,7 @@ const Dashboard = () => {
             //     balance would be credited.
             //   </p> */}
             // </Row>
-            <div>
-              </div>
+            <div></div>
           ) : (
             <Row>
               <Col>
