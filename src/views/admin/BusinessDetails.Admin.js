@@ -14,12 +14,12 @@ import TopCards from "../../components/dashboard/TopCards";
 
 import AdminLayout from "../../layouts/AdminLayout";
 import TransactionsTable from "../../components/TransactionsTable";
-import glo from '../../assets/dashboard/glo.svg'
-import mtn1 from '../../assets/dashboard/mtn 1.svg'
-import mob9 from '../../assets/dashboard/mob9.svg'
-import airtel from '../../assets/dashboard/airtel.svg'
-import tranIcon from '../../assets/dashboard/transa.svg'
-import wallIcon from '../../assets/dashboard/walle.svg'
+import glo from "../../assets/dashboard/glo.svg";
+import mtn1 from "../../assets/dashboard/mtn 1.svg";
+import mob9 from "../../assets/dashboard/mob9.svg";
+import airtel from "../../assets/dashboard/airtel.svg";
+import tranIcon from "../../assets/dashboard/transa.svg";
+import wallIcon from "../../assets/dashboard/walle.svg";
 
 import {
   getSingleBusiness,
@@ -58,9 +58,10 @@ const Account = (props) => {
       setBusiness({ ...res.data.business, balance: { ...res.data.balance } });
       setActive(res.data.business.active);
       setIsAdmin(res.data.business.isAdmin);
-      setType(res.data.business.type)
+      setType(res.data.business.type);
 
-      const { data_volume, data_unit, wallet_balance, mega_wallet } = res.data.balance;
+      const { data_volume, data_unit, wallet_balance, mega_wallet } =
+        res.data.balance;
       setBalanceDisplay(
         displayBalance(
           data_volume,
@@ -93,28 +94,28 @@ const Account = (props) => {
     await makeActive(business._id);
     setLoading(false);
     setActive(true);
-  }
+  };
 
   const handleRemoveActive = async () => {
     setLoading(true);
     await disableAccount(business._id);
     setLoading(false);
     setActive(false);
-  }
+  };
 
   const handleSetTypeLite = async () => {
     setLoading(true);
     await setAccountType("lite", business._id);
     setLoading(false);
     setType("lite");
-  }
+  };
 
   const handleSetTypeMega = async () => {
     setLoading(true);
     await setAccountType("mega", business._id);
     setLoading(false);
     setType("mega");
-  }
+  };
 
   return (
     <AdminLayout>
@@ -150,7 +151,14 @@ const Account = (props) => {
         </Button>
       )}
       {type === "lite" && (
-        <Button className="mx-2" disabled={loading} onClick={() => window.location.href = `/admin/user_packages/${businessId}`} color="primary">
+        <Button
+          className="mx-2"
+          disabled={loading}
+          onClick={() =>
+            (window.location.href = `/admin/user_packages/${businessId}`)
+          }
+          color="primary"
+        >
           {loading ? "Please wait..." : "Pricing"}
         </Button>
       )}
@@ -274,7 +282,12 @@ const Account = (props) => {
                   bg="bg-light-info text-info"
                   title="Profit"
                   subtitle="Balance"
-                  earning={balanceDisplay}
+                  earning={
+                    balanceDisplay.toLowerCase() == "0 mb" ||
+                    balanceDisplay.toLowerCase() == "mb 0"
+                      ? "₦ 0"
+                      : balanceDisplay
+                  }
                   icon={wallIcon}
                 />
               </Col>
@@ -315,7 +328,7 @@ const Account = (props) => {
                       bg="bg-light-warning text-warning"
                       title="Refunds"
                       subtitle="MTN Gifting"
-                      earning={`${mega_wallet.mtn_gifting/1000} GB`}
+                      earning={`${mega_wallet.mtn_gifting / 1000} GB`}
                       icon={mtn1}
                     />
                   </Col>
@@ -324,7 +337,7 @@ const Account = (props) => {
                       bg="bg-light-success text-success"
                       title="New Project"
                       subtitle="Airtel"
-                      earning={`${mega_wallet.airtel/1000} GB`}
+                      earning={`${mega_wallet.airtel / 1000} GB`}
                       icon={airtel}
                     />
                   </Col>
@@ -335,18 +348,18 @@ const Account = (props) => {
                       bg="bg-light-info text-info"
                       title="Profit"
                       subtitle="GLO"
-                      earning={`${mega_wallet.glo/1000} GB`}
+                      earning={`${mega_wallet.glo / 1000} GB`}
                       icon={glo}
                     />
                   </Col>
-                  
+
                   {/* 9Mobile wallet */}
                   <Col sm="6" lg="9">
                     <TopCards
                       bg="bg-light-info text-info"
                       title="Profit"
                       subtitle="9Mobile"
-                      earning={`${mega_wallet["9mobile"]/1000} GB`}
+                      earning={`${mega_wallet["9mobile"] / 1000} GB`}
                       icon={mob9}
                     />
                   </Col>
