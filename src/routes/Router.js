@@ -34,10 +34,10 @@ const Transactions = lazy(() => import("../views/ui/Transactions"));
 const Pricing = lazy(() => import("../views/ui/Pricing"));
 const ViewPricing = lazy(() => import("../views/ui/ViewPricing"));
 const Admin = lazy(() => import("./Admin"));
-const TransactionsV2 = lazy(() => import('../views/ui/TransactionsV2'));
+const TransactionsV2 = lazy(() => import("../views/ui/TransactionsV2"));
 
 const Routes = () => {
-  const {user} = useUser()
+  const { user } = useUser();
 
   // console.log("user router", user)
 
@@ -50,8 +50,11 @@ const Routes = () => {
           <ProtectedRoute path="/dashboard" component={Dashboard} />
           {/* <ProtectedRoute path="/packages/:id" component={Pricing} /> */}
           <ProtectedRoute path="/packages" component={ViewPricing} />
-         {user?.type == "mega" ? <ProtectedRoute path="/allocate" component={AllocateDataMA} />
-          : <ProtectedRoute path="/allocate" component={AllocateData} /> }
+          {user?.type == "mega" ? (
+            <ProtectedRoute path="/allocate" component={AllocateDataMA} />
+          ) : (
+            <ProtectedRoute path="/allocate" component={AllocateData} />
+          )}
           <ProtectedRoute path="/wallet" component={Wallet} />
           <ProtectedRoute path="/account" component={Account} />
           <ProtectedRoute path="/payments" component={Payments} />
@@ -62,9 +65,17 @@ const Routes = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/forgot-password" component={ForgotPassword} />
           <Route exact path="/check-email/:email" component={CheckEmail} />
-          <Route exact path="/check-email-confirm/:email" component={CheckEmailConfirm} />
+          <Route
+            exact
+            path="/check-email-confirm/:email"
+            component={CheckEmailConfirm}
+          />
           <Route exact path="/confirm-email" component={ConfirmEmail} />
-          <Route exact path="/reset-password/:email/:token" component={SetPassword} />
+          <Route
+            exact
+            path="/reset-password/:email/:token"
+            component={SetPassword}
+          />
           <Route exact path="/register" component={Register} />
           <Route exact path="/not-found" component={NotFound} />
           <Redirect to="/not-found" />

@@ -9,13 +9,13 @@ import { useAdmin } from "../../context/adminContext";
 import { useUser } from "../../context/userContext";
 // import "../../assets/scss/custom.scss";
 import AdminControls from "../../components/AdminControls";
-import glo from '../../assets/dashboard/glo.svg'
-import mtn1 from '../../assets/dashboard/mtn 1.svg'
-import mob9 from '../../assets/dashboard/mob9.svg'
-import airtel from '../../assets/dashboard/airtel.svg'
-import tranIcon from '../../assets/dashboard/transa.svg'
-import wallIcon from '../../assets/dashboard/walle.svg'
-// 
+import glo from "../../assets/dashboard/glo.svg";
+import mtn1 from "../../assets/dashboard/mtn 1.svg";
+import mob9 from "../../assets/dashboard/mob9.svg";
+import airtel from "../../assets/dashboard/airtel.svg";
+import tranIcon from "../../assets/dashboard/transa.svg";
+import wallIcon from "../../assets/dashboard/walle.svg";
+//
 // import SupportCard from "../../components/dashboard/SupportCard";
 // import PaymentButton from "../../components/PaymentButton";
 // import PaymentButtonFw from "../../components/PaymentButtonFw";
@@ -23,14 +23,10 @@ import wallIcon from '../../assets/dashboard/walle.svg'
 
 const Dashboard = () => {
   const { user } = useUser();
-  const { transaction, business, payment, mainBalance, allTrx, allSold  } = useAdmin();
+  const { transaction, business, payment, mainBalance, allTrx, allSold } =
+    useAdmin();
   const {
-    currentBalance: {
-      volume,
-      unit,
-      cash,
-      mega_wallet,
-    },
+    currentBalance: { volume, unit, cash, mega_wallet },
   } = useAppState();
   const [balanceDisplay, setBalanceDisplay] = useState("");
 
@@ -48,7 +44,7 @@ const Dashboard = () => {
               bg="bg-light-info text-info"
               title="Profit"
               subtitle="ABISUBPORTAL WALLET"
-              earning={`₦ ${mainBalance.mtn|| 0}`}
+              earning={`₦ ${mainBalance.mtn || 0}`}
               icon={mtn1}
             />
           </Col>
@@ -59,6 +55,16 @@ const Dashboard = () => {
               subtitle="9MOBILE (OGDAMS)"
               earning={`₦ ${mainBalance.mob9 || 0}`}
               icon={mob9}
+            />
+          </Col>
+
+          <Col sm="6" lg="4">
+            <TopCards
+              bg="bg-light-info text-info"
+              title="Profit"
+              subtitle="GLO ALMAMGT"
+              earning={`${Number(user?.glo_almamgt || "0") / 1000} GB`}
+              icon={glo}
             />
           </Col>
           {/* <Col sm="6" lg="4">
@@ -84,7 +90,7 @@ const Dashboard = () => {
               bg="bg-light-warning text-warning"
               title="New Project"
               subtitle="Total data sold"
-              earning={`${allSold/1000} GB`}
+              earning={`${allSold / 1000} GB`}
               icon={wallIcon}
             />
           </Col>
@@ -106,7 +112,7 @@ const Dashboard = () => {
                   bg="bg-light-info text-info"
                   title="Profit"
                   subtitle="MTN SME (You)"
-                  earning={`${mega_wallet.mtn_sme/1000} GB`}
+                  earning={`${mega_wallet.mtn_sme / 1000} GB`}
                   // earning={`${mega_wallet.mtn_sme} ${mega_wallet.unit}`}
                   icon={mtn1}
                 />
@@ -116,7 +122,7 @@ const Dashboard = () => {
                   bg="bg-light-warning text-warning"
                   title="Refunds"
                   subtitle="MTN Gifting (You)"
-                  earning={`${mega_wallet.mtn_gifting/1000} GB`}
+                  earning={`${mega_wallet.mtn_gifting / 1000} GB`}
                   icon={mtn1}
                 />
               </Col>
@@ -125,31 +131,31 @@ const Dashboard = () => {
                   bg="bg-light-success text-success"
                   title="New Project"
                   subtitle="Airtel (You)"
-                  earning={`${mega_wallet.airtel/1000} GB`}
+                  earning={`${mega_wallet.airtel / 1000} GB`}
                   icon={airtel}
                 />
               </Col>
 
               {/* Glo wallet - Hidden for now */}
               <Col sm="6" lg="4">
-                  <TopCards
-                    bg="bg-light-info text-info"
-                    title="Profit"
-                    subtitle="GLO"
-                    earning={`${mega_wallet.glo/1000} GB`}
-                    icon={glo}
-                  />
-                </Col>
+                <TopCards
+                  bg="bg-light-info text-info"
+                  title="Profit"
+                  subtitle="GLO"
+                  earning={`${mega_wallet.glo / 1000} GB`}
+                  icon={glo}
+                />
+              </Col>
 
-                <Col sm="6" lg="4">
-                  <TopCards
-                    bg="bg-light-info text-info"
-                    title="Profit"
-                    subtitle="9 Mobile"
-                    earning={`${mega_wallet["9mobile"]/1000} GB`}
-                    icon={mob9}
-                  />
-                </Col>
+              <Col sm="6" lg="4">
+                <TopCards
+                  bg="bg-light-info text-info"
+                  title="Profit"
+                  subtitle="9 Mobile"
+                  earning={`${mega_wallet["9mobile"] / 1000} GB`}
+                  icon={mob9}
+                />
+              </Col>
             </>
           )}
         </Row>

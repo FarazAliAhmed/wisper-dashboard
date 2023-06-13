@@ -9,6 +9,7 @@ import Login from "../views/auth/Login.js";
 import PricingUser from "../components/pages/PricingUser.js";
 import ViewPricing from "../views/admin/ViewPricing.js";
 import AllocateDataMA from "../views/ui/AllocateDataMA.js";
+import AllocateDataMAdmin from "../views/ui/AllocateDataMAdmin.js";
 
 const Home = lazy(() => import("../views/Home"));
 const Logout = lazy(() => import("../views/auth/Logout"));
@@ -27,7 +28,9 @@ const Transactions = lazy(() => import("../views/admin/Transactions.Admin"));
 const Wallet = lazy(() => import("../views/admin/Wallet.Admin"));
 const Account = lazy(() => import("../views/admin/Account.Admin"));
 const Documentation = lazy(() => import("../views/admin/Documentation.Admin"));
-const TransactionsV2 = lazy(() => import('../views/admin/TransactionsV2.Admin'));
+const TransactionsV2 = lazy(() =>
+  import("../views/admin/TransactionsV2.Admin")
+);
 
 const AdminRoutes = () => {
   return (
@@ -54,12 +57,21 @@ const AdminRoutes = () => {
               />
               <AdminProtectedRoute
                 path="/admin/allocate"
-                component={AllocateDataMA}
+                component={AllocateDataMAdmin}
               />
               <AdminProtectedRoute path="/admin/payment" component={Payments} />
-              <AdminProtectedRoute path="/admin/user_packages/:id" component={Pricing} />
-              <AdminProtectedRoute path="/admin/packages" component={ViewPricing} />
-              <AdminProtectedRoute path="/admin/developers" component={Documentation} />
+              <AdminProtectedRoute
+                path="/admin/user_packages/:id"
+                component={Pricing}
+              />
+              <AdminProtectedRoute
+                path="/admin/packages"
+                component={ViewPricing}
+              />
+              <AdminProtectedRoute
+                path="/admin/developers"
+                component={Documentation}
+              />
               <AdminProtectedRoute path="/admin/wallet" component={Wallet} />
               <AdminProtectedRoute
                 path="/admin/transaction"
