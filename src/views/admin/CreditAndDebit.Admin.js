@@ -37,7 +37,7 @@ const AllocateData = () => {
     amount_cash: "",
     unit: "money",
     wallet: "",
-    pay_type:""
+    pay_type: "",
   });
 
   const [serverResponse, setServerResponse] = useState({
@@ -50,8 +50,7 @@ const AllocateData = () => {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [business, setBusiness] = useState({});
-  const [businessName, setBusinessName] = useState("")
-
+  const [businessName, setBusinessName] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,77 +65,85 @@ const AllocateData = () => {
       });
     }
     try {
-    // start of getting user details
-    const businessId = values.business_id;    
+      // start of getting user details
+      const businessId = values.business_id;
 
-    const mega_user = await getSingleBusiness(businessId);
-    setBusiness({ ...mega_user.data.business, balance: { ...mega_user.data.balance } });
-    
-    const mega_wallet = mega_user.data.balance?.mega_wallet;
-
-    // console.log((values.amount * 1000) + (mega_wallet[values.wallet]), "ajhu")
-
-    // end of getting user details
-
-    if(mega_user){
-
-      // console.log(values)
-
-      let response;
-      setLoading(true);
-      if (values.action_type === "credit") {
-        const res = await creditBusiness({
-          business_id: values.business_id,
-          credit_amount: values.unit == "data" ? values.amount * 1000 : values.amount,
-          unit: values.unit,
-          wallet: values.wallet,
-        });
-        
-        response = res.data.message;
-
-        const genCred = await generateCreditPayment({
-          business_id: values.business_id,
-          volume: values.amount * 1000,
-          amount:values.amount_cash,
-          wallet:values.wallet,
-          old: mega_wallet[values.wallet],
-          new: values.unit == "data" ? (values.amount * 1000) + (mega_wallet[values.wallet]) : values.amount,
-          pay_type: values.pay_type,
-          payment_ref:
-            "AD-trx-" + Math.floor(Math.random() * 10000000000000000),
-        });
-
-        console.log("genCred", genCred)
-      }
-      if (values.action_type === "debit") {
-        const res = await debitBusiness({
-          business_id: values.business_id,
-          debit_amount: values.unit == "data" ? values.amount * 1000 : values.amount,
-          unit: values.unit,
-          wallet: values.wallet,
-        });
-        if (res.status === 401) {
-          response = res.data.message;
-        } else {
-          response = "Data balance updated";
-        }
-      }
-
-      setIsSuccess(true);
-
-      setServerResponse({
-        status: true,
-        message: response,
+      const mega_user = await getSingleBusiness(businessId);
+      setBusiness({
+        ...mega_user.data.business,
+        balance: { ...mega_user.data.balance },
       });
 
-      setLoading(false);
+      const mega_wallet = mega_user.data.balance?.mega_wallet;
 
-      console.log(serverResponse);
-    }
+      // console.log((values.amount * 1000) + (mega_wallet[values.wallet]), "ajhu")
 
-    
+      // end of getting user details
+
+      if (mega_user) {
+        // console.log(values)
+
+        let response;
+        setLoading(true);
+
+        setIsSuccess(true);
+        if (values.action_type === "credit") {
+          const res = await creditBusiness({
+            business_id: values.business_id,
+            credit_amount:
+              values.unit == "data" ? values.amount * 1000 : values.amount,
+            unit: values.unit,
+            wallet: values.wallet,
+          });
+
+          response = res.data.message;
+
+          const genCred = await generateCreditPayment({
+            business_id: values.business_id,
+            volume: values.amount * 1000,
+            amount: values.amount_cash,
+            wallet: values.wallet,
+            old: mega_wallet[values.wallet],
+            new:
+              values.unit == "data"
+                ? values.amount * 1000 + mega_wallet[values.wallet]
+                : values.amount,
+            pay_type: values.pay_type,
+            payment_ref:
+              "AD-trx-" + Math.floor(Math.random() * 10000000000000000),
+          });
+
+          setIsSuccess(true);
+
+          console.log("genCred", genCred);
+        }
+        if (values.action_type === "debit") {
+          const res = await debitBusiness({
+            business_id: values.business_id,
+            debit_amount:
+              values.unit == "data" ? values.amount * 1000 : values.amount,
+            unit: values.unit,
+            wallet: values.wallet,
+          });
+          if (res.status === 401) {
+            response = res.data.message;
+          } else {
+            response = "Data balance updated";
+          }
+        }
+        setIsSuccess(true);
+
+        setServerResponse({
+          status: true,
+          message: response,
+        });
+
+        setLoading(false);
+
+        console.log(serverResponse);
+      }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
       setServerResponse({ status, message });
@@ -148,21 +155,18 @@ const AllocateData = () => {
 
     setValues({ ...values, [name]: value });
 
-    if(name == "business_id" && value.length == 24){
-      console.log("value", value)
-      const businessId = value;    
-  
+    if (name == "business_id" && value.length == 24) {
+      console.log("value", value);
+      const businessId = value;
+
       const mega_user = await getSingleBusiness(businessId);
 
-      if(mega_user) {
+      if (mega_user) {
         // console.log("mega user", mega_user?.data.balance.business.name)
-        setBusinessName(mega_user?.data.balance.business.name)
+        setBusinessName(mega_user?.data.balance.business.name);
       }
     }
-
-
   };
-
 
   return (
     <AdminLayout>
@@ -202,29 +206,40 @@ const AllocateData = () => {
                   </>
                 )}
                 {!loading && !isSuccess && (
-                 <>
-                  <p className="text-center">
-                  
-                   {values.unit == "data" ? 
-                   
-                   <>
-
-                      You are about to {values.action_type} <span style={{fontWeight:"bold"}}>{businessName} </span>
-                    
-                      with
-                      {values.amount  > 999 ? <span style={{fontWeight:"bold"}}> {values.amount / 1000} TB</span> 
-                      : <span style={{fontWeight:"bold"}}> {values.amount} GB</span>} 
-                   </> : 
-                   <>
-                    You are about to fund <span style={{fontWeight:"bold"}}>{businessName} </span>
-                   
-                   with ₦{values.amount} 
-                   </>
-                   }
-                  </p>
-                  <p className="text-center">
-                    Are you sure you want to continue?
-                  </p>
+                  <>
+                    <p className="text-center">
+                      {values.unit == "data" ? (
+                        <>
+                          You are about to {values.action_type}{" "}
+                          <span style={{ fontWeight: "bold" }}>
+                            {businessName}{" "}
+                          </span>
+                          with
+                          {values.amount > 999 ? (
+                            <span style={{ fontWeight: "bold" }}>
+                              {" "}
+                              {values.amount / 1000} TB
+                            </span>
+                          ) : (
+                            <span style={{ fontWeight: "bold" }}>
+                              {" "}
+                              {values.amount} GB
+                            </span>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          You are about to fund{" "}
+                          <span style={{ fontWeight: "bold" }}>
+                            {businessName}{" "}
+                          </span>
+                          with ₦{values.amount}
+                        </>
+                      )}
+                    </p>
+                    <p className="text-center">
+                      Are you sure you want to continue?
+                    </p>
                   </>
                 )}
               </div>
@@ -330,7 +345,9 @@ const AllocateData = () => {
                           : values.action_type === "debit"
                           ? "Debit"
                           : ""}{" "}
-                      {values.unit == "data" ?  "Data Volume Being Added (GB)" : "Credit Amount Being added in Naira"}
+                        {values.unit == "data"
+                          ? "Data Volume Being Added (GB)"
+                          : "Credit Amount Being added in Naira"}
                       </Label>
                       <Input
                         required
@@ -342,43 +359,45 @@ const AllocateData = () => {
                       />
                     </FormGroup>
                   </Col>
-                  {values.action_type === "credit" && values.unit === "data" && (
+                  {values.action_type === "credit" &&
+                    values.unit === "data" && (
                       <>
-                    <Col md={12}>
-                      <FormGroup>
-                        <Label for="unit">Payment Type</Label>
-                        <Input
-                          onChange={handleChange}
-                          name="pay_type"
-                          className="mb-3"
-                          type="select"
-                          required
-                        >
-                          <option selected>--- Select Payment type ---</option>
-                          <option value="paid">Paid</option>
-                          <option value="credit">Credit</option>
-                        </Input>
-                      </FormGroup>
+                        <Col md={12}>
+                          <FormGroup>
+                            <Label for="unit">Payment Type</Label>
+                            <Input
+                              onChange={handleChange}
+                              name="pay_type"
+                              className="mb-3"
+                              type="select"
+                              required
+                            >
+                              <option selected>
+                                --- Select Payment type ---
+                              </option>
+                              <option value="paid">Paid</option>
+                              <option value="credit">Credit</option>
+                            </Input>
+                          </FormGroup>
+                        </Col>
 
-                    </Col>
-
-                    <Col md={12}>
-                      <FormGroup>
-                        <Label for="amount_payed">Amount Paid by User (Naira)</Label>
-                        <Input
-                          required
-                          value={values.amount_cash}
-                          id="amount_cash"
-                          name="amount_cash"
-                          onChange={handleChange}
-                          type="number"
-                        />
-                      </FormGroup>
-                    </Col>
-
+                        <Col md={12}>
+                          <FormGroup>
+                            <Label for="amount_payed">
+                              Amount Paid by User (Naira)
+                            </Label>
+                            <Input
+                              required
+                              value={values.amount_cash}
+                              id="amount_cash"
+                              name="amount_cash"
+                              onChange={handleChange}
+                              type="number"
+                            />
+                          </FormGroup>
+                        </Col>
                       </>
-                   
-                  )}
+                    )}
                 </Row>
 
                 <Button
