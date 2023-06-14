@@ -246,7 +246,14 @@ const AllocateData = () => {
             </ModalBody>
             {!isSuccess && (
               <ModalFooter className="confirm-footer">
-                <Button type="submit" color="primary" onClick={handleSubmit}>
+                <Button
+                  type="submit"
+                  color="primary"
+                  onClick={(e) => {
+                    setIsSuccess(true);
+                    handleSubmit(e);
+                  }}
+                >
                   Yes, Proceed
                 </Button>{" "}
                 <Button onClick={() => setIsOpen(false)}>No, Cancel</Button>
