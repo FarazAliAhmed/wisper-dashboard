@@ -115,7 +115,7 @@ const AllocateData = () => {
 
           setIsSuccess(true);
 
-          console.log("genCred", genCred);
+          // console.log("genCred", genCred);
         }
         if (values.action_type === "debit") {
           const res = await debitBusiness({
@@ -127,6 +127,27 @@ const AllocateData = () => {
           });
           if (res.status === 401) {
             response = res.data.message;
+
+            const val_MB = values.amount * 1000;
+
+            const debCred = await generateCreditPayment({
+              business_id: values.business_id,
+              volume: values.amount * 1000,
+              amount: values.amount_cash,
+              wallet: values.wallet,
+              old: mega_wallet[values.wallet],
+              new:
+                values.unit == "data"
+                  ? mega_wallet[values.wallet] - val_MB
+                  : values.amount,
+              pay_type: "debit",
+              payment_ref:
+                "AD-trx-" + Math.floor(Math.random() * 10000000000000000),
+            });
+
+            setIsSuccess(true);
+
+            // console.log("debCred", debCred);
           } else {
             response = "Data balance updated";
           }
