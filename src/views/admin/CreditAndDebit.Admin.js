@@ -28,8 +28,11 @@ import checked from "../../assets/images/logos/checked.png";
 import loadingGIF from "../../assets/images/logos/loading2.gif";
 
 import "./../../assets/scss/custom.scss";
+import axios from "axios";
 
 const AllocateData = () => {
+  const { REACT_APP_DB_URL } = process.env;
+
   const [values, setValues] = useState({
     action_type: "",
     business_id: "",
@@ -115,9 +118,8 @@ const AllocateData = () => {
 
           setIsSuccess(true);
 
-          // console.log("genCred", genCred);
-        }
-        if (values.action_type === "debit") {
+          console.log("genCred", genCred);
+        } else if (values.action_type === "debit") {
           const res = await debitBusiness({
             business_id: values.business_id,
             debit_amount:
@@ -125,32 +127,31 @@ const AllocateData = () => {
             unit: values.unit,
             wallet: values.wallet,
           });
-          if (res.status === 401) {
-            response = res.data.message;
 
-            const val_MB = values.amount * 1000;
+          response = res.data.message;
 
-            const debCred = await generateCreditPayment({
-              business_id: values.business_id,
-              volume: values.amount * 1000,
-              amount: values.amount_cash,
-              wallet: values.wallet,
-              old: mega_wallet[values.wallet],
-              new:
-                values.unit == "data"
-                  ? mega_wallet[values.wallet] - val_MB
-                  : values.amount,
-              pay_type: "debit",
-              payment_ref:
-                "AD-trx-" + Math.floor(Math.random() * 10000000000000000),
-            });
+          const val_MB = values.amount * 1000;
 
-            setIsSuccess(true);
+          const debCred = await generateCreditPayment({
+            business_id: values.business_id,
+            volume: values.amount * 1000,
+            amount: 0,
+            wallet: values.wallet,
+            old: mega_wallet[values.wallet],
+            new:
+              values.unit == "data"
+                ? mega_wallet[values.wallet] - val_MB
+                : values.amount,
+            pay_type: "debit",
+            payment_ref:
+              "AD-trx-" + Math.floor(Math.random() * 10000000000000000),
+          });
 
-            // console.log("debCred", debCred);
-          } else {
-            response = "Data balance updated";
-          }
+          setIsSuccess(true);
+
+          console.log("debCred", debCred);
+
+          // console.log("sjjs", res);
         }
         setIsSuccess(true);
 

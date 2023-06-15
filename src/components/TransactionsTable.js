@@ -29,7 +29,9 @@ const TransactionsTable = ({
 }) => {
   const [transactionsData, setTransactionsData] = useState([...transactions]);
 
-  const {user} = useUser()
+  // console.log(transactions);
+
+  const { user } = useUser();
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
@@ -108,7 +110,7 @@ const TransactionsTable = ({
       (transaction) =>
         transaction.phone_number === searchValue ||
         transaction.transaction_ref === searchValue ||
-        transaction.business_id === searchValue 
+        transaction.business_id === searchValue
     );
 
     setTransactionsData(results);
@@ -126,7 +128,7 @@ const TransactionsTable = ({
                   <CardTitle tag="h5">Transactions History</CardTitle>
                 )}
                 <CardSubtitle className="mb-2 text-muted" tag="h6">
-                Recent Transactions
+                  Recent Transactions
                 </CardSubtitle>
 
                 <div className="legend-container">
@@ -230,8 +232,12 @@ const TransactionsTable = ({
                   <thead>
                     <tr>
                       <th>Phone Number</th>
-                     {user?.type == "lite" && user?.isAdmin == false ?  <th>Price</th> :  <th>Volume</th>}
-                     {user?.type == "lite" && <th>Volume</th> }
+                      {user?.type == "lite" && user?.isAdmin == false ? (
+                        <th>Price</th>
+                      ) : (
+                        <th>Volume</th>
+                      )}
+                      {user?.type == "lite" && <th>Volume</th>}
                       <th>Status</th>
                       <th>Network</th>
                       <th>Date</th>
@@ -252,9 +258,15 @@ const TransactionsTable = ({
                             </div>
                           </div>
                         </td>
-                        {user?.type == "lite" && user?.isAdmin == false ? <td> ₦{tx.data_volume} </td> : <td>{tx.data_volume/1000} GB</td>}
+                        {user?.type == "lite" && user?.isAdmin == false ? (
+                          <td> ₦{tx.data_volume} </td>
+                        ) : (
+                          <td>{tx.data_volume / 1000} GB</td>
+                        )}
 
-                       {user?.type == "lite" && <td>{tx.lite_volume || "0 mb"}</td> }
+                        {user?.type == "lite" && (
+                          <td>{tx.lite_volume || "0 mb"}</td>
+                        )}
 
                         {/* <td>{tx.price || "-"}</td> */}
                         <td>

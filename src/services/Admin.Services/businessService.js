@@ -3,10 +3,9 @@ import { adminUrl, adminUrlV2 } from "../../config";
 
 export const getBusinesses = async () => {
   try {
-    const res =  await http.get(`${adminUrl}/business`);
+    const res = await http.get(`${adminUrl}/business`);
 
-    return res
-  
+    return res;
   } catch (e) {
     return null;
   }
@@ -14,10 +13,9 @@ export const getBusinesses = async () => {
 
 export const getSingleBusiness = async (id) => {
   try {
-    const res =  await http.get(`${adminUrl}/business/get/${id}`);
+    const res = await http.get(`${adminUrl}/business/get/${id}`);
 
-    return res
-  
+    return res;
   } catch (e) {
     return null;
   }
@@ -25,10 +23,9 @@ export const getSingleBusiness = async (id) => {
 
 export const getWallets = async () => {
   try {
-    const res =  await http.get(`${adminUrl}/balances`);
+    const res = await http.get(`${adminUrl}/balances`);
 
-    return res
-  
+    return res;
   } catch (e) {
     return null;
   }
@@ -36,10 +33,9 @@ export const getWallets = async () => {
 
 export const getPayments = async () => {
   try {
-    const res =  await http.get(`${adminUrl}/payments`);
+    const res = await http.get(`${adminUrl}/payments`);
 
-    return res
-  
+    return res;
   } catch (e) {
     return null;
   }
@@ -47,33 +43,29 @@ export const getPayments = async () => {
 
 export const getTransactions = async () => {
   try {
-    const res =  await http.get(`${adminUrl}/transactions`);
+    const res = await http.get(`${adminUrl}/transactions`);
 
-    return res
-  
+    return res;
   } catch (e) {
     return null;
   }
 };
 
-
 export async function getAllPlansUser(userId) {
   try {
     const res = await http.get(`${adminUrl}/plans_user/${userId}`);
-    console.log(res)
-    return res
+    console.log(res);
+    return res;
   } catch (error) {
     return null;
   }
 }
 
-
 export const getAllTrx = async () => {
   try {
-    const res =  await http.get(`${adminUrl}/trxAll`);
+    const res = await http.get(`${adminUrl}/trxAll`);
 
-    return res
-  
+    return res;
   } catch (e) {
     return null;
   }
@@ -81,10 +73,9 @@ export const getAllTrx = async () => {
 
 export const getAllSold = async () => {
   try {
-    const res =  await http.get(`${adminUrl}/totalDataAll`);
+    const res = await http.get(`${adminUrl}/totalDataAll`);
 
-    return res
-  
+    return res;
   } catch (e) {
     return null;
   }
@@ -92,10 +83,9 @@ export const getAllSold = async () => {
 
 export const getAdmins = async () => {
   try {
-    const res =  await http.get(`${adminUrl}/admins`);
+    const res = await http.get(`${adminUrl}/admins`);
 
-    return res
-  
+    return res;
   } catch (e) {
     return null;
   }
@@ -103,10 +93,9 @@ export const getAdmins = async () => {
 
 export const getMainBalance = async () => {
   try {
-    const res =  await http.get(`${adminUrl}/api/balance`);
+    const res = await http.get(`${adminUrl}/api/balance`);
 
-    return res
-  
+    return res;
   } catch (e) {
     return null;
   }
@@ -114,10 +103,9 @@ export const getMainBalance = async () => {
 
 export const creditBusiness = async (body) => {
   try {
-    const res =  await http.post(`${adminUrl}/credit`, body);
+    const res = await http.post(`${adminUrl}/credit`, body);
 
-    return res
-  
+    return res;
   } catch (e) {
     return null;
   }
@@ -125,10 +113,9 @@ export const creditBusiness = async (body) => {
 
 export const debitBusiness = async (body) => {
   try {
-    const res =  await http.post(`${adminUrl}/debit`, body);
+    const res = await http.post(`${adminUrl}/debit`, body);
 
-    return res
-  
+    return res;
   } catch (e) {
     return null;
   }
@@ -136,33 +123,29 @@ export const debitBusiness = async (body) => {
 
 export const generateCreditPayment = async (body) => {
   try {
-    const res =  await http.post(`${adminUrl}/payments`, body);
+    const res = await http.post(`${adminUrl}/payments`, body);
 
-    return res
-  
+    return res;
   } catch (e) {
-    return null;
+    return e;
   }
 };
 
 export const updatePayType = async (body) => {
   try {
-    const res =  await http.post(`${adminUrl}/update_payment_type`, body);
+    const res = await http.post(`${adminUrl}/update_payment_type`, body);
 
-    return res
-  
+    return res;
   } catch (e) {
     return null;
   }
 };
 
-
 export const removeAdmin = async (email) => {
   try {
-    const res =  await http.delete(`${adminUrl}/admin/remove/${email}`);
+    const res = await http.delete(`${adminUrl}/admin/remove/${email}`);
 
-    return res
-  
+    return res;
   } catch (e) {
     return null;
   }
@@ -170,60 +153,69 @@ export const removeAdmin = async (email) => {
 
 export const makeAdmin = async (email) => {
   try {
-    const res =  await http.post(`${adminUrl}/admin/create`, { email });
+    const res = await http.post(`${adminUrl}/admin/create`, { email });
 
-    return res
-  
+    return res;
   } catch (e) {
     return null;
   }
 };
 
 export const makeActive = async (account_id) => {
-  try{
-    const res =  await http.get(`${adminUrl}/account/enable/${account_id}`)
+  try {
+    const res = await http.get(`${adminUrl}/account/enable/${account_id}`);
 
-    return res
-  
-  }catch(e){
-    return null
+    return res;
+  } catch (e) {
+    return null;
   }
-}
+};
 
 export const disableAccount = async (account_id) => {
-  try{
-    const res =  await http.get(`${adminUrl}/account/disable/${account_id}`)
+  try {
+    const res = await http.get(`${adminUrl}/account/disable/${account_id}`);
 
-    return res
-  
-  }catch(e){
-    return null
+    return res;
+  } catch (e) {
+    return null;
   }
-}
+};
 
 export const setAccountType = async (type, account_id) => {
-  try{
-    const res =  await http.post(`${adminUrl}/account/type`, { type, account_id })
-
-    return res
-  
-  }catch(e){
-    return null
-  }
-}
-
-export async function getAllTransactionsV2({limit, offset} = {limit: 50, offset: 0}) {
   try {
-    const transactions = await http.get(`${adminUrlV2}/transactions?limit=${limit}&offset=${offset}`);
+    const res = await http.post(`${adminUrl}/account/type`, {
+      type,
+      account_id,
+    });
+
+    return res;
+  } catch (e) {
+    return null;
+  }
+};
+
+export async function getAllTransactionsV2(
+  { limit, offset } = { limit: 50, offset: 0 }
+) {
+  try {
+    const transactions = await http.get(
+      `${adminUrlV2}/transactions?limit=${limit}&offset=${offset}`
+    );
     return transactions.data;
   } catch (error) {
     return { data: [] };
   }
 }
 
-export async function FilterTransactionsV2(filter, {limit, offset} = {limit: 50, offset: 0}) {
+export async function FilterTransactionsV2(
+  filter,
+  { limit, offset } = { limit: 50, offset: 0 }
+) {
   try {
-    const transactions = await http.post(`${adminUrlV2}/transactions/filter?limit=${limit}&offset=${offset}`, filter);
+    const transactions = await http.post(
+      `${adminUrlV2}/transactions/filter?limit=${limit}&offset=${offset}`,
+      filter
+    );
     return transactions.data;
   } catch (error) {
     return { data: [] };

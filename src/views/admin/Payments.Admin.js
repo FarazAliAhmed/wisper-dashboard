@@ -19,69 +19,64 @@ import { Link } from "react-router-dom";
 
 import "../../assets/scss/custom.scss";
 
-import {
-  updatePayType
-} from "../../services/Admin.Services/businessService";
+import { updatePayType } from "../../services/Admin.Services/businessService";
 import axios from "axios";
 
 const Payments = () => {
   const { payment: payments } = useAdmin();
 
   // console.log(payments)
-  
+
   const [searchValue, setSearchValue] = useState("");
   const [paymentData, setPaymentData] = useState([]);
   const [showWithVolume, setShowWithVolume] = useState(true);
-  const [filteredData, setFilteredData] = useState([])
-  
+  const [filteredData, setFilteredData] = useState([]);
 
   const handleToggle = () => {
-    setShowWithVolume(prevState => !prevState);
+    setShowWithVolume((prevState) => !prevState);
   };
 
   useEffect(() => {
     // const filteredData = showWithVolume ? payments.filter(item => item.hasOwnProperty('volume')) : payments.filter(item => !item.hasOwnProperty("volume"));
-   
+
     const getFilteredTransactions = () => {
       const cutoffDate = new Date("2023-05-31");
-      
-      return payments.filter(transaction => {
+
+      return payments.filter((transaction) => {
         const paymentDate = new Date(transaction.date_of_payment);
         return paymentDate > cutoffDate;
       });
     };
-    
+
     const getOldTransactions = () => {
       const cutoffDate = new Date("2023-05-31");
-      
-      return payments.filter(transaction => {
+
+      return payments.filter((transaction) => {
         const paymentDate = new Date(transaction.date_of_payment);
         return paymentDate < cutoffDate;
       });
     };
-    
-    const transactionsToDisplay = showWithVolume ? getFilteredTransactions() : getOldTransactions;
 
+    const transactionsToDisplay = showWithVolume
+      ? getFilteredTransactions()
+      : getOldTransactions;
 
     setFilteredData(transactionsToDisplay);
-
-
-
   }, [showWithVolume, payments]);
 
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   const [receiptdata, setReceiptData] = useState({
-    ...paymentData[0]
-  })
+    ...paymentData[0],
+  });
 
   const toggleShow = () => {
-    setShow(!show)
-  }
+    setShow(!show);
+  };
 
   const showReceipt = (receiptdata) => {
-    setReceiptData(receiptdata)
-    toggleShow()
-  }
+    setReceiptData(receiptdata);
+    toggleShow();
+  };
 
   const handleChange = (e) => {
     const val = e.target.value;
@@ -94,42 +89,40 @@ const Payments = () => {
         payment._id === val ||
         payment.payment_ref === val ||
         payment.username === val ||
-        payment.business_id === val 
+        payment.business_id === val
     );
 
-    const filteredData = showWithVolume ? results.filter(item => item.hasOwnProperty('volume')) : results.filter(item => !item.hasOwnProperty("volume"));
+    const filteredData = showWithVolume
+      ? results.filter((item) => item.hasOwnProperty("volume"))
+      : results.filter((item) => !item.hasOwnProperty("volume"));
 
     setPaymentData(filteredData);
   };
 
+  const handlePayType = async (type, id) => {
+    // console.log(type, id)
 
-   const handlePayType = async (type, id) => {
-// console.log(type, id)
+    try {
+      // const genCred = await updatePayType({
+      //   business_id: id,
+      //   pay_type: type
+      // });
 
-      try {
-        // const genCred = await updatePayType({
-        //   business_id: id,
-        //   pay_type: type
-        // });
-    
+      const genCred = await axios.post(
+        "https://wisper-reseller.herokuapp.com/api/admin/update_payment_type",
+        {
+          ref: id,
+          payType: type,
+        }
+      );
 
-        const genCred = await axios.post(
-          "https://wisper-reseller.herokuapp.com/api/admin/update_payment_type",
-          {
-            ref: id,
-            payType: type,
-          }
-        );
+      window.location = "/admin/payment";
 
-        window.location = "/admin/payment"
-
-        console.log("upt pay type", genCred)
-      
-      } catch (error) {
-        console.log(error)
-      }
-    
-   }
+      console.log("upt pay type", genCred);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <AdminLayout>
@@ -167,15 +160,29 @@ const Payments = () => {
             <div>
               <Card>
                 <CardBody>
-                  <CardTitle tag="h5" style={{width:"100%", display:"flex", justifyContent:"space-between"}}>
-                  <h5>Payment and Data Allocation History</h5>
-                    <Button className="receipt-button" style={{background:`${showWithVolume ? "red":"green"}`}} onClick={handleToggle}>
-                      {showWithVolume ? "Old Trx" :"New Trx"}
-                       </Button>
+                  <CardTitle
+                    tag="h5"
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <h5>Payment and Data Allocation History</h5>
+                    <Button
+                      className="receipt-button"
+                      style={{
+                        background: `${showWithVolume ? "red" : "green"}`,
+                      }}
+                      onClick={handleToggle}
+                    >
+                      {showWithVolume ? "Old Trx" : "New Trx"}
+                    </Button>
                   </CardTitle>
                   <CardSubtitle className="mb-2 text-muted" tag="h6">
-                  List of all payments and data allocation made to Wisper acccount
-                </CardSubtitle>
+                    List of all payments and data allocation made to Wisper
+                    acccount
+                  </CardSubtitle>
 
                   <Table
                     className="no-wrap mt-3 align-middle"
@@ -186,12 +193,14 @@ const Payments = () => {
                       <tr>
                         <th>S/N</th>
                         <th>Business ID</th>
-                         <th>Username</th>
+                        <th>Username</th>
                         <th>Date of Payment</th>
-                        {showWithVolume ?  <th>Amount (₦)</th> :  <th>Amount</th>}
-                        {showWithVolume &&   <th>Data Volume</th>}
-                        {showWithVolume &&   <th>Data Wallet</th>}
-                        {showWithVolume &&   <th>Pay Type</th>}
+                        {showWithVolume ? <th>Amount (₦)</th> : <th>Amount</th>}
+                        {showWithVolume && <th>Data Volume</th>}
+                        {showWithVolume && <th>Data Wallet</th>}
+                        {/* {showWithVolume && <th>OLD</th>}
+                        {showWithVolume && <th>NEW</th>} */}
+                        {showWithVolume && <th>Pay Type</th>}
                         <th>Payment Reference</th>
                         <th>More</th>
                       </tr>
@@ -201,38 +210,90 @@ const Payments = () => {
                         filteredData.map((pm, index) => (
                           <tr key={index} className="border-top">
                             <td>{index}</td>
-                            <td> 
-                        <Link
-                            to={`/admin/business/${pm.business_id}`}
-                            className="text-decoration-none"
-                          >
-                            {pm.business_id}
-
-                            </Link>
-                            </td>
-                            {pm.username ?  <td>{pm.username}</td> : <td></td>}
-                            <td>{pm.date_of_payment.split(" GMT")[0]}</td>
-                            {showWithVolume ? <td>₦{pm.amount}</td> :  <td>{pm.amount/1000}GB</td>}
-
-                            {showWithVolume &&  <td>{pm.volume/1000}GB</td>}
-                            {showWithVolume &&  <td>{pm.wallet != "mtn_gifting" ? <>{pm.wallet}</> : "MTN"}</td>}
-
-                            {showWithVolume && 
-                           
-                                  <td>
-                                     <Button className="receipt-button" style={{background:`${pm.pay_type == "credit"  ? "red":"green"}`}} onClick={() => handlePayType(pm.pay_type == "credit" ? "paid": "credit", pm.payment_ref)}>
-                                      {pm.pay_type}
-                                     </Button>
-                                  </td>
-                            }    
-
-                            <td>{pm.payment_ref}</td>  
-
-                                               
-                            
                             <td>
-                          <Button className="receipt-button" onClick={() => showReceipt(pm)}>View</Button>
-                        </td>
+                              <Link
+                                to={`/admin/business/${pm.business_id}`}
+                                className="text-decoration-none"
+                              >
+                                {pm.business_id}
+                              </Link>
+                            </td>
+                            {pm.username ? <td>{pm.username}</td> : <td></td>}
+                            <td>{pm.date_of_payment.split(" GMT")[0]}</td>
+                            {showWithVolume ? (
+                              <td>₦{pm.amount}</td>
+                            ) : (
+                              <td>{(pm.amount / 1000).toFixed(2)}GB</td>
+                            )}
+
+                            {showWithVolume && <td>{pm.volume / 1000}GB</td>}
+                            {showWithVolume && (
+                              <td>
+                                {pm.wallet != "mtn_gifting" ? (
+                                  <>{pm.wallet}</>
+                                ) : (
+                                  "MTN"
+                                )}
+                              </td>
+                            )}
+
+                            {/* {showWithVolume && (
+                              <td>{(pm.old / 1000).toFixed(2)}GB</td>
+                            )}
+                            {showWithVolume && (
+                              <td>{(pm.new / 1000).toFixed(2)}GB</td>
+                            )} */}
+
+                            {showWithVolume && (
+                              <>
+                                {pm.pay_type == "debit" ? (
+                                  <td>
+                                    <Button
+                                      className="receipt-button"
+                                      style={{
+                                        background: "gray",
+                                      }}
+                                    >
+                                      {pm.pay_type}
+                                    </Button>
+                                  </td>
+                                ) : (
+                                  <td>
+                                    <Button
+                                      className="receipt-button"
+                                      style={{
+                                        background: `${
+                                          pm.pay_type == "credit"
+                                            ? "red"
+                                            : "green"
+                                        }`,
+                                      }}
+                                      onClick={() =>
+                                        handlePayType(
+                                          pm.pay_type == "credit"
+                                            ? "paid"
+                                            : "credit",
+                                          pm.payment_ref
+                                        )
+                                      }
+                                    >
+                                      {pm.pay_type}
+                                    </Button>
+                                  </td>
+                                )}
+                              </>
+                            )}
+
+                            <td>{pm.payment_ref}</td>
+
+                            <td>
+                              <Button
+                                className="receipt-button"
+                                onClick={() => showReceipt(pm)}
+                              >
+                                View
+                              </Button>
+                            </td>
                           </tr>
                         ))}
                     </tbody>
@@ -243,7 +304,11 @@ const Payments = () => {
           </Col>
         </Row>
       </div>
-      <PaymentReceipt show={show} receiptData={receiptdata} toggleShow={toggleShow} />
+      <PaymentReceipt
+        show={show}
+        receiptData={receiptdata}
+        toggleShow={toggleShow}
+      />
     </AdminLayout>
   );
 };

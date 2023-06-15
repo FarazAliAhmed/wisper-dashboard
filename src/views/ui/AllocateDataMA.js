@@ -39,8 +39,8 @@ const AllocateDataMA = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
 
-  const { plans } = useAppState()
-  const dataPlans = parseDataPlans(plans)
+  const { plans } = useAppState();
+  const dataPlans = parseDataPlans(plans);
 
   // useEffect(() => {
   //   parseDataPlans(plans)
@@ -50,15 +50,17 @@ const AllocateDataMA = () => {
     // e.preventDefault();
     try {
       setLoading(true);
-      await allocateData(plan, user?.access_token);
+      const res = await allocateData(plan, user?.access_token);
+      // console.log("res", res);
       setLoading(false);
       setPlan(initialState);
-      return {status: true, message: "Data allocated successfully."};
+      return { status: true, message: "Data allocated successfully." };
       // setServerResponse({status: true, message: "Data allocated successfully."});
-    }catch (error) {
+    } catch (error) {
+      console.log("error.response.data.message:", error.response.data.message);
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
-      return {status, message};
+      return { status, message };
       // setServerResponse({ status, message });
     }
   };
