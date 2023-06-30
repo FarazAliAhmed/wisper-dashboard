@@ -20,6 +20,7 @@ import mob9 from "../../assets/dashboard/mob9.svg";
 import airtel from "../../assets/dashboard/airtel.svg";
 import tranIcon from "../../assets/dashboard/transa.svg";
 import wallIcon from "../../assets/dashboard/walle.svg";
+import axios from "axios";
 
 // import PaymentButton from "../../components/PaymentButton";
 
@@ -35,6 +36,21 @@ const Dashboard = () => {
   const [balanceDisplay, setBalanceDisplay] = useState("");
 
   useEffect(() => {
+    // console.log("sjsjsj");
+    // const getRevenue = async () => {
+    //   await axios
+    //     .get("http://localhost:5000/api/admin/analysis/revenue")
+    //     .then((response) => {
+    //       console.log("REVENUE", response.data); // Process the received data
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //       // Handle the error
+    //     });
+    // };
+
+    // getRevenue();
+
     setBalanceDisplay(displayBalance(volume, unit, cash, mega_wallet, user));
   }, [volume, unit, cash]);
 

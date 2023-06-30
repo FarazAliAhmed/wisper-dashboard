@@ -7,7 +7,7 @@ import {
   getMaintenance,
   getSingleTrx,
   getSingleSold,
-  getAllPlansUser
+  getAllPlansUser,
 } from "../services/dataService";
 import { useUser } from "./userContext";
 // import { getMainBalance } from "../services/Admin.Services/businessService";
@@ -32,19 +32,19 @@ const AppStateProvider = ({ children }) => {
     // airtel_balance: "",
   });
   const [transactions, setTransactions] = useState([]);
-  const [singleTrx, setSingleTrx] = useState(0)
-  const [singleSold, setSingleSold] = useState(0)
+  const [singleTrx, setSingleTrx] = useState(0);
+  const [singleSold, setSingleSold] = useState(0);
   const [payments, setPayments] = useState([]);
   const [plans, setPlans] = useState([]);
   const [plansUser, setPlansUser] = useState([]);
   const [maintenance, setMaintenance] = useState({
-    "mtn_sme": false,
-    "mtn_gifting": false,
-    "airtel": false,
-    "glo": false,
+    mtn_sme: false,
+    mtn_gifting: false,
+    airtel: false,
+    glo: false,
     "9mobile": false,
-    "notice": null,
-  })
+    notice: null,
+  });
 
   const { user } = useUser();
 
@@ -58,27 +58,27 @@ const AppStateProvider = ({ children }) => {
         getMaintenance(),
         getSingleTrx(user?._id),
         getSingleSold(user?._id),
-        getAllPlansUser(user?._id)
-      ])
-      const balanceRes = results[0] 
-      const transactionRes = results[1] 
-      const paymentRes = results[2] 
-      const planRes = results[3]
-      const maintenanceRes = results[4]
-      const planResUser = results[7]
+        getAllPlansUser(user?._id),
+      ]);
+      const balanceRes = results[0];
+      const transactionRes = results[1];
+      const paymentRes = results[2];
+      const planRes = results[3];
+      const maintenanceRes = results[4];
+      const planResUser = results[7];
 
-      console.log("result 1", results[1])
+      // console.log("result 1", results[1])
 
       // setSingleTrx(results[5]?.data.transactionCount)
       // setSingleSold(results[6]?.data.totalDataSold)
       // djdhhd
-      
-// console.log(user?._id)
-// console.log(results[5])
-// console.log(results[6])
+
+      // console.log(user?._id)
+      // console.log(results[5])
+      // console.log(results[6])
 
       // const mainBalance = await getMainBalance();
-      if(balanceRes){
+      if (balanceRes) {
         setCurrentBalance({
           volume: balanceRes.data.data_volume,
           unit: balanceRes.data.data_unit,
@@ -96,49 +96,59 @@ const AppStateProvider = ({ children }) => {
         });
       }
 
-     if(transactionRes){
-      transactionRes.data.sort(function (a, b) {
-        const A = Date.parse(a.created_at);
-        const B = Date.parse(b.created_at);
-        if (A > B) return -1;
-        if (A < B) return 1;
-      }); transactionRes.data.sort(function (a, b) {
-        const A = Date.parse(a.created_at);
-        const B = Date.parse(b.created_at);
-        if (A > B) return -1;
-        if (A < B) return 1;
-      });
+      if (transactionRes) {
+        transactionRes.data.sort(function (a, b) {
+          const A = Date.parse(a.created_at);
+          const B = Date.parse(b.created_at);
+          if (A > B) return -1;
+          if (A < B) return 1;
+        });
+        transactionRes.data.sort(function (a, b) {
+          const A = Date.parse(a.created_at);
+          const B = Date.parse(b.created_at);
+          if (A > B) return -1;
+          if (A < B) return 1;
+        });
 
-      setTransactions(transactionRes.data);
-      console.log("transactionRes", transactionRes)
-     }
+        setTransactions(transactionRes.data);
+        // console.log("transactionRes", transactionRes)
+      }
 
-      if(paymentRes){
+      if (paymentRes) {
         setPayments(paymentRes.data);
       }
 
-      if(planRes){
+      if (planRes) {
         setPlans(planRes.data.plan);
       }
-      
-      if(planResUser){
+
+      if (planResUser) {
         // console.log("planResUser", planResUser)
         setPlansUser(planResUser.data);
       }
 
-      if(maintenanceRes){
-        setMaintenance(maintenanceRes.data.maintenance)
+      if (maintenanceRes) {
+        setMaintenance(maintenanceRes.data.maintenance);
       }
-
     }
-    if(user){
+    if (user) {
       fetchBalance();
     }
   }, [user]);
 
   return (
     <AppStateContext.Provider
-      value={{ currentBalance, transactions, payments, plans, plansUser, maintenance, setMaintenance, singleTrx, singleSold }}
+      value={{
+        currentBalance,
+        transactions,
+        payments,
+        plans,
+        plansUser,
+        maintenance,
+        setMaintenance,
+        singleTrx,
+        singleSold,
+      }}
     >
       {children}
     </AppStateContext.Provider>

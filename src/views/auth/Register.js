@@ -27,7 +27,7 @@ const Register = () => {
     name: "",
     email: "",
     mobile_number: "",
-    address: "",
+    address: "...",
     username: "",
     password: "",
   });
@@ -49,12 +49,10 @@ const Register = () => {
       setErrors({});
       window.location = "/dashboard";
     } catch (error) {
-
-      
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
 
-      setServerResponse({ status, message:"User Already Registered" });
+      setServerResponse({ status, message: "User Already Registered" });
       // console.log(error);
     }
   };
@@ -130,8 +128,9 @@ const Register = () => {
           <FormFeedback>{errors.mobile_number}</FormFeedback>
         </FormGroup>
         <FormGroup className="mb-3">
-          <Label>Address</Label>
+          {/* <Label>Address</Label> */}
           <Input
+            hidden
             value={account.address}
             onChange={handleChange}
             type="text"
