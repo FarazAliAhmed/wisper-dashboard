@@ -24,6 +24,9 @@ const BusinessDetails = lazy(() =>
 );
 const Payments = lazy(() => import("../views/admin/Payments.Admin"));
 const Pricing = lazy(() => import("../views/admin/Pricing.Admin"));
+const UpdateMegaPrice = lazy(() =>
+  import("../views/admin/UpdateMegaPrice.Admin")
+);
 const Transactions = lazy(() => import("../views/admin/Transactions.Admin"));
 const Wallet = lazy(() => import("../views/admin/Wallet.Admin"));
 const Account = lazy(() => import("../views/admin/Account.Admin"));
@@ -63,6 +66,10 @@ const AdminRoutes = () => {
               <AdminProtectedRoute
                 path="/admin/user_packages/:id"
                 component={Pricing}
+              />
+              <AdminProtectedRoute
+                path="/admin/updateMegaPrice/:id"
+                component={UpdateMegaPrice}
               />
               <AdminProtectedRoute
                 path="/admin/packages"
