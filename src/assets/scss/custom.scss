@@ -2,16 +2,39 @@
 
 .bank-details {
   background-image: url("../images/bg/wisper.jpg");
+  margin: 0 0.2em;
   margin-bottom: 20px;
-  padding: 60px 0px;
+  padding: 10px 0px;
+  border-radius: 1rem;
+
   color: #fff;
 }
 
 .sterling__logo {
-  width: 12em;
+  width: 10rem;
+  height: 4.2rem;
   background-color: #fff;
-  padding: 1em;
+  padding: 1rem;
   margin-bottom: 1em;
+  border-radius: 1rem;
+}
+
+.wema__logo {
+  width: 5rem;
+  height: 4.2rem;
+  background-color: #fff;
+  padding: 0.1rem;
+  margin-bottom: 1em;
+  border-radius: 1rem;
+}
+
+.moniepoint__logo {
+  width: 12rem;
+  height: 4.2rem;
+  background-color: #fff;
+  padding: 0.1rem;
+  margin-bottom: 1em;
+  border-radius: 1rem;
 }
 
 // Component: PaymentButton

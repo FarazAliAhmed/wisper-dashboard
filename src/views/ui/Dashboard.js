@@ -3,6 +3,7 @@ import { Col, Row } from "reactstrap";
 
 import "../../assets/scss/custom.scss";
 import TopCards from "../../components/dashboard/TopCards";
+import FundCards from "../../components/dashboard/FundCards";
 import SupportCard from "../../components/dashboard/SupportCard";
 import FullLayout from "../../layouts/FullLayout";
 import sterling_logo from "../../assets/images/logos/Sterling_Bank_Logo_Straight.png";
@@ -79,24 +80,29 @@ const Dashboard = () => {
               />
             </Col>
           )}
-          <Col sm="6" lg="4">
-            <TopCards
-              bg="bg-light-danger text-danger"
-              title="Refunds"
-              subtitle="Total transactions "
-              earning={`${singleTrx}`}
-              icon={tranIcon}
-            />
-          </Col>
-          <Col sm="6" lg="4">
-            <TopCards
-              bg="bg-light-warning text-warning"
-              title="New Project"
-              subtitle="Total data sold"
-              earning={`${singleSold / 1000} GB`}
-              icon={wallIcon}
-            />
-          </Col>
+
+          {user.type != "mega" && (
+            <Col sm="6" lg="4">
+              <TopCards
+                bg="bg-light-danger text-danger"
+                title="Refunds"
+                subtitle="Total transactions "
+                earning={`${singleTrx}`}
+                icon={tranIcon}
+              />
+            </Col>
+          )}
+          {user.type != "mega" && (
+            <Col sm="6" lg="4">
+              <TopCards
+                bg="bg-light-warning text-warning"
+                title="New Project"
+                subtitle="Total data sold"
+                earning={`${singleSold / 1000} GB`}
+                icon={wallIcon}
+              />
+            </Col>
+          )}
 
           {/***Mega Wallets***/}
           {user.type === "mega" && (
@@ -151,14 +157,26 @@ const Dashboard = () => {
                   icon={mob9}
                 />
               </Col>
+
+              <Col sm="6" lg="4">
+                <FundCards
+                  bg="bg-light-info text-info"
+                  title="Profit"
+                  subtitle="Fund Wallet"
+                  earning={`Fund your Mega wallet`}
+                  icon={wallIcon}
+                />
+              </Col>
             </>
           )}
         </Row>
 
         {user ? (
           user?.type === "mega" ? (
+            <></>
+          ) : (
             // <Row className="bank-details">
-            //   {/* <Col>
+            //   <Col>
             //     <div>
             //       <img className="sterling__logo" src={sterling_logo} alt="" />
             //     </div>
@@ -175,10 +193,9 @@ const Dashboard = () => {
             //   <p className="text-warning">
             //     Send payment receipt to admin for validation, after which
             //     balance would be credited.
-            //   </p> */}
+            //   </p>
             // </Row>
-            <div></div>
-          ) : (
+            // <div></div>
             <Row>
               <Col>
                 <PaymentButtonFw />

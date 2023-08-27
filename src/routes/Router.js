@@ -26,6 +26,7 @@ const Logout = lazy(() => import("../views/auth/Logout"));
 const Register = lazy(() => import("../views/auth/Register"));
 const Dashboard = lazy(() => import("../views/ui/Dashboard.js"));
 const AllocateData = lazy(() => import("../views/ui/AllocateData"));
+const MegaFunding = lazy(() => import("../views/ui/MegaFunding"));
 const Wallet = lazy(() => import("../views/ui/Wallet"));
 const Account = lazy(() => import("../views/ui/Account"));
 const Documentation = lazy(() => import("../views/ui/Documentation"));
@@ -54,6 +55,9 @@ const Routes = () => {
             <ProtectedRoute path="/allocate" component={AllocateDataMA} />
           ) : (
             <ProtectedRoute path="/allocate" component={AllocateData} />
+          )}
+          {user?.type == "mega" && (
+            <ProtectedRoute path="/megaFunding" component={MegaFunding} />
           )}
           <ProtectedRoute path="/wallet" component={Wallet} />
           <ProtectedRoute path="/account" component={Account} />
