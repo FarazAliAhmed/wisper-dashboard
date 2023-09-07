@@ -107,6 +107,15 @@ const Dashboard = () => {
           {/***Mega Wallets***/}
           {user.type === "mega" && (
             <>
+              <Col sm="6" lg="4">
+                <FundCards
+                  bg="bg-light-info text-info"
+                  title="Profit"
+                  subtitle="Wallet Balance"
+                  earning={`₦${cash}`}
+                  icon={wallIcon}
+                />
+              </Col>
               {/* MTN and Airtel Wallets */}
               {/* <Col sm="6" lg="4">
                 <TopCards
@@ -155,16 +164,6 @@ const Dashboard = () => {
                   subtitle="9 Mobile"
                   earning={`${mega_wallet["9mobile"] / 1000} GB`}
                   icon={mob9}
-                />
-              </Col>
-
-              <Col sm="6" lg="4">
-                <FundCards
-                  bg="bg-light-info text-info"
-                  title="Profit"
-                  subtitle="Fund Wallet"
-                  earning={`Fund your Mega wallet`}
-                  icon={wallIcon}
                 />
               </Col>
             </>

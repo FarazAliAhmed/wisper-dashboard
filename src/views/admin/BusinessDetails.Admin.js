@@ -165,6 +165,18 @@ const Account = (props) => {
         </Button>
       )}
       {type === "mega" && (
+        <Button
+          className="mx-2"
+          disabled={loading}
+          onClick={() =>
+            (window.location.href = `/admin/updateMegaPrice/${businessId}`)
+          }
+          color="primary"
+        >
+          {loading ? "Please wait..." : "Pricing"}
+        </Button>
+      )}
+      {type === "mega" && (
         <Button disabled={loading} onClick={handleSetTypeLite} color="primary">
           {loading ? "Please wait..." : "Make Lite"}
         </Button>

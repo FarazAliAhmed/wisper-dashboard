@@ -4,9 +4,8 @@ import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 import { useAppState } from "../context/appContext";
 import { useUser } from "../context/userContext";
-import { useAdmin } from "../context/adminContext"
+import { useAdmin } from "../context/adminContext";
 import { displayBalance } from "../utils";
-
 
 // Businesses Navigation Bar
 const navigation = [
@@ -29,6 +28,11 @@ const navigation = [
     title: "Allocate Data",
     href: "/allocate",
     icon: "bi bi-send",
+  },
+  {
+    title: "Buy Bulk Data",
+    href: "/buyBulkData",
+    icon: "bi bi-bag",
   },
   {
     title: "Account",
@@ -66,7 +70,6 @@ const navigation = [
     icon: "bi bi-box-arrow-right",
   },
 ];
-
 
 // Admin Navigation Bar
 const adminNav = [
@@ -139,7 +142,7 @@ const Sidebar = ({ isAdmin }) => {
   const [adminBalance, setAdminBalance] = useState({
     mtn_balance: "",
     airtel_balance: "",
-  })
+  });
 
   useEffect(() => {
     if (isAdmin) {
@@ -152,7 +155,7 @@ const Sidebar = ({ isAdmin }) => {
   } = useAppState();
 
   const { user } = useUser();
-  const adminContext = useAdmin();  
+  const adminContext = useAdmin();
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
@@ -183,7 +186,7 @@ const Sidebar = ({ isAdmin }) => {
         // </> : <>
         // <div></div>
         // {/* <div className="mt-2 text-muted fw-bold">TOTAL: {balanceDisplay}</div> */}
-        // </> 
+        // </>
       }
       <div className="pt-4 mt-2">
         <Nav vertical className="sidebarNav">
