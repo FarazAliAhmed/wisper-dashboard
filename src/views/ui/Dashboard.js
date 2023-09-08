@@ -58,6 +58,7 @@ const Dashboard = () => {
   return (
     <FullLayout>
       <div>
+        <h4>Balances</h4>
         {/***Top Cards***/}
         {maintenance.notice && (
           <Row>
@@ -209,6 +210,7 @@ const Dashboard = () => {
           <TransactionsTable
             transactions={transactions.slice(0, 5)}
             showHeader={false}
+            showSubHeader={true}
           />
         </Row>
         <Row>

@@ -1,0 +1,161 @@
+import React, { useState, useEffect } from "react";
+import Pagination from "./Pagination";
+
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Table,
+  Col,
+  Row,
+  Button,
+  CardText,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Input,
+  FormGroup,
+} from "reactstrap";
+import { paginate } from "../utils";
+import TransactionReceipt from "./TransactionReceipt";
+import { useUser } from "../context/userContext";
+import PurchaseHistoryReceipt from "./PurchaseHistoryReceipt";
+import moment from "moment";
+import MonifyReceipt from "./MonifyReceipt";
+
+const MonifyHistoryTable = ({
+  transactions,
+  showHeader,
+  showPageSettings = false,
+}) => {
+  const [transactionsData, setTransactionsData] = useState([...transactions]);
+
+  console.log(transactionsData, "tr8");
+
+  const { user } = useUser();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [searchValue, setSearchValue] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isReversed, setIsReversed] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = "20";
+
+  const [show, setShow] = useState(false);
+  const [receiptdata, setReceiptData] = useState({
+    ...transactionsData[0],
+  });
+
+  const toggleShow = () => {
+    setShow(!show);
+  };
+
+  const showReceipt = (receiptdata) => {
+    setReceiptData(receiptdata);
+    toggleShow();
+  };
+
+  useEffect(() => {
+    const paginatedData = paginate(transactions, currentPage, pageSize);
+    setTransactionsData(paginatedData);
+  }, [currentPage, transactions]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  function shortenValue(value) {
+    const prefix = value.substring(0, 4);
+    const suffix = value.substring(value.length - 4);
+    return `${prefix}...${suffix}`;
+  }
+
+  return (
+    <div>
+      <Row>
+        <Col lg="12">
+          <div>
+            <Card>
+              <CardBody>
+                {showHeader && <CardTitle tag="h5">Wallet History</CardTitle>}
+
+                <div className="legend-container">
+                  <p className="legend">
+                    <span className=" bg-success rounded-circle d-inline-block"></span>{" "}
+                    Successful
+                  </p>
+                  {/*   <p className="legend">
+                    <span className=" bg-warning rounded-circle d-inline-block"></span>{" "}
+                    Processing
+                  </p> */}
+                  <p className="legend">
+                    <span className=" bg-danger rounded-circle d-inline-block"></span>{" "}
+                    Failed
+                  </p>
+                </div>
+
+                <Table
+                  className="no-wrap mt-3 align-middle"
+                  responsive
+                  borderless
+                >
+                  <thead>
+                    <tr>
+                      <th>Trans. Ref</th>
+                      <th>Amount</th>
+                      <th>Bal. Before</th>
+                      <th>Bal. After</th>
+                      <th>Purpose</th>
+                      <th>Type</th>
+                      <th>Date and time</th>
+                      <th>Receipt</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {transactionsData.map((tx, idx) => (
+                      <tr key={idx} className="border-top">
+                        <td>{shortenValue(tx.payment_ref)}</td>
+                        <td>₦{tx.amount}</td>
+                        <td>₦{tx.old_bal}</td>
+                        <td>₦{tx.new_bal}</td>
+                        <td>{tx.purpose}</td>
+                        <td>{tx.pay_type}</td>
+                        <td>{tx.date_of_payment}</td>
+                        <td>
+                          <Button
+                            className="receipt-button"
+                            onClick={() => showReceipt(tx)}
+                          >
+                            View
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+
+                <MonifyReceipt
+                  show={show}
+                  receiptData={receiptdata}
+                  toggleShow={toggleShow}
+                />
+                <Pagination
+                  itemsCount={transactions.length}
+                  pageSize={pageSize}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+                />
+              </CardBody>
+            </Card>
+          </div>
+        </Col>
+      </Row>
+    </div>
+  );
+};
+
+export default MonifyHistoryTable;

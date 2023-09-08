@@ -8,7 +8,70 @@ import { useAdmin } from "../context/adminContext";
 import { displayBalance } from "../utils";
 
 // Businesses Navigation Bar
-const navigation = [
+const liteNav = [
+  {
+    title: "Dashboard",
+    href: "/dashboard",
+    icon: "bi bi-house",
+  },
+  // {
+  //   title: "Buy Data",
+  //   href: "/allocate-data",
+  //   icon: "bi bi-reception-4",
+  // },
+  // {
+  //   title: "Fund Wallet",
+  //   href: "/wallet",
+  //   icon: "bi bi-wallet",
+  // },
+  {
+    title: "Allocate Data",
+    href: "/allocate",
+    icon: "bi bi-send",
+  },
+  // {
+  //   title: "Buy Bulk Data",
+  //   href: "/buyBulkData",
+  //   icon: "bi bi-bag",
+  // },
+  // {
+  //   title: "Account",
+  //   href: "/account",
+  //   icon: "bi bi-person",
+  // },
+  {
+    title: "Packages",
+    href: "/packages",
+    icon: "bi bi-tags",
+  },
+  // {
+  //   title: "Pricing",
+  //   href: "/pricing",
+  //   icon: "bi bi-tags",
+  // },
+  {
+    title: "Payments",
+    href: "/payments",
+    icon: "bi bi-credit-card",
+  },
+  {
+    title: "Transactions",
+    href: "/transactions",
+    icon: "bi bi-cash-stack",
+  },
+  {
+    title: "API Settings",
+    href: "/developers",
+    icon: "bi bi-code-slash",
+  },
+  {
+    title: "Logout",
+    href: "/logout",
+    icon: "bi bi-box-arrow-right",
+  },
+];
+
+const megaNav = [
   {
     title: "Dashboard",
     href: "/dashboard",
@@ -34,26 +97,32 @@ const navigation = [
     href: "/buyBulkData",
     icon: "bi bi-bag",
   },
+
   {
-    title: "Account",
-    href: "/account",
-    icon: "bi bi-person",
+    title: "Wallet",
+    href: "/monifyWallet",
+    icon: "bi bi-wallet2",
   },
-  {
-    title: "Packages",
-    href: "/packages",
-    icon: "bi bi-tags",
-  },
+  // {
+  //   title: "Account",
+  //   href: "/account",
+  //   icon: "bi bi-person",
+  // },
+  // {
+  //   title: "Packages",
+  //   href: "/packages",
+  //   icon: "bi bi-tags",
+  // },
   // {
   //   title: "Pricing",
   //   href: "/pricing",
   //   icon: "bi bi-tags",
   // },
-  {
-    title: "Payments",
-    href: "/payments",
-    icon: "bi bi-credit-card",
-  },
+  // {
+  //   title: "Payments",
+  //   href: "/payments",
+  //   icon: "bi bi-credit-card",
+  // },
   {
     title: "Transactions",
     href: "/transactions",
@@ -123,11 +192,11 @@ const adminNav = [
     href: "/admin/developers",
     icon: "bi bi-code-slash",
   },
-  {
-    title: "Account",
-    href: "/admin/account",
-    icon: "bi bi-person",
-  },
+  // {
+  //   title: "Account",
+  //   href: "/admin/account",
+  //   icon: "bi bi-person",
+  // },
   {
     title: "Logout",
     href: "/logout",
@@ -138,15 +207,22 @@ const adminNav = [
 const Sidebar = ({ isAdmin }) => {
   let location = useLocation();
   const [balanceDisplay, setBalanceDisplay] = useState("");
-  const [nav, setNav] = useState(navigation);
+  const [nav, setNav] = useState([]);
   const [adminBalance, setAdminBalance] = useState({
     mtn_balance: "",
     airtel_balance: "",
   });
+  const { user } = useUser();
 
   useEffect(() => {
     if (isAdmin) {
       setNav(adminNav);
+    } else {
+      if (user.type == "mega") {
+        setNav(megaNav);
+      } else {
+        setNav(liteNav);
+      }
     }
   }, [isAdmin]);
 
@@ -154,7 +230,6 @@ const Sidebar = ({ isAdmin }) => {
     currentBalance: { volume, unit, cash, mega_wallet },
   } = useAppState();
 
-  const { user } = useUser();
   const adminContext = useAdmin();
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");

@@ -148,6 +148,64 @@ export async function FilterTransactionsV2(
   }
 }
 
+export async function getMegaPurchaseTransactions(
+  { limit, offset, userId } = { limit: 50, offset: 0 }
+) {
+  try {
+    const transactions = await http.get(
+      `${apiUrl}/getMegaHistory/${userId}?limit=${limit}`
+    );
+    console.log(limit, "trans56");
+    return transactions.data;
+  } catch (error) {
+    return { data: [] };
+  }
+}
+
+export async function PurchaseMegaPriceTransactions(
+  filter,
+  { limit, offset, userId } = { limit: 50, offset: 0 }
+) {
+  try {
+    const transactions = await http.get(
+      `${apiUrl}/getMegaHistory/${userId}?limit=${limit}`
+    );
+    console.log(transactions, "moni");
+    return transactions.data;
+  } catch (error) {
+    return { data: [] };
+  }
+}
+
+export async function getMonifyTransactions(
+  { limit, offset, userId } = { limit: 50, offset: 0 }
+) {
+  try {
+    const transactions = await http.get(
+      `${apiUrl}/getMonnifyTrx/${userId}?limit=${limit}`
+    );
+    console.log(transactions, "moni");
+    return transactions.data;
+  } catch (error) {
+    return { data: [] };
+  }
+}
+
+export async function PurchaseMonifyTransactions(
+  filter,
+  { limit, offset, userId } = { limit: 50, offset: 0 }
+) {
+  try {
+    const transactions = await http.get(
+      `${apiUrl}/getMonnifyTrx/${userId}?limit=${limit}`
+    );
+    console.log(transactions, "monify");
+    return transactions.data;
+  } catch (error) {
+    return { data: [] };
+  }
+}
+
 export async function getAllPayments() {
   try {
     const res = await http.get(`${apiUrl}/payments`);

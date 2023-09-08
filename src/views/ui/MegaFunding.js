@@ -52,7 +52,11 @@ const AllocateDataMA = () => {
             <p>
               To add funds, make a payment to this dedicated account. Your
               wallet will be automatically credited.
+              <p>
+                <b>₦50</b> Fee per Bank Transfer Applies
+              </p>
             </p>
+
             {bankAccounts &&
               bankAccounts.map((item, index) => (
                 <Col md={12}>

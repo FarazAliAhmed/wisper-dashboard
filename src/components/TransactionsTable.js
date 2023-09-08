@@ -25,6 +25,7 @@ import { useUser } from "../context/userContext";
 const TransactionsTable = ({
   transactions,
   showHeader,
+  showSubHeader,
   showPageSettings = false,
 }) => {
   const [transactionsData, setTransactionsData] = useState([...transactions]);
@@ -127,9 +128,12 @@ const TransactionsTable = ({
                 {showHeader && (
                   <CardTitle tag="h5">Transactions History</CardTitle>
                 )}
-                <CardSubtitle className="mb-2 text-muted" tag="h6">
-                  Recent Transactions
-                </CardSubtitle>
+
+                {showSubHeader && (
+                  <CardSubtitle className="mb-2 text-muted" tag="h6">
+                    Recent Transactions
+                  </CardSubtitle>
+                )}
 
                 <div className="legend-container">
                   <p className="legend">

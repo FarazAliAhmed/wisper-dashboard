@@ -14,7 +14,7 @@ import wisperSmall from "../assets/images/logos/wisper-white.png";
 import user1 from "../assets/images/users/user1.jpg";
 import { useUser } from "../context/userContext";
 
-const Header = ({isAdmin}) => {
+const Header = ({ isAdmin }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const context = useUser();
@@ -27,13 +27,13 @@ const Header = ({isAdmin}) => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
   return (
-    <Navbar color={isAdmin ? "danger": "primary"} dark expand="xs">
+    <Navbar color={isAdmin ? "danger" : "primary"} dark expand="xs">
       <div className="d-flex align-items-center">
         <NavbarBrand href="/" className="d-lg-none">
           <img src={wisperSmall} width={80} alt="wisper logo" />
         </NavbarBrand>
         <Button
-          color={isAdmin ? "danger": "primary"}
+          color={isAdmin ? "danger" : "primary"}
           className="d-lg-none"
           onClick={() => showMobilemenu()}
         >
@@ -68,27 +68,29 @@ const Header = ({isAdmin}) => {
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem header>{context?.user?.username}</DropdownItem>
-              <Link className="text-decoration-none text-dark" to={isAdmin ? "/admin" :"/dashboard"}>
-            <DropdownItem className="text-dark">
-                Dashboard
-            </DropdownItem>
-              </Link>
-              <Link className="text-decoration-none text-dark" to={isAdmin ? "/admin/account" : "/account"}>
-            <DropdownItem className="text-dark">
-                Edit Account
-            </DropdownItem>
-              </Link>
+            <Link
+              className="text-decoration-none text-dark"
+              to={isAdmin ? "/admin" : "/dashboard"}
+            >
+              <DropdownItem className="text-dark">Dashboard</DropdownItem>
+            </Link>
+            <Link
+              className="text-decoration-none text-dark"
+              to={isAdmin ? "/admin/account" : "/account"}
+            >
+              <DropdownItem className="text-dark">Account</DropdownItem>
+            </Link>
+            <Link
+              className="text-decoration-none text-dark"
+              to={isAdmin ? "/admin/allocate" : "/allocate"}
+            >
+              <DropdownItem className="text-dark">Allocate Data</DropdownItem>
+            </Link>
             <DropdownItem divider />
-              <Link className="text-decoration-none text-dark" to={isAdmin ? "/admin/allocate" : "/allocate"}>
-            <DropdownItem className="text-dark">
-                Allocate Data
-            </DropdownItem>
-              </Link>
-              <Link className="text-decoration-none text-danger" to="/logout">
-            <DropdownItem className="text-danger">
-                Logout
-            </DropdownItem>
-              </Link>
+
+            <Link className="text-decoration-none text-danger" to="/logout">
+              <DropdownItem className="text-danger">Logout</DropdownItem>
+            </Link>
           </DropdownMenu>
         </Dropdown>
       </Collapse>

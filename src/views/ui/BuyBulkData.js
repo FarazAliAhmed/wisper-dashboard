@@ -38,6 +38,7 @@ import "./../../assets/scss/custom.scss";
 import { toast } from "react-hot-toast";
 import PurchaseButton from "../../components/PurchaseButton";
 import { set } from "lodash";
+import PurchaseHistory from "../../components/PurchaseHistory";
 
 const initialState = {
   network: "airtel",
@@ -76,27 +77,31 @@ const BuyBulkData = () => {
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
-    try {
-      setLoading(true);
+    if (cash > costValue) {
+      try {
+        setLoading(true);
 
-      await purchaseMegaPrice(
-        {
-          business_id: user?._id,
-          network: bucketValue,
-          amountInGB: amountValue,
-        },
-        user?.access_token
-      );
-      setLoading(false);
-      // setPlan(initialState);
-      toast.success("data successfully purchased");
-      return { status: true, message: "Data allocated successfully." };
-    } catch (error) {
-      setLoading(false);
-      toast.error("error purchasing");
-      const { status, message } = handleFailedRequest(error);
-      return { status, message };
-      // setServerResponse({ status, message });
+        await purchaseMegaPrice(
+          {
+            business_id: user?._id,
+            network: bucketValue,
+            amountInGB: amountValue,
+          },
+          user?.access_token
+        );
+        setLoading(false);
+        // setPlan(initialState);
+        toast.success("data successfully purchased");
+        return { status: true, message: "Data allocated successfully." };
+      } catch (error) {
+        setLoading(false);
+        toast.error("error purchasing");
+        const { status, message } = handleFailedRequest(error);
+        return { status, message };
+        // setServerResponse({ status, message });
+      }
+    } else {
+      toast.error("Insufficient Funds");
     }
   };
 
@@ -262,6 +267,7 @@ const BuyBulkData = () => {
             </Col>
           </Row>
         </Card>
+        <PurchaseHistory />
       </div>
     </FullLayout>
   );
