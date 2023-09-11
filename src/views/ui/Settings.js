@@ -231,7 +231,7 @@ const Settings = () => {
               toggle={() => setConfirm(!confirm)}
             >
               <ModalBody>
-                <div className="confirm text-center">
+                <div className="confirm ">
                   <h5>Reset Password</h5>
                   <Form>
                     <Row form>

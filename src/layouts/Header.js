@@ -76,9 +76,9 @@ const Header = ({ isAdmin }) => {
             </Link>
             <Link
               className="text-decoration-none text-dark"
-              to={isAdmin ? "/admin/account" : "/account"}
+              to={isAdmin ? "/admin/account" : "/settings"}
             >
-              <DropdownItem className="text-dark">Account</DropdownItem>
+              <DropdownItem className="text-dark">Settings</DropdownItem>
             </Link>
             <Link
               className="text-decoration-none text-dark"
