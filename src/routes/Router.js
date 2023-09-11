@@ -23,6 +23,7 @@ const Home = lazy(() => import("../views/Home"));
 const NotFound = lazy(() => import("../views/NotFound"));
 const Login = lazy(() => import("../views/auth/Login.js"));
 const Logout = lazy(() => import("../views/auth/Logout"));
+const Settings = lazy(() => import("../views/ui/Settings.js"));
 const Register = lazy(() => import("../views/auth/Register"));
 const Dashboard = lazy(() => import("../views/ui/Dashboard.js"));
 const AllocateData = lazy(() => import("../views/ui/AllocateData"));
@@ -74,6 +75,7 @@ const Routes = () => {
           <ProtectedRoute path="/transactions" component={TransactionsV2} />
           <ProtectedRoute path="/developers" component={Documentation} />
           <ProtectedRoute path="/logout" component={Logout} />
+          <ProtectedRoute path="/settings" component={Settings} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/forgot-password" component={ForgotPassword} />
           <Route exact path="/check-email/:email" component={CheckEmail} />

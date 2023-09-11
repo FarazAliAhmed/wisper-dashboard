@@ -15,6 +15,16 @@ export const validateProperty = (input) => {
     if (value.trim().length < 5)
       return "Password must be a minimum of 5 characters";
   }
+  if (name === "newPass") {
+    if (value.trim() === "") return "Password is required";
+    if (value.trim().length < 5)
+      return "Password must be a minimum of 5 characters";
+  }
+  if (name === "currentPass") {
+    if (value.trim() === "") return "Password is required";
+    if (value.trim().length < 5)
+      return "Password must be a minimum of 5 characters";
+  }
   if (name === "username") {
     if (value.trim() === "") return "Username is required";
     if (value.trim().length > 10)
