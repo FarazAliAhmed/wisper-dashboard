@@ -50,7 +50,7 @@ const AllocateDataMA = () => {
         <Card body>
           <Row>
             <Row form>{/* <Col md={12}></Col> */}</Row>
-            <img className="monnify__logo" src={monnify} />
+            {/* <img className="monnify__logo" src={monnify} /> */}
             <p>
               To add funds, make a payment to this dedicated account. Your
               wallet will be automatically credited.
@@ -76,13 +76,13 @@ const AllocateDataMA = () => {
                             alt=""
                           />
                         )}
-                        {/* {item.bankName == "Moniepoint bank" && (
+                        {item.bankName == "Moniepoint Microfinance Bank" && (
                           <img
                             className="moniepoint__logo"
                             src={moniepoint_logo}
                             alt=""
                           />
-                        )} */}
+                        )}
 
                         <div
                           style={{
@@ -91,7 +91,8 @@ const AllocateDataMA = () => {
                             alignItems: "center",
                           }}
                         >
-                          <b>Account Name:</b> &nbsp;MFY / Wisper Communication Limited-{item.accountName}
+                          <b>Account Name:</b> &nbsp;MFY / Wisper Communication
+                          Limited-{item.accountName}
                         </div>
                         <div
                           style={{

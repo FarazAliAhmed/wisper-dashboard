@@ -116,7 +116,7 @@ const Settings = () => {
     setErrors(validationErrors);
   };
 
-  const navItems = ["Business Profile", "Security"];
+  const navItems = ["Profile", "Security"];
   return (
     <FullLayout>
       <div>
