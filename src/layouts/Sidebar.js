@@ -60,8 +60,8 @@ const liteNav = [
     icon: "bi bi-cash-stack",
   },
   {
-    title: "API Settings",
-    href: "/developers",
+    title: "Settings",
+    href: "/settings",
     icon: "bi bi-code-slash",
   },
   {
@@ -129,8 +129,8 @@ const megaNav = [
     icon: "bi bi-cash-stack",
   },
   {
-    title: "API Settings",
-    href: "/developers",
+    title: "Settings",
+    href: "/settings",
     icon: "bi bi-code-slash",
   },
   {
@@ -188,8 +188,8 @@ const adminNav = [
   //   icon: "bi bi-tags",
   // },
   {
-    title: "API Settings",
-    href: "/admin/developers",
+    title: "Settings",
+    href: "/admin/setings",
     icon: "bi bi-code-slash",
   },
   // {

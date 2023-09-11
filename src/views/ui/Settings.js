@@ -24,6 +24,7 @@ import {
   handleFailedRequest,
   validateProperty,
 } from "../../utils";
+import _Documentation from "../../components/pages/Documentation";
 
 const Settings = () => {
   const context = useUser();
@@ -116,7 +117,7 @@ const Settings = () => {
     setErrors(validationErrors);
   };
 
-  const navItems = ["Profile", "Security"];
+  const navItems = ["Profile", "Security", "Developer"];
   return (
     <FullLayout>
       <div>
@@ -319,6 +320,12 @@ const Settings = () => {
                 </Button>
               </Form>
             </Card>
+          </>
+        )}
+
+        {navState == 2 && (
+          <>
+            <_Documentation />
           </>
         )}
       </div>

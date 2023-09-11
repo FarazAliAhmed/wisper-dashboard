@@ -1,6 +1,6 @@
-import React from 'react'
-import FullLayout from '../../layouts/FullLayout';
-import _Documentation from '../../components/pages/Documentation'
+import React from "react";
+import FullLayout from "../../layouts/FullLayout";
+import _Documentation from "../../components/pages/Documentation";
 
 const Documentation = () => {
   return (
