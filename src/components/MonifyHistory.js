@@ -148,7 +148,6 @@ const MonifyHistory = () => {
   return (
     <div
       style={{
-        background: "white",
         padding: "1rem 1rem",
       }}
     >
