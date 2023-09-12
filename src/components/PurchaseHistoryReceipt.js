@@ -34,8 +34,16 @@ function PurchaseHistoryReceipt({ receiptData, show, toggleShow }) {
           Data Volume :<strong> {receiptData.volume} GB </strong> <br />
           Bucket :<strong> {receiptData.network} </strong> <br />
           Cost :<strong> ₦{receiptData.amount} </strong> <br />
-          Old Balance :<strong> {receiptData.old_bal}GB </strong> <br />
-          New Balance :<strong> {receiptData.new_bal}GB </strong> <br />
+          Old Balance :<strong>
+            {" "}
+            {Number(receiptData.old_bal) / 1000}GB{" "}
+          </strong>{" "}
+          <br />
+          New Balance :<strong>
+            {" "}
+            {Number(receiptData.new_bal) / 1000}GB{" "}
+          </strong>{" "}
+          <br />
           Status :<strong> {receiptData.status} </strong> <br />
           Date :
           <strong>
@@ -76,7 +84,10 @@ const TransactionMessage = ({ bucket, volume, status, cost }) => {
     return (
       <p>
         OK <br />
-        You have successfully credited <strong>{volume}GB</strong>
+        You have successfully credited{" "}
+        <strong>
+          {volume}GB {""}
+        </strong>
         worth of data to your <strong>{bucket} bucket</strong>, for{" "}
         <strong>₦{cost}</strong>
       </p>

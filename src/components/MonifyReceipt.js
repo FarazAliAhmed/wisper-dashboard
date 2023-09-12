@@ -23,9 +23,8 @@ function MonifyReceipt({ receiptData, show, toggleShow }) {
           Trans. Ref :<strong> {receiptData.payment_ref} </strong> <br />
           Amount :<strong> ₦{receiptData.amount} </strong> <br />
           Purpose :<strong> {receiptData.purpose} </strong> <br />
-          Cost :<strong> ₦{receiptData.amount} </strong> <br />
-          Old Balance :<strong> ₦{receiptData.old_bal} </strong> <br />
-          New Balance :<strong> ₦{receiptData.new_bal} </strong> <br />
+          Old Wallet Balance :<strong> ₦{receiptData.old_bal} </strong> <br />
+          New Wallet Balance :<strong> ₦{receiptData.new_bal} </strong> <br />
           Type :<strong> {receiptData.pay_type} </strong> <br />
           Descripion :<strong> {receiptData.desc} </strong> <br />
           Date :

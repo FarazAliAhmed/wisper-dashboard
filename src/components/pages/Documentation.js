@@ -13,6 +13,7 @@ import { useAppState } from "../../context/appContext";
 import { parseDataPlans } from "../../utils";
 
 import { saveCallback, saveWebhook } from "../../services/dataService";
+import toast from "react-hot-toast";
 
 // import FullLayout from "../../layouts/FullLayout";
 // import tableData from "../../utils/plansTable";
@@ -74,6 +75,7 @@ const Documentation = () => {
             style={{ padding: ".2em .4em", marginLeft: ".8em" }}
             onClick={() => {
               navigator.clipboard.writeText(user?.access_token);
+              toast.success("copied");
             }}
           >
             Click to Copy

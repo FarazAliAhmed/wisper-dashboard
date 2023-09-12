@@ -83,21 +83,6 @@ const MonifyHistoryTable = ({
               <CardBody>
                 {showHeader && <CardTitle tag="h5">Wallet History</CardTitle>}
 
-                <div className="legend-container">
-                  <p className="legend">
-                    <span className=" bg-success rounded-circle d-inline-block"></span>{" "}
-                    Successful
-                  </p>
-                  {/*   <p className="legend">
-                    <span className=" bg-warning rounded-circle d-inline-block"></span>{" "}
-                    Processing
-                  </p> */}
-                  <p className="legend">
-                    <span className=" bg-danger rounded-circle d-inline-block"></span>{" "}
-                    Failed
-                  </p>
-                </div>
-
                 <Table
                   className="no-wrap mt-3 align-middle"
                   responsive
@@ -116,25 +101,35 @@ const MonifyHistoryTable = ({
                     </tr>
                   </thead>
                   <tbody>
-                    {transactionsData.map((tx, idx) => (
-                      <tr key={idx} className="border-top">
-                        <td>{shortenValue(tx.payment_ref)}</td>
-                        <td>₦{tx.amount}</td>
-                        <td>₦{tx.old_bal}</td>
-                        <td>₦{tx.new_bal}</td>
-                        <td>{tx.purpose}</td>
-                        <td>{tx.pay_type}</td>
-                        <td>{tx.date_of_payment}</td>
-                        <td>
-                          <Button
-                            className="receipt-button"
-                            onClick={() => showReceipt(tx)}
-                          >
-                            View
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
+                    {transactionsData.map((tx, idx) => {
+                      const dateObject = moment(tx.date_of_payment);
+
+                      // Get the date in the format "YYYY-MM-DD"
+                      const formattedDate = dateObject.format("YYYY-MM-DD");
+
+                      // Get the time in the format "HH:MM:SS"
+                      const formattedTime = dateObject.format("HH:mm:ss");
+
+                      return (
+                        <tr key={idx} className="border-top">
+                          <td>{shortenValue(tx.payment_ref)}</td>
+                          <td>₦{tx.amount}</td>
+                          <td>₦{tx.old_bal}</td>
+                          <td>₦{tx.new_bal}</td>
+                          <td>{tx.purpose}</td>
+                          <td>{tx.pay_type}</td>
+                          <td>{`${formattedDate} ${formattedTime}`}</td>
+                          <td>
+                            <Button
+                              className="receipt-button"
+                              onClick={() => showReceipt(tx)}
+                            >
+                              View
+                            </Button>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </Table>
 

@@ -14,16 +14,20 @@ import {
   Modal,
   ModalBody,
   ModalFooter,
+  Toast,
 } from "reactstrap";
 import { useUser } from "../../context/userContext";
 import "../../assets/scss/custom.scss";
 import FullLayout from "../../layouts/FullLayout";
-import { update } from "../../services/userService";
+import { changePass, update } from "../../services/userService";
 import {
   formIsValid,
   handleFailedRequest,
   validateProperty,
 } from "../../utils";
+import { toast } from "react-hot-toast";
+import { BeatLoader } from "react-spinners";
+
 import _Documentation from "../../components/pages/Documentation";
 
 const Settings = () => {
@@ -78,20 +82,26 @@ const Settings = () => {
   const handleSubmitPassChange = async () => {
     console.log(passwordChange);
 
-    // try {
-    //   setLoading(true);
-    //   const body = { ...reqObj, ...user };
-    //   await update(body);
-    //   setLoading(false);
-    //   setUser({ ...user });
-    //   setServerResponse({ status: true, message: "Updated successfully." });
-    //   setErrors({});
-    // } catch (error) {
-    //   setLoading(false);
-    //   const { status, message } = handleFailedRequest(error);
-    //   setUser(reqObj);
-    //   setServerResponse({ status, message });
-    // }
+    try {
+      setLoading(true);
+      const body = {
+        oldPassword: passwordChange.currentPass,
+        newPassword: passwordChange.newPass,
+      };
+      console.log(body);
+
+      await changePass(body);
+      setLoading(false);
+      toast.success("Password changed");
+      setServerResponse({ status: true, message: "Updated successfully." });
+      setErrors({});
+      setPasswordChange({});
+    } catch (error) {
+      setLoading(false);
+      const { status, message } = handleFailedRequest(error);
+      toast.error("error changing password");
+      setServerResponse({ status, message });
+    }
   };
 
   const handleChange = ({ currentTarget: input }) => {
@@ -316,7 +326,11 @@ const Settings = () => {
                   </p>
                 </Row>
                 <Button disabled={loading} type="submit" color="primary">
-                  Change password
+                  {loading ? (
+                    <BeatLoader size={10} color="white" loading />
+                  ) : (
+                    <>Change password</>
+                  )}
                 </Button>
               </Form>
             </Card>

@@ -92,6 +92,8 @@ const BuyBulkData = () => {
         setLoading(false);
         // setPlan(initialState);
         toast.success("data successfully purchased");
+        window.location.reload();
+
         return { status: true, message: "Data allocated successfully." };
       } catch (error) {
         setLoading(false);
@@ -177,18 +179,21 @@ const BuyBulkData = () => {
                         <option selected disabled>
                           ---Select Bucket---
                         </option>
-                        <option value="glo">GLO -{mega_wallet.glo} </option>
+                        <option value="glo">
+                          GLO -{Number(mega_wallet.glo) / 1000}GB{" "}
+                        </option>
                         <option value="mtn_sme">
-                          MTN[SME] -{mega_wallet.mtn_sme}
+                          MTN[SME] -{Number(mega_wallet.mtn_sme) / 1000}GB
                         </option>
                         <option value="mtn_gifting">
-                          MTN GIFTING -{mega_wallet.mtn_gifting}
+                          MTN GIFTING -{Number(mega_wallet.mtn_gifting) / 1000}
+                          GB
                         </option>
                         <option value="9mobile">
-                          9MOBILE -{mega_wallet["9mobile"]}{" "}
+                          9MOBILE -{Number(mega_wallet["9mobile"]) / 1000}GB{" "}
                         </option>
                         <option value="airtel">
-                          AIRTEL -{mega_wallet.airtel}
+                          AIRTEL -{Number(mega_wallet.airtel) / 1000}GB
                         </option>
                       </Input>
                     </FormGroup>

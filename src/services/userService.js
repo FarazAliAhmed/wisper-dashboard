@@ -11,3 +11,7 @@ export async function update(body) {
   const params = body["username"];
   return http.patch(`${apiEndpoint}/${params}`, body);
 }
+
+export async function changePass(body) {
+  return http.post(`${apiUrl}/change_password`, body);
+}
