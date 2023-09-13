@@ -59,15 +59,14 @@ const Routes = () => {
           ) : (
             <ProtectedRoute path="/allocate" component={AllocateData} />
           )}
-          {user?.type == "mega" && (
-            <ProtectedRoute path="/megaFunding" component={MegaFunding} />
-          )}
+          <ProtectedRoute path="/megaFunding" component={MegaFunding} />
+
           {user?.type == "mega" && (
             <ProtectedRoute path="/buyBulkData" component={BuyBulkData} />
           )}
-          {user?.type == "mega" && (
-            <ProtectedRoute path="/monifyWallet" component={MonifyWallet} />
-          )}
+
+          <ProtectedRoute path="/monifyWallet" component={MonifyWallet} />
+
           <ProtectedRoute path="/wallet" component={Wallet} />
           <ProtectedRoute path="/account" component={Account} />
           <ProtectedRoute path="/payments" component={Payments} />

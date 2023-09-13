@@ -72,7 +72,7 @@ const Dashboard = () => {
           </Col>
         </Row>
 
-        <Row className="mt-4">
+        <Row className="mt-0">
           <MonifyHistory />
         </Row>
       </div>

@@ -17,11 +17,15 @@ import { useAppState } from "../../context/appContext";
 
 import FullLayout from "../../layouts/FullLayout";
 import { allocateData } from "../../services/dataService";
-import { handleFailedRequest, parseDataAllocatePlans, parseDataPlans } from "../../utils";
+import {
+  handleFailedRequest,
+  parseDataAllocatePlans,
+  parseDataPlans,
+} from "../../utils";
 // import dataPlans from "../../utils/plansTable";
 
 import "./../../assets/scss/custom.scss";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 
 const initialState = {
   network: "airtel",
@@ -40,8 +44,8 @@ const AllocateData = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
 
-  const { plansUser } = useAppState()
-  const dataPlans = parseDataAllocatePlans(plansUser)
+  const { plansUser } = useAppState();
+  const dataPlans = parseDataAllocatePlans(plansUser);
 
   // console.log("dataPlans", dataPlans)
 
@@ -56,27 +60,26 @@ const AllocateData = () => {
 
       // console.log("plan", plan)
 
-
-     if(plan.price){
-      await allocateData(plan, user?.access_token);
-      setLoading(false);
-      setPlan(initialState);
-      return {status: true, message: "Data allocated successfully."};
-     } else {
-        toast.info('Contact Admin To Set Plan Price', {
-          position: toast.POSITION.TOP_RIGHT
+      if (plan.price) {
+        await allocateData(plan, user?.access_token);
+        setLoading(false);
+        setPlan(initialState);
+        return { status: true, message: "Data allocated successfully." };
+      } else {
+        toast.info("Contact Admin To Set Plan Price", {
+          position: toast.POSITION.TOP_RIGHT,
         });
         setLoading(false);
-        return
-     }
+        return;
+      }
       // setServerResponse({status: true, message: "Data allocated successfully."});
-    }catch (error) {
-      toast.error('An Error Occured Try Again', {
-        position: toast.POSITION.TOP_RIGHT
+    } catch (error) {
+      toast.error("An Error Occured Try Again", {
+        position: toast.POSITION.TOP_RIGHT,
       });
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
-      return {status, message};
+      return { status, message };
       // setServerResponse({ status, message });
     }
   };
@@ -87,31 +90,28 @@ const AllocateData = () => {
     // console.log("name", name)
     // console.log("value", value)
     // console.log("value", value)
-    
+
     // console.log(dataPlans)
     // Assuming the object array is called 'dataPlans'
-    const matchedItem = dataPlans.find(item => item.id == value);
-  
+    const matchedItem = dataPlans.find((item) => item.id == value);
+
     // console.log("matchedItem", matchedItem)
-    
-    if (matchedItem && name === 'plan_id') {
+
+    if (matchedItem && name === "plan_id") {
       const { size, price } = matchedItem;
-      const updatedPlan = { ...plan, [name]: value, volume:size, price };
+      const updatedPlan = { ...plan, [name]: value, volume: size, price };
       setPlan(updatedPlan);
-      console.log('Updated Plan:', updatedPlan);
+      console.log("Updated Plan:", updatedPlan);
     } else {
       setPlan({ ...plan, [name]: value });
       // console.log('Updated Plan:', plan); // Log the original plan object
     }
   };
-  
-  
-  
 
   return (
     <FullLayout>
       <div>
-      <ToastContainer />
+        <ToastContainer />
         <h5 className="mb-4 mt-3">Allocate Data</h5>
         <Card body>
           {/* {serverResponse.message.length > 0 && (
@@ -176,7 +176,6 @@ const AllocateData = () => {
                             </option>
                           ))}
                       </Input>
-                      
                     </FormGroup>
                   </Col>
                   <Col md={12}>
@@ -189,7 +188,6 @@ const AllocateData = () => {
                         onChange={handleChange}
                         type="number"
                       />
-                     
                     </FormGroup>
                   </Col>
                 </Row>
@@ -212,11 +210,12 @@ const AllocateData = () => {
                 <p>Code For Data Balance</p>
                 <Card className="shadow-none code-balance">
                   <CardBody>
-                    <div className="py-2 border-bottom">MTN [SME] *461*4#</div>
                     <div className="py-2 border-bottom">
-                      MTN [Gifting] *131*4# or *460*260#
+                      MTN *321*3*3# or *312*5#
                     </div>
-                    <div className="py-2 ">Airtel *140#</div>
+                    <div className="py-2 border-bottom">Airtel CG *140#</div>
+                    <div className="py-2 border-bottom">GLO *127*0#</div>
+                    <div className="py-2 border-bottom">9Mobile *228#</div>
                   </CardBody>
                 </Card>
               </div>

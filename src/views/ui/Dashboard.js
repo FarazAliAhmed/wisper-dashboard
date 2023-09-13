@@ -68,20 +68,16 @@ const Dashboard = () => {
         <Row>
           {user.type != "mega" && (
             <Col sm="6" lg="4">
-              <TopCards
+              <FundCards
                 bg="bg-light-info text-info"
                 title="Profit"
-                subtitle="Balance"
-                earning={
-                  balanceDisplay.toLowerCase() == "0 mb"
-                    ? "₦ 0"
-                    : balanceDisplay
-                }
+                subtitle="Wallet Balance"
+                earning={`₦${cash}`}
                 icon={wallIcon}
               />
             </Col>
           )}
-
+          {/* 
           {user.type != "mega" && (
             <Col sm="6" lg="4">
               <TopCards
@@ -103,7 +99,7 @@ const Dashboard = () => {
                 icon={wallIcon}
               />
             </Col>
-          )}
+          )} */}
 
           {/***Mega Wallets***/}
           {user.type === "mega" && (
@@ -196,11 +192,7 @@ const Dashboard = () => {
             //   </p>
             // </Row>
             // <div></div>
-            <Row>
-              <Col>
-                <PaymentButtonFw />
-              </Col>
-            </Row>
+            ""
           )
         ) : (
           ""

@@ -49,10 +49,16 @@ const liteNav = [
   //   href: "/pricing",
   //   icon: "bi bi-tags",
   // },
+  // {
+  //   title: "Payments",
+  //   href: "/payments",
+  //   icon: "bi bi-credit-card",
+  // },
+
   {
-    title: "Payments",
-    href: "/payments",
-    icon: "bi bi-credit-card",
+    title: "Wallet",
+    href: "/monifyWallet",
+    icon: "bi bi-wallet2",
   },
   {
     title: "Transactions",
