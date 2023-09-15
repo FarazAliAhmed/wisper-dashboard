@@ -35,6 +35,10 @@ import {
   getBusinessTransactionFromAllTransactions,
 } from "../../utils";
 import { useAdmin } from "../../context/adminContext";
+import MonifyHistory from "../../components/MonifyHistory";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import AdminMonifyHistory from "../../components/AdminMonifyHistory";
+import AdminPurchaseHistory from "../../components/AdminPurchaseHistory";
 
 const Account = (props) => {
   const [business, setBusiness] = useState({});
@@ -43,6 +47,8 @@ const Account = (props) => {
   const [active, setActive] = useState();
   const [type, setType] = useState();
   const [loading, setLoading] = useState(false);
+  const [cashBalance, setCashBalance] = useState(0);
+  const [navState, setNavState] = useState(0);
 
   const businessId = props.match.params.businessId;
 
@@ -71,6 +77,7 @@ const Account = (props) => {
           res.data.business
         )
       );
+      setCashBalance(wallet_balance);
     }
     fetchBusinessDetails();
   }, []);
@@ -118,6 +125,8 @@ const Account = (props) => {
     setLoading(false);
     setType("mega");
   };
+
+  const navItems = ["Transactions", "Wallet", "Data Purchase"];
 
   return (
     <AdminLayout>
@@ -296,12 +305,7 @@ const Account = (props) => {
                   bg="bg-light-info text-info"
                   title="Profit"
                   subtitle="Balance"
-                  earning={
-                    balanceDisplay.toLowerCase() == "0 mb" ||
-                    balanceDisplay.toLowerCase() == "mb 0"
-                      ? "₦ 0"
-                      : balanceDisplay
-                  }
+                  earning={`₦${cashBalance}`}
                   icon={wallIcon}
                 />
               </Col>
@@ -384,14 +388,45 @@ const Account = (props) => {
         </Row>
 
         <Row className="mt-4">
-          <h5 className="mb-4 mt-3">Business Transactions</h5>
-          <TransactionsTable
-            transactions={getBusinessTransactionFromAllTransactions(
-              transaction,
-              businessId
-            )}
-            showHeader={true}
-          />
+          <h3>Business Table Data</h3>
+
+          <div className="settings__nav">
+            {navItems.map((item, index) => (
+              <p
+                onClick={() => {
+                  setNavState(index);
+                }}
+                key={index}
+                className={navState == index ? "activeNav__item" : ""}
+              >
+                {item}
+              </p>
+            ))}
+          </div>
+          {navState == 0 && (
+            <>
+              {/* <h5 className="mb-4 mt-3">Business Transactions</h5> */}
+              <TransactionsTable
+                transactions={getBusinessTransactionFromAllTransactions(
+                  transaction,
+                  businessId
+                )}
+                showHeader={true}
+              />
+            </>
+          )}
+          {navState == 1 && (
+            <>
+              {/* <h5 className="mb-4 mt-3">Business Transactions</h5> */}
+              <AdminMonifyHistory businessId={businessId} />
+            </>
+          )}
+          {navState == 2 && (
+            <>
+              {/* <h5 className="mb-4 mt-3">Business Transactions</h5> */}
+              <AdminPurchaseHistory businessId={businessId} />
+            </>
+          )}
         </Row>
       </div>
     </AdminLayout>
