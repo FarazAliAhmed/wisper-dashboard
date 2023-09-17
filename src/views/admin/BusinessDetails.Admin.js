@@ -39,6 +39,7 @@ import MonifyHistory from "../../components/MonifyHistory";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import AdminMonifyHistory from "../../components/AdminMonifyHistory";
 import AdminPurchaseHistory from "../../components/AdminPurchaseHistory";
+import moment from "moment";
 
 const Account = (props) => {
   const [business, setBusiness] = useState({});
@@ -127,7 +128,12 @@ const Account = (props) => {
   };
 
   const navItems = ["Transactions", "Wallet", "Data Purchase"];
+  const dateObject = moment(business?.createdAt);
 
+  const formattedDate = dateObject.format("YYYY-MM-DD");
+
+  // Get the time in the format "HH:MM:SS"
+  const formattedTime = dateObject.format("HH:mm:ss");
   return (
     <AdminLayout>
       <Link to="/admin/business">
@@ -285,7 +291,7 @@ const Account = (props) => {
                     <FormGroup>
                       <Label for="dateJoined">Date joined</Label>
                       <Input
-                        value={business?.createdAt}
+                        value={`${formattedDate} ${formattedTime}`}
                         disabled
                         id="dateJoined"
                         name="dateJoined"
