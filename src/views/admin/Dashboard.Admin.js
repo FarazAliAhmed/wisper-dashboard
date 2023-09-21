@@ -8,7 +8,7 @@ import { useAppState } from "../../context/appContext";
 import { useAdmin } from "../../context/adminContext";
 import { useUser } from "../../context/userContext";
 // import "../../assets/scss/custom.scss";
-import AdminControls from "../../components/AdminControls";
+import AdminControls from "../../components/AdminControlsDash";
 import glo from "../../assets/dashboard/glo.svg";
 import mtn1 from "../../assets/dashboard/mtn 1.svg";
 import mob9 from "../../assets/dashboard/mob9.svg";

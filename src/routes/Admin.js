@@ -8,6 +8,7 @@ import AdminProvider from "../context/adminContext";
 import Login from "../views/auth/Login.js";
 import PricingUser from "../components/pages/PricingUser.js";
 import ViewPricing from "../views/admin/ViewPricing.js";
+import Settings from "../views/admin/Settings.Admin.js";
 import AllocateDataMA from "../views/ui/AllocateDataMA.js";
 import AllocateDataMAdmin from "../views/ui/AllocateDataMAdmin.js";
 
@@ -18,6 +19,7 @@ const CreditAndDebit = lazy(() =>
   import("../views/admin/CreditAndDebit.Admin")
 );
 const Allocate = lazy(() => import("../views/admin/AllocateData.Admin"));
+const Maintenance = lazy(() => import("../views/admin/Maintenance.Admin.js"));
 const Business = lazy(() => import("../views/admin/Business.Admin"));
 const BusinessDetails = lazy(() =>
   import("../views/admin/BusinessDetails.Admin")
@@ -53,6 +55,18 @@ const AdminRoutes = () => {
                 exact
                 path="/admin/business"
                 component={Business}
+              />
+
+              <AdminProtectedRoute
+                exact
+                path="/admin/settings"
+                component={Settings}
+              />
+
+              <AdminProtectedRoute
+                exact
+                path="/admin/maintenance"
+                component={Maintenance}
               />
               <AdminProtectedRoute
                 path="/admin/modify-account"

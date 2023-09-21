@@ -143,11 +143,7 @@ const PurchaseHistory = () => {
   };
 
   return (
-    <div
-      style={{
-        padding: "1rem 1rem",
-      }}
-    >
+    <div>
       {loading ? (
         <Loader isLoading={loading} />
       ) : (

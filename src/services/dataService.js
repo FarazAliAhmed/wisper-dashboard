@@ -101,6 +101,15 @@ export async function getAllTransactions() {
   }
 }
 
+export async function getMegaMaintenance() {
+  try {
+    const res = await http.get(`${apiUrl}/admin/getMegaMaintenance`);
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function getSingleTrx(id) {
   try {
     const res = await http.get(`${apiUrl}/trxSingle/${id}`);
@@ -174,6 +183,30 @@ export async function PurchaseMegaPriceTransactions(
     return transactions.data;
   } catch (error) {
     return { data: [] };
+  }
+}
+
+export async function getSubDealers({ userId }) {
+  try {
+    const subDealer = await http.get(
+      `${apiUrl}/subdealer/getAllSubdealersId/${userId}`
+    );
+    console.log(subDealer, "sub");
+    return subDealer.data?.subdealers;
+  } catch (error) {
+    return { data: [] };
+  }
+}
+
+export async function getSubDealerInfo({ userId }) {
+  try {
+    const subDealer = await http.get(
+      `${apiUrl}/subdealer/getSubdealersInfo/${userId}`
+    );
+    console.log(subDealer, "subInfo");
+    return subDealer.data?.subdealers;
+  } catch (error) {
+    return { data: {} };
   }
 }
 

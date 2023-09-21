@@ -19,59 +19,43 @@ import {
   clearMaintenanceNotice,
   enterNetworkMaintenance,
   exitNetworkMaintenance,
+  enterMegaNetworkMaintenance,
+  exitMegaNetworkMaintenance,
 } from "../services/Admin.Services/controlService";
 import AdminNotifier from "./AdminNotifier";
+import { getMegaMaintenance } from "../services/dataService";
+import { toast } from "react-toastify";
 
-const AdminControls = () => {
-  const { maintenance, setMaintenance } = useAppState();
+const AdminMegaControls = () => {
+  const [maintenance, setMaintenance] = useState("");
+  //   const { maintenance, setMaintenance } = useAppState();
 
   const [noticeType, setNoticeType] = useState("warning");
   const [message, setMessage] = useState("");
   const [serverResp, setResp] = useState("none");
 
-  useEffect(() => {
-    if (maintenance) {
-      setNoticeType(
-        maintenance["notice"]
-          ? maintenance["notice"].split(":::")[0]
-          : "warning"
-      );
-      setMessage(
-        maintenance["notice"] ? maintenance["notice"].split(":::")[1] : ""
-      );
-    }
-  }, [maintenance]);
+  useEffect(async () => {
+    const getMegaMaintenanceFunc = async () => {
+      // setLoading(true);
+      const resp = await getMegaMaintenance();
+      setMaintenance(resp?.data?.maintenance);
+      // setSubDealers(resp);
+      // setLoading(false);
+    };
 
-  const handleChange = (e) => {
-    setMessage(e.target.value);
-  };
-
-  const handleNoticeType = (e) => {
-    setNoticeType(e.target.value);
-  };
-
-  const saveNotice = () => {
-    const resp = setMaintenanceNotice(`${noticeType}:::${message}`);
-    setMaintenance({ ...maintenance, notice: `${noticeType}:::${message}` });
-    if (!!resp) setResp(true);
-  };
-
-  const clearNotice = () => {
-    const resp = clearMaintenanceNotice();
-    setMaintenance({ ...maintenance, notice: null });
-    if (!!resp) setResp(true);
-    setMessage("");
-    setNoticeType("warning");
-  };
+    getMegaMaintenanceFunc();
+  }, []);
 
   const setNetworkMaintenance = (network, status) => {
     setMaintenance({ ...maintenance, [network]: status });
     if (status) {
-      enterNetworkMaintenance(network);
+      enterMegaNetworkMaintenance(network);
     } else {
-      exitNetworkMaintenance(network);
+      exitMegaNetworkMaintenance(network);
     }
   };
+
+  console.log(maintenance);
 
   return (
     <Card>
@@ -92,7 +76,7 @@ const AdminControls = () => {
 
         <Col md={12}>
           <div className="mt-3">
-            <h5>Data Allocation Maintenance Mode</h5>
+            <h5>Bulk Data Purchase Maintenance Mode</h5>
           </div>
           <div>
             <Table className="no-wrap mt-3 align-middle" responsive borderless>
@@ -268,4 +252,4 @@ const AdminControls = () => {
   );
 };
 
-export default AdminControls;
+export default AdminMegaControls;

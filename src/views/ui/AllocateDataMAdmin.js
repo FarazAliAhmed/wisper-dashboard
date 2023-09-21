@@ -169,11 +169,12 @@ const AllocateDataMAdmin = () => {
                 <p>Code For Data Balance</p>
                 <Card className="shadow-none code-balance">
                   <CardBody>
-                    <div className="py-2 border-bottom">MTN [SME] *461*4#</div>
                     <div className="py-2 border-bottom">
-                      MTN [Gifting] *131*4# or *460*260#
+                      MTN *321*3*3# or *312*5#
                     </div>
-                    <div className="py-2 ">Airtel *140#</div>
+                    <div className="py-2 border-bottom">Airtel CG *140#</div>
+                    <div className="py-2 border-bottom">GLO *127*0#</div>
+                    <div className="py-2 border-bottom">9Mobile *228#</div>
                   </CardBody>
                 </Card>
               </div>

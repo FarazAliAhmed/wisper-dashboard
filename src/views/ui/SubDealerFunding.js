@@ -21,11 +21,7 @@ import { useUser } from "../../context/userContext";
 import { useAppState } from "../../context/appContext";
 
 import FullLayout from "../../layouts/FullLayout";
-import {
-  allocateData,
-  getMegaMaintenance,
-  purchaseMegaPrice,
-} from "../../services/dataService";
+import { allocateData, purchaseMegaPrice } from "../../services/dataService";
 import {
   handleFailedRequest,
   parseDataAllocatePlans,
@@ -50,7 +46,7 @@ const initialState = {
   phone_number: "",
 };
 
-const BuyBulkData = () => {
+const SubDealerFunding = () => {
   const [plan, setPlan] = useState(initialState);
   const [confirmState, setConfirmState] = useState(false);
   const {
@@ -63,7 +59,6 @@ const BuyBulkData = () => {
   //   status: true,
   //   message: "",
   // });
-  const [maintenance, setMaintenance] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [bucketValue, setBucketValue] = useState("glo");
@@ -76,17 +71,9 @@ const BuyBulkData = () => {
 
   // console.log("dataPlans", dataPlans)
 
-  useEffect(async () => {
-    const getMegaMaintenanceFunc = async () => {
-      // setLoading(true);
-      const resp = await getMegaMaintenance();
-      setMaintenance(resp?.data?.maintenance);
-      // setSubDealers(resp);
-      // setLoading(false);
-    };
-
-    getMegaMaintenanceFunc();
-  }, []);
+  // useEffect(() => {
+  //   parseDataPlans(plans)
+  // }, [])
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
@@ -192,33 +179,22 @@ const BuyBulkData = () => {
                         <option selected disabled>
                           ---Select Bucket---
                         </option>
-                        {maintenance["airtel"] && (
-                          <option value="airtel">
-                            AIRTEL: {Number(mega_wallet.airtel) / 1000}GB
-                          </option>
-                        )}
-                        {maintenance["glo"] && (
-                          <option value="glo">
-                            GLO: {Number(mega_wallet.glo) / 1000}GB{" "}
-                          </option>
-                        )}
-                        {maintenance["9mobile"] && (
-                          <option value="9mobile">
-                            9MOBILE: {Number(mega_wallet["9mobile"]) / 1000}GB{" "}
-                          </option>
-                        )}
-                        {maintenance["mtn_gifting"] && (
-                          <option value="mtn_gifting">
-                            MTN GIFTING:{" "}
-                            {Number(mega_wallet.mtn_gifting) / 1000}
-                            GB
-                          </option>
-                        )}
-                        {maintenance["mtn_sme"] && (
-                          <option value="mtn_sme">
-                            MTN[SME]: {Number(mega_wallet.mtn_sme) / 1000}GB
-                          </option>
-                        )}
+                        <option value="glo">
+                          GLO -{Number(mega_wallet.glo) / 1000}GB{" "}
+                        </option>
+                        <option value="mtn_sme">
+                          MTN[SME] -{Number(mega_wallet.mtn_sme) / 1000}GB
+                        </option>
+                        <option value="mtn_gifting">
+                          MTN GIFTING -{Number(mega_wallet.mtn_gifting) / 1000}
+                          GB
+                        </option>
+                        <option value="9mobile">
+                          9MOBILE -{Number(mega_wallet["9mobile"]) / 1000}GB{" "}
+                        </option>
+                        <option value="airtel">
+                          AIRTEL -{Number(mega_wallet.airtel) / 1000}GB
+                        </option>
                       </Input>
                     </FormGroup>
                   </Col>
@@ -278,35 +254,18 @@ const BuyBulkData = () => {
                 <Card className="shadow-none code-balance">
                   <CardBody>
                     <div className="py-2 border-bottom">
-                      MTN [SME]:{" "}
-                      {maintenance["mtn_sme"]
-                        ? ` ₦${megaPriceUser.mtn_sme}`
-                        : "unavailable"}
+                      MTN [SME]:₦{megaPriceUser.mtn_sme}
                     </div>
                     <div className="py-2 border-bottom">
-                      GLO:{" "}
-                      {maintenance["glo"]
-                        ? ` ₦${megaPriceUser.glo}`
-                        : "unavailable"}
+                      GLO: ₦{megaPriceUser.glo}
                     </div>
                     <div className="py-2 border-bottom">
-                      MTN CG:{" "}
-                      {maintenance["mtn_gifting"]
-                        ? ` ₦${megaPriceUser.mtn_gifting}`
-                        : "unavailable"}
+                      MTN CG: ₦{megaPriceUser.mtn_gifting}
                     </div>
                     <div className="py-2 border-bottom ">
-                      9MOBILE:{" "}
-                      {maintenance["9mobile"]
-                        ? ` ₦${megaPriceUser["9mobile"]}`
-                        : "unavailable"}
+                      9MOBILE: ₦{megaPriceUser["9mobile"]}
                     </div>
-                    <div className="py-2 ">
-                      Airtel:{" "}
-                      {maintenance["airtel"]
-                        ? ` ₦${megaPriceUser.airtel}`
-                        : "unavailable"}
-                    </div>
+                    <div className="py-2 ">Airtel: ₦{megaPriceUser.airtel}</div>
                   </CardBody>
                 </Card>
               </div>
@@ -319,4 +278,4 @@ const BuyBulkData = () => {
   );
 };
 
-export default BuyBulkData;
+export default SubDealerFunding;

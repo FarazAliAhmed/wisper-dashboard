@@ -7,6 +7,10 @@ export async function register(body) {
   return http.post(apiEndpoint, body);
 }
 
+export async function createSubDealers(body) {
+  return http.post(`${apiUrl}/subdealer/createSubdealer`, body);
+}
+
 export async function update(body) {
   const params = body["username"];
   return http.patch(`${apiEndpoint}/${params}`, body);

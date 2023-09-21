@@ -29,6 +29,7 @@ import { toast } from "react-hot-toast";
 import { BeatLoader } from "react-spinners";
 
 import _Documentation from "../../components/pages/Documentation";
+import AdminLayout from "../../layouts/AdminLayout";
 
 const Settings = () => {
   const context = useUser();
@@ -129,7 +130,7 @@ const Settings = () => {
 
   const navItems = ["Profile", "Security", "Developer"];
   return (
-    <FullLayout>
+    <AdminLayout>
       <div>
         <h4 className="mb-4 mt-3">Settings</h4>
         <div className="settings__nav">
@@ -344,7 +345,7 @@ const Settings = () => {
           </>
         )}
       </div>
-    </FullLayout>
+    </AdminLayout>
   );
 };
 

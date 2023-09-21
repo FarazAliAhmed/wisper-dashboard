@@ -44,11 +44,7 @@ const liteNav = [
     href: "/packages",
     icon: "bi bi-tags",
   },
-  // {
-  //   title: "Pricing",
-  //   href: "/pricing",
-  //   icon: "bi bi-tags",
-  // },
+
   // {
   //   title: "Payments",
   //   href: "/payments",
@@ -109,6 +105,12 @@ const megaNav = [
     href: "/monifyWallet",
     icon: "bi bi-wallet2",
   },
+
+  // {
+  //   title: "Sub-Dealers",
+  //   href: "/sub-dealers",
+  //   icon: "bi bi-shop",
+  // },
   // {
   //   title: "Account",
   //   href: "/account",
@@ -188,14 +190,14 @@ const adminNav = [
     href: "/admin/packages",
     icon: "bi bi-tags",
   },
-  // {
-  //   title: "Pricing",
-  //   href: "/admin/pricing",
-  //   icon: "bi bi-tags",
-  // },
+  {
+    title: "Maintenance",
+    href: "/admin/maintenance",
+    icon: "bi bi-cone-striped",
+  },
   {
     title: "Settings",
-    href: "/admin/setings",
+    href: "/admin/settings",
     icon: "bi bi-code-slash",
   },
   // {
