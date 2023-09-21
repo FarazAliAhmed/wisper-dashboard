@@ -58,7 +58,6 @@ const BuyBulkData = () => {
     currentBalance: { volume, unit, cash, mega_wallet },
   } = useAppState();
 
-  console.log("jj", megaPriceUser);
   // const [serverResponse, setServerResponse] = useState({
   //   status: true,
   //   message: "",
@@ -142,8 +141,6 @@ const BuyBulkData = () => {
       setCostValue(megaPriceUser["9mobile"] * value);
     }
   };
-
-  console.log(volume, "ppp");
 
   return (
     <FullLayout>

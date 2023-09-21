@@ -31,8 +31,6 @@ const PurchaseHistoryTable = ({
 }) => {
   const [transactionsData, setTransactionsData] = useState([...transactions]);
 
-  console.log(transactionsData, "tr8");
-
   const { user } = useUser();
 
   const [isOpen, setIsOpen] = useState(false);

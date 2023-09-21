@@ -135,7 +135,6 @@ const PurchaseHistory = () => {
       if (!loading) {
         setLoading(true);
         const resp = await getMegaPurchaseTransactions(pagination);
-        console.log("lsk", resp);
         setTransactions(resp);
         setLoading(false);
       }

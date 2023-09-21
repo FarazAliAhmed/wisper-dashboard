@@ -33,7 +33,7 @@ export async function getBalance() {
 export async function allocateData(body, apiKey) {
   const headers = { "x-api-key": apiKey };
 
-  console.log("body", body);
+  // console.log("body", body);
   const payload = {
     network: body.network,
     plan_id: body.plan_id,
@@ -51,7 +51,7 @@ export async function allocateData(body, apiKey) {
 export async function updateMegaPrice(body, apiKey) {
   const headers = { "x-api-key": apiKey };
 
-  console.log("body", body);
+  // console.log("body", body);
   const payload = {
     business_id: body.business_id,
     mtn_sme: body.mtn_sme,
@@ -67,7 +67,7 @@ export async function updateMegaPrice(body, apiKey) {
 export async function purchaseMegaPrice(body, apiKey) {
   const headers = { "x-api-key": apiKey };
 
-  console.log("body", body);
+  // console.log("body", body);
   const payload = {
     business_id: body.business_id,
     network: body.network,
@@ -85,7 +85,7 @@ export async function purchaseMegaPrice(body, apiKey) {
 export async function getUserMegaPrice(id) {
   try {
     const res = await http.get(`${apiUrl}/getMegaPriceUser/${id}`);
-    console.log(res, "jj1");
+    // console.log(res, "jj1");
     return res;
   } catch (error) {
     return null;
@@ -135,7 +135,7 @@ export async function getAllTransactionsV2(
     const transactions = await http.get(
       `${apiUrlV2}/transactions?limit=${limit}&offset=${offset}`
     );
-    console.log({ transactions });
+    // console.log({ transactions });
     return transactions.data;
   } catch (error) {
     return { data: [] };
@@ -164,7 +164,7 @@ export async function getMegaPurchaseTransactions(
     const transactions = await http.get(
       `${apiUrl}/getMegaHistory/${userId}?limit=${limit}`
     );
-    console.log(limit, "trans56");
+    // console.log(limit, "trans56");
     return transactions.data;
   } catch (error) {
     return { data: [] };
@@ -179,7 +179,7 @@ export async function PurchaseMegaPriceTransactions(
     const transactions = await http.get(
       `${apiUrl}/getMegaHistory/${userId}?limit=${limit}`
     );
-    console.log(transactions, "moni");
+    // console.log(transactions, "moni");
     return transactions.data;
   } catch (error) {
     return { data: [] };
@@ -191,7 +191,7 @@ export async function getSubDealers({ userId }) {
     const subDealer = await http.get(
       `${apiUrl}/subdealer/getAllSubdealersId/${userId}`
     );
-    console.log(subDealer, "sub");
+    // console.log(subDealer, "sub");
     return subDealer.data?.subdealers;
   } catch (error) {
     return { data: [] };
@@ -203,7 +203,7 @@ export async function getSubDealerInfo({ userId }) {
     const subDealer = await http.get(
       `${apiUrl}/subdealer/getSubdealersInfo/${userId}`
     );
-    console.log(subDealer, "subInfo");
+    // console.log(subDealer, "subInfo");
     return subDealer.data?.subdealers;
   } catch (error) {
     return { data: {} };
@@ -217,7 +217,7 @@ export async function getMonifyTransactions(
     const transactions = await http.get(
       `${apiUrl}/getMonnifyTrx/${userId}?limit=${limit}`
     );
-    console.log(transactions, "moni");
+    // console.log(transactions, "moni");
     return transactions.data;
   } catch (error) {
     return { data: [] };
@@ -232,7 +232,7 @@ export async function PurchaseMonifyTransactions(
     const transactions = await http.get(
       `${apiUrl}/getMonnifyTrx/${userId}?limit=${limit}`
     );
-    console.log(transactions, "monify");
+    // console.log(transactions, "monify");
     return transactions.data;
   } catch (error) {
     return { data: [] };

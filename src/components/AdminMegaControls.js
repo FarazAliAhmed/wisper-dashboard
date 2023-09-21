@@ -55,8 +55,6 @@ const AdminMegaControls = () => {
     }
   };
 
-  console.log(maintenance);
-
   return (
     <Card>
       <Row>

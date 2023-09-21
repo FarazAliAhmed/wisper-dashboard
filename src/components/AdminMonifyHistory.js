@@ -138,7 +138,6 @@ const AdminMonifyHistory = ({ businessId }) => {
       if (!loading) {
         setLoading(true);
         const resp = await getMonifyTransactions(pagination);
-        console.log("lsk", resp);
         setTransactions(resp);
         setLoading(false);
       }

@@ -42,7 +42,6 @@ const AllocateDataMA = () => {
 
   const bankAccounts = user?.bankAccounts;
 
-  console.log("user", user);
   return (
     <FullLayout>
       <div>

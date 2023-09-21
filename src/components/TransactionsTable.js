@@ -30,8 +30,6 @@ const TransactionsTable = ({
 }) => {
   const [transactionsData, setTransactionsData] = useState([...transactions]);
 
-  // console.log(transactions);
-
   const { user } = useUser();
 
   const [isOpen, setIsOpen] = useState(false);

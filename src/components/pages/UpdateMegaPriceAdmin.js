@@ -11,8 +11,6 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
 const UpdateMegaPrice = ({ userId }) => {
-  console.log("businessId", userId);
-
   return (
     <div className="umpa__container">
       <div className="umpa__content">

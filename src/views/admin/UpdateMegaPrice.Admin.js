@@ -64,7 +64,6 @@ const Pricing = () => {
 
   useEffect(async () => {
     await getUserMegaPrice(id).then((res) => {
-      console.log("mega", res);
       if (res) {
         const data = res.data;
         setPlan({
