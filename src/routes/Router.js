@@ -76,7 +76,7 @@ const Routes = () => {
           {/* {user?.type == "mega" && (
             <ProtectedRoute path="/sub-dealers" component={SubDealers} />
           )}
-y
+
           {user?.type == "mega" && (
             <ProtectedRoute
               path="/subDealer/business/:businessId"

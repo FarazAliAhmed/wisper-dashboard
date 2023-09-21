@@ -192,29 +192,29 @@ const BuyBulkData = () => {
                         <option selected disabled>
                           ---Select Bucket---
                         </option>
-                        {maintenance["airtel"] && (
+                        {!maintenance["airtel"] && (
                           <option value="airtel">
                             AIRTEL: {Number(mega_wallet.airtel) / 1000}GB
                           </option>
                         )}
-                        {maintenance["glo"] && (
+                        {!maintenance["glo"] && (
                           <option value="glo">
                             GLO: {Number(mega_wallet.glo) / 1000}GB{" "}
                           </option>
                         )}
-                        {maintenance["9mobile"] && (
+                        {!maintenance["9mobile"] && (
                           <option value="9mobile">
                             9MOBILE: {Number(mega_wallet["9mobile"]) / 1000}GB{" "}
                           </option>
                         )}
-                        {maintenance["mtn_gifting"] && (
+                        {!maintenance["mtn_gifting"] && (
                           <option value="mtn_gifting">
                             MTN GIFTING:{" "}
                             {Number(mega_wallet.mtn_gifting) / 1000}
                             GB
                           </option>
                         )}
-                        {maintenance["mtn_sme"] && (
+                        {!maintenance["mtn_sme"] && (
                           <option value="mtn_sme">
                             MTN[SME]: {Number(mega_wallet.mtn_sme) / 1000}GB
                           </option>
@@ -279,31 +279,31 @@ const BuyBulkData = () => {
                   <CardBody>
                     <div className="py-2 border-bottom">
                       MTN [SME]:{" "}
-                      {maintenance["mtn_sme"]
+                      {!maintenance["mtn_sme"]
                         ? ` ₦${megaPriceUser.mtn_sme}`
                         : "unavailable"}
                     </div>
                     <div className="py-2 border-bottom">
                       GLO:{" "}
-                      {maintenance["glo"]
+                      {!maintenance["glo"]
                         ? ` ₦${megaPriceUser.glo}`
                         : "unavailable"}
                     </div>
                     <div className="py-2 border-bottom">
                       MTN CG:{" "}
-                      {maintenance["mtn_gifting"]
+                      {!maintenance["mtn_gifting"]
                         ? ` ₦${megaPriceUser.mtn_gifting}`
                         : "unavailable"}
                     </div>
                     <div className="py-2 border-bottom ">
                       9MOBILE:{" "}
-                      {maintenance["9mobile"]
+                      {!maintenance["9mobile"]
                         ? ` ₦${megaPriceUser["9mobile"]}`
                         : "unavailable"}
                     </div>
                     <div className="py-2 ">
                       Airtel:{" "}
-                      {maintenance["airtel"]
+                      {!maintenance["airtel"]
                         ? ` ₦${megaPriceUser.airtel}`
                         : "unavailable"}
                     </div>
