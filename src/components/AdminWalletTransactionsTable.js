@@ -19,6 +19,9 @@ import moment from "moment";
 import MonifyReceipt from "./MonifyReceipt";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import AdminWalletTransactionReceipt from "./AdminWalletTransactionsReceipt";
+import CopyToClipboard from "react-copy-to-clipboard";
+import { MdOutlineContentCopy } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const AdminWalletTransactionsTable = ({
   transactions,
@@ -116,7 +119,21 @@ const AdminWalletTransactionsTable = ({
                             </Link>
                           </td>
 
-                          <td>{shortenValue(tx.business_id)}</td>
+                          <td>
+                            {" "}
+                            <CopyToClipboard
+                              text={tx.business_id}
+                              onCopy={() => {
+                                toast.success("Copied!");
+                              }}
+                            >
+                              <MdOutlineContentCopy
+                                color="black"
+                                cursor={"pointer"}
+                              />
+                            </CopyToClipboard>
+                            {shortenValue(tx.business_id)}
+                          </td>
                           <td>{shortenValue(tx.payment_ref)}</td>
                           <td>₦{tx.amount}</td>
                           <td>{tx.purpose}</td>
