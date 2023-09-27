@@ -28,6 +28,7 @@ const Register = lazy(() => import("../views/auth/Register"));
 const Dashboard = lazy(() => import("../views/ui/Dashboard.js"));
 const AllocateData = lazy(() => import("../views/ui/AllocateData"));
 const BuyBulkData = lazy(() => import("../views/ui/BuyBulkData"));
+const BucketHistory = lazy(() => import("../views/ui/BucketHistory.js"));
 const MonifyWallet = lazy(() => import("../views/ui/MonifyWallet.js"));
 const MegaFunding = lazy(() => import("../views/ui/MegaFunding"));
 const Wallet = lazy(() => import("../views/ui/Wallet"));
@@ -73,7 +74,11 @@ const Routes = () => {
           ) : (
             ""
           )}
-
+          {user?.type == "subdealer" ? (
+            <ProtectedRoute path="/bucketHistory" component={BucketHistory} />
+          ) : (
+            ""
+          )}
           {user?.type == "mega" ? (
             <ProtectedRoute path="/sub-dealers" component={SubDealers} />
           ) : (

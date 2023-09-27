@@ -94,6 +94,11 @@ const subdealerNav = [
     href: "/allocate",
     icon: "bi bi-send",
   },
+  {
+    title: "Bucket History",
+    href: "/bucketHistory",
+    icon: "bi bi-bag",
+  },
   // {
   //   title: "Buy Bulk Data",
   //   href: "/buyBulkData",
