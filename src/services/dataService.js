@@ -82,6 +82,24 @@ export async function purchaseMegaPrice(body, apiKey) {
   return res;
 }
 
+export async function allocateSubDealerPrice(body, apiKey) {
+  const headers = { "x-api-key": apiKey };
+
+  // console.log("body", body);
+  // const payload = {
+  //   business_id: body.business_id,
+  //   network: body.network,
+  //   amountInGB: body.amountInGB,
+  // };
+  const res = await http.post(
+    `${apiUrl}/subdealer/allocateData
+`,
+    body,
+    { headers }
+  );
+  return res;
+}
+
 export async function getUserMegaPrice(id) {
   try {
     const res = await http.get(`${apiUrl}/getMegaPriceUser/${id}`);
@@ -191,8 +209,8 @@ export async function getSubDealers({ userId }) {
     const subDealer = await http.get(
       `${apiUrl}/subdealer/getAllSubdealersId/${userId}`
     );
-    // console.log(subDealer, "sub");
-    return subDealer.data?.subdealers;
+    console.log(subDealer, "sub");
+    return subDealer.data;
   } catch (error) {
     return { data: [] };
   }
@@ -203,10 +221,20 @@ export async function getSubDealerInfo({ userId }) {
     const subDealer = await http.get(
       `${apiUrl}/subdealer/getSubdealersInfo/${userId}`
     );
-    // console.log(subDealer, "subInfo");
-    return subDealer.data?.subdealers;
+    console.log(subDealer, "subInfo");
+    return subDealer.data;
   } catch (error) {
     return { data: {} };
+  }
+}
+
+export async function getSubDealerTransactions({ userId }) {
+  try {
+    const subDealer = await http.get(`${apiUrl}/subdealer/allTrx/${userId}`);
+    console.log(subDealer, "subInfoTrans");
+    return subDealer.data;
+  } catch (error) {
+    return { data: [] };
   }
 }
 
@@ -233,6 +261,22 @@ export async function PurchaseMonifyTransactions(
       `${apiUrl}/getMonnifyTrx/${userId}?limit=${limit}`
     );
     // console.log(transactions, "monify");
+    return transactions.data;
+  } catch (error) {
+    return { data: [] };
+  }
+}
+
+export async function SubDealersAllocationTransactions(
+  { limit, offset, userId } = { limit: 50, offset: 0 }
+) {
+  try {
+    console.log(userId, "ooo882");
+
+    const transactions = await http.get(
+      `${apiUrl}/subdealer/getSubdealerHistory/${userId}?limit=${limit}`
+    );
+    console.log(transactions, "ooo");
     return transactions.data;
   } catch (error) {
     return { data: [] };

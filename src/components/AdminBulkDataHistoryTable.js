@@ -1,0 +1,181 @@
+import React, { useState, useEffect } from "react";
+import Pagination from "./Pagination";
+import moment from "moment";
+
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Table,
+  Col,
+  Row,
+  Button,
+  CardText,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Input,
+  FormGroup,
+} from "reactstrap";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+
+import { paginate } from "../utils";
+import TransactionReceipt from "./TransactionReceipt";
+import { useUser } from "../context/userContext";
+import PurchaseHistoryReceipt from "./PurchaseHistoryReceipt";
+import AdminBulkDataHistoryReceipt from "./AdminBulkDataHistoryReceipt";
+
+const AdminBulkDataHistoryTable = ({
+  transactions,
+  showHeader,
+  showPageSettings = false,
+}) => {
+  const [transactionsData, setTransactionsData] = useState([...transactions]);
+
+  const { user } = useUser();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [searchValue, setSearchValue] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isReversed, setIsReversed] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = "20";
+
+  const [show, setShow] = useState(false);
+  const [receiptdata, setReceiptData] = useState({
+    ...transactionsData[0],
+  });
+
+  const toggleShow = () => {
+    setShow(!show);
+  };
+
+  const showReceipt = (receiptdata) => {
+    setReceiptData(receiptdata);
+    toggleShow();
+  };
+
+  useEffect(() => {
+    const paginatedData = paginate(transactions, currentPage, pageSize);
+    setTransactionsData(paginatedData);
+  }, [currentPage, transactions]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  function shortenValue(value) {
+    const prefix = value.substring(0, 4);
+    const suffix = value.substring(value.length - 4);
+    return `${prefix}...${suffix}`;
+  }
+
+  return (
+    <div>
+      <Row>
+        <Col lg="12">
+          <div>
+            <Card>
+              <CardBody>
+                {showHeader && (
+                  <CardTitle tag="h5">Bulk Data Purchase History</CardTitle>
+                )}
+
+                <div className="legend-container">
+                  <p className="legend">
+                    <span className=" bg-success rounded-circle d-inline-block"></span>{" "}
+                    Successful
+                  </p>
+                  {/*   <p className="legend">
+                    <span className=" bg-warning rounded-circle d-inline-block"></span>{" "}
+                    Processing
+                  </p> */}
+                  <p className="legend">
+                    <span className=" bg-danger rounded-circle d-inline-block"></span>{" "}
+                    Failed
+                  </p>
+                </div>
+                <Table
+                  className="no-wrap mt-3 align-middle"
+                  responsive
+                  borderless
+                >
+                  <thead>
+                    <tr>
+                      <th>Username</th>
+                      <th>Bucket</th>
+                      <th>Data Volume</th>
+                      <th>Cost</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                      <th>Channel</th>
+                      <th>Receipt</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {transactionsData.map((tx, idx) => (
+                      <tr key={idx} className="border-top">
+                        <td>
+                          <Link
+                            to={`/admin/business/${tx.business_id}`}
+                            className="text-decoration-none"
+                          >
+                            {shortenValue(tx.business_id)}
+                          </Link>
+                        </td>
+                        <td>{tx.network}</td>
+                        <td>{tx.volume}GB</td>
+                        <td>₦{tx.amount}</td>
+                        <td>
+                          {tx.status === "pending" ? (
+                            <span className="p-2 bg-warning rounded-circle d-inline-block ms-3"></span>
+                          ) : tx.status === "success" ? (
+                            <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
+                          ) : (
+                            <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
+                          )}
+                        </td>
+                        <td>
+                          {" "}
+                          {moment(tx.createdAt).format(
+                            "YYYY-MM-DD HH:mm:ss"
+                          )}{" "}
+                        </td>
+                        <td>{tx.channel}</td>
+                        <td>
+                          <Button
+                            className="receipt-button"
+                            onClick={() => showReceipt(tx)}
+                          >
+                            View
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+                <AdminBulkDataHistoryReceipt
+                  show={show}
+                  receiptData={receiptdata}
+                  toggleShow={toggleShow}
+                />
+                <Pagination
+                  itemsCount={transactions.length}
+                  pageSize={pageSize}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+                />
+              </CardBody>
+            </Card>
+          </div>
+        </Col>
+      </Row>
+    </div>
+  );
+};
+
+export default AdminBulkDataHistoryTable;

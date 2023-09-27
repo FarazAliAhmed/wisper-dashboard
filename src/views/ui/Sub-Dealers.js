@@ -40,6 +40,7 @@ import { useUser } from "../../context/userContext";
 import { getSubDealers } from "../../services/dataService";
 import Loader from "../../layouts/loader/Loader";
 import moment from "moment";
+import FullLayout from "../../layouts/FullLayout";
 
 const SubDealers = () => {
   const { user } = useUser();
@@ -87,6 +88,7 @@ const SubDealers = () => {
         username: "",
         password: "",
       });
+      window.location.reload();
       // authService.loginWithJwt(response.headers["x-auth-token"]);
       setErrors({});
       // window.location = "/dashboard";
@@ -117,7 +119,7 @@ const SubDealers = () => {
         userId: user?._id,
       });
       console.log("lsk", resp);
-      setSubDealers(resp);
+      setSubDealers(resp?.subdealers);
       setLoading(false);
     };
 
@@ -141,22 +143,26 @@ const SubDealers = () => {
   };
 
   return (
-    <AdminLayout>
+    <FullLayout>
       <div className="sub__dealers__container">
         <h4>Sub Dealers</h4>
         <div className="sub__dealers__head">
-          <FormGroup>
-            <Input
-              onChange={handleSearchChange}
-              value={searchValue}
-              name="search"
-              placeholder="Search"
-              type="text"
-            />
-          </FormGroup>
+          <input
+            onChange={handleSearchChange}
+            value={searchValue}
+            name="search"
+            placeholder="Search"
+            type="text"
+          />
+
           <button
             onClick={() => {
               setConfirm(true);
+            }}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
             }}
           >
             <AiOutlinePlus /> Add Sub Dealers
@@ -212,7 +218,7 @@ const SubDealers = () => {
                   </thead>
                   <tbody>
                     {searchResults.map((tdata, index) => (
-                      <tr className="border-top">
+                      <tr key={index} className="border-top">
                         <td>{index}</td>
                         <td>
                           <div className="d-flex align-items-center py-2">
@@ -438,7 +444,7 @@ const SubDealers = () => {
           <Button onClick={() => setConfirm(false)}>No, Cancel</Button>
         </ModalFooter>
       </Modal>
-    </AdminLayout>
+    </FullLayout>
   );
 };
 

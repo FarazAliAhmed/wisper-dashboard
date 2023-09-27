@@ -15,6 +15,12 @@ import AllocateDataMAdmin from "../views/ui/AllocateDataMAdmin.js";
 const Home = lazy(() => import("../views/Home"));
 const Logout = lazy(() => import("../views/auth/Logout"));
 const Dashboard = lazy(() => import("../views/admin/Dashboard.Admin"));
+const WalletTransaction = lazy(() =>
+  import("../views/admin/WalletTransaction.admin.js")
+);
+const BulkDataHistory = lazy(() =>
+  import("../views/admin/BulkDataHistory.admin.js")
+);
 const CreditAndDebit = lazy(() =>
   import("../views/admin/CreditAndDebit.Admin")
 );
@@ -26,6 +32,13 @@ const BusinessDetails = lazy(() =>
 );
 const Payments = lazy(() => import("../views/admin/Payments.Admin"));
 const Pricing = lazy(() => import("../views/admin/Pricing.Admin"));
+const GloDataResolution = lazy(() =>
+  import("../views/admin/GloDataResolution.Admin.js")
+);
+
+const WalletResolution = lazy(() =>
+  import("../views/admin/WalletResolution.Admin.js")
+);
 const UpdateMegaPrice = lazy(() =>
   import("../views/admin/UpdateMegaPrice.Admin")
 );
@@ -90,8 +103,24 @@ const AdminRoutes = () => {
                 component={ViewPricing}
               />
               <AdminProtectedRoute
+                path="/admin/gloRes"
+                component={GloDataResolution}
+              />
+              <AdminProtectedRoute
+                path="/admin/walletRes"
+                component={WalletResolution}
+              />
+              <AdminProtectedRoute
                 path="/admin/developers"
                 component={Documentation}
+              />
+              <AdminProtectedRoute
+                path="/admin/walletTransactions"
+                component={WalletTransaction}
+              />
+              <AdminProtectedRoute
+                path="/admin/bulkDataHistory"
+                component={BulkDataHistory}
               />
               <AdminProtectedRoute path="/admin/wallet" component={Wallet} />
               <AdminProtectedRoute

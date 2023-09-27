@@ -1,5 +1,5 @@
 import http from "../httpService";
-import { adminUrl, adminUrlV2 } from "../../config";
+import { adminUrl, adminUrlV2, apiUrl } from "../../config";
 
 export const getBusinesses = async () => {
   try {
@@ -96,6 +96,37 @@ export const getMainBalance = async () => {
     const res = await http.get(`${adminUrl}/api/balance`);
 
     return res;
+  } catch (e) {
+    return null;
+  }
+};
+
+export const getTotalBalance = async () => {
+  try {
+    const res = await http.get(`${adminUrl}/analysis/calwalbal`);
+    return res.data.totalWalletBalance;
+  } catch (e) {
+    return null;
+  }
+};
+
+export const getAllWalletTransactions = async (
+  { limit, offset, userId } = { limit: 50, offset: 0 }
+) => {
+  try {
+    const res = await http.get(`${apiUrl}/monnifyGetAll?limit=${limit}`);
+    return res.data;
+  } catch (e) {
+    return null;
+  }
+};
+
+export const getAllBulkDataPurchaseTransactions = async (
+  { limit, offset, userId } = { limit: 50, offset: 0 }
+) => {
+  try {
+    const res = await http.get(`${apiUrl}/getAllMegaHistory?limit=${limit}`);
+    return res.data;
   } catch (e) {
     return null;
   }

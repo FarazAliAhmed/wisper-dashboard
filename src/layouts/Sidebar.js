@@ -73,6 +73,81 @@ const liteNav = [
   },
 ];
 
+const subdealerNav = [
+  {
+    title: "Dashboard",
+    href: "/dashboard",
+    icon: "bi bi-house",
+  },
+  // {
+  //   title: "Buy Data",
+  //   href: "/allocate-data",
+  //   icon: "bi bi-reception-4",
+  // },
+  // {
+  //   title: "Fund Wallet",
+  //   href: "/wallet",
+  //   icon: "bi bi-wallet",
+  // },
+  {
+    title: "Allocate Data",
+    href: "/allocate",
+    icon: "bi bi-send",
+  },
+  // {
+  //   title: "Buy Bulk Data",
+  //   href: "/buyBulkData",
+  //   icon: "bi bi-bag",
+  // },
+
+  // {
+  //   title: "Wallet",
+  //   href: "/monifyWallet",
+  //   icon: "bi bi-wallet2",
+  // },
+
+  // {
+  //   title: "Sub-Dealers",
+  //   href: "/sub-dealers",
+  //   icon: "bi bi-shop",
+  // },
+  // {
+  //   title: "Account",
+  //   href: "/account",
+  //   icon: "bi bi-person",
+  // },
+  // {
+  //   title: "Packages",
+  //   href: "/packages",
+  //   icon: "bi bi-tags",
+  // },
+  // {
+  //   title: "Pricing",
+  //   href: "/pricing",
+  //   icon: "bi bi-tags",
+  // },
+  // {
+  //   title: "Payments",
+  //   href: "/payments",
+  //   icon: "bi bi-credit-card",
+  // },
+  {
+    title: "Transactions",
+    href: "/transactions",
+    icon: "bi bi-cash-stack",
+  },
+  {
+    title: "Settings",
+    href: "/settings",
+    icon: "bi bi-code-slash",
+  },
+  {
+    title: "Logout",
+    href: "/logout",
+    icon: "bi bi-box-arrow-right",
+  },
+];
+
 const megaNav = [
   {
     title: "Dashboard",
@@ -106,11 +181,11 @@ const megaNav = [
     icon: "bi bi-wallet2",
   },
 
-  // {
-  //   title: "Sub-Dealers",
-  //   href: "/sub-dealers",
-  //   icon: "bi bi-shop",
-  // },
+  {
+    title: "Sub-Dealers",
+    href: "/sub-dealers",
+    icon: "bi bi-shop",
+  },
   // {
   //   title: "Account",
   //   href: "/account",
@@ -160,21 +235,33 @@ const adminNav = [
     href: "/admin/business",
     icon: "bi bi-person",
   },
-  {
-    title: "Wallets",
-    href: "/admin/wallet",
-    icon: "bi bi-cash",
-  },
+  // {
+  //   title: "Wallets",
+  //   href: "/admin/wallet",
+  //   icon: "bi bi-cash",
+  // },
   {
     title: "Allocate Data",
     href: "/admin/allocate",
     icon: "bi bi-send",
   },
+
   {
-    title: "Payments",
-    href: "/admin/payment",
-    icon: "bi bi-credit-card",
+    title: "Wallet Transactions",
+    href: "/admin/walletTransactions",
+    icon: "bi bi-wallet2",
   },
+  {
+    title: "Bulk Data History",
+    href: "/admin/bulkDataHistory",
+    icon: "bi bi-bag",
+  },
+
+  // {
+  //   title: "Payments",
+  //   href: "/admin/payment",
+  //   icon: "bi bi-credit-card",
+  // },
   {
     title: "Transactions",
     href: "/admin/transaction",
@@ -185,10 +272,21 @@ const adminNav = [
     href: "/admin/modify-account",
     icon: "bi bi-wrench",
   },
+
+  // {
+  //   title: "Packages",
+  //   href: "/admin/packages",
+  //   icon: "bi bi-tags",
+  // },
   {
-    title: "Packages",
-    href: "/admin/packages",
-    icon: "bi bi-tags",
+    title: "Glo Data Resolution",
+    href: "/admin/gloRes",
+    icon: "bi bi-wrench",
+  },
+  {
+    title: "Wallet Resolution",
+    href: "/admin/walletRes",
+    icon: "bi bi-wrench",
   },
   {
     title: "Maintenance",
@@ -228,6 +326,8 @@ const Sidebar = ({ isAdmin }) => {
     } else {
       if (user.type == "mega") {
         setNav(megaNav);
+      } else if (user.type == "subdealer") {
+        setNav(subdealerNav);
       } else {
         setNav(liteNav);
       }

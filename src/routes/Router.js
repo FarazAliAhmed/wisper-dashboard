@@ -62,34 +62,47 @@ const Routes = () => {
           <ProtectedRoute path="/dashboard" component={Dashboard} />
           {/* <ProtectedRoute path="/packages/:id" component={Pricing} /> */}
           <ProtectedRoute path="/packages" component={ViewPricing} />
-          {user?.type == "mega" ? (
+          {user?.type == "mega" || user?.type == "subdealer" ? (
             <ProtectedRoute path="/allocate" component={AllocateDataMA} />
           ) : (
             <ProtectedRoute path="/allocate" component={AllocateData} />
           )}
-          <ProtectedRoute path="/megaFunding" component={MegaFunding} />
 
-          {user?.type == "mega" && (
+          {user?.type == "mega" ? (
             <ProtectedRoute path="/buyBulkData" component={BuyBulkData} />
+          ) : (
+            ""
           )}
 
-          {/* {user?.type == "mega" && (
+          {user?.type == "mega" ? (
             <ProtectedRoute path="/sub-dealers" component={SubDealers} />
+          ) : (
+            ""
           )}
 
-          {user?.type == "mega" && (
+          {user?.type == "mega" ? (
             <ProtectedRoute
               path="/subDealer/business/:businessId"
               component={SubDealerBusinessDetails}
             />
+          ) : (
+            ""
           )}
 
-          {user?.type == "mega" && (
+          {user?.type == "mega" ? (
             <ProtectedRoute
               path="/subDealer/fund/:businessId"
               component={SubDealerBusinessFund}
             />
-          )} */}
+          ) : (
+            ""
+          )}
+
+          {user?.type != "subdealer" ? (
+            <ProtectedRoute path="/megaFunding" component={MegaFunding} />
+          ) : (
+            ""
+          )}
 
           <ProtectedRoute path="/monifyWallet" component={MonifyWallet} />
 

@@ -331,7 +331,7 @@ const AllocateData = () => {
                   </Col>
                   <Col md={12}>
                     <FormGroup>
-                      <Label for="unit">Business Type</Label>
+                      <Label for="unit">Funding Type</Label>
                       <Input
                         onChange={handleChange}
                         required
@@ -340,8 +340,12 @@ const AllocateData = () => {
                         type="select"
                       >
                         <option selected>--- Select type ---</option>
-                        <option value="money">Lite</option>
-                        <option value="data">Mega</option>
+                        <option value="money">
+                          Wallet Funding (Lite and Mega Users)
+                        </option>
+                        <option value="data">
+                          Bucket Funding (Mega Users Only)
+                        </option>
                       </Input>
                     </FormGroup>
                   </Col>

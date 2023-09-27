@@ -65,19 +65,20 @@ const Dashboard = () => {
             <AdminNotifier maintenance={maintenance} />
           </Row>
         )}
-        <Row>
-          {user.type != "mega" && (
-            <Col sm="6" lg="4">
-              <FundCards
-                bg="bg-light-info text-info"
-                title="Profit"
-                subtitle="Wallet Balance"
-                earning={`₦${cash}`}
-                icon={wallIcon}
-              />
-            </Col>
-          )}
-          {/* 
+        {user?.type != "subdealer" && (
+          <Row>
+            {user.type != "mega" && (
+              <Col sm="6" lg="4">
+                <FundCards
+                  bg="bg-light-info text-info"
+                  title="Profit"
+                  subtitle="Wallet Balance"
+                  earning={`₦${cash}`}
+                  icon={wallIcon}
+                />
+              </Col>
+            )}
+            {/* 
           {user.type != "mega" && (
             <Col sm="6" lg="4">
               <TopCards
@@ -101,20 +102,20 @@ const Dashboard = () => {
             </Col>
           )} */}
 
-          {/***Mega Wallets***/}
-          {user.type === "mega" && (
-            <>
-              <Col sm="6" lg="4">
-                <FundCards
-                  bg="bg-light-info text-info"
-                  title="Profit"
-                  subtitle="Wallet Balance"
-                  earning={`₦${cash}`}
-                  icon={wallIcon}
-                />
-              </Col>
-              {/* MTN and Airtel Wallets */}
-              {/* <Col sm="6" lg="4">
+            {/***Mega Wallets***/}
+            {user.type === "mega" && (
+              <>
+                <Col sm="6" lg="4">
+                  <FundCards
+                    bg="bg-light-info text-info"
+                    title="Profit"
+                    subtitle="Wallet Balance"
+                    earning={`₦${cash}`}
+                    icon={wallIcon}
+                  />
+                </Col>
+                {/* MTN and Airtel Wallets */}
+                {/* <Col sm="6" lg="4">
                 <TopCards
                   bg="bg-light-info text-info"
                   title="Profit"
@@ -123,7 +124,55 @@ const Dashboard = () => {
                   icon="bi bi-wallet-fill"
                 />
               </Col> */}
-              <Col sm="6" lg="4">
+                <Col sm="6" lg="4">
+                  <TopCards
+                    bg="bg-light-warning text-warning"
+                    title="Refunds"
+                    subtitle="MTN"
+                    earning={`${mega_wallet.mtn_gifting / 1000} GB`}
+                    icon={mtn1}
+                  />
+                </Col>
+                <Col sm="6" lg="4">
+                  <TopCards
+                    bg="bg-light-success text-success"
+                    title="New Project"
+                    subtitle="Airtel"
+                    earning={`${mega_wallet.airtel / 1000} GB`}
+                    icon={airtel}
+                  />
+                </Col>
+
+                {/* Glo wallet - Hidden for now */}
+                <Col sm="6" lg="4">
+                  <TopCards
+                    bg="bg-light-info text-info"
+                    title="Profit"
+                    subtitle="GLO"
+                    earning={`${mega_wallet.glo / 1000} GB`}
+                    icon={glo}
+                  />
+                </Col>
+
+                {/* 9Mobile wallet */}
+                <Col sm="6" lg="4">
+                  <TopCards
+                    bg="bg-light-info text-info"
+                    title="Profit"
+                    subtitle="9 Mobile"
+                    earning={`${mega_wallet["9mobile"] / 1000} GB`}
+                    icon={mob9}
+                  />
+                </Col>
+              </>
+            )}
+          </Row>
+        )}
+
+        {user?.type == "subdealer" && (
+          <Row lg={12}>
+            <Row lg={12}>
+              <Col sm="6" lg="6">
                 <TopCards
                   bg="bg-light-warning text-warning"
                   title="Refunds"
@@ -132,7 +181,7 @@ const Dashboard = () => {
                   icon={mtn1}
                 />
               </Col>
-              <Col sm="6" lg="4">
+              <Col sm="6" lg="6">
                 <TopCards
                   bg="bg-light-success text-success"
                   title="New Project"
@@ -141,9 +190,10 @@ const Dashboard = () => {
                   icon={airtel}
                 />
               </Col>
-
-              {/* Glo wallet - Hidden for now */}
-              <Col sm="6" lg="4">
+            </Row>
+            {/* Glo wallet - Hidden for now */}
+            <Row lg={12}>
+              <Col sm="6" lg="6">
                 <TopCards
                   bg="bg-light-info text-info"
                   title="Profit"
@@ -154,7 +204,7 @@ const Dashboard = () => {
               </Col>
 
               {/* 9Mobile wallet */}
-              <Col sm="6" lg="4">
+              <Col sm="6" lg="6">
                 <TopCards
                   bg="bg-light-info text-info"
                   title="Profit"
@@ -163,9 +213,9 @@ const Dashboard = () => {
                   icon={mob9}
                 />
               </Col>
-            </>
-          )}
-        </Row>
+            </Row>
+          </Row>
+        )}
 
         {user ? (
           user?.type === "mega" ? (

@@ -34,6 +34,8 @@ const Settings = () => {
   const context = useUser();
   const [confirm, setConfirm] = useState(false);
 
+  const { user: userObj } = useUser();
+
   const [user, setUser] = useState({
     name: "",
     mobile_number: "",
@@ -123,7 +125,7 @@ const Settings = () => {
     setErrors(validationErrors);
   };
 
-  const navItems = ["Profile", "Security", "Developer"];
+  const navItems = ["Profile", "Security", "Developer", "Dealer"];
   return (
     <FullLayout>
       <div>
@@ -337,6 +339,85 @@ const Settings = () => {
         {navState == 2 && (
           <>
             <_Documentation />
+          </>
+        )}
+
+        {navState == 3 && (
+          <>
+            {userObj?.type == "subdealer" ? (
+              <Card body>
+                {serverResponse.message.length > 0 && (
+                  <>
+                    {serverResponse.status ? (
+                      <UncontrolledAlert dismissible color="success">
+                        {serverResponse.message}
+                      </UncontrolledAlert>
+                    ) : (
+                      <UncontrolledAlert dismissible color="danger">
+                        {serverResponse.message}
+                      </UncontrolledAlert>
+                    )}
+                  </>
+                )}
+                <Form onSubmit={handleSubmit}>
+                  <Row form>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label for="fullName">Business Name</Label>
+                        <Input
+                          id="fullName"
+                          name="name"
+                          value={""}
+                          disabled
+                          type="text"
+                        />
+                        <FormFeedback>{errors.name}</FormFeedback>
+                      </FormGroup>
+                    </Col>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label for="username">Username</Label>
+                        <Input
+                          value={""}
+                          id="username"
+                          disabled
+                          name="username"
+                          type="username"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label for="email">Email</Label>
+                        <Input
+                          value={""}
+                          disabled
+                          id="email"
+                          name="email"
+                          placeholder="example@mail.com"
+                          type="email"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label for="mobile_number">Phone Number</Label>
+                        <Input
+                          value={""}
+                          id="mobile_number"
+                          name="mobile_number"
+                          disabled
+                          type="number"
+                        />
+                        <FormFeedback>{errors.mobile_number}</FormFeedback>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </Form>
+              </Card>
+            ) : (
+              ""
+            )}
           </>
         )}
       </div>

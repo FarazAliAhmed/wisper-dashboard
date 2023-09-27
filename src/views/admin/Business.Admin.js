@@ -38,6 +38,7 @@ const Business = () => {
 
     setSearchResults(results);
   };
+  console.log("jj", business);
 
   return (
     <AdminLayout>
@@ -131,7 +132,7 @@ const Business = () => {
           <Card>
             <CardBody>
               <CardTitle className="text-center" tag="h5">
-                Mega Accounts
+                Results
               </CardTitle>
               {/*      <CardSubtitle
               className="mb-2 d-block text-danger text-center"
@@ -232,6 +233,55 @@ const Business = () => {
                       <td>{tdata.email}</td>
                       <td>{tdata.mobile_number}</td>
                       <td>{tdata.type}</td>
+                      <td>{tdata.createdAt.split("T")[0]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </CardBody>
+          </Card>
+        )}
+
+        {searchResults.length === 0 && (
+          <Card>
+            <CardBody>
+              <CardTitle className="text-center" tag="h5">
+                Sub Dealers Accounts
+              </CardTitle>
+
+              <Table
+                striped
+                className="no-wrap mt-3 align-middle"
+                responsive
+                borderless
+              >
+                <thead>
+                  <tr>
+                    <th>S/N</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Created At</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {business.subdealer.map((tdata, index) => (
+                    <tr key={index} className="border-top">
+                      <td>{index}</td>
+                      <td>
+                        <div className="d-flex align-items-center py-2">
+                          <Link
+                            to={`/admin/business/${tdata._id}`}
+                            className="text-decoration-none"
+                          >
+                            <h6 className="mb-0">{tdata.name}</h6>
+                          </Link>
+                        </div>
+                      </td>
+                      <td>{tdata.username}</td>
+                      <td>{tdata.email}</td>
+                      <td>{tdata.mobile_number}</td>
                       <td>{tdata.createdAt.split("T")[0]}</td>
                     </tr>
                   ))}

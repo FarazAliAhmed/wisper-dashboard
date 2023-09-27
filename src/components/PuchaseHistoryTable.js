@@ -102,6 +102,7 @@ const PurchaseHistoryTable = ({
                       <th>Cost</th>
                       <th>Status</th>
                       <th>Date</th>
+                      <th>Channel</th>
                       <th>Receipt</th>
                     </tr>
                   </thead>
@@ -126,6 +127,7 @@ const PurchaseHistoryTable = ({
                             "YYYY-MM-DD HH:mm:ss"
                           )}{" "}
                         </td>
+                        <td>{tx.channel}</td>
 
                         <td>
                           <Button

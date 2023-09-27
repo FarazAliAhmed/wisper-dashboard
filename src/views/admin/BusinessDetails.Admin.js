@@ -40,6 +40,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import AdminMonifyHistory from "../../components/AdminMonifyHistory";
 import AdminPurchaseHistory from "../../components/AdminPurchaseHistory";
 import moment from "moment";
+import AdminSubDealers from "../ui/AdminSub-Dealers";
 
 const Account = (props) => {
   const [business, setBusiness] = useState({});
@@ -49,6 +50,7 @@ const Account = (props) => {
   const [type, setType] = useState();
   const [loading, setLoading] = useState(false);
   const [cashBalance, setCashBalance] = useState(0);
+  const [subBalance, setSubBalance] = useState({});
   const [navState, setNavState] = useState(0);
 
   const businessId = props.match.params.businessId;
@@ -79,11 +81,10 @@ const Account = (props) => {
         )
       );
       setCashBalance(wallet_balance);
+      setSubBalance(mega_wallet);
     }
     fetchBusinessDetails();
   }, []);
-
-  console.log("bal", balanceDisplay);
 
   const handleRemoveAdmin = async () => {
     setLoading(true);
@@ -127,7 +128,7 @@ const Account = (props) => {
     setType("mega");
   };
 
-  const navItems = ["Transactions", "Wallet", "Data Purchase"];
+  const navItems = ["Transactions", "Wallet", "Data Purchase", "Sub Dealers"];
   const dateObject = moment(business?.createdAt);
 
   const formattedDate = dateObject.format("YYYY-MM-DD");
@@ -240,6 +241,20 @@ const Account = (props) => {
                       />
                     </FormGroup>
                   </Col>
+                  {business?.type == "subdealer" && (
+                    <Col md={12}>
+                      <FormGroup>
+                        <Label for="dealer">Dealer Id</Label>
+                        <Input
+                          value={business?.dealer}
+                          disabled
+                          id="dealer"
+                          name="dealer"
+                          type="text"
+                        />
+                      </FormGroup>
+                    </Col>
+                  )}
                   <Col md={12}>
                     <FormGroup>
                       <Label for="username">Username</Label>
@@ -306,15 +321,17 @@ const Account = (props) => {
 
           <Col lg="5">
             <Row>
-              <Col sm="6" lg="9">
-                <TopCards
-                  bg="bg-light-info text-info"
-                  title="Profit"
-                  subtitle="Balance"
-                  earning={`₦${cashBalance}`}
-                  icon={wallIcon}
-                />
-              </Col>
+              {business.type !== "subdealer" && (
+                <Col sm="6" lg="9">
+                  <TopCards
+                    bg="bg-light-info text-info"
+                    title="Profit"
+                    subtitle="Balance"
+                    earning={`₦${cashBalance}`}
+                    icon={wallIcon}
+                  />
+                </Col>
+              )}
               {/* <Col sm="6" lg="9">
                 <TopCards
                   bg="bg-light-danger text-danger"
@@ -335,7 +352,7 @@ const Account = (props) => {
               </Col> */}
 
               {/***Mega Wallets***/}
-              {business.type === "mega" && (
+              {business.type === "mega" || business.type === "subdealer" ? (
                 <>
                   {/* MTN and Airtel Wallets */}
                   {/* <Col sm="6" lg="9">
@@ -388,6 +405,8 @@ const Account = (props) => {
                     />
                   </Col>
                 </>
+              ) : (
+                ""
               )}
             </Row>
           </Col>
@@ -431,6 +450,13 @@ const Account = (props) => {
             <>
               {/* <h5 className="mb-4 mt-3">Business Transactions</h5> */}
               <AdminPurchaseHistory businessId={businessId} />
+            </>
+          )}
+
+          {navState == 3 && (
+            <>
+              {/* <h5 className="mb-4 mt-3">Business Transactions</h5> */}
+              <AdminSubDealers businessId={businessId} />
             </>
           )}
         </Row>

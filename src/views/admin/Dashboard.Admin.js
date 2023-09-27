@@ -76,7 +76,7 @@ const Dashboard = () => {
               icon={airtel}
             />
           </Col> */}
-          <Col sm="6" lg="4">
+          {/* <Col sm="6" lg="4">
             <TopCards
               bg="bg-light-danger text-danger"
               title="Refunds"
@@ -102,7 +102,7 @@ const Dashboard = () => {
               earning={`${balanceDisplay}`}
               icon={tranIcon}
             />
-          </Col>
+          </Col> */}
           {/***Mega Wallets***/}
           {user.type === "mega" && (
             <>

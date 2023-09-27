@@ -36,11 +36,15 @@ import {
 } from "../../utils";
 import { useAdmin } from "../../context/adminContext";
 import MonifyHistory from "../../components/MonifyHistory";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom";
 import AdminMonifyHistory from "../../components/AdminMonifyHistory";
 import AdminPurchaseHistory from "../../components/AdminPurchaseHistory";
 import moment from "moment";
-import { getSubDealerInfo } from "../../services/dataService";
+import {
+  getSubDealerInfo,
+  getSubDealerTransactions,
+} from "../../services/dataService";
+import SubDealerPurchaseHistory from "../../components/SubDealerPurchaseHistory";
 
 const BusinessDetails = (props) => {
   const [business, setBusiness] = useState({});
@@ -52,32 +56,43 @@ const BusinessDetails = (props) => {
   const [cashBalance, setCashBalance] = useState(0);
   const [navState, setNavState] = useState(0);
   const [subDealer, setSubDealer] = useState({});
+  const [subDealerTransactions, setSubDealerTransactions] = useState([]);
 
   const [mega_wallet, setMega_Wallet] = useState("");
-  const [transaction, setTransaction] = useState("");
+  const [balances, setBalances] = useState({});
 
-  const businessId = props.match.params.businessId;
+  const { businessId } = useParams();
+  // const { transaction } = useAdmin();
 
   // const mega_wallet = business?.balance?.mega_wallet;
 
-  // const { transaction } = useAdmin();
+  // console.log(transaction);
 
-  // console.log(transaction)
-
-  console.log("bal", balanceDisplay);
+  console.log("bal", balances);
 
   const handleGetSubDealerInfo = async () => {
     setLoading(true);
     const resp = await getSubDealerInfo({
       userId: businessId,
     });
-    setSubDealer(resp);
+    setSubDealer(resp?.subdealers);
+    setBalances(resp?.dataBalance);
+    setLoading(false);
+  };
 
+  const handleGetSubDealerTransactions = async () => {
+    setLoading(true);
+    const resp = await getSubDealerTransactions({
+      userId: businessId,
+    });
+    setSubDealerTransactions(resp?.subdealers);
+    // setBalances(resp?.dataBalance);
     setLoading(false);
   };
 
   useEffect(() => {
     handleGetSubDealerInfo();
+    handleGetSubDealerTransactions();
   }, []);
 
   const handleMakeAdmin = async () => {
@@ -115,7 +130,9 @@ const BusinessDetails = (props) => {
     setType("mega");
   };
 
-  const navItems = ["Transactions", "Wallet", "Data Purchase"];
+  console.log(balances, "bb");
+
+  const navItems = ["Transactions", "Allocation"];
   const dateObject = moment(business?.createdAt);
 
   const formattedDate = dateObject.format("YYYY-MM-DD");
@@ -128,11 +145,9 @@ const BusinessDetails = (props) => {
         <Button color="primary">Back</Button>
       </Link>{" "}
       &nbsp;
-      {/* {isAdmin && (
-        <Button disabled={loading} onClick={handleRemoveAdmin} color="danger">
-          {loading ? "Please wait..." : "Remove from admin"}
-        </Button>
-      )} */}
+      <Button disabled={loading} onClick={""} color="danger">
+        {loading ? "Please wait..." : "Remove Subdealer"}
+      </Button>
       {/* {!isAdmin && (
         <Button disabled={loading} onClick={handleMakeAdmin} color="success">
           {loading ? "Please wait..." : "Make admin"}
@@ -279,7 +294,7 @@ const BusinessDetails = (props) => {
 
           <Col lg="5">
             <Row>
-              <Col sm="6" lg="9">
+              {/* <Col sm="6" lg="9">
                 <TopCards
                   bg="bg-light-info text-info"
                   title="Profit"
@@ -287,7 +302,7 @@ const BusinessDetails = (props) => {
                   earning={`₦${cashBalance}`}
                   icon={wallIcon}
                 />
-              </Col>
+              </Col> */}
               {/* <Col sm="6" lg="9">
                 <TopCards
                   bg="bg-light-danger text-danger"
@@ -308,62 +323,92 @@ const BusinessDetails = (props) => {
               </Col> */}
 
               {/***Mega Wallets***/}
-              {business.type === "mega" && (
-                <>
-                  {/* MTN and Airtel Wallets */}
-                  {/* <Col sm="6" lg="9">
-                    <TopCards
-                      bg="bg-light-info text-info"
-                      title="Profit"
-                      subtitle="MTN SME"
-                      earning={`${mega_wallet.mtn_sme} ${mega_wallet.unit}`}
-                      icon="bi bi-wallet-fill"
-                    />
-                  </Col> */}
-                  <Col sm="6" lg="9">
-                    <TopCards
-                      bg="bg-light-warning text-warning"
-                      title="Refunds"
-                      subtitle="MTN Gifting"
-                      earning={`${mega_wallet.mtn_gifting / 1000} GB`}
-                      icon={mtn1}
-                    />
-                  </Col>
-                  <Col sm="6" lg="9">
-                    <TopCards
-                      bg="bg-light-success text-success"
-                      title="New Project"
-                      subtitle="Airtel"
-                      earning={`${mega_wallet.airtel / 1000} GB`}
-                      icon={airtel}
-                    />
-                  </Col>
 
-                  {/* Glo wallet - Hidden for now */}
-                  <Col sm="6" lg="9">
-                    <TopCards
-                      bg="bg-light-info text-info"
-                      title="Profit"
-                      subtitle="GLO"
-                      earning={`${mega_wallet.glo / 1000} GB`}
-                      icon={glo}
-                    />
-                  </Col>
+              {/* MTN and Airtel Wallets */}
+              <Col sm="6" lg="9">
+                <TopCards
+                  bg="bg-light-info text-info"
+                  title="Profit"
+                  subtitle="MTN SME"
+                  earning={`${balances?.mega_wallet?.mtn_sme / 1000} GB`}
+                  icon={mtn1}
+                />
+              </Col>
+              <Col sm="6" lg="9">
+                <TopCards
+                  bg="bg-light-warning text-warning"
+                  title="Refunds"
+                  subtitle="MTN Gifting"
+                  earning={`${balances?.mega_wallet?.mtn_gifting / 1000} GB`}
+                  icon={mtn1}
+                />
+              </Col>
+              <Col sm="6" lg="9">
+                <TopCards
+                  bg="bg-light-success text-success"
+                  title="New Project"
+                  subtitle="Airtel"
+                  earning={`${balances?.mega_wallet?.airtel / 1000} GB`}
+                  icon={airtel}
+                />
+              </Col>
 
-                  {/* 9Mobile wallet */}
-                  <Col sm="6" lg="9">
-                    <TopCards
-                      bg="bg-light-info text-info"
-                      title="Profit"
-                      subtitle="9Mobile"
-                      earning={`${mega_wallet["9mobile"] / 1000} GB`}
-                      icon={mob9}
-                    />
-                  </Col>
-                </>
-              )}
+              {/* Glo wallet - Hidden for now */}
+              <Col sm="6" lg="9">
+                <TopCards
+                  bg="bg-light-info text-info"
+                  title="Profit"
+                  subtitle="GLO"
+                  earning={`${balances?.mega_wallet?.glo / 1000} GB`}
+                  icon={glo}
+                />
+              </Col>
+
+              {/* 9Mobile wallet */}
+              <Col sm="6" lg="9">
+                <TopCards
+                  bg="bg-light-info text-info"
+                  title="Profit"
+                  subtitle="9Mobile"
+                  earning={`${balances?.mega_wallet?.["9mobile"] / 1000} GB`}
+                  icon={mob9}
+                />
+              </Col>
             </Row>
           </Col>
+        </Row>
+
+        <Row className="mt-4">
+          <h3>Sub Dealer Table Data</h3>
+
+          <div className="settings__nav">
+            {navItems.map((item, index) => (
+              <p
+                onClick={() => {
+                  setNavState(index);
+                }}
+                key={index}
+                className={navState == index ? "activeNav__item" : ""}
+              >
+                {item}
+              </p>
+            ))}
+          </div>
+          {navState == 0 && (
+            <>
+              {/* <h5 className="mb-4 mt-3">Business Transactions</h5> */}
+              <TransactionsTable
+                transactions={subDealerTransactions}
+                showHeader={true}
+              />
+            </>
+          )}
+          {navState == 1 && (
+            <>
+              {/* <h5 className="mb-4 mt-3">Business Transactions</h5> */}
+              <SubDealerPurchaseHistory businessId={businessId} />
+            </>
+          )}
         </Row>
       </div>
     </AdminLayout>
