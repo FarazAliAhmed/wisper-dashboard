@@ -29,18 +29,29 @@ import { toast } from "react-hot-toast";
 import { BeatLoader } from "react-spinners";
 
 import _Documentation from "../../components/pages/Documentation";
+import { getSubDealerInfo } from "../../services/dataService";
 
 const Settings = () => {
   const context = useUser();
   const [confirm, setConfirm] = useState(false);
 
   const { user: userObj } = useUser();
+  const [dealer, setDealer] = useState({});
 
   const [user, setUser] = useState({
     name: "",
     mobile_number: "",
     address: "",
   });
+  const handleGetSubDealerInfo = async () => {
+    setLoading(true);
+    const resp = await getSubDealerInfo({
+      userId: userObj?.dealer,
+    });
+    setDealer(resp?.subdealers);
+
+    setLoading(false);
+  };
 
   const [passwordChange, setPasswordChange] = useState({
     currentPass: "",
@@ -60,6 +71,7 @@ const Settings = () => {
 
   useEffect(() => {
     setUser(reqObj);
+    handleGetSubDealerInfo();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -125,23 +137,40 @@ const Settings = () => {
     setErrors(validationErrors);
   };
 
+  console.log(dealer, "dealer");
   const navItems = ["Profile", "Security", "Developer", "Dealer"];
   return (
     <FullLayout>
       <div>
         <h4 className="mb-4 mt-3">Settings</h4>
         <div className="settings__nav">
-          {navItems.map((item, index) => (
-            <p
-              onClick={() => {
-                setNavState(index);
-              }}
-              key={index}
-              className={navState == index ? "activeNav__item" : ""}
-            >
-              {item}
-            </p>
-          ))}
+          {navItems.map((item, index) =>
+            index !== 3 ? (
+              <p
+                onClick={() => {
+                  setNavState(index);
+                }}
+                key={index}
+                className={navState === index ? "activeNav__item" : ""}
+              >
+                {item}
+              </p>
+            ) : (
+              <>
+                {userObj.type == "subdealer" && (
+                  <p
+                    onClick={() => {
+                      setNavState(index);
+                    }}
+                    key={index}
+                    className={navState === index ? "activeNav__item" : ""}
+                  >
+                    {item}
+                  </p>
+                )}
+              </>
+            )
+          )}
         </div>
         {navState == 0 && (
           <Card body>
@@ -367,7 +396,7 @@ const Settings = () => {
                         <Input
                           id="fullName"
                           name="name"
-                          value={""}
+                          value={dealer?.name}
                           disabled
                           type="text"
                         />
@@ -378,7 +407,7 @@ const Settings = () => {
                       <FormGroup>
                         <Label for="username">Username</Label>
                         <Input
-                          value={""}
+                          value={dealer?.username}
                           id="username"
                           disabled
                           name="username"
@@ -390,7 +419,7 @@ const Settings = () => {
                       <FormGroup>
                         <Label for="email">Email</Label>
                         <Input
-                          value={""}
+                          value={dealer?.email}
                           disabled
                           id="email"
                           name="email"
@@ -403,13 +432,12 @@ const Settings = () => {
                       <FormGroup>
                         <Label for="mobile_number">Phone Number</Label>
                         <Input
-                          value={""}
+                          value={dealer?.mobile_number}
                           id="mobile_number"
                           name="mobile_number"
                           disabled
                           type="number"
                         />
-                        <FormFeedback>{errors.mobile_number}</FormFeedback>
                       </FormGroup>
                     </Col>
                   </Row>

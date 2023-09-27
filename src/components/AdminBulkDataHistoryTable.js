@@ -124,7 +124,7 @@ const AdminBulkDataHistoryTable = ({
                             to={`/admin/business/${tx.business_id}`}
                             className="text-decoration-none"
                           >
-                            {shortenValue(tx.business_id)}
+                            {tx.username}
                           </Link>
                         </td>
                         <td>{tx.network}</td>

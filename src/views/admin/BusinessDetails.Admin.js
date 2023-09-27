@@ -416,17 +416,33 @@ const Account = (props) => {
           <h3>Business Table Data</h3>
 
           <div className="settings__nav">
-            {navItems.map((item, index) => (
-              <p
-                onClick={() => {
-                  setNavState(index);
-                }}
-                key={index}
-                className={navState == index ? "activeNav__item" : ""}
-              >
-                {item}
-              </p>
-            ))}
+            {navItems.map((item, index) =>
+              index !== 3 ? (
+                <p
+                  onClick={() => {
+                    setNavState(index);
+                  }}
+                  key={index}
+                  className={navState === index ? "activeNav__item" : ""}
+                >
+                  {item}
+                </p>
+              ) : (
+                <>
+                  {business.type == "mega" && (
+                    <p
+                      onClick={() => {
+                        setNavState(index);
+                      }}
+                      key={index}
+                      className={navState === index ? "activeNav__item" : ""}
+                    >
+                      {item}
+                    </p>
+                  )}
+                </>
+              )
+            )}
           </div>
           {navState == 0 && (
             <>

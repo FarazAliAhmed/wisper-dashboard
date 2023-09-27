@@ -157,14 +157,14 @@ const SubDealerFunding = () => {
       <div>
         <div className="data__heading">
           <h5 className="mb-4 mt-3">Fund Data Bucket</h5>
-          <h5
+          {/* <h5
             // style={{
             //   fontSize: "17px",
             // }}
             className="mb-4 mt-3"
           >
             <img src={wallIcon} /> ₦{cash}
-          </h5>
+          </h5> */}
         </div>
 
         <Card body>
