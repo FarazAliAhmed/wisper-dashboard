@@ -162,6 +162,39 @@ export const generateCreditPayment = async (body) => {
   }
 };
 
+export const adminMonifyCreditPurchase = async (body) => {
+  try {
+    console.log(body, "body");
+    const res = await http.post(`${apiUrl}/monnifyAdminAddBalance`, body);
+
+    return res;
+  } catch (e) {
+    return e;
+  }
+};
+
+export const adminMonifyDebitPurchase = async (body) => {
+  try {
+    console.log(body, "body");
+
+    const res = await http.post(`${apiUrl}/monnifyAdminDebitBalance`, body);
+
+    return res;
+  } catch (e) {
+    return e;
+  }
+};
+
+// export const purchaseAdminMegaData = async (body) => {
+//   try {
+//     const res = await http.post(`${apiUrl}/purchaseAdminMegaData`, body);
+
+//     return res;
+//   } catch (e) {
+//     return e;
+//   }
+// };
+
 export const updatePayType = async (body) => {
   try {
     const res = await http.post(`${adminUrl}/update_payment_type`, body);

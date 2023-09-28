@@ -283,6 +283,22 @@ export async function SubDealersAllocationTransactions(
   }
 }
 
+export async function AllSubDealersAllocationTransactions(
+  { limit, offset, userId } = { limit: 50, offset: 0 }
+) {
+  try {
+    console.log(userId, "ooo882");
+
+    const transactions = await http.get(
+      `${apiUrl}/subdealer/DealerGetHistory/${userId}?limit=${limit}`
+    );
+    console.log(transactions, "ooosubi");
+    return transactions.data;
+  } catch (error) {
+    return { data: [] };
+  }
+}
+
 export async function getAllPayments() {
   try {
     const res = await http.get(`${apiUrl}/payments`);

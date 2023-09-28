@@ -20,6 +20,7 @@ import mob9 from "../../assets/dashboard/mob9.svg";
 import airtel from "../../assets/dashboard/airtel.svg";
 import tranIcon from "../../assets/dashboard/transa.svg";
 import wallIcon from "../../assets/dashboard/walle.svg";
+import "../../assets/scss/custom.scss";
 
 import {
   getSingleBusiness,
@@ -141,36 +142,39 @@ const BusinessDetails = (props) => {
   const formattedTime = dateObject.format("HH:mm:ss");
   return (
     <AdminLayout>
-      <Link to="/sub-dealers">
-        <Button color="primary">Back</Button>
-      </Link>{" "}
-      &nbsp;
-      <Button disabled={loading} onClick={""} color="danger">
-        {loading ? "Please wait..." : "Remove Subdealer"}
-      </Button>
-      {/* {!isAdmin && (
+      <div className="business__action__cards">
+        <Link to="/sub-dealers">
+          <Button color="primary">Back</Button>
+        </Link>{" "}
+        <Button disabled={loading} onClick={""} color="danger">
+          {loading ? "Please wait..." : "Remove Subdealer"}
+        </Button>
+        {/* {!isAdmin && (
         <Button disabled={loading} onClick={handleMakeAdmin} color="success">
           {loading ? "Please wait..." : "Make admin"}
         </Button>
       )} */}
-      &nbsp;
-      {active && (
-        <Button disabled={loading} onClick={handleRemoveActive} color="warning">
-          {loading ? "Please wait..." : "Disable Account"}
-        </Button>
-      )}
-      {!active && (
-        <Button disabled={loading} onClick={handleSetActive} color="info">
-          {loading ? "Please wait..." : "Enable Account"}
-        </Button>
-      )}
-      &nbsp;
-      {/* {type === "lite" && (
+        {active && (
+          <Button
+            disabled={loading}
+            onClick={handleRemoveActive}
+            color="warning"
+          >
+            {loading ? "Please wait..." : "Disable Account"}
+          </Button>
+        )}
+        {!active && (
+          <Button disabled={loading} onClick={handleSetActive} color="info">
+            {loading ? "Please wait..." : "Enable Account"}
+          </Button>
+        )}
+        {/* &nbsp; */}
+        {/* {type === "lite" && (
         <Button disabled={loading} onClick={handleSetTypeMega} color="dark">
           {loading ? "Please wait..." : "Make Mega"}
         </Button>
       )} */}
-      {/* {type === "lite" && (
+        {/* {type === "lite" && (
         <Button
           className="mx-2"
           disabled={loading}
@@ -182,19 +186,21 @@ const BusinessDetails = (props) => {
           {loading ? "Please wait..." : "Pricing"}
         </Button>
       )} */}
-      <Button
-        className="mx-2"
-        disabled={loading}
-        onClick={() => (window.location.href = `/subDealer/fund/${businessId}`)}
-        color="primary"
-      >
-        {loading ? "Please wait..." : "Fund"}
-      </Button>
-      {/* {type === "mega" && (
+        <Button
+          disabled={loading}
+          onClick={() =>
+            (window.location.href = `/subDealer/fund/${businessId}`)
+          }
+          color="primary"
+        >
+          {loading ? "Please wait..." : "Fund"}
+        </Button>
+        {/* {type === "mega" && (
         <Button disabled={loading} onClick={handleSetTypeLite} color="primary">
           {loading ? "Please wait..." : "Make Lite"}
         </Button>
       )} */}
+      </div>
       <div>
         <h5 className="mb-4 mt-3">Sub Dealer Account</h5>
 

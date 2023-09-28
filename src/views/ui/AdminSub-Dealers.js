@@ -272,7 +272,7 @@ const AdminSubDealers = ({ businessId }) => {
                         <td>
                           <div className="d-flex align-items-center py-2">
                             <Link
-                              to={`/subDealer/business/${tdata?._id}`}
+                              to={`/admin/subDealer/business/${tdata?._id}`}
                               className="text-decoration-none"
                             >
                               <h6 className="mb-0">{tdata?.name}</h6>

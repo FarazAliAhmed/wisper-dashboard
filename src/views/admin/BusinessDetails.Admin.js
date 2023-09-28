@@ -137,66 +137,73 @@ const Account = (props) => {
   const formattedTime = dateObject.format("HH:mm:ss");
   return (
     <AdminLayout>
-      <Link to="/admin/business">
-        <Button color="primary">Back</Button>
-      </Link>{" "}
-      &nbsp;
-      {isAdmin && (
-        <Button disabled={loading} onClick={handleRemoveAdmin} color="danger">
-          {loading ? "Please wait..." : "Remove from admin"}
-        </Button>
-      )}
-      {!isAdmin && (
-        <Button disabled={loading} onClick={handleMakeAdmin} color="success">
-          {loading ? "Please wait..." : "Make admin"}
-        </Button>
-      )}
-      &nbsp;
-      {active && (
-        <Button disabled={loading} onClick={handleRemoveActive} color="warning">
-          {loading ? "Please wait..." : "Disable Account"}
-        </Button>
-      )}
-      {!active && (
-        <Button disabled={loading} onClick={handleSetActive} color="info">
-          {loading ? "Please wait..." : "Enable Account"}
-        </Button>
-      )}
-      &nbsp;
-      {type === "lite" && (
-        <Button disabled={loading} onClick={handleSetTypeMega} color="dark">
-          {loading ? "Please wait..." : "Make Mega"}
-        </Button>
-      )}
-      {type === "lite" && (
-        <Button
-          className="mx-2"
-          disabled={loading}
-          onClick={() =>
-            (window.location.href = `/admin/user_packages/${businessId}`)
-          }
-          color="primary"
-        >
-          {loading ? "Please wait..." : "Pricing"}
-        </Button>
-      )}
-      {type === "mega" && (
-        <Button
-          className="mx-2"
-          disabled={loading}
-          onClick={() =>
-            (window.location.href = `/admin/updateMegaPrice/${businessId}`)
-          }
-          color="primary"
-        >
-          {loading ? "Please wait..." : "Pricing"}
-        </Button>
-      )}
-      {type === "mega" && (
-        <Button disabled={loading} onClick={handleSetTypeLite} color="primary">
-          {loading ? "Please wait..." : "Make Lite"}
-        </Button>
-      )}
+      <div className="business__action__cards">
+        <Link to="/admin/business">
+          <Button color="primary">Back</Button>
+        </Link>{" "}
+        {isAdmin && (
+          <Button disabled={loading} onClick={handleRemoveAdmin} color="danger">
+            {loading ? "Please wait..." : "Remove from admin"}
+          </Button>
+        )}
+        {!isAdmin && (
+          <Button disabled={loading} onClick={handleMakeAdmin} color="success">
+            {loading ? "Please wait..." : "Make admin"}
+          </Button>
+        )}
+        {active && (
+          <Button
+            disabled={loading}
+            onClick={handleRemoveActive}
+            color="warning"
+          >
+            {loading ? "Please wait..." : "Disable Account"}
+          </Button>
+        )}
+        {!active && (
+          <Button disabled={loading} onClick={handleSetActive} color="info">
+            {loading ? "Please wait..." : "Enable Account"}
+          </Button>
+        )}
+        {type === "lite" && (
+          <Button disabled={loading} onClick={handleSetTypeMega} color="dark">
+            {loading ? "Please wait..." : "Make Mega"}
+          </Button>
+        )}
+        {type === "lite" && (
+          <Button
+            // className="mx-2"
+            disabled={loading}
+            onClick={() =>
+              (window.location.href = `/admin/user_packages/${businessId}`)
+            }
+            color="primary"
+          >
+            {loading ? "Please wait..." : "Pricing"}
+          </Button>
+        )}
+        {type === "mega" && (
+          <Button
+            // className="mx-2"
+            disabled={loading}
+            onClick={() =>
+              (window.location.href = `/admin/updateMegaPrice/${businessId}`)
+            }
+            color="primary"
+          >
+            {loading ? "Please wait..." : "Pricing"}
+          </Button>
+        )}
+        {type === "mega" && (
+          <Button
+            disabled={loading}
+            onClick={handleSetTypeLite}
+            color="primary"
+          >
+            {loading ? "Please wait..." : "Make Lite"}
+          </Button>
+        )}
+      </div>
       <div>
         <h5 className="mb-4 mt-3">Business Account</h5>
 

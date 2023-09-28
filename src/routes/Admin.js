@@ -11,6 +11,9 @@ import ViewPricing from "../views/admin/ViewPricing.js";
 import Settings from "../views/admin/Settings.Admin.js";
 import AllocateDataMA from "../views/ui/AllocateDataMA.js";
 import AllocateDataMAdmin from "../views/ui/AllocateDataMAdmin.js";
+const SubDealerBusinessDetails = lazy(() =>
+  import("../views/ui/BusinessDetails.Sub-Dealers.js")
+);
 
 const Home = lazy(() => import("../views/Home"));
 const Logout = lazy(() => import("../views/auth/Logout"));
@@ -117,6 +120,10 @@ const AdminRoutes = () => {
               <AdminProtectedRoute
                 path="/admin/walletTransactions"
                 component={WalletTransaction}
+              />
+              <AdminProtectedRoute
+                path="/admin/subDealer/business/:businessId"
+                component={SubDealerBusinessDetails}
               />
               <AdminProtectedRoute
                 path="/admin/bulkDataHistory"

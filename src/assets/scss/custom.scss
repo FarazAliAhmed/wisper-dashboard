@@ -7,6 +7,19 @@
   justify-content: space-between;
   width: 100%;
 }
+
+.business__action__cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1rem;
+
+  @media (max-width: 660px) {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+}
 .add__sub__dealer__con {
   width: 100%;
 }
@@ -27,6 +40,7 @@
   justify-content: space-between;
   align-items: center !important;
   width: 100%;
+  gap: 1rem;
   margin: 0;
   padding: 0;
 

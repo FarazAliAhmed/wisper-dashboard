@@ -375,19 +375,6 @@ const Settings = () => {
           <>
             {userObj?.type == "subdealer" ? (
               <Card body>
-                {serverResponse.message.length > 0 && (
-                  <>
-                    {serverResponse.status ? (
-                      <UncontrolledAlert dismissible color="success">
-                        {serverResponse.message}
-                      </UncontrolledAlert>
-                    ) : (
-                      <UncontrolledAlert dismissible color="danger">
-                        {serverResponse.message}
-                      </UncontrolledAlert>
-                    )}
-                  </>
-                )}
                 <Form onSubmit={handleSubmit}>
                   <Row form>
                     <Col md={6}>

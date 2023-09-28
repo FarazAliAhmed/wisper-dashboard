@@ -46,6 +46,7 @@ import { set } from "lodash";
 import PurchaseHistory from "../../components/PurchaseHistory";
 import { useParams } from "react-router-dom";
 import SubDealerPurchaseButton from "../../components/SubDealerPurchaseButton";
+import AllSubDealerPurchaseHistory from "../../components/AllSubDealerPurchaseHistory";
 
 const initialState = {
   network: "airtel",
@@ -212,22 +213,11 @@ const SubDealerFunding = () => {
                         <option selected disabled>
                           ---Select Bucket---
                         </option>
-                        <option value="glo">
-                          GLO -{Number(mega_wallet.glo) / 1000}GB{" "}
-                        </option>
-                        <option value="mtn_sme">
-                          MTN[SME] -{Number(mega_wallet.mtn_sme) / 1000}GB
-                        </option>
-                        <option value="mtn_gifting">
-                          MTN GIFTING -{Number(mega_wallet.mtn_gifting) / 1000}
-                          GB
-                        </option>
-                        <option value="9mobile">
-                          9MOBILE -{Number(mega_wallet["9mobile"]) / 1000}GB{" "}
-                        </option>
-                        <option value="airtel">
-                          AIRTEL -{Number(mega_wallet.airtel) / 1000}GB
-                        </option>
+                        <option value="glo">GLO</option>
+                        <option value="mtn_sme">MTN[SME]</option>
+                        <option value="mtn_gifting">MTN GIFTING GB</option>
+                        <option value="9mobile">9MOBILE</option>
+                        <option value="airtel">AIRTEL</option>
                       </Input>
                     </FormGroup>
                   </Col>
@@ -325,7 +315,7 @@ const SubDealerFunding = () => {
             </Col>
           </Row>
         </Card>
-        {/* <PurchaseHistory /> */}
+        <AllSubDealerPurchaseHistory />
       </div>
     </FullLayout>
   );
