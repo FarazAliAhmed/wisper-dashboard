@@ -25,6 +25,7 @@ import authService from "../../services/authService";
 const Register = () => {
   const [account, setAccount] = useState({
     name: "",
+    business_name: "",
     email: "",
     mobile_number: "",
     address: "...",
@@ -86,6 +87,18 @@ const Register = () => {
             type="text"
             required
             name="name"
+          />
+          <FormFeedback>{errors.name}</FormFeedback>
+        </FormGroup>
+        <FormGroup className="mb-3">
+          <Label>Business name</Label> <span className="text-danger">*</span>
+          <Input
+            onChange={handleChange}
+            value={account.business_name}
+            invalid={errors.business_name}
+            type="text"
+            required
+            name="business_name"
           />
           <FormFeedback>{errors.name}</FormFeedback>
         </FormGroup>

@@ -30,6 +30,15 @@ export async function getBalance() {
   }
 }
 
+export async function checkUsername(username) {
+  try {
+    const res = await http.get(`${apiUrl}/check-store-username/${username}`);
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function allocateData(body, apiKey) {
   const headers = { "x-api-key": apiKey };
 
@@ -100,10 +109,70 @@ export async function allocateSubDealerPrice(body, apiKey) {
   return res;
 }
 
+export async function updateStoreFront(body, apiKey) {
+  const headers = { "x-api-key": apiKey };
+
+  // console.log("body", body);
+  // const payload = {
+  //   business_id: body.business_id,
+  //   network: body.network,
+  //   amountInGB: body.amountInGB,
+  // };
+  const res = await http.put(
+    `${apiUrl}/store-fronts/${body.id}
+`,
+    body,
+    { headers }
+  );
+  return res;
+}
+
+export async function updateSellingPrice(body, apiKey) {
+  const headers = { "x-api-key": apiKey };
+
+  // console.log("body", body);
+  // const payload = {
+  //   business_id: body.business_id,
+  //   network: body.network,
+  //   amountInGB: body.amountInGB,
+  // };
+
+  const { id, ...rest } = body;
+  console.log(rest);
+  const res = await http.post(`${apiUrl}/admin/update_selling/${id}`, rest, {
+    headers,
+  });
+  return res;
+}
+
 export async function getUserMegaPrice(id) {
   try {
     const res = await http.get(`${apiUrl}/getMegaPriceUser/${id}`);
     // console.log(res, "jj1");
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getStoreFront(id) {
+  try {
+    const res = await http.get(`${apiUrl}/store-fronts/${id}`);
+    // console.log(res, "jj1");
+    console.log("ssf", res);
+
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getUsernameStoreFront(username) {
+  try {
+    const res = await http.get(`${apiUrl}/store-fronts-username/${username}`);
+    // console.log(res, "jj1");
+    console.log("ssf", res);
+
     return res;
   } catch (error) {
     return null;

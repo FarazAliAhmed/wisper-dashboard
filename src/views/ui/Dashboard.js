@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row } from "reactstrap";
+import { Col, Row, UncontrolledAlert } from "reactstrap";
 
 import "../../assets/scss/custom.scss";
 import TopCards from "../../components/dashboard/TopCards";
@@ -58,6 +58,9 @@ const Dashboard = () => {
   return (
     <FullLayout>
       <div>
+        <UncontrolledAlert dismissible={false} color="success">
+          Account Type - {user?.type}
+        </UncontrolledAlert>
         <h4>Balances</h4>
         {/***Top Cards***/}
         {maintenance.notice && (

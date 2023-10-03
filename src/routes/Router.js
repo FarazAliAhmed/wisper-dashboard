@@ -16,6 +16,7 @@ import ConfirmEmail from "../views/auth/ConfirmEmail.jsx";
 import PricingUser from "../components/pages/PricingUser.js";
 import { useUser } from "../context/userContext.js";
 import AllocateDataMA from "../views/ui/AllocateDataMA.js";
+import SFCustomer from "../views/ui/SFCustomer.js";
 
 /***** Pages ****/
 
@@ -30,6 +31,8 @@ const AllocateData = lazy(() => import("../views/ui/AllocateData"));
 const BuyBulkData = lazy(() => import("../views/ui/BuyBulkData"));
 const BucketHistory = lazy(() => import("../views/ui/BucketHistory.js"));
 const MonifyWallet = lazy(() => import("../views/ui/MonifyWallet.js"));
+const StoreFront = lazy(() => import("../views/ui/StoreFront.js"));
+const EditStoreFront = lazy(() => import("../views/ui/EditStoreFront.js"));
 const MegaFunding = lazy(() => import("../views/ui/MegaFunding"));
 const Wallet = lazy(() => import("../views/ui/Wallet"));
 const Account = lazy(() => import("../views/ui/Account"));
@@ -110,6 +113,9 @@ const Routes = () => {
           )}
 
           <ProtectedRoute path="/monifyWallet" component={MonifyWallet} />
+          <ProtectedRoute path="/storeFront" component={StoreFront} />
+          <ProtectedRoute path="/editStoreFront" component={EditStoreFront} />
+          <Route path="/sf/:storeName" component={SFCustomer} />
 
           <ProtectedRoute path="/wallet" component={Wallet} />
           <ProtectedRoute path="/account" component={Account} />

@@ -7,6 +7,51 @@
   justify-content: space-between;
   width: 100%;
 }
+.sf__head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.sf__filtering {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  // gap: 0.5rem;
+  padding: 0.4rem 0.4rem;
+  padding-left: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #007bff;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: center;
+  background-color: #007bff;
+  color: white;
+  // width: 100%;
+}
+.sf__filtering > select {
+  all: unset;
+  padding: 0rem 0.2rem;
+  background-color: #007bff;
+}
+
+.sf__action__cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 3rem;
+
+  @media (max-width: 660px) {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+}
 
 .business__action__cards {
   display: flex;

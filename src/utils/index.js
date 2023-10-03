@@ -35,6 +35,11 @@ export const validateProperty = (input) => {
     if (value.trim().length < 5)
       return "Name must be a minimum of 5 characters";
   }
+  if (name === "business_name") {
+    if (value.trim() === "") return "Business Name is required";
+    if (value.trim().length < 5)
+      return " Business Name must be a minimum of 5 characters";
+  }
 };
 
 export const validateForm = (data) => {

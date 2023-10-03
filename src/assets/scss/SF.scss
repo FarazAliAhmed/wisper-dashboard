@@ -1,0 +1,142 @@
+.sf__customer__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 0;
+  height: 100vh;
+  //   padding-bottom: 1rem;
+  background-color: white;
+}
+
+.sf__customer__maintenance {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+
+  img {
+    width: 70%;
+  }
+  @media (max-width: 660px) {
+    img {
+      width: 90%;
+    }
+  }
+}
+
+.sf__customer__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around !important;
+  align-items: center;
+  width: 90%;
+  height: 100%;
+  gap: 0rem;
+}
+
+.sf__customer__logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.sf__customer__logo span {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+}
+
+.sf__customer__head {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.sf__customer__head h3,
+.sf__customer__head p {
+  margin: 0;
+  padding: 0;
+}
+
+.sf__customer__socials {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  font-size: 25px;
+}
+
+.sf__customer__buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.sf__customer__buttons button {
+  width: 60%;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  outline: none;
+  border: none;
+  color: white;
+  font-weight: 600;
+
+  @media (max-width: 660px) {
+    width: 80%;
+  }
+}
+
+// .sf__customer__buttons a {
+//   width: 60%;
+
+//   button {
+//     padding: 0.5rem 1rem;
+//     border-radius: 0.5rem;
+//     outline: none;
+//     border: none;
+//     color: white;
+//     font-weight: 600;
+//     width: 100%;
+//   }
+
+//   @media (max-width: 660px) {
+//     width: 80%;
+//   }
+// }
+
+.sf__customer__footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  gap: 0.3rem;
+  margin-top: 1rem;
+
+  img {
+    width: 30px;
+    height: 30px;
+  }
+}

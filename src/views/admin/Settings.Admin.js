@@ -37,6 +37,7 @@ const Settings = () => {
 
   const [user, setUser] = useState({
     name: "",
+    business_name: "",
     mobile_number: "",
     address: "",
   });
@@ -165,7 +166,7 @@ const Settings = () => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="fullName">Business Name</Label>
+                    <Label for="fullName">Full Name</Label>
                     <Input
                       id="fullName"
                       name="name"
@@ -175,6 +176,20 @@ const Settings = () => {
                       type="text"
                     />
                     <FormFeedback>{errors.name}</FormFeedback>
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="businessName">Business Name</Label>
+                    <Input
+                      id="businessName"
+                      name="business_name"
+                      value={user.business_name}
+                      onChange={handleChange}
+                      invalid={errors.business_name}
+                      type="text"
+                    />
+                    <FormFeedback>{errors.business_name}</FormFeedback>
                   </FormGroup>
                 </Col>
                 <Col md={6}>

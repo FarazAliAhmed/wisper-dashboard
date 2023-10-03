@@ -88,7 +88,7 @@ const SubDealers = () => {
         username: "",
         password: "",
       });
-      window.location.reload();
+      // window.location.reload();
       // authService.loginWithJwt(response.headers["x-auth-token"]);
       setErrors({});
       // window.location = "/dashboard";

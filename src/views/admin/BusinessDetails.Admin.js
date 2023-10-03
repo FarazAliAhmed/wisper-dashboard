@@ -214,12 +214,24 @@ const Account = (props) => {
                 <Row form>
                   <Col md={12}>
                     <FormGroup>
-                      <Label for="fullName">Business Name</Label>
+                      <Label for="fullName">Full Name</Label>
                       <Input
                         disabled
                         id="fullName"
                         value={business?.name}
                         name="name"
+                        type="text"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col md={12}>
+                    <FormGroup>
+                      <Label for="businessName">Business Name</Label>
+                      <Input
+                        disabled
+                        id="businessName"
+                        value={business?.business_name}
+                        name="business_name"
                         type="text"
                       />
                     </FormGroup>

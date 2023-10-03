@@ -50,12 +50,23 @@ const liteNav = [
   //   href: "/payments",
   //   icon: "bi bi-credit-card",
   // },
+  {
+    title: "Store Front",
+    href: "/storeFront",
+    icon: "bi bi-shop",
+  },
+  // {
+  //   title: "Edit Store Front",
+  //   href: "/editStoreFront",
+  //   icon: "bi bi-pencil-square",
+  // },
 
   {
     title: "Wallet",
     href: "/monifyWallet",
     icon: "bi bi-wallet2",
   },
+
   {
     title: "Transactions",
     href: "/transactions",
@@ -94,6 +105,16 @@ const subdealerNav = [
     href: "/allocate",
     icon: "bi bi-send",
   },
+  {
+    title: "Store Front",
+    href: "/storeFront",
+    icon: "bi bi-shop",
+  },
+  // {
+  //   title: "Edit Store Front",
+  //   href: "/editStoreFront",
+  //   icon: "bi bi-pencil-square",
+  // },
   {
     title: "Bucket History",
     href: "/bucketHistory",
@@ -179,6 +200,21 @@ const megaNav = [
     href: "/buyBulkData",
     icon: "bi bi-bag",
   },
+  {
+    title: "Sub-Dealers",
+    href: "/sub-dealers",
+    icon: "bi bi-shop",
+  },
+  {
+    title: "Store Front",
+    href: "/storeFront",
+    icon: "bi bi-shop",
+  },
+  // {
+  //   title: "Edit Store Front",
+  //   href: "/editStoreFront",
+  //   icon: "bi bi-pencil-square",
+  // },
 
   {
     title: "Wallet",
@@ -186,11 +222,6 @@ const megaNav = [
     icon: "bi bi-wallet2",
   },
 
-  {
-    title: "Sub-Dealers",
-    href: "/sub-dealers",
-    icon: "bi bi-shop",
-  },
   // {
   //   title: "Account",
   //   href: "/account",

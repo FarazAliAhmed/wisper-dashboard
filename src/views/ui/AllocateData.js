@@ -14,7 +14,9 @@ import {
 import AllocateButton from "../../components/AllocateButton";
 import { useUser } from "../../context/userContext";
 import { useAppState } from "../../context/appContext";
+import wallIcon from "../../assets/dashboard/walle.svg";
 
+import "./../../assets/scss/custom.scss";
 import FullLayout from "../../layouts/FullLayout";
 import { allocateData } from "../../services/dataService";
 import {
@@ -40,6 +42,10 @@ const AllocateData = () => {
   //   status: true,
   //   message: "",
   // });
+  const {
+    megaPriceUser,
+    currentBalance: { volume, unit, cash, mega_wallet },
+  } = useAppState();
 
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
@@ -108,11 +114,23 @@ const AllocateData = () => {
     }
   };
 
+  console.log(plansUser);
+
   return (
     <FullLayout>
       <div>
         <ToastContainer />
-        <h5 className="mb-4 mt-3">Allocate Data</h5>
+        <div className="data__heading">
+          <h5 className="mb-4 mt-3">Allocate Data</h5>
+          <h5
+            // style={{
+            //   fontSize: "17px",
+            // }}
+            className="mb-4 mt-3"
+          >
+            <img src={wallIcon} /> ₦{cash}
+          </h5>
+        </div>
         <Card body>
           {/* {serverResponse.message.length > 0 && (
             <>
@@ -176,6 +194,19 @@ const AllocateData = () => {
                             </option>
                           ))}
                       </Input>
+                    </FormGroup>
+                  </Col>
+                  <Col md={12}>
+                    <FormGroup>
+                      <Label for="cost">Cost</Label>
+                      <Input
+                        value={plan.price && `₦${plan.price}`}
+                        id="phone_number"
+                        name="cost"
+                        disabled
+                        onChange={handleChange}
+                        type="text"
+                      />
                     </FormGroup>
                   </Col>
                   <Col md={12}>
