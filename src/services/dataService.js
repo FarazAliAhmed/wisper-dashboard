@@ -1,9 +1,9 @@
 import http from "./httpService";
-import { apiUrl, apiUrlV2 } from "../config.js";
+import { apiUrl, apiUrlV2, adminUrl } from "../config.js";
 
 export async function getAllPlans() {
   try {
-    const res = await http.get(`${apiUrl}/plans`);
+    const res = await http.get(`${adminUrl}/plans`);
     // console.log(res)
     return res;
   } catch (error) {
@@ -21,6 +21,16 @@ export async function getAllPlansUser(userId) {
   }
 }
 
+export async function getCustomerName(phone) {
+  try {
+    console.log("plans user", phone);
+
+    const res = await http.get(`${apiUrl}/store-fronts-phone/${phone}`);
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
 export async function getBalance() {
   try {
     const res = await http.get(`${apiUrl}/balance`);
@@ -39,6 +49,24 @@ export async function checkUsername(username) {
   }
 }
 
+export async function getSFTransactionsTable(business_id) {
+  try {
+    const res = await http.get(`${apiUrl}/store-fronts-history/${business_id}`);
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
+
+// export async function getSFTransactionsTable(business_id) {
+//   try {
+//     const res = await http.get(`${apiUrl}/store-fronts-all-history/${business_id}`);
+//     return res;
+//   } catch (error) {
+//     return null;
+//   }
+// }
+
 export async function allocateData(body, apiKey) {
   const headers = { "x-api-key": apiKey };
 
@@ -54,6 +82,17 @@ export async function allocateData(body, apiKey) {
   };
 
   const res = await http.post(`${apiUrl}/buy`, payload, { headers });
+  return res;
+}
+
+export async function allocateSFData(body) {
+  console.log(body, "fluter");
+  const res = await http.post(`${apiUrl}/store-fronts/allocateData`, body);
+  return res;
+}
+
+export async function uploadImage(body) {
+  const res = await http.post(`${apiUrl}/store-fronts-upload`, body);
   return res;
 }
 

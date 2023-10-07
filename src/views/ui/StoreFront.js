@@ -34,7 +34,11 @@ import "../../assets/scss/custom.scss";
 import SFTable from "../../components/SFTransactionsTable";
 import SFTransactionsTable from "../../components/SFTransactionsTable";
 import SFCustomersTable from "../../components/SFCustomersTable";
-import { updateStoreFront } from "../../services/dataService";
+import {
+  checkUsername,
+  getSFTransactionsTable,
+  updateStoreFront,
+} from "../../services/dataService";
 import toast from "react-hot-toast";
 import CopyToClipboard from "react-copy-to-clipboard";
 // import PaymentButton from "../../components/PaymentButton";
@@ -43,9 +47,22 @@ const StoreFront = () => {
   const { user } = useUser();
   const { storeFront } = useAppState();
   const [maintenance, setMaintenance] = useState(storeFront?.storeMaintenance);
+  const [customerTable, setCustomerTabele] = useState([]);
+  const [transactionTable, setTransactionTable] = useState([]);
   useEffect(() => {
     setMaintenance(storeFront?.storeMaintenance);
   }, [storeFront]);
+
+  useEffect(() => {
+    const getSFTransactions = async () => {
+      await getSFTransactionsTable(storeFront?.business_id).then((res) => {
+        console.log(res, "lllo");
+        setTransactionTable(res?.data);
+      });
+    };
+
+    getSFTransactions();
+  }, [storeFront.business_id]);
   const handleUpdate = async () => {
     if (storeFront?.storeMaintenance) {
       try {
@@ -189,7 +206,7 @@ const StoreFront = () => {
 
         <Row className="mt-4">
           <SFTransactionsTable
-            transactions={[]}
+            transactions={transactionTable}
             showHeader={true}
             showSubHeader={false}
           />

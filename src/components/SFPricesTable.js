@@ -143,7 +143,6 @@ const SFPricesTable = ({
       );
       setLoading(false);
       toast.success("Selling Price Updated");
-      window.location.reload();
     } catch (error) {
       setLoading(false);
       toast.error("Error Updating Selling Price");

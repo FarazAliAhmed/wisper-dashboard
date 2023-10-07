@@ -22,6 +22,7 @@ import { paginate } from "../utils";
 import TransactionReceipt from "./TransactionReceipt";
 import { useUser } from "../context/userContext";
 import SFReceipt from "./SFReceipt";
+import moment from "moment";
 
 const SFTransactionsTable = ({
   transactions,
@@ -251,7 +252,7 @@ const SFTransactionsTable = ({
                         <td>
                           <div className="d-flex align-items-center p-2">
                             <div className="ms-3">
-                              <h6 className="mb-0">{tx.customer_name}</h6>
+                              <h6 className="mb-0">{tx.name}</h6>
                               {/* <span className="text-muted">{tdata.email}</span> */}
                             </div>
                           </div>
@@ -259,14 +260,14 @@ const SFTransactionsTable = ({
                         <td>
                           <div className="d-flex align-items-center p-2">
                             <div className="ms-3">
-                              <h6 className="mb-0">{tx.phone_number}</h6>
+                              <h6 className="mb-0">{tx.phone}</h6>
                               {/* <span className="text-muted">{tdata.email}</span> */}
                             </div>
                           </div>
                         </td>
-                        <td> ₦{tx.data_volume} </td>
+                        <td> ₦{tx.price} </td>
 
-                        <td>{tx.data_volume / 1000} GB</td>
+                        <td>{tx.volume / 1000} GB</td>
 
                         {/* <td>{tx.price || "-"}</td> */}
                         <td>
@@ -278,8 +279,10 @@ const SFTransactionsTable = ({
                             <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
                           )}
                         </td>
-                        <td>{tx.network_provider}</td>
-                        <td>{tx.created_at}</td>
+                        <td>{tx.network}</td>
+                        <td>
+                          {moment(tx.date).format("YYYY-MM-DD HH:mm:ss")}{" "}
+                        </td>
                         <td>
                           <Button
                             className="receipt-button"

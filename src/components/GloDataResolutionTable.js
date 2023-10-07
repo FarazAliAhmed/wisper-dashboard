@@ -21,6 +21,7 @@ import {
 import { paginate } from "../utils";
 import TransactionReceipt from "./TransactionReceipt";
 import { useUser } from "../context/userContext";
+import moment from "moment";
 
 const GloDataResolutionTable = ({
   transactions,
@@ -155,16 +156,19 @@ const GloDataResolutionTable = ({
                 >
                   <thead>
                     <tr>
-                      <th>Bucket ID</th>
-                      <th>Data Sold on Wisper</th>
-                      <th>Data Sold on Glo</th>
-                      <th>No. Trans</th>
-                      <th>Bal.</th>
-                      <th>Bucket Bal. End </th>
-                      <th>Bucket Bal. Start </th>
-                      <th>Status</th>
-
                       <th>Date</th>
+                      <th>Bucket ID</th>
+
+                      <th>Bucket Bal. Start </th>
+                      <th>Bucket Bal. End </th>
+                      <th>Data Sold on Glo</th>
+                      <th>Data Sold on Wisper</th>
+                      <th>No. Trans</th>
+
+                      <th>Raw Bal.</th>
+                      <th>Bal.</th>
+
+                      <th>Status</th>
 
                       {/* <th>Price</th> */}
                       {/* <th>Reference</th> */}
@@ -175,26 +179,28 @@ const GloDataResolutionTable = ({
                     {transactionsData.map((tx, idx) => (
                       <tr key={idx} className="border-top">
                         <td>
-                          {tx.status === "processing" ? (
-                            <span className="p-2 bg-warning rounded-circle d-inline-block ms-3"></span>
-                          ) : tx.status === "failed" ? (
-                            <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
-                          ) : (
+                          {" "}
+                          <td>
+                            {" "}
+                            {moment(tx.date).format("YYYY-MM-DD HH:mm:ss")}{" "}
+                          </td>
+                        </td>
+                        <td>{tx.bucketID}</td>
+                        <td>{(tx.startOfDayBalance / 1000).toFixed(2)}GB</td>
+                        <td>{(tx.endOfDayBalance / 1000).toFixed(2)}GB</td>
+                        <td>{(tx.dataSoldOnGlo / 1000).toFixed(2)}GB</td>
+                        <td>{(tx.dataSoldOnWisper / 1000).toFixed(2)}GB</td>
+                        <td>{tx.numberOfTransactions}</td>
+                        <td>{(tx.balance2 / 1000).toFixed(2)}GB</td>
+                        <td>{(tx.balance / 1000).toFixed(2)}GB</td>
+
+                        <td>
+                          {tx.status.toLowerCase() === "green" ? (
                             <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
+                          ) : (
+                            <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
                           )}
                         </td>
-                        {/* <td>{tx.network_provider}</td>
-                        <td>{tx.created_at}</td> */}
-                        <td>
-                          <Button
-                            className="receipt-button"
-                            onClick={() => showReceipt(tx)}
-                          >
-                            View
-                          </Button>
-                        </td>
-                        {/* <td>₦ {tx.data_price}</td> */}
-                        {/* <td>{tx.transaction_ref}</td> */}
                       </tr>
                     ))}
                   </tbody>

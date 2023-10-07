@@ -8,6 +8,7 @@ import {
   ModalHeader,
 } from "reactstrap";
 import { useUser } from "../context/userContext";
+import moment from "moment";
 
 function SFReceipt({ receiptData, show, toggleShow }) {
   const { user } = useUser();
@@ -17,32 +18,20 @@ function SFReceipt({ receiptData, show, toggleShow }) {
       <Modal centered isOpen={show} toggle={toggleShow}>
         <ModalHeader toggle={toggleShow}>Transaction Receipt</ModalHeader>
         <ModalBody>
-          <Alert
-            className="receipt-font"
-            color={receiptData.status == "success" ? "success" : "danger"}
-          >
-            {user?.type == "lite" ? (
-              <TransactionMessage
-                status={receiptData.status}
-                volume={receiptData.lite_volume}
-                phone_number={receiptData.phone_number}
-                created_at={receiptData.created_at}
-              />
-            ) : (
-              <TransactionMessage
-                status={receiptData.status}
-                volume={receiptData.data_volume}
-                phone_number={receiptData.phone_number}
-                created_at={receiptData.created_at}
-              />
-            )}
-          </Alert>
-          {/* Data Volume :<strong> {receiptData.data_volume} MB </strong> <br /> */}
-          {/* Recipient :<strong> {receiptData.phone_number} </strong> <br /> */}
+          Customer Name :<strong> {receiptData.name} </strong> <br />
+          Customer Email:<strong> {receiptData.email} </strong> <br />
+          Data Volume :<strong> {receiptData.volume / 1000} GB</strong> <br />
+          Data Cost :<strong> ₦{receiptData.price}</strong> <br />
+          Recipient :<strong> {receiptData.phone} </strong> <br />
           Status :<strong> {receiptData.status} </strong> <br />
-          Date :<strong> {receiptData.created_at} </strong> <br />
-          Network :<strong> {receiptData.network_provider} </strong> <br />
-          Reference Code:
+          Date :
+          <strong>
+            {" "}
+            {moment(receiptData.date).format("YYYY-MM-DD HH:mm:ss")}{" "}
+          </strong>{" "}
+          <br />
+          Network :<strong> {receiptData.network} </strong> <br />
+          {/* Reference Code:
           <strong>
             <Button
               color="info"
@@ -53,7 +42,7 @@ function SFReceipt({ receiptData, show, toggleShow }) {
             >
               Click to Copy
             </Button>
-          </strong>{" "}
+          </strong>{" "} */}
           <br />
         </ModalBody>
         <ModalFooter>

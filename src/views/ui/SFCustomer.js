@@ -29,23 +29,42 @@ import {
   UncontrolledAlert,
 } from "reactstrap";
 import { validateProperty } from "../../utils";
-import { getUsernameStoreFront } from "../../services/dataService";
+import {
+  allocateData,
+  allocateSFData,
+  getAllPlansUser,
+  getCustomerName,
+  getUsernameStoreFront,
+} from "../../services/dataService";
 import Loader from "../../layouts/loader/Loader";
 import timer from "../../assets/images/users/packages.svg";
 import empty from "../../assets/images/users/cart.png";
+import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
+import { numbers } from "../../networkCheckout";
+const { REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY } = process.env;
+
 const SFCustomer = () => {
-  const { storeName } = useParams();
+  const { storeUserName } = useParams();
   const [success, setSuccess] = useState(false);
   const [confirm, setConfirm] = useState(false);
+  const [prices, setPrices] = useState(false);
   const [failed, setFailed] = useState(false);
-  const [storeFront, setStoreFront] = useState({});
-  const [account, setAccount] = useState({
+  const [customerName, setCustomerName] = useState({
     name: "",
+    state: false,
+  });
+  const [storeFront, setStoreFront] = useState({});
+  const [activePlan, setActivePlan] = useState({});
+  const [account, setAccount] = useState({
+    phone: "",
+    name: "",
+    storeBusiness: "",
     email: "",
-    mobile_number: "",
-    address: "...",
-    username: "",
-    password: "",
+    price: "", // or null if not applicable
+    volume: "", // or null if not applicable
+    // status: "", // or null if not applicable
+    network: "", // or null if not applicable
+    transaction_ref: "", // Unique reference identifier
   });
   const [errors, setErrors] = useState({});
   const [serverResponse, setServerResponse] = useState({
@@ -57,7 +76,7 @@ const SFCustomer = () => {
     const fetchStoreFront = async () => {
       try {
         setLoading(true);
-        const resp = await getUsernameStoreFront(storeName);
+        const resp = await getUsernameStoreFront(storeUserName);
         setStoreFront(resp.data);
         setLoading(false);
       } catch (error) {
@@ -69,52 +88,131 @@ const SFCustomer = () => {
     fetchStoreFront();
   }, []);
 
-  const handleSubmit = async (e) => {
-    // e.preventDefault();
+  useEffect(() => {
+    const fetchAllPlansUser = async () => {
+      await getAllPlansUser(storeFront.business_id).then((res) => {
+        setPrices(res?.data);
+        console.log("res", res);
+      });
+    };
 
+    fetchAllPlansUser();
+  }, [storeFront.business_id]);
+
+  useEffect(() => {
+    const fetchCustomerName = async () => {
+      await getCustomerName(account.phone).then((res) => {
+        // setAccount({ ...account, name: res?.data });
+        if (res?.data) {
+          setCustomerName({
+            name: res?.data,
+            state: true,
+          });
+        } else {
+          setCustomerName({
+            name: "",
+            state: false,
+          });
+        }
+
+        console.log("resrr", res);
+      });
+    };
+
+    fetchCustomerName();
+  }, [account.phone]);
+
+  const paymentConfig = {
+    public_key: REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY,
+    tx_ref: "trx-" + Math.floor(Math.random() * 10000000000000000),
+    amount: activePlan.selling_price,
+    currency: "NGN",
+    payment_options: "card, mobilemoney, banktransfer, ussd",
+    customer: {
+      name: customerName.name,
+      phone_number: account.phone,
+      email: account.email,
+    },
+    customizations: {
+      title: "Buy Data",
+      description: `Buy Data from ${storeFront.storeUserName}'store `,
+    },
+  };
+  console.log(paymentConfig);
+  const initiatePayment = useFlutterwave(paymentConfig);
+
+  const makePayment = () => {
+    initiatePayment({ callback: onSuccess, onClose });
+  };
+
+  const handleSubmit = async (response) => {
     try {
       setLoading(true);
-      // const response = await createSubDealers({
-      //   business: user?._id,
-      //   fullName: account.name,
-      //   email: account.email,
-      //   username: account?.username,
-      //   phoneNumber: account?.mobile_number,
-      // });
-      setLoading(false);
-      setSuccess(true);
-      setAccount({
-        name: "",
-        email: "",
-        mobile_number: "",
-        address: "...",
-        username: "",
-        password: "",
+
+      await allocateSFData({
+        network: account.network,
+        plan_id: activePlan.plan_id,
+        phone_number: account.phone,
+        business_id: storeFront.business_id,
+        price: activePlan.selling_price,
+        volume: activePlan.volume,
+        trx_ref: String(response),
+        custName: customerName.name,
+        custEmail: account.email,
       });
-      // window.location.reload();
-      // authService.loginWithJwt(response.headers["x-auth-token"]);
-      setErrors({});
-      // window.location = "/dashboard";
-    } catch (error) {
       setLoading(false);
-      // const { status, message } = handleFailedRequest(error);
-      setFailed(true);
-      // setServerResponse({ status, message: "User Already Registered" });
-      // console.log(error);
+      toast.success("success");
+    } catch (error) {
+      toast.error("error occured");
     }
   };
 
-  const handleChange = ({ currentTarget: input }) => {
-    const validationErrors = { ...errors };
-    const errorMessage = validateProperty(input);
-    if (errorMessage) validationErrors[input.name] = errorMessage;
-    else delete validationErrors[input.name];
-
-    const { name, value } = input;
-    setAccount({ ...account, [name]: value });
-    setErrors(validationErrors);
+  const onSuccess = (response) => {
+    closePaymentModal();
+    handleSubmit(response.transaction_id);
+    console.log(response);
+    // setShow(false);
+    toast.success(`Payment Successful. `);
+    // window.location.reload();
   };
-  console.log(storeFront, "hhh");
+
+  const onClose = () => {
+    setConfirm(false);
+  };
+
+  const handleChange = ({ currentTarget: input }) => {
+    const { name, value } = input;
+
+    let phoneNumberPrefix;
+    let network = "";
+    // Determine the network based on the phone number's prefix
+    if (name == "phone") {
+      phoneNumberPrefix = value.substring(0, 4);
+      if (numbers.mtn.includes(phoneNumberPrefix)) {
+        network = "mtn";
+      } else if (numbers.glo.includes(phoneNumberPrefix)) {
+        network = "glo";
+      } else if (numbers["9mobile"].includes(phoneNumberPrefix)) {
+        network = "9mobile";
+      } else if (numbers.airtel.includes(phoneNumberPrefix)) {
+        network = "airtel";
+      }
+    }
+
+    setAccount({ ...account, [name]: value, network: network });
+  };
+
+  const handlePlanChange = ({ currentTarget: input }) => {
+    const { name, value } = input;
+    if (value == "select") {
+      setActivePlan(value);
+    } else {
+      const selectedPlan = JSON.parse(value);
+      setActivePlan(selectedPlan);
+    }
+  };
+
+  console.log(activePlan, "hhh");
   return (
     <>
       {" "}
@@ -264,69 +362,114 @@ const SFCustomer = () => {
                           {/* <h5>Empower Sub-Dealers to Grow Together</h5> */}
                         </div>
 
-                        <Form onSubmit={handleSubmit}>
-                          <FormGroup className="mb-3">
-                            <Label>Customer Name</Label>{" "}
-                            <span className="text-danger">*</span>
-                            <Input
-                              onChange={handleChange}
-                              value={""}
-                              invalid={errors.name}
-                              type="text"
-                              required
-                              name="customer"
-                            />
-                            <FormFeedback>{errors.customer_name}</FormFeedback>
-                          </FormGroup>
-                          <FormGroup className="mb-3">
-                            <Label>Email address</Label>{" "}
-                            <span className="text-danger">*</span>
-                            <Input
-                              type="email"
-                              required
-                              name="email"
-                              value={account.email}
-                              onChange={handleChange}
-                              invalid={errors.email}
-                            />
-                            <FormFeedback>{errors.email}</FormFeedback>
-                          </FormGroup>
-                          <FormGroup className="mb-3">
-                            <Label>Username</Label>{" "}
-                            <span className="text-danger">*</span>
-                            <Input
-                              value={account.username}
-                              onChange={handleChange}
-                              invalid={errors.username}
-                              type="text"
-                              required
-                              name="username"
-                            />
-                            <FormFeedback>{errors.username}</FormFeedback>
-                          </FormGroup>
+                        <Form>
                           <FormGroup className="mb-3">
                             <Label>
                               Phone number{" "}
                               <span className="text-danger">*</span>
                             </Label>
                             <Input
-                              value={account.mobile_number}
-                              invalid={errors.mobile_number}
+                              value={account.phone}
                               onChange={handleChange}
-                              name="mobile_number"
+                              name="phone"
                               required
                               type="number"
                             />
-                            <FormFeedback>{errors.mobile_number}</FormFeedback>
                           </FormGroup>
                           <FormGroup className="mb-3">
-                            {/* <Label>Address</Label> */}
+                            <Label>Customer Name</Label>{" "}
+                            <span className="text-danger">*</span>
                             <Input
-                              hidden
-                              value={account.address}
-                              onChange={handleChange}
+                              onChange={(e) => {
+                                setCustomerName({
+                                  ...customerName,
+                                  name: e.target.value,
+                                });
+                              }}
+                              value={customerName.name}
+                              disabled={customerName.state == true}
                               type="text"
-                              name="address"
+                              required
+                              name="name"
+                            />
+                          </FormGroup>
+
+                          <FormGroup className="mb-3">
+                            <Label>Email</Label>{" "}
+                            <span className="text-danger">*</span>
+                            <Input
+                              onChange={handleChange}
+                              value={account.email}
+                              type="text"
+                              required
+                              name="email"
+                            />
+                          </FormGroup>
+
+                          <FormGroup className="mb-3">
+                            <Label>Network</Label>{" "}
+                            <span className="text-danger">*</span>
+                            <Input
+                              onChange={handleChange}
+                              value={account.network}
+                              type="text"
+                              required
+                              name="network"
+                              disabled
+                            />
+                          </FormGroup>
+
+                          <FormGroup className="mb-3">
+                            <Label>Data Plans</Label>{" "}
+                            <span className="text-danger">*</span>
+                            <Input
+                              onChange={handlePlanChange}
+                              name="activePlan"
+                              value={
+                                activePlan == "select"
+                                  ? activePlan
+                                  : JSON.stringify(activePlan)
+                              }
+                              className="mb-3"
+                              type="select"
+                              disabled={account.network == ""}
+                            >
+                              {account.network == "" ? (
+                                <option value="select">
+                                  Select a valid number
+                                </option>
+                              ) : (
+                                <>
+                                  <option value="select">Select a plan</option>
+                                  {prices
+                                    .filter(
+                                      (plan) => plan.network === account.network
+                                    )
+                                    .map((plan) => (
+                                      <option
+                                        key={plan.id}
+                                        value={JSON.stringify(plan)}
+                                      >
+                                        {plan.size} - {plan.validity}
+                                      </option>
+                                    ))}
+                                </>
+                              )}
+                            </Input>
+                          </FormGroup>
+                          <FormGroup className="mb-3">
+                            <Label>Price</Label>{" "}
+                            <span className="text-danger">*</span>
+                            <Input
+                              disabled
+                              value={`₦${
+                                activePlan.selling_price
+                                  ? activePlan.selling_price
+                                  : ""
+                              }`}
+                              type="text"
+                              required
+                              name="price"
                             />
                           </FormGroup>
                         </Form>
@@ -336,15 +479,26 @@ const SFCustomer = () => {
                       <Button
                         color="primary"
                         onClick={() => {
-                          handleSubmit();
-                          setConfirm(false);
+                          if (
+                            account.phone == "" ||
+                            customerName.name == "" ||
+                            account.email == "" ||
+                            account.network == "" ||
+                            activePlan == "select" ||
+                            activePlan == "" ||
+                            activePlan.selling_price == ""
+                          ) {
+                            toast.error("incomplete information");
+                          } else {
+                            makePayment();
+                          }
                         }}
                         // disabled={formIsValid(errors) || loading}
                         size="lg"
                         type="submit"
                         className="submit-btn"
                       >
-                        Create
+                        Pay Now
                       </Button>{" "}
                       <Button onClick={() => setConfirm(false)}>
                         No, Cancel

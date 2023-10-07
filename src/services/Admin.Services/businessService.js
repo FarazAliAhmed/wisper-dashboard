@@ -61,6 +61,16 @@ export async function getAllPlansUser(userId) {
   }
 }
 
+export async function getGloResolution() {
+  try {
+    const res = await http.get(`${adminUrl}/analysis/getBucketUsage`);
+    console.log(res);
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
+
 export const getAllTrx = async () => {
   try {
     const res = await http.get(`${adminUrl}/trxAll`);

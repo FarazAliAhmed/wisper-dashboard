@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   Form,
@@ -15,8 +15,10 @@ import {
   ModalFooter,
   Toast,
 } from "reactstrap";
+import "../../assets/scss/SF.scss";
 import "../../assets/scss/custom.scss";
 import { Link } from "react-router-dom";
+import AvatarEditor from "react-avatar-editor";
 
 import TopCards from "../../components/dashboard/TopCards";
 import FundCards from "../../components/dashboard/FundCards";
@@ -39,16 +41,171 @@ import {
   checkUsername,
   getAllPlansUser,
   updateStoreFront,
+  uploadImage,
 } from "../../services/dataService";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { set } from "lodash";
+import { IoMdClose } from "react-icons/io";
+import { AiFillEye } from "react-icons/ai";
+
+const ImageModal = ({ imgUrl, closeModal, avatarFunc }) => {
+  console.log(imgUrl);
+  const editorRef = useRef(null);
+  const [loading, setLoading] = useState();
+  const onClickSave = async () => {
+    try {
+      if (editorRef.current) {
+        const canvas = editorRef.current.getImage();
+
+        const canvasScaled = editorRef.current.getImageScaledToCanvas();
+        // Do something with the canvas or canvasScaled
+
+        canvas.toBlob((blob) => {
+          // Do something with the Blob
+          if (blob) {
+            const image = new File([blob], "image.jpg", { type: blob.type });
+            // Use the image File object as needed
+            const formData = new FormData();
+            formData.append("profileImg", image);
+
+            setLoading(true);
+
+            uploadImage(formData).then((res) => {
+              avatarFunc(res?.data);
+              closeModal();
+              setLoading(false);
+              toast.success(`Successfully uploaded! Please save changes `);
+            });
+            // console.log(formData);
+
+            // console.log(formData);
+          }
+        }, "image/jpeg");
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("error uploading");
+    }
+  };
+
+  const formdata = new FormData();
+  formdata.append("image", "sksk");
+  console.log(formdata);
+
+  return (
+    <div className="avatar__modal-overlay">
+      <div className="avatar__modal">
+        <span className="avatar__close" onClick={closeModal}>
+          <IoMdClose size={15} cursor="pointer" color="#000" />
+        </span>
+        <div className="avatar__modal-content">
+          <AvatarEditor
+            ref={editorRef}
+            image={imgUrl}
+            width={180}
+            height={180}
+            border={50}
+            borderRadius={200}
+            color={[255, 255, 255, 0.9]} // RGBA
+            scale={1.2}
+            rotate={0}
+          />
+
+          <Button color="primary" onClick={onClickSave}>
+            {loading ? (
+              <BeatLoader size={10} color="white" loading />
+            ) : (
+              <span>Continue</span>
+            )}
+          </Button>
+          {/* <button color onClick={onClickSave}>
+         
+            {uploadImageLoading ? (
+              <BeatLoader size={10} color="white" loading />
+            ) : (
+              <span>Continue</span>
+            )}
+            <span>Continue</span>
+          </button> */}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const EditStoreFront = () => {
   const { user } = useUser();
   const { storeFront } = useAppState();
   const [prices, setPrices] = useState([]);
   const [usernameCheck, setUsernameCheck] = useState([]);
+
+  const [openModal, setOpenModal] = useState(false);
+  const [imgUrl, setImgUrl] = useState("");
+  const [modalKey, setModalKey] = useState(0);
+  const [avatar, setAvatar] = useState("");
+  const fileInputRef = useRef(null);
+
+  const handleFileUpload = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileSelected = async (event) => {
+    const file = event.target.files && event.target.files[0];
+
+    if (file) {
+      // Get the file extension
+      const extension = file.name.split(".").pop()?.toLowerCase();
+
+      // Check if the file extension indicates an image
+      if (
+        extension &&
+        (extension === "jpg" ||
+          extension === "jpeg" ||
+          extension === "png" ||
+          extension === "webp")
+      ) {
+        // Check the file size
+        const fileSize = file.size / 1024; // Convert to KB
+        const maxSizeKB = 100; // Maximum size in KB
+
+        if (fileSize <= maxSizeKB) {
+          const imageUrl = URL.createObjectURL(file);
+          setImgUrl(imageUrl);
+          setOpenModal(true);
+          setModalKey((prevKey) => prevKey + 1);
+        } else {
+          // Display an error message or perform any other appropriate action
+          console.error("Selected file size exceeds the limit (100KB).");
+          toast.error("Selected file size exceeds the limit (100KB).");
+        }
+      } else {
+        // Display an error message or perform any other appropriate action
+        console.error(
+          "Selected file is not a supported image format (JPEG, JPG, PNG, or WebP)."
+        );
+        toast.error(
+          "Selected file is not a supported image format (JPEG, JPG, PNG, or WebP)."
+        );
+      }
+    }
+
+    // Reset the file input value
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const closeModal = () => {
+    setOpenModal(false);
+    setImgUrl("");
+  };
+
+  const setAvatarFunc = (image) => {
+    setStoreInfo({ ...storeInfo, storeImg: image });
+  };
 
   const [storeInfo, setStoreInfo] = useState({
     storeName: "",
@@ -61,6 +218,7 @@ const EditStoreFront = () => {
     facebook: "",
     storeImg: "",
     storeColor: "",
+    storeUserName: "",
   });
   const {
     socialLinks,
@@ -70,11 +228,13 @@ const EditStoreFront = () => {
     storeImg,
     storeURL,
     storeColor,
+    storeUserName,
   } = storeFront;
 
   const reqObj = {
     ...socialLinks,
     storeName,
+    storeUserName,
     storeDesc,
     phoneNumber,
     storeImg,
@@ -98,13 +258,13 @@ const EditStoreFront = () => {
 
   useEffect(() => {
     const fetchUsernameChecker = async () => {
-      await checkUsername(storeInfo?.storeName).then((res) => {
+      await checkUsername(storeInfo?.storeUserName).then((res) => {
         setUsernameCheck(res?.data);
       });
     };
 
     fetchUsernameChecker();
-  }, [storeInfo.storeName]);
+  }, [storeInfo.storeUserName]);
 
   const [errors, setErrors] = useState({});
   const [errorsPass, setErrorsPass] = useState({});
@@ -117,39 +277,58 @@ const EditStoreFront = () => {
 
   const [balanceDisplay, setBalanceDisplay] = useState("");
 
+  const handleBrandSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+      await updateStoreFront(
+        {
+          id: user?._id,
+          storeImg: storeInfo.storeImg,
+          storeColor: storeInfo.storeColor,
+        },
+        user?.access_token
+      );
+      setLoading(false);
+      toast.success("Store Information Updated");
+      // window.location.reload();
+    } catch (error) {
+      setLoading(false);
+      toast.error("Error Updating Store Information");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (usernameCheck == false && storeInfo.storeName != storeFront.storeName) {
-      try {
-        setLoading(true);
-        await updateStoreFront(
-          {
-            id: user?._id,
-            storeName: storeInfo.storeName,
-            storeDesc: storeInfo.storeDesc,
-            storeURL: "",
-            phoneNumber: storeInfo.phoneNumber,
-            storeImg: storeInfo.storeImg,
-            storeColor: storeInfo.storeColor,
-            socialLinks: {
-              whatsapp: storeInfo.whatsapp,
-              instagram: storeInfo.instagram,
-              twitter: storeInfo.twitter,
-              facebook: storeInfo.facebook,
-            },
+    try {
+      setLoading(true);
+      await updateStoreFront(
+        {
+          id: user?._id,
+          storeName: storeInfo.storeName,
+          storeDesc: storeInfo.storeDesc,
+          storeURL: `${window.location.protocol}//${window.location.host}/sf/${storeInfo.storeUserName}`,
+          phoneNumber: storeInfo.phoneNumber,
+          // storeImg: storeInfo.storeImg,
+          // storeColor: storeInfo.storeColor,
+          storeUserName: storeInfo.storeUserName,
+          socialLinks: {
+            whatsapp: storeInfo.whatsapp,
+            instagram: storeInfo.instagram,
+            twitter: storeInfo.twitter,
+            facebook: storeInfo.facebook,
           },
-          user?.access_token
-        );
-        setLoading(false);
-        toast.success("Store Information Updated");
-        window.location.reload();
-      } catch (error) {
-        setLoading(false);
-        toast.error("Error Updating Store Information");
-      }
-    } else {
-      toast.error("Store Name already exist");
+        },
+        user?.access_token
+      );
+      setLoading(false);
+      toast.success("Store Information Updated");
+      // window.location.reload();
+    } catch (error) {
+      setLoading(false);
+      toast.error("Error Updating Store Information");
     }
   };
 
@@ -157,7 +336,7 @@ const EditStoreFront = () => {
     const { name, value } = input;
 
     // Check for spaces in the input value
-    if (name === "storeName" && value.includes(" ")) {
+    if (name === "storeUserName" && value.includes(" ")) {
       // If spaces are found, replace them with underscores or handle it as desired
       const sanitizedValue = value.replace(/ /g, "_"); // Replace spaces with underscores
 
@@ -193,7 +372,7 @@ const EditStoreFront = () => {
   //   setStoreInfo({ ...storeInfo, [name]: value });
   // };
 
-  console.log(prices, "oo");
+  console.log(storeInfo.storeImg, "oo");
 
   const navItems = ["Information", "Branding", "Prices"];
 
@@ -231,10 +410,23 @@ const EditStoreFront = () => {
                       // invalid={errors.name}
                       type="text"
                     />
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <Label for="storeName">Store User Name</Label>
+                    <Input
+                      id="storeUserName"
+                      name="storeUserName"
+                      value={storeInfo.storeUserName}
+                      onChange={handleChange}
+                      // invalid={errors.name}
+                      type="text"
+                    />
                     <p style={{ color: "red" }}>
                       {usernameCheck &&
-                      storeInfo.storeName != storeFront.storeName
-                        ? `${storeInfo.storeName} already exist`
+                      storeInfo.storeUserName != storeFront.storeUserName
+                        ? `${storeInfo.storeUserName} already exist`
                         : ""}
                     </p>
                   </FormGroup>
@@ -354,34 +546,56 @@ const EditStoreFront = () => {
         )}
         {navState == 1 && (
           <Card body>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleBrandSubmit}>
               <Row form>
-                <Col md={12}>
-                  <FormGroup>
-                    <Label for="storeName">Store Logo</Label>
-                    <Input
-                      id="storeLogo"
-                      name="storeImg"
-                      value={storeInfo.storeImg}
-                      onChange={handleChange}
-                      // invalid={errors.name}
-                      type="text"
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md={6}>
-                  <FormGroup>
-                    <Label for="colorTheme">Color Theme</Label>
-                    <Input
-                      id="colorTheme"
-                      name="storeColor"
-                      value={storeInfo.storeColor}
-                      onChange={handleChange}
-                      // invalid={errors.business_name}
-                      type="color"
-                    />
-                  </FormGroup>
-                </Col>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Col md={3}>
+                    <FormGroup>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <Label for="storeName">
+                          Store Logo{" "}
+                          {storeInfo.storeImg && (
+                            <a target="_blank" href={storeInfo.storeImg}>
+                              <AiFillEye />
+                            </a>
+                          )}
+                        </Label>
+                        <input
+                          type="file"
+                          style={{ display: "none" }}
+                          ref={fileInputRef}
+                          onChange={handleFileSelected}
+                        />
+                        <Button onClick={handleFileUpload} color="primary">
+                          Upload new avatar
+                        </Button>
+                      </div>
+                    </FormGroup>
+                  </Col>
+                  <Col md={6}>
+                    <FormGroup>
+                      <Label for="colorTheme">Color Theme</Label>
+                      <Input
+                        id="colorTheme"
+                        name="storeColor"
+                        value={storeInfo.storeColor}
+                        onChange={handleChange}
+                        // invalid={errors.business_name}
+                        type="color"
+                      />
+                    </FormGroup>
+                  </Col>
+                </div>
               </Row>
               <Button disabled={loading} type="submit" color="primary">
                 {loading ? (
@@ -403,6 +617,14 @@ const EditStoreFront = () => {
           </Row>
         )}
       </div>
+      {openModal && (
+        <ImageModal
+          key={modalKey} // Add key prop here
+          imgUrl={imgUrl}
+          closeModal={closeModal}
+          avatarFunc={setAvatarFunc}
+        />
+      )}
     </FullLayout>
   );
 };

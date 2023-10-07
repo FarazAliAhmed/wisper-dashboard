@@ -115,7 +115,7 @@ const Routes = () => {
           <ProtectedRoute path="/monifyWallet" component={MonifyWallet} />
           <ProtectedRoute path="/storeFront" component={StoreFront} />
           <ProtectedRoute path="/editStoreFront" component={EditStoreFront} />
-          <Route path="/sf/:storeName" component={SFCustomer} />
+          <Route path="/sf/:storeUserName" component={SFCustomer} />
 
           <ProtectedRoute path="/wallet" component={Wallet} />
           <ProtectedRoute path="/account" component={Account} />
