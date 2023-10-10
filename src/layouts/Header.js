@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Navbar,
@@ -16,8 +16,24 @@ import { useUser } from "../context/userContext";
 
 const Header = ({ isAdmin }) => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const [type, setType] = React.useState("");
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const context = useUser();
+
+  useEffect(() => {
+    if (context?.user?.type == "mega" && context?.user?.isAdmin == true) {
+      setType("Admin");
+    } else if (
+      context?.user?.type == "mega" &&
+      context?.user?.isAdmin == false
+    ) {
+      setType("Dealer");
+    } else if (context?.user?.type == "subdealer") {
+      setType("Agent");
+    } else if (context?.user?.type == "lite") {
+      setType("Lite");
+    }
+  }, []);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const Handletoggle = () => {
@@ -68,9 +84,7 @@ const Header = ({ isAdmin }) => {
           </DropdownToggle>
           <DropdownMenu>
             <div className="text-decoration-none text-dark">
-              <DropdownItem className="text-dark">
-                Wisper - {context?.user?.type}
-              </DropdownItem>
+              <DropdownItem className="text-dark">Wisper - {type}</DropdownItem>
             </div>
 
             <DropdownItem divider />

@@ -89,7 +89,7 @@ const Routes = () => {
           {user?.type == "mega" ? (
             <ProtectedRoute
               path="/agents/business/:businessId"
-              component={AgentsBusinessDetails}
+              component={Dashboard}
             />
           ) : (
             ""
