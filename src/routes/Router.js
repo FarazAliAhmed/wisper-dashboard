@@ -81,15 +81,16 @@ const Routes = () => {
             ""
           )}
           {user?.type == "mega" ? (
-            <ProtectedRoute path="/agents" component={Agents} />
+            <ProtectedRoute exact path="/agents" component={Agents} />
           ) : (
             ""
           )}
 
           {user?.type == "mega" ? (
             <ProtectedRoute
+              exact
               path="/agents/business/:businessId"
-              component={Dashboard}
+              component={AgentsBusinessDetails}
             />
           ) : (
             ""
@@ -97,6 +98,7 @@ const Routes = () => {
 
           {user?.type == "mega" ? (
             <ProtectedRoute
+              exact
               path="/agents/fund/:businessId"
               component={AgentsBusinessFund}
             />

@@ -223,7 +223,7 @@ const Agents = () => {
                         <td>
                           <div className="d-flex align-items-center py-2">
                             <Link
-                              to={`/agents/business/${tdata?.dealer}`}
+                              to={`/agents/business/${tdata?._id}`}
                               className="text-decoration-none"
                             >
                               <h6 className="mb-0">{tdata?.name}</h6>
@@ -281,7 +281,7 @@ const Agents = () => {
                   </thead>
                   <tbody>
                     {agents.map((tdata, index) => (
-                      <tr className="border-top">
+                      <tr key={index} className="border-top">
                         <td>{index}</td>
                         <td>
                           <div className="d-flex align-items-center py-2">
