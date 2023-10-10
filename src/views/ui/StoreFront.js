@@ -38,6 +38,7 @@ import SFTransactionsTable from "../../components/SFTransactionsTable";
 import SFCustomersTable from "../../components/SFCustomersTable";
 import {
   checkUsername,
+  getAllPlansUser,
   getSFAnalysis,
   getSFTransactionsTable,
   updateStoreFront,
@@ -51,10 +52,13 @@ import Media from "react-media";
 const StoreFront = () => {
   const { user } = useUser();
   const { storeFront } = useAppState();
+  const [prices, setPrices] = useState([]);
   const [maintenance, setMaintenance] = useState(storeFront?.storeMaintenance);
   const [customerTable, setCustomerTabele] = useState([]);
   const [transactionTable, setTransactionTable] = useState([]);
   const [sfAnalysis, setSfAnalysis] = useState({});
+  const [filter, setFilter] = useState("All Time");
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     setMaintenance(storeFront?.storeMaintenance);
   }, [storeFront]);
@@ -67,16 +71,32 @@ const StoreFront = () => {
       });
     };
 
-    const getSfAnalysis = async () => {
-      await getSFAnalysis(storeFront?.business_id).then((res) => {
-        console.log(res, "anaa");
-        setSfAnalysis(res?.data);
+    getSFTransactions();
+  }, [storeFront.business_id]);
+
+  useEffect(() => {
+    const fetchAllPlansUser = async () => {
+      await getAllPlansUser(user._id).then((res) => {
+        setPrices(res?.data);
+        console.log("res", res);
       });
     };
 
-    getSFTransactions();
+    fetchAllPlansUser();
+  }, []);
+
+  useEffect(() => {
+    const getSfAnalysis = async () => {
+      setLoading(true);
+      await getSFAnalysis(storeFront?.business_id).then((res) => {
+        console.log(res, "anaa");
+        setSfAnalysis(res?.data[filter]);
+        setLoading(false);
+      });
+    };
+
     getSfAnalysis();
-  }, [storeFront.business_id]);
+  }, [filter]);
   const handleUpdate = async () => {
     if (storeFront?.storeMaintenance) {
       try {
@@ -111,8 +131,6 @@ const StoreFront = () => {
     }
   };
 
-  console.log(storeFront, "sf");
-
   const metricsArray = [
     {
       title: "Profit",
@@ -124,14 +142,14 @@ const StoreFront = () => {
     {
       title: "Customers",
       subtitle: "Total No.Customers",
-      value: `100`,
+      value: storeFront?.customer,
       icon: customers,
       wallet: false,
     },
     {
       title: "Products",
       subtitle: "Total No.Products",
-      value: `500`,
+      value: prices?.length,
       icon: products,
       wallet: false,
     },
@@ -141,32 +159,40 @@ const StoreFront = () => {
     {
       title: "Refunds",
       subtitle: "Store Visit",
-      value: `100`,
+      value: loading ? "loading" : sfAnalysis?.TotalStoreVisits ?? 0,
       icon: visit,
       wallet: false,
     },
     {
       title: "Amount",
       subtitle: "Amount Sold",
-      value: `₦500`,
+      value: loading
+        ? "loading"
+        : `₦${
+            sfAnalysis?.TotalAmountSold ? sfAnalysis.TotalAmountSold[0] ?? 0 : 0
+          }`,
       icon: sold,
       wallet: false,
     },
+
     {
       title: "Revenue",
       subtitle: "Revenue",
-      value: `₦500`,
+      value: loading ? "loading" : `₦${sfAnalysis?.TotalRevenue ?? 0}`,
       icon: revenue,
       wallet: false,
     },
     {
       title: "Transactions",
       subtitle: "Transactions",
-      value: `30`,
+      value: loading ? "loading" : `${sfAnalysis?.TotalTransactions ?? 0}`,
       icon: dataTransactions,
       wallet: false,
     },
   ];
+
+  console.log(sfAnalysis, "sf");
+
   return (
     <FullLayout>
       <div>
@@ -196,7 +222,7 @@ const StoreFront = () => {
                       bg="bg-light-warning text-warning"
                       title="Customers"
                       subtitle="Total No.Customers"
-                      earning={`100`}
+                      earning={storeFront.customer}
                       icon={customers}
                     />
                   </Col>
@@ -205,7 +231,7 @@ const StoreFront = () => {
                       bg="bg-light-success text-success"
                       title="Products"
                       subtitle="Total No.Products"
-                      earning={`₦500`}
+                      earning={prices?.length}
                       icon={products}
                     />
                   </Col>
@@ -220,15 +246,22 @@ const StoreFront = () => {
             <h4>Store Front Analytics</h4>
             <div className="sf__filtering">
               <IoIosOptions size={20} />
-              <select>
-                <option value="allTime">All Time</option>
-                <option value="today">Today</option>
-                <option value="yesterday">Yesterday</option>
-                <option value="thisWeek">This Week</option>
-                <option value="thisMonth">This Month</option>
-                <option value="last30">Last 30 Days</option>
-                <option value="lastMonth">Last Month</option>
-                <option value="thisYear">This Year</option>
+              <select
+                value={filter}
+                onChange={(e) => {
+                  setFilter(e.target.value);
+                }}
+              >
+                <option selected value="All Time">
+                  All Time
+                </option>
+                <option value="Today">Today</option>
+                <option value="Yesterday">Yesterday</option>
+                <option value="This Week">This Week</option>
+                <option value="This Month">This Month</option>
+                <option value="Last 30 Days">Last 30 Days</option>
+                <option value="Last Month">Last Month</option>
+                <option value="This Year">This Year</option>
               </select>
             </div>
           </div>
@@ -244,7 +277,9 @@ const StoreFront = () => {
                       bg="bg-light-warning text-warning"
                       title="Refunds"
                       subtitle="Store Visit"
-                      earning={`100`}
+                      earning={
+                        loading ? "loading" : sfAnalysis?.TotalStoreVisits ?? 0
+                      }
                       icon={visit}
                     />
                   </Col>
@@ -253,7 +288,15 @@ const StoreFront = () => {
                       bg="bg-light-success text-success"
                       title="New Project"
                       subtitle="Amount Sold"
-                      earning={`₦500`}
+                      earning={
+                        loading
+                          ? "loading"
+                          : `₦${
+                              sfAnalysis?.TotalAmountSold
+                                ? sfAnalysis.TotalAmountSold[0] ?? 0
+                                : 0
+                            }`
+                      }
                       icon={sold}
                     />
                   </Col>
@@ -264,7 +307,11 @@ const StoreFront = () => {
                       bg="bg-light-info text-info"
                       title="Profit"
                       subtitle="Revenue"
-                      earning={`₦500`}
+                      earning={
+                        loading
+                          ? "loading"
+                          : `₦${sfAnalysis?.TotalRevenue ?? 0}`
+                      }
                       icon={revenue}
                     />
                   </Col>
@@ -275,7 +322,11 @@ const StoreFront = () => {
                       bg="bg-light-info text-info"
                       title="Profit"
                       subtitle="Transactions"
-                      earning={`30`}
+                      earning={
+                        loading
+                          ? "loading"
+                          : `${sfAnalysis?.TotalTransactions ?? 0}`
+                      }
                       icon={dataTransactions}
                     />
                   </Col>
@@ -311,7 +362,7 @@ const StoreFront = () => {
           </Link>
         </div>
 
-        <Row className="mt-4">
+        <Row className="mt-3">
           <SFTransactionsTable
             // transactions={transactionTable}
             transactions={transactionTable}
@@ -319,7 +370,7 @@ const StoreFront = () => {
             showSubHeader={false}
           />
         </Row>
-        <Row className="mt-1">
+        <Row className="mt-3">
           <SFCustomersTable
             transactions={[]}
             showHeader={true}
