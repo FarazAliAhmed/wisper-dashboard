@@ -40,7 +40,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import AdminMonifyHistory from "../../components/AdminMonifyHistory";
 import AdminPurchaseHistory from "../../components/AdminPurchaseHistory";
 import moment from "moment";
-import AdminSubDealers from "../ui/AdminSub-Dealers";
+import AdminAgents from "../ui/AdminAgents";
 
 const Account = (props) => {
   const [business, setBusiness] = useState({});
@@ -128,7 +128,7 @@ const Account = (props) => {
     setType("mega");
   };
 
-  const navItems = ["Transactions", "Wallet", "Data Purchase", "Sub Dealers"];
+  const navItems = ["Transactions", "Wallet", "Data Purchase", "Agents"];
   const dateObject = moment(business?.createdAt);
 
   const formattedDate = dateObject.format("YYYY-MM-DD");
@@ -432,7 +432,7 @@ const Account = (props) => {
         </Row>
 
         <Row className="mt-4">
-          <h3>Business Table Data</h3>
+          {/* <h3>Business Table Data</h3> */}
 
           <div className="settings__nav">
             {navItems.map((item, index) =>
@@ -491,7 +491,7 @@ const Account = (props) => {
           {navState == 3 && (
             <>
               {/* <h5 className="mb-4 mt-3">Business Transactions</h5> */}
-              <AdminSubDealers businessId={businessId} />
+              <AdminAgents businessId={businessId} />
             </>
           )}
         </Row>

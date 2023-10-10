@@ -40,6 +40,27 @@ export const validateProperty = (input) => {
     if (value.trim().length < 5)
       return " Business Name must be a minimum of 5 characters";
   }
+  if (name === "mobile_number") {
+    if (value.trim() === "") return "Phone number is required";
+    if (value.trim().length < 11 || value.trim().length > 11)
+      return "Phone number must be 11 characters";
+  }
+
+  if (name === "phone_number") {
+    if (value.trim() === "") return "Phone number is required";
+    if (value.trim().length < 11 || value.trim().length > 11)
+      return "Phone number must be 11 characters";
+  }
+  if (name === "phoneNumber") {
+    if (value.trim() === "") return "Phone number is required";
+    if (value.trim().length < 11 || value.trim().length > 11)
+      return "Phone number must be 11 characters";
+  }
+  if (name === "phone") {
+    if (value.trim() === "") return "Phone number is required";
+    if (value.trim().length < 11 || value.trim().length > 11)
+      return "Phone number must be 11 characters";
+  }
 };
 
 export const validateForm = (data) => {

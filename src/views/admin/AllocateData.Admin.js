@@ -9,6 +9,7 @@ import {
   Row,
   Col,
   CardBody,
+  FormFeedback,
 } from "reactstrap";
 import AllocateButton from "../../components/AllocateButton";
 import { useAppState } from "../../context/appContext";
@@ -16,7 +17,11 @@ import { useUser } from "../../context/userContext";
 
 import AdminLayout from "../../layouts/AdminLayout";
 import { allocateData } from "../../services/dataService";
-import { handleFailedRequest, parseDataPlans } from "../../utils";
+import {
+  handleFailedRequest,
+  parseDataPlans,
+  validateProperty,
+} from "../../utils";
 // import dataPlans from "../../utils/plansTable";
 
 const initialState = {
@@ -33,10 +38,11 @@ const AllocateData = () => {
   const { plans } = useAppState();
   const dataPlans = parseDataPlans(plans);
 
-  // const [serverResponse, setServerResponse] = useState({
-  //   status: true,
-  //   message: "",
-  // });
+  const [errors, setErrors] = useState({});
+  const [serverResponse, setServerResponse] = useState({
+    status: true,
+    message: "",
+  });
 
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
@@ -59,6 +65,11 @@ const AllocateData = () => {
   };
 
   const handleChange = ({ currentTarget: input }) => {
+    const validationErrors = { ...errors };
+    const errorMessage = validateProperty(input);
+    if (errorMessage) validationErrors[input.name] = errorMessage;
+    else delete validationErrors[input.name];
+
     const { name, type, value, checked } = input;
 
     if (type === "checkbox") {
@@ -147,6 +158,7 @@ const AllocateData = () => {
                         onChange={handleChange}
                         type="number"
                       />
+                      <FormFeedback>{errors.phone_number}</FormFeedback>
                     </FormGroup>
                   </Col>
                   <Col md={12}>

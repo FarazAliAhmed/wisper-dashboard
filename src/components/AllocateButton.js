@@ -16,6 +16,7 @@ const AllocateButton = ({
   phone_number,
   handleSubmit,
   plans,
+  valid,
 }) => {
   const [success, setSuccess] = useState(false);
   const [confirm, setConfirm] = useState(false);
@@ -55,7 +56,7 @@ const AllocateButton = ({
   return (
     <>
       {/* <Button className="fund-button">Fund Account</Button> */}
-      <Button color="primary" onClick={handleSend}>
+      <Button disabled={valid || loading} color="primary" onClick={handleSend}>
         Allocate
       </Button>
 

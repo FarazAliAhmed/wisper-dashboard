@@ -244,7 +244,11 @@ const Settings = () => {
                   </FormGroup>
                 </Col>
               </Row>
-              <Button disabled={loading} type="submit" color="primary">
+              <Button
+                disabled={formIsValid(errors) || loading}
+                type="submit"
+                color="primary"
+              >
                 Save
               </Button>
             </Form>

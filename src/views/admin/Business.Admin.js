@@ -246,7 +246,7 @@ const Business = () => {
           <Card>
             <CardBody>
               <CardTitle className="text-center" tag="h5">
-                Sub Dealers Accounts
+                Agents Accounts
               </CardTitle>
 
               <Table

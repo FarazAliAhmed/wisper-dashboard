@@ -106,7 +106,7 @@ const PricingUser = ({ businessId }) => {
         newPlan
       );
 
-      // console.log(response)
+      console.log(response);
       document.getElementById(`myInput${dataId}`).value = "";
 
       toast.info("Price Updated", {
@@ -179,6 +179,7 @@ const PricingUser = ({ businessId }) => {
                           const matchingPlan = userPlans.find(
                             (obj) => obj.plan_id === tdata.dataId
                           );
+                          console.log(matchingPlan, "match");
                           if (matchingPlan) {
                             const price = matchingPlan.price;
                             return "₦" + price;

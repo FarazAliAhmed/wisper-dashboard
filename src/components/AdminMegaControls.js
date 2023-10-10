@@ -39,7 +39,7 @@ const AdminMegaControls = () => {
       // setLoading(true);
       const resp = await getMegaMaintenance();
       setMaintenance(resp?.data?.maintenance);
-      // setSubDealers(resp);
+
       // setLoading(false);
     };
 

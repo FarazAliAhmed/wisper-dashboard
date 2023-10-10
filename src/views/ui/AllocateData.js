@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   CardBody,
+  FormFeedback,
   // UncontrolledAlert,
   // Button,
 } from "reactstrap";
@@ -20,9 +21,11 @@ import "./../../assets/scss/custom.scss";
 import FullLayout from "../../layouts/FullLayout";
 import { allocateData } from "../../services/dataService";
 import {
+  formIsValid,
   handleFailedRequest,
   parseDataAllocatePlans,
   parseDataPlans,
+  validateProperty,
 } from "../../utils";
 // import dataPlans from "../../utils/plansTable";
 
@@ -38,10 +41,11 @@ const initialState = {
 const AllocateData = () => {
   const [plan, setPlan] = useState(initialState);
 
-  // const [serverResponse, setServerResponse] = useState({
-  //   status: true,
-  //   message: "",
-  // });
+  const [errors, setErrors] = useState({});
+  const [serverResponse, setServerResponse] = useState({
+    status: true,
+    message: "",
+  });
   const {
     megaPriceUser,
     currentBalance: { volume, unit, cash, mega_wallet },
@@ -70,6 +74,8 @@ const AllocateData = () => {
         await allocateData(plan, user?.access_token);
         setLoading(false);
         setPlan(initialState);
+        // setServerResponse({status: true, message: "Data allocated successfully."});
+        setErrors({});
         return { status: true, message: "Data allocated successfully." };
       } else {
         toast.info("Contact Admin To Set Plan Price", {
@@ -91,6 +97,11 @@ const AllocateData = () => {
   };
 
   const handleChange = ({ currentTarget: input }) => {
+    const validationErrors = { ...errors };
+    const errorMessage = validateProperty(input);
+    if (errorMessage) validationErrors[input.name] = errorMessage;
+    else delete validationErrors[input.name];
+
     const { name, value } = input;
 
     // console.log("name", name)
@@ -107,9 +118,13 @@ const AllocateData = () => {
       const { size, price } = matchedItem;
       const updatedPlan = { ...plan, [name]: value, volume: size, price };
       setPlan(updatedPlan);
+      setErrors(validationErrors);
+
       console.log("Updated Plan:", updatedPlan);
     } else {
       setPlan({ ...plan, [name]: value });
+      setErrors(validationErrors);
+
       // console.log('Updated Plan:', plan); // Log the original plan object
     }
   };
@@ -190,7 +205,7 @@ const AllocateData = () => {
                               key={`${plan.network}-${plan.id}`}
                               value={plan.id}
                             >
-                              {plan.size} ({plan.validity}) - {plan.plan_type}
+                              {plan.size} ({plan.validity})
                             </option>
                           ))}
                       </Input>
@@ -214,11 +229,13 @@ const AllocateData = () => {
                       <Label for="phone_number">Phone Number</Label>
                       <Input
                         value={plan.phone_number}
+                        invalid={errors.phone_number}
                         id="phone_number"
                         name="phone_number"
                         onChange={handleChange}
                         type="number"
                       />
+                      <FormFeedback>{errors.phone_number}</FormFeedback>
                     </FormGroup>
                   </Col>
                 </Row>
@@ -230,6 +247,7 @@ const AllocateData = () => {
                   plan_id={plan.plan_id}
                   phone_number={plan.phone_number}
                   plans={plansUser}
+                  valid={formIsValid(errors)}
                 />
                 {/* <Button disabled={loading} type="submit" color="primary">
               Allocate

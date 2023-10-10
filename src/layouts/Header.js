@@ -67,7 +67,13 @@ const Header = ({ isAdmin }) => {
             ></img>
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem header>{context?.user?.username}</DropdownItem>
+            <div className="text-decoration-none text-dark">
+              <DropdownItem className="text-dark">
+                Wisper - {context?.user?.type}
+              </DropdownItem>
+            </div>
+
+            <DropdownItem divider />
             <Link
               className="text-decoration-none text-dark"
               to={isAdmin ? "/admin" : "/dashboard"}

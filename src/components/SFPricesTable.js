@@ -36,6 +36,7 @@ const SFPricesTable = ({
   showHeader,
   showSubHeader,
   showPageSettings = false,
+  fetchPrice,
 }) => {
   const [transactionsData, setTransactionsData] = useState([...transactions]);
 
@@ -141,6 +142,7 @@ const SFPricesTable = ({
         },
         user?.access_token
       );
+      fetchPrice(true);
       setLoading(false);
       toast.success("Selling Price Updated");
     } catch (error) {
@@ -173,21 +175,6 @@ const SFPricesTable = ({
                       tag="h6"
                     ></CardSubtitle>
                   )}
-
-                  <div className="legend-container">
-                    <p className="legend">
-                      <span className=" bg-success rounded-circle d-inline-block"></span>{" "}
-                      Successful
-                    </p>
-                    {/*   <p className="legend">
-                    <span className=" bg-warning rounded-circle d-inline-block"></span>{" "}
-                    Processing
-                  </p> */}
-                    <p className="legend">
-                      <span className=" bg-danger rounded-circle d-inline-block"></span>{" "}
-                      Failed
-                    </p>
-                  </div>
 
                   {showPageSettings && (
                     <>

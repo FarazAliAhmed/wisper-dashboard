@@ -22,7 +22,7 @@ import airtel from "../../assets/dashboard/airtel.svg";
 import tranIcon from "../../assets/dashboard/transa.svg";
 import wallIcon from "../../assets/dashboard/walle.svg";
 import axios from "axios";
-import SubDealerPurchaseHistory from "../../components/SubDealerPurchaseHistory";
+import AgentsPurchaseHistory from "../../components/AgentsPurchaseHistory";
 
 // import PaymentButton from "../../components/PaymentButton";
 
@@ -108,7 +108,7 @@ const BucketHistory = () => {
         </Row>
 
         <Row className="mt-4">
-          <SubDealerPurchaseHistory businessId={user?._id} />
+          <AgentsPurchaseHistory businessId={user?._id} />
         </Row>
         <Row>
           <Col lg="12">

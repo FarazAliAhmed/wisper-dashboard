@@ -5,6 +5,8 @@ import { Link, useParams } from "react-router-dom";
 import { BsWhatsapp, BsInstagram, BsFacebook } from "react-icons/bs";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import { RiTwitterXFill } from "react-icons/ri";
+import { FiShare } from "react-icons/fi";
+import { BsChevronRight } from "react-icons/bs";
 import { IoMdCall } from "react-icons/io";
 import toast from "react-hot-toast";
 import logo from "../../assets/images/logos/wisperN.png";
@@ -27,6 +29,7 @@ import {
   Label,
   Form,
   UncontrolledAlert,
+  ModalHeader,
 } from "reactstrap";
 import { validateProperty } from "../../utils";
 import {
@@ -39,22 +42,35 @@ import {
 import Loader from "../../layouts/loader/Loader";
 import timer from "../../assets/images/users/packages.svg";
 import empty from "../../assets/images/users/cart.png";
+import { ShareSocial } from "react-share-social";
 import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
 import { numbers } from "../../networkCheckout";
+import CopyToClipboard from "react-copy-to-clipboard";
+import cancel from "../../assets/images/logos/cancel.png";
+import checked from "../../assets/images/logos/checked.png";
 const { REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY } = process.env;
 
 const SFCustomer = () => {
   const { storeUserName } = useParams();
+
   const [success, setSuccess] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [prices, setPrices] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [copyState, setCopyState] = useState(false);
   const [customerName, setCustomerName] = useState({
     name: "",
     state: false,
   });
+
+  const [customerEmail, setCustomerEmail] = useState({
+    email: "",
+    state: false,
+  });
+
   const [storeFront, setStoreFront] = useState({});
   const [activePlan, setActivePlan] = useState({});
+  const [isOpen, setIsOpen] = useState(false);
   const [account, setAccount] = useState({
     phone: "",
     name: "",
@@ -79,6 +95,9 @@ const SFCustomer = () => {
         const resp = await getUsernameStoreFront(storeUserName);
         setStoreFront(resp.data);
         setLoading(false);
+
+        // Set the page title using resp.data.storeName
+        document.title = resp.data.storeName;
       } catch (error) {
         setErrors("error");
         setLoading(false);
@@ -105,12 +124,22 @@ const SFCustomer = () => {
         // setAccount({ ...account, name: res?.data });
         if (res?.data) {
           setCustomerName({
-            name: res?.data,
+            name: res?.data?.name,
+            state: true,
+          });
+
+          setCustomerEmail({
+            email: res?.data?.email,
             state: true,
           });
         } else {
           setCustomerName({
             name: "",
+            state: false,
+          });
+
+          setCustomerEmail({
+            email: "",
             state: false,
           });
         }
@@ -122,6 +151,17 @@ const SFCustomer = () => {
     fetchCustomerName();
   }, [account.phone]);
 
+  const style = {
+    background: "primary",
+    borderRadius: 3,
+    border: 0,
+    width: "100%",
+    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+    color: "black",
+    padding: "1rem",
+    cursor: "pointer",
+  };
+
   const paymentConfig = {
     public_key: REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY,
     tx_ref: "trx-" + Math.floor(Math.random() * 10000000000000000),
@@ -131,7 +171,7 @@ const SFCustomer = () => {
     customer: {
       name: customerName.name,
       phone_number: account.phone,
-      email: account.email,
+      email: customerEmail.email,
     },
     customizations: {
       title: "Buy Data",
@@ -146,34 +186,33 @@ const SFCustomer = () => {
   };
 
   const handleSubmit = async (response) => {
-    try {
-      setLoading(true);
+    setLoading(true);
 
-      await allocateSFData({
-        network: account.network,
-        plan_id: activePlan.plan_id,
-        phone_number: account.phone,
-        business_id: storeFront.business_id,
-        price: activePlan.selling_price,
-        volume: activePlan.volume,
-        trx_ref: String(response),
-        custName: customerName.name,
-        custEmail: account.email,
-      });
-      setLoading(false);
-      toast.success("success");
-    } catch (error) {
-      toast.error("error occured");
-    }
+    await allocateSFData({
+      network: account.network,
+      plan_id: activePlan.plan_id,
+      phone_number: account.phone,
+      business_id: storeFront.business_id,
+      price: activePlan.selling_price,
+      volume: activePlan.volume,
+      trx_ref: String(response),
+      custName: customerName.name,
+      custEmail: customerEmail.email,
+    });
+    setLoading(false);
+
+    setErrors({});
   };
 
-  const onSuccess = (response) => {
+  const onSuccess = async (response) => {
     closePaymentModal();
-    handleSubmit(response.transaction_id);
-    console.log(response);
-    // setShow(false);
-    toast.success(`Payment Successful. `);
-    // window.location.reload();
+    try {
+      await handleSubmit(response.transaction_id);
+      setConfirm(false);
+      setSuccess(true);
+    } catch (error) {
+      setErrors(true);
+    }
   };
 
   const onClose = () => {
@@ -181,6 +220,11 @@ const SFCustomer = () => {
   };
 
   const handleChange = ({ currentTarget: input }) => {
+    const validationErrors = { ...errors };
+    const errorMessage = validateProperty(input);
+    if (errorMessage) validationErrors[input.name] = errorMessage;
+    else delete validationErrors[input.name];
+
     const { name, value } = input;
 
     let phoneNumberPrefix;
@@ -200,6 +244,7 @@ const SFCustomer = () => {
     }
 
     setAccount({ ...account, [name]: value, network: network });
+    setErrors(validationErrors);
   };
 
   const handlePlanChange = ({ currentTarget: input }) => {
@@ -212,10 +257,28 @@ const SFCustomer = () => {
     }
   };
 
+  const handleShareClick = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Wisper Store",
+          text: `Check out this Wisper Store - ${storeFront.storeURL}`,
+          url: storeFront.storeURL, // Replace with your desired URL
+        });
+        console.log("Share successful");
+      } catch (error) {
+        console.error("Share failed:", error);
+      }
+    } else {
+      // Fallback for browsers that do not support the Web Share API
+      alert("Native sharing is not supported on this browser.");
+    }
+  };
+
   console.log(activePlan, "hhh");
+
   return (
     <>
-      {" "}
       {loading ? (
         <Loader isLoading={loading} />
       ) : (
@@ -254,94 +317,111 @@ const SFCustomer = () => {
               ) : (
                 <div className="sf__customer__container">
                   <div className="sf__customer__content">
-                    <div className="sf__customer__logo">
-                      <span>
-                        <img
+                    <div className="sf__customer__top">
+                      <div className="sf__share">
+                        {" "}
+                        <Button
                           style={{
-                            border: `3px solid ${storeFront?.storeColor}`,
+                            border: "none",
+                            background: `${storeFront.storeColor}`,
                           }}
-                          src={storeFront?.storeImg}
-                        />
-                      </span>
-
-                      <div className="sf__customer__head">
-                        <h3>{storeFront?.storeName}</h3>
-                        <p>{storeFront?.storeDesc}</p>
+                          onClick={() => {
+                            setIsOpen(true);
+                            // handleShareClick();
+                          }}
+                        >
+                          Share Store
+                        </Button>
                       </div>
-                      <div className="sf__customer__socials">
-                        <a
-                          target="_blank"
-                          href={storeFront?.socialLinks?.whatsapp}
-                        >
-                          <BsWhatsapp
-                            cursor={"pointer"}
-                            color={storeFront.storeColor}
+                      <div className="sf__customer__logo">
+                        <span>
+                          <img
+                            style={{
+                              border: `3px solid ${storeFront?.storeColor}`,
+                            }}
+                            src={storeFront?.storeImg}
                           />
-                        </a>
-                        <a
-                          target="_blank"
-                          href={storeFront?.socialLinks?.instagram}
-                        >
-                          <BsInstagram
-                            cursor={"pointer"}
-                            color={storeFront.storeColor}
-                          />
-                        </a>
-                        <a
-                          target="_blank"
-                          href={storeFront?.socialLinks?.twitter}
-                        >
-                          <RiTwitterXFill
-                            cursor={"pointer"}
-                            color={storeFront.storeColor}
-                          />
-                        </a>
-                        <a
-                          target="_blank"
-                          href={storeFront?.socialLinks?.facebook}
-                        >
-                          <BsFacebook
-                            cursor={"pointer"}
-                            color={storeFront.storeColor}
-                          />
-                        </a>
+                        </span>
 
-                        <a
-                          target="_blank"
-                          href={`tel:${storeFront?.socialLinks?.phoneNumber}`}
-                        >
-                          <IoMdCall
-                            cursor={"pointer"}
-                            color={storeFront.storeColor}
-                          />
-                        </a>
+                        <div className="sf__customer__head">
+                          <h3>{storeFront?.storeName}</h3>
+                          <p>{storeFront?.storeDesc}</p>
+                        </div>
+                        <div className="sf__customer__socials">
+                          <a
+                            target="_blank"
+                            href={storeFront?.socialLinks?.whatsapp}
+                          >
+                            <BsWhatsapp
+                              cursor={"pointer"}
+                              color={storeFront.storeColor}
+                            />
+                          </a>
+                          <a
+                            target="_blank"
+                            href={storeFront?.socialLinks?.instagram}
+                          >
+                            <BsInstagram
+                              cursor={"pointer"}
+                              color={storeFront.storeColor}
+                            />
+                          </a>
+                          <a
+                            target="_blank"
+                            href={storeFront?.socialLinks?.twitter}
+                          >
+                            <RiTwitterXFill
+                              cursor={"pointer"}
+                              color={storeFront.storeColor}
+                            />
+                          </a>
+                          <a
+                            target="_blank"
+                            href={storeFront?.socialLinks?.facebook}
+                          >
+                            <BsFacebook
+                              cursor={"pointer"}
+                              color={storeFront.storeColor}
+                            />
+                          </a>
+
+                          <a
+                            target="_blank"
+                            href={`tel:${storeFront?.socialLinks?.phoneNumber}`}
+                          >
+                            <IoMdCall
+                              cursor={"pointer"}
+                              color={storeFront.storeColor}
+                            />
+                          </a>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="sf__customer__buttons">
-                      <h4>Services</h4>
+                      <div className="sf__customer__buttons">
+                        <h4>Services</h4>
 
-                      <button
-                        style={{
-                          background: `${storeFront.storeColor}`,
-                        }}
-                        onClick={() => {
-                          setConfirm(true);
-                        }}
-                      >
-                        Buy Data
-                      </button>
+                        <button
+                          style={{
+                            background: `${storeFront.storeColor}`,
+                          }}
+                          onClick={() => {
+                            setConfirm(true);
+                          }}
+                        >
+                          Buy Data
+                        </button>
 
-                      <button
-                        style={{
-                          background: `${storeFront.storeColor}`,
-                        }}
-                        onClick={() => {
-                          toast.success("Comming Soon");
-                        }}
-                      >
-                        Buy Airtime
-                      </button>
+                        <button
+                          style={{
+                            background: `${storeFront.storeColor}`,
+                          }}
+                          onClick={() => {
+                            toast.success("Comming Soon");
+                          }}
+                        >
+                          Buy Airtime
+                        </button>
+                      </div>
                     </div>
 
                     <div className="sf__customer__footer">
@@ -370,11 +450,13 @@ const SFCustomer = () => {
                             </Label>
                             <Input
                               value={account.phone}
+                              invalid={errors.phone}
                               onChange={handleChange}
                               name="phone"
                               required
                               type="number"
                             />
+                            <FormFeedback>{errors.phone}</FormFeedback>
                           </FormGroup>
                           <FormGroup className="mb-3">
                             <Label>Customer Name</Label>{" "}
@@ -398,8 +480,14 @@ const SFCustomer = () => {
                             <Label>Email</Label>{" "}
                             <span className="text-danger">*</span>
                             <Input
-                              onChange={handleChange}
-                              value={account.email}
+                              onChange={(e) => {
+                                setCustomerName({
+                                  ...customerEmail,
+                                  email: e.target.value,
+                                });
+                              }}
+                              value={customerEmail.email}
+                              disabled={customerEmail.state == true}
                               type="text"
                               required
                               name="email"
@@ -482,7 +570,7 @@ const SFCustomer = () => {
                           if (
                             account.phone == "" ||
                             customerName.name == "" ||
-                            account.email == "" ||
+                            customerEmail.email == "" ||
                             account.network == "" ||
                             activePlan == "select" ||
                             activePlan == "" ||
@@ -511,6 +599,89 @@ const SFCustomer = () => {
           )}
         </>
       )}
+      <Modal centered isOpen={isOpen}>
+        <ModalHeader toggle={() => setIsOpen(false)}>Share Store</ModalHeader>
+        <ModalBody>
+          <div className="sf__share__con">
+            <div onClick={handleShareClick} style={style}>
+              <div className="sf__share__options">
+                <span>
+                  <FiShare /> Share Options
+                </span>
+                <BsChevronRight />
+              </div>
+            </div>
+            <div style={style}>
+              <div className="sf__share__options">
+                <span>
+                  <img alt="logo" src={logo} /> {storeFront.storeURL}
+                </span>
+
+                {copyState ? (
+                  <b
+                  // onClick={() => {
+                  //   navigator.clipboard.writeText(storeFront.storeURL ?? "");
+                  //   setCopyState(!copyState);
+                  // }}
+                  >
+                    Copied{" "}
+                  </b>
+                ) : (
+                  <b
+                    onClick={() => {
+                      navigator.clipboard.writeText(storeFront.storeURL ?? "");
+                      setCopyState(!copyState);
+                    }}
+                  >
+                    Copy
+                  </b>
+                )}
+              </div>
+            </div>
+          </div>
+        </ModalBody>
+
+        {/* <ModalFooter className="confirm-footer">
+          <Button type="submit" color="primary" onClick={(e) => {}}>
+            Yes, Proceed
+          </Button>{" "}
+          <Button onClick={() => setIsOpen(false)}>No, Cancel</Button>
+        </ModalFooter> */}
+      </Modal>
+
+      <Modal centered isOpen={success} toggle={() => setSuccess(!success)}>
+        <ModalBody>
+          <div className="confirm text-center">
+            <img src={checked} className="confirm-checked" alt="success" />
+            <p>Data Purchase Successful</p>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button color="secondary" onClick={() => setSuccess(false)}>
+            Close
+          </Button>
+        </ModalFooter>
+      </Modal>
+
+      {/* Failure On Data sent*/}
+      <Modal centered isOpen={failed} toggle={() => setFailed(!failed)}>
+        <ModalBody>
+          <div className="confirm text-center">
+            <img
+              src={cancel}
+              width={50}
+              className="confirm-cancel"
+              alt="confirm"
+            />
+            <p>Data Purchase Failed</p>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button color="secondary" onClick={() => setFailed(false)}>
+            Close
+          </Button>
+        </ModalFooter>
+      </Modal>
     </>
   );
 };

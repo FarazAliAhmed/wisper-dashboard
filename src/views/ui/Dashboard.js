@@ -58,9 +58,9 @@ const Dashboard = () => {
   return (
     <FullLayout>
       <div>
-        <UncontrolledAlert dismissible={false} color="success">
+        {/* <UncontrolledAlert dismissible={false} color="success">
           Account Type - {user?.type}
-        </UncontrolledAlert>
+        </UncontrolledAlert> */}
         <h4>Balances</h4>
         {/***Top Cards***/}
         {maintenance.notice && (

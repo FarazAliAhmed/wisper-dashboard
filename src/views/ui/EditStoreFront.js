@@ -33,7 +33,7 @@ import {
 import { totalDataSold, displayBalance } from "../../utils";
 import { toast } from "react-hot-toast";
 import { BeatLoader } from "react-spinners";
-
+import defaultImg from "../../assets/images/users/user4.jpg";
 import { useAppState } from "../../context/appContext";
 import { useUser } from "../../context/userContext";
 import SFPricesTable from "../../components/SFPricesTable";
@@ -138,6 +138,7 @@ const EditStoreFront = () => {
   const { user } = useUser();
   const { storeFront } = useAppState();
   const [prices, setPrices] = useState([]);
+  const [fetchPrice, setFetchPrice] = useState(false);
   const [usernameCheck, setUsernameCheck] = useState([]);
 
   const [openModal, setOpenModal] = useState(false);
@@ -169,7 +170,7 @@ const EditStoreFront = () => {
       ) {
         // Check the file size
         const fileSize = file.size / 1024; // Convert to KB
-        const maxSizeKB = 100; // Maximum size in KB
+        const maxSizeKB = 500; // Maximum size in KB
 
         if (fileSize <= maxSizeKB) {
           const imageUrl = URL.createObjectURL(file);
@@ -178,8 +179,8 @@ const EditStoreFront = () => {
           setModalKey((prevKey) => prevKey + 1);
         } else {
           // Display an error message or perform any other appropriate action
-          console.error("Selected file size exceeds the limit (100KB).");
-          toast.error("Selected file size exceeds the limit (100KB).");
+          console.error("Selected file size exceeds the limit (500KB).");
+          toast.error("Selected file size exceeds the limit (500KB).");
         }
       } else {
         // Display an error message or perform any other appropriate action
@@ -250,7 +251,7 @@ const EditStoreFront = () => {
     };
 
     fetchAllPlansUser();
-  }, []);
+  }, [fetchPrice]);
 
   useEffect(() => {
     setStoreInfo(reqObj);
@@ -325,6 +326,8 @@ const EditStoreFront = () => {
       );
       setLoading(false);
       toast.success("Store Information Updated");
+      setErrors({});
+
       // window.location.reload();
     } catch (error) {
       setLoading(false);
@@ -333,6 +336,10 @@ const EditStoreFront = () => {
   };
 
   const handleChange = async ({ currentTarget: input }) => {
+    const validationErrors = { ...errors };
+    const errorMessage = validateProperty(input);
+    if (errorMessage) validationErrors[input.name] = errorMessage;
+    else delete validationErrors[input.name];
     const { name, value } = input;
 
     // Check for spaces in the input value
@@ -342,9 +349,11 @@ const EditStoreFront = () => {
 
       // Update the state with the sanitized value
       setStoreInfo({ ...storeInfo, [name]: sanitizedValue });
+      setErrors(validationErrors);
     } else {
       // If no spaces, update the state normally
       setStoreInfo({ ...storeInfo, [name]: value });
+      setErrors(validationErrors);
     }
   };
 
@@ -372,7 +381,7 @@ const EditStoreFront = () => {
   //   setStoreInfo({ ...storeInfo, [name]: value });
   // };
 
-  console.log(storeInfo.storeImg, "oo");
+  console.log(prices, "oo");
 
   const navItems = ["Information", "Branding", "Prices"];
 
@@ -381,6 +390,9 @@ const EditStoreFront = () => {
       <div>
         <div className="sf__head">
           <h4>Edit Store Front </h4>
+          <a target="_blank" href={storeFront.storeURL}>
+            <Button color="primary">Preview</Button>
+          </a>
         </div>
         <div className="settings__nav">
           {navItems.map((item, index) => (
@@ -478,11 +490,13 @@ const EditStoreFront = () => {
                     <Label for="mobile_number">Phone Number</Label>
                     <Input
                       value={storeInfo.phoneNumber}
+                      invalid={errors.phoneNumber}
                       id="mobile_number"
                       name="phoneNumber"
                       onChange={handleChange}
                       type="number"
                     />
+                    <FormFeedback>{errors.phoneNumber}</FormFeedback>
                   </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -534,7 +548,11 @@ const EditStoreFront = () => {
                   </FormGroup>
                 </Col>
               </Row>
-              <Button disabled={loading} type="submit" color="primary">
+              <Button
+                disabled={formIsValid(errors) || loading}
+                type="submit"
+                color="primary"
+              >
                 {loading ? (
                   <BeatLoader size={10} color="white" loading />
                 ) : (
@@ -562,22 +580,35 @@ const EditStoreFront = () => {
                           flexDirection: "column",
                         }}
                       >
-                        <Label for="storeName">
-                          Store Logo{" "}
-                          {storeInfo.storeImg && (
-                            <a target="_blank" href={storeInfo.storeImg}>
-                              <AiFillEye />
-                            </a>
-                          )}
-                        </Label>
+                        {storeFront.storeImg == "" || !storeFront.storeImg ? (
+                          ""
+                        ) : (
+                          <img
+                            className="sf__avatar"
+                            alt="avatar"
+                            src={storeInfo.storeImg}
+                          />
+                        )}
+
                         <input
                           type="file"
                           style={{ display: "none" }}
                           ref={fileInputRef}
                           onChange={handleFileSelected}
+                          accept=".jpg, .jpeg, .png, .webp" // Specify the allowed file extensions here
                         />
-                        <Button onClick={handleFileUpload} color="primary">
-                          Upload new avatar
+                        <Label for="storeName">Store Logo </Label>
+
+                        <Button
+                          style={{
+                            width: "80%",
+                          }}
+                          onClick={handleFileUpload}
+                          color="primary"
+                        >
+                          {storeFront.storeImg == "" || !storeFront.storeImg
+                            ? "Upload"
+                            : "Replace"}
                         </Button>
                       </div>
                     </FormGroup>
@@ -613,6 +644,7 @@ const EditStoreFront = () => {
               transactions={prices}
               showHeader={true}
               showSubHeader={false}
+              fetchPrice={setFetchPrice}
             />
           </Row>
         )}

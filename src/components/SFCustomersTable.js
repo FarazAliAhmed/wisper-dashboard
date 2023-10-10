@@ -247,12 +247,8 @@ const SFCustomersTable = ({
                     {transactionsData.map((tx, idx) => (
                       <tr key={idx} className="border-top">
                         <td>
-                          <div className="d-flex align-items-center p-2">
-                            <div className="ms-3">
-                              <h6 className="mb-0">{tx.customer_name}</h6>
-                              {/* <span className="text-muted">{tdata.email}</span> */}
-                            </div>
-                          </div>
+                          <h6 className="mb-0">{tx.customer_name}</h6>
+                          {/* <span className="text-muted">{tdata.email}</span> */}
                         </td>
                         <td>
                           <div className="d-flex align-items-center p-2">

@@ -3,7 +3,7 @@ import { apiUrl, apiUrlV2, adminUrl } from "../config.js";
 
 export async function getAllPlans() {
   try {
-    const res = await http.get(`${adminUrl}/plans`);
+    const res = await http.get(`${apiUrl}/plans`);
     // console.log(res)
     return res;
   } catch (error) {
@@ -13,14 +13,13 @@ export async function getAllPlans() {
 
 export async function getAllPlansUser(userId) {
   try {
-    const res = await http.get(`${apiUrl}/plans_user/${userId}`);
-    // console.log("plans user", res)
+    const res = await http.get(`${adminUrl}/plans_user/${userId}`);
+    console.log("plans user", res);
     return res;
   } catch (error) {
     return null;
   }
 }
-
 export async function getCustomerName(phone) {
   try {
     console.log("plans user", phone);
@@ -52,6 +51,18 @@ export async function checkUsername(username) {
 export async function getSFTransactionsTable(business_id) {
   try {
     const res = await http.get(`${apiUrl}/store-fronts-history/${business_id}`);
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getSFAnalysis(business_id) {
+  try {
+    const res = await http.get(
+      `${apiUrl}/store-fronts/analysis/${business_id}`
+    );
+    console.log(res);
     return res;
   } catch (error) {
     return null;
@@ -130,7 +141,7 @@ export async function purchaseMegaPrice(body, apiKey) {
   return res;
 }
 
-export async function allocateSubDealerPrice(body, apiKey) {
+export async function allocateAgentsPrice(body, apiKey) {
   const headers = { "x-api-key": apiKey };
 
   // console.log("body", body);
@@ -312,7 +323,7 @@ export async function PurchaseMegaPriceTransactions(
   }
 }
 
-export async function getSubDealers({ userId }) {
+export async function getAgents({ userId }) {
   try {
     const subDealer = await http.get(
       `${apiUrl}/subdealer/getAllSubdealersId/${userId}`
@@ -324,7 +335,7 @@ export async function getSubDealers({ userId }) {
   }
 }
 
-export async function getSubDealerInfo({ userId }) {
+export async function getAgentsInfo({ userId }) {
   try {
     const subDealer = await http.get(
       `${apiUrl}/subdealer/getSubdealersInfo/${userId}`
@@ -336,7 +347,7 @@ export async function getSubDealerInfo({ userId }) {
   }
 }
 
-export async function getSubDealerTransactions({ userId }) {
+export async function getAgentsTransactions({ userId }) {
   try {
     const subDealer = await http.get(`${apiUrl}/subdealer/allTrx/${userId}`);
     console.log(subDealer, "subInfoTrans");
@@ -375,7 +386,7 @@ export async function PurchaseMonifyTransactions(
   }
 }
 
-export async function SubDealersAllocationTransactions(
+export async function AgentsAllocationTransactions(
   { limit, offset, userId } = { limit: 50, offset: 0 }
 ) {
   try {
@@ -391,7 +402,7 @@ export async function SubDealersAllocationTransactions(
   }
 }
 
-export async function AllSubDealersAllocationTransactions(
+export async function AllAgentsAllocationTransactions(
   { limit, offset, userId } = { limit: 50, offset: 0 }
 ) {
   try {

@@ -1,2 +1,0 @@
-(this["webpackJsonpstarter-bt5"]=this["webpackJsonpstarter-bt5"]||[]).push([[39],{183:function(t,e,c){"use strict";c.r(e);c(1);var s=c(14),r=c(27),n=c(2);e.default=function(){return Object(n.jsx)(r.a,{children:Object(n.jsxs)("div",{className:"text-center",children:[Object(n.jsx)("div",{children:"404 | Page Not Found"}),Object(n.jsx)(s.b,{to:"/",children:"Back Home"})]})})}}}]);
-//# sourceMappingURL=39.89cadc4b.chunk.js.map

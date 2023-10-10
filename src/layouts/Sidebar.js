@@ -84,7 +84,7 @@ const liteNav = [
   },
 ];
 
-const subdealerNav = [
+const agentsNav = [
   {
     title: "Dashboard",
     href: "/dashboard",
@@ -132,11 +132,6 @@ const subdealerNav = [
   //   icon: "bi bi-wallet2",
   // },
 
-  // {
-  //   title: "Sub-Dealers",
-  //   href: "/sub-dealers",
-  //   icon: "bi bi-shop",
-  // },
   // {
   //   title: "Account",
   //   href: "/account",
@@ -201,9 +196,9 @@ const megaNav = [
     icon: "bi bi-bag",
   },
   {
-    title: "Sub-Dealers",
-    href: "/sub-dealers",
-    icon: "bi bi-shop",
+    title: "Agents",
+    href: "/agents",
+    icon: "bi bi-person-check",
   },
   {
     title: "Store Front",
@@ -317,12 +312,12 @@ const adminNav = [
   {
     title: "Glo Data Resolution",
     href: "/admin/gloRes",
-    icon: "bi bi-wrench",
+    icon: "bi bi-server",
   },
   {
     title: "Wallet Resolution",
     href: "/admin/walletRes",
-    icon: "bi bi-wrench",
+    icon: "bi bi-wallet-fill",
   },
   {
     title: "Maintenance",
@@ -363,7 +358,7 @@ const Sidebar = ({ isAdmin }) => {
       if (user.type == "mega") {
         setNav(megaNav);
       } else if (user.type == "subdealer") {
-        setNav(subdealerNav);
+        setNav(agentsNav);
       } else {
         setNav(liteNav);
       }

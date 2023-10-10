@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   CardBody,
+  FormFeedback,
   // UncontrolledAlert,
   // Button,
 } from "reactstrap";
@@ -18,7 +19,12 @@ import { useAppState } from "../../context/appContext";
 import FullLayout from "../../layouts/FullLayout";
 import AdminLayout from "../../layouts/AdminLayout";
 import { allocateData } from "../../services/dataService";
-import { handleFailedRequest, parseDataPlans } from "../../utils";
+import {
+  formIsValid,
+  handleFailedRequest,
+  parseDataPlans,
+  validateProperty,
+} from "../../utils";
 // import dataPlans from "../../utils/plansTable";
 
 import "./../../assets/scss/custom.scss";
@@ -31,6 +37,7 @@ const initialState = {
 
 const AllocateDataMAdmin = () => {
   const [plan, setPlan] = useState(initialState);
+  const [errors, setErrors] = useState({});
 
   // const [serverResponse, setServerResponse] = useState({
   //   status: true,
@@ -54,6 +61,7 @@ const AllocateDataMAdmin = () => {
       await allocateData(plan, user?.access_token);
       setLoading(false);
       setPlan(initialState);
+      setErrors({});
       return { status: true, message: "Data allocated successfully." };
       // setServerResponse({status: true, message: "Data allocated successfully."});
     } catch (error) {
@@ -65,8 +73,13 @@ const AllocateDataMAdmin = () => {
   };
 
   const handleChange = ({ currentTarget: input }) => {
+    const validationErrors = { ...errors };
+    const errorMessage = validateProperty(input);
+    if (errorMessage) validationErrors[input.name] = errorMessage;
+    else delete validationErrors[input.name];
     const { name, value } = input;
     setPlan({ ...plan, [name]: value });
+    setErrors(validationErrors);
   };
   return (
     <AdminLayout>
@@ -142,11 +155,13 @@ const AllocateDataMAdmin = () => {
                       <Label for="phone_number">Phone Number</Label>
                       <Input
                         value={plan.phone_number}
+                        invalid={errors.phone_number}
                         id="phone_number"
                         name="phone_number"
                         onChange={handleChange}
                         type="number"
                       />
+                      <FormFeedback>{errors.phone_number}</FormFeedback>
                     </FormGroup>
                   </Col>
                 </Row>
@@ -158,6 +173,7 @@ const AllocateDataMAdmin = () => {
                   plan_id={plan.plan_id}
                   phone_number={plan.phone_number}
                   plans={plans}
+                  valid={formIsValid(errors)}
                 />
                 {/* <Button disabled={loading} type="submit" color="primary">
               Allocate

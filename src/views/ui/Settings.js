@@ -29,7 +29,7 @@ import { toast } from "react-hot-toast";
 import { BeatLoader } from "react-spinners";
 
 import _Documentation from "../../components/pages/Documentation";
-import { getSubDealerInfo } from "../../services/dataService";
+import { getAgentsInfo } from "../../services/dataService";
 
 const Settings = () => {
   const context = useUser();
@@ -44,9 +44,9 @@ const Settings = () => {
     mobile_number: "",
     address: "",
   });
-  const handleGetSubDealerInfo = async () => {
+  const handleGetAgentsInfo = async () => {
     setLoading(true);
-    const resp = await getSubDealerInfo({
+    const resp = await getAgentsInfo({
       userId: userObj?.dealer,
     });
     setDealer(resp?.subdealers);
@@ -58,6 +58,7 @@ const Settings = () => {
     currentPass: "",
     newPass: "",
   });
+
   const [errors, setErrors] = useState({});
   const [errorsPass, setErrorsPass] = useState({});
   const [navState, setNavState] = useState(0);
@@ -72,7 +73,7 @@ const Settings = () => {
 
   useEffect(() => {
     setUser(reqObj);
-    handleGetSubDealerInfo();
+    handleGetAgentsInfo();
   }, []);
 
   const handleSubmit = async (e) => {

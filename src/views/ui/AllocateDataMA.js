@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   CardBody,
+  FormFeedback,
   // UncontrolledAlert,
   // Button,
 } from "reactstrap";
@@ -17,7 +18,12 @@ import { useAppState } from "../../context/appContext";
 
 import FullLayout from "../../layouts/FullLayout";
 import { allocateData } from "../../services/dataService";
-import { handleFailedRequest, parseDataPlans } from "../../utils";
+import {
+  formIsValid,
+  handleFailedRequest,
+  parseDataPlans,
+  validateProperty,
+} from "../../utils";
 // import dataPlans from "../../utils/plansTable";
 
 import "./../../assets/scss/custom.scss";
@@ -30,6 +36,7 @@ const initialState = {
 
 const AllocateDataMA = () => {
   const [plan, setPlan] = useState(initialState);
+  const [errors, setErrors] = useState({});
 
   // const [serverResponse, setServerResponse] = useState({
   //   status: true,
@@ -54,8 +61,9 @@ const AllocateDataMA = () => {
       // console.log("res", res);
       setLoading(false);
       setPlan(initialState);
-      return { status: true, message: "Data allocated successfully." };
       // setServerResponse({status: true, message: "Data allocated successfully."});
+      setErrors({});
+      return { status: true, message: "Data allocated successfully." };
     } catch (error) {
       console.log("error.response.data.message:", error.response.data.message);
       setLoading(false);
@@ -66,9 +74,17 @@ const AllocateDataMA = () => {
   };
 
   const handleChange = ({ currentTarget: input }) => {
+    const validationErrors = { ...errors };
+    const errorMessage = validateProperty(input);
+    if (errorMessage) validationErrors[input.name] = errorMessage;
+    else delete validationErrors[input.name];
+
     const { name, value } = input;
     setPlan({ ...plan, [name]: value });
+    setErrors(validationErrors);
   };
+
+  console.log(errors, "errors");
   return (
     <FullLayout>
       <div>
@@ -132,7 +148,7 @@ const AllocateDataMA = () => {
                               key={`${plan.network}-${plan.dataId}`}
                               value={plan.dataId}
                             >
-                              {plan.size} ({plan.duration}) - {plan.plan_type}
+                              {plan.size} ({plan.duration})
                             </option>
                           ))}
                       </Input>
@@ -143,11 +159,14 @@ const AllocateDataMA = () => {
                       <Label for="phone_number">Phone Number</Label>
                       <Input
                         value={plan.phone_number}
+                        invalid={errors.phone_number}
                         id="phone_number"
                         name="phone_number"
                         onChange={handleChange}
+                        required
                         type="number"
                       />
+                      <FormFeedback>{errors.phone_number}</FormFeedback>
                     </FormGroup>
                   </Col>
                 </Row>
@@ -159,6 +178,7 @@ const AllocateDataMA = () => {
                   plan_id={plan.plan_id}
                   phone_number={plan.phone_number}
                   plans={plans}
+                  valid={formIsValid(errors)}
                 />
                 {/* <Button disabled={loading} type="submit" color="primary">
               Allocate

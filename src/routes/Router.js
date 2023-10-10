@@ -43,14 +43,12 @@ const Pricing = lazy(() => import("../views/ui/Pricing"));
 const ViewPricing = lazy(() => import("../views/ui/ViewPricing"));
 const Admin = lazy(() => import("./Admin"));
 const TransactionsV2 = lazy(() => import("../views/ui/TransactionsV2"));
-const SubDealers = lazy(() => import("../views/ui/Sub-Dealers.js"));
-const SubDealerBusinessDetails = lazy(() =>
-  import("../views/ui/BusinessDetails.Sub-Dealers.js")
+const Agents = lazy(() => import("../views/ui/Agents.js"));
+const AgentsBusinessDetails = lazy(() =>
+  import("../views/ui/BusinessDetails.Agents.js")
 );
 
-const SubDealerBusinessFund = lazy(() =>
-  import("../views/ui/SubDealerFunding.js")
-);
+const AgentsBusinessFund = lazy(() => import("../views/ui/AgentsFunding.js"));
 
 const Routes = () => {
   const { user } = useUser();
@@ -83,15 +81,15 @@ const Routes = () => {
             ""
           )}
           {user?.type == "mega" ? (
-            <ProtectedRoute path="/sub-dealers" component={SubDealers} />
+            <ProtectedRoute path="/agents" component={Agents} />
           ) : (
             ""
           )}
 
           {user?.type == "mega" ? (
             <ProtectedRoute
-              path="/subDealer/business/:businessId"
-              component={SubDealerBusinessDetails}
+              path="/agents/business/:businessId"
+              component={AgentsBusinessDetails}
             />
           ) : (
             ""
@@ -99,8 +97,8 @@ const Routes = () => {
 
           {user?.type == "mega" ? (
             <ProtectedRoute
-              path="/subDealer/fund/:businessId"
-              component={SubDealerBusinessFund}
+              path="/agents/fund/:businessId"
+              component={AgentsBusinessFund}
             />
           ) : (
             ""
