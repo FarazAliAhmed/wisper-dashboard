@@ -22,6 +22,7 @@ import { paginate } from "../utils";
 import TransactionReceipt from "./TransactionReceipt";
 import { useUser } from "../context/userContext";
 import SFReceipt from "./SFReceipt";
+import moment from "moment";
 
 const SFCustomersTable = ({
   transactions,
@@ -132,21 +133,6 @@ const SFCustomersTable = ({
                   </CardSubtitle>
                 )}
 
-                <div className="legend-container">
-                  <p className="legend">
-                    <span className=" bg-success rounded-circle d-inline-block"></span>{" "}
-                    Successful
-                  </p>
-                  {/*   <p className="legend">
-                    <span className=" bg-warning rounded-circle d-inline-block"></span>{" "}
-                    Processing
-                  </p> */}
-                  <p className="legend">
-                    <span className=" bg-danger rounded-circle d-inline-block"></span>{" "}
-                    Failed
-                  </p>
-                </div>
-
                 {showPageSettings && (
                   <>
                     <Row className="justify-content-center mt-4">
@@ -247,43 +233,24 @@ const SFCustomersTable = ({
                     {transactionsData.map((tx, idx) => (
                       <tr key={idx} className="border-top">
                         <td>
-                          <h6 className="mb-0">{tx.customer_name}</h6>
+                          <h6 className="mb-0">{tx.name}</h6>
                           {/* <span className="text-muted">{tdata.email}</span> */}
                         </td>
                         <td>
                           <div className="d-flex align-items-center p-2">
-                            <div className="ms-3">
-                              <h6 className="mb-0">{tx.phone_number}</h6>
-                              {/* <span className="text-muted">{tdata.email}</span> */}
-                            </div>
+                            <h6 className="mb-0">{tx.phone}</h6>
+                            {/* <span className="text-muted">{tdata.email}</span> */}
                           </div>
                         </td>
-                        <td> ₦{tx.data_volume} </td>
-
-                        <td>{tx.data_volume / 1000} GB</td>
-
-                        {/* <td>{tx.price || "-"}</td> */}
+                        <td> {tx.email} </td>
                         <td>
-                          {tx.status === "processing" ? (
-                            <span className="p-2 bg-warning rounded-circle d-inline-block ms-3"></span>
-                          ) : tx.status === "failed" ? (
-                            <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
-                          ) : (
-                            <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
-                          )}
+                          {" "}
+                          {moment(tx.dateJoined).format(
+                            "YYYY-MM-DD HH:mm:ss"
+                          )}{" "}
                         </td>
-                        <td>{tx.network_provider}</td>
-                        <td>{tx.created_at}</td>
-                        <td>
-                          <Button
-                            className="receipt-button"
-                            onClick={() => showReceipt(tx)}
-                          >
-                            View
-                          </Button>
-                        </td>
-                        {/* <td>₦ {tx.data_price}</td> */}
-                        {/* <td>{tx.transaction_ref}</td> */}
+
+                        <td>{tx.numberOfPurchases}</td>
                       </tr>
                     ))}
                   </tbody>

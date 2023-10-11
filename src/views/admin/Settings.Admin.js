@@ -54,13 +54,28 @@ const Settings = () => {
     message: "",
   });
   const [loading, setLoading] = useState(false);
-  const { name, mobile_number, address, email, username, password } =
-    context.user;
-  const reqObj = { name, mobile_number, address, email, username, password };
+  const {
+    name,
+    mobile_number,
+    business_name,
+    address,
+    email,
+    username,
+    password,
+  } = context.user;
+  const reqObj = {
+    name,
+    business_name,
+    mobile_number,
+    address,
+    email,
+    username,
+    password,
+  };
 
   useEffect(() => {
     setUser(reqObj);
-  }, []);
+  }, [context]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

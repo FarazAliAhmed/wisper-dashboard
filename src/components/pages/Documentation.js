@@ -7,12 +7,22 @@ import {
   Button,
   Input,
   UncontrolledAlert,
+  Modal,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import { useUser } from "../../context/userContext";
 import { useAppState } from "../../context/appContext";
 import { parseDataPlans } from "../../utils";
-
-import { saveCallback, saveWebhook } from "../../services/dataService";
+import { MdOutlineContentCopy } from "react-icons/md";
+import cancel from "../../assets/images/logos/cancel.png";
+import checked from "../../assets/images/logos/checked.png";
+import {
+  allocateSFData,
+  getAccessToken,
+  saveCallback,
+  saveWebhook,
+} from "../../services/dataService";
 import toast from "react-hot-toast";
 
 // import FullLayout from "../../layouts/FullLayout";
@@ -24,17 +34,38 @@ const Documentation = () => {
   const { user } = useUser();
   const { plans } = useAppState();
 
+  const [success, setSuccess] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+  const [failed, setFailed] = useState(false);
+
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState("");
   const [webhook, setWebhook] = useState();
   const [callback, setCallback] = useState();
 
   useEffect(() => {
     setWebhook(user?.webhook);
     setCallback(user?.callback);
+    setToken(user?.access_token);
   }, [user]);
 
   const tableData = parseDataPlans(plans);
 
+  const handleSubmit = async () => {
+    await getAccessToken(user?._id)
+      .then((res) => {
+        setToken(res.data.newAccessToken);
+        console.log(res, "kk");
+        setSuccess(true);
+        setConfirm(false);
+      })
+      .catch((error) => {
+        setFailed(true);
+        console.log(error, "kk");
+
+        setConfirm(false);
+      });
+  };
   const handleSaveWebhook = () => {
     saveWebhook(webhook);
     showNotice();
@@ -66,21 +97,33 @@ const Documentation = () => {
           API Documentation
         </Button>
       </a>
-      <div className="mb-2">
+      <div
+        style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+        className="mb-2"
+      >
         <b>Authorization Token:</b>
-        <div className="text-muted p-3">
-          {user?.access_token}
-          <Button
-            color="info"
-            style={{ padding: ".2em .4em", marginLeft: ".8em" }}
+        <div className="text-muted ">
+          {token}
+          <MdOutlineContentCopy
+            style={{ cursor: "pointer" }}
             onClick={() => {
               navigator.clipboard.writeText(user?.access_token);
               toast.success("copied");
             }}
-          >
-            Click to Copy
-          </Button>
+          />
         </div>
+        <a
+          style={{
+            textDecoration: "none",
+          }}
+          onClick={(e) => {
+            e.preventDefault();
+            setConfirm(true);
+          }}
+          href=""
+        >
+          Generate New Token
+        </a>
       </div>
 
       {/* Webhook URL */}
@@ -173,6 +216,84 @@ const Documentation = () => {
           </Table>
         </CardBody>
       </Card>
+
+      <Modal centered isOpen={confirm} toggle={() => setConfirm(!confirm)}>
+        <ModalBody>
+          <div className="add__sub__dealer__con">
+            <div className="add__sub__dealer__head">
+              <h4>Confirm Reset Api Token</h4>
+            </div>
+            <p>
+              Are you sure you want to reset your API Token? This action will
+              revoke your current API Token, and you will need to update it in
+              any applications services using it
+            </p>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button
+            color="primary"
+            onClick={handleSubmit}
+            // disabled={formIsValid(errors) || loading}
+            size="lg"
+            type="submit"
+            className="submit-btn"
+          >
+            Confirm Reset
+          </Button>{" "}
+          <Button onClick={() => setConfirm(false)}>No, Cancel</Button>
+        </ModalFooter>
+      </Modal>
+      <Modal centered isOpen={success} toggle={() => setSuccess(!success)}>
+        <ModalBody>
+          <h3>API Token Reset Successful</h3>
+          <div className="confirm text-center">
+            <img src={checked} className="confirm-checked" alt="success" />
+            <p>
+              Your API Token has been successfully reset. Please make sure to
+              update your applications or services with the new API Key for
+              uninterrupted access to our services
+            </p>
+            <p>{token}</p>
+            <Button
+              color="info"
+              style={{ padding: ".2em .4em", marginLeft: ".8em" }}
+              onClick={() => {
+                navigator.clipboard.writeText(token);
+                toast.success("copied");
+              }}
+            >
+              Click to Copy
+            </Button>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button color="secondary" onClick={() => setSuccess(false)}>
+            Close
+          </Button>
+        </ModalFooter>
+      </Modal>
+
+      {/* Failure On Data sent*/}
+      <Modal centered isOpen={failed} toggle={() => setFailed(!failed)}>
+        <ModalBody>
+          <h3>API Token Reset Successful</h3>
+          <div className="confirm text-center">
+            <img
+              src={cancel}
+              width={50}
+              className="confirm-cancel"
+              alt="confirm"
+            />
+            <p>Please Try Again</p>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button color="secondary" onClick={() => setFailed(false)}>
+            Close
+          </Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 };

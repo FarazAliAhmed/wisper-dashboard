@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Row, UncontrolledAlert } from "reactstrap";
+import {
+  Button,
+  Col,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  Row,
+  UncontrolledAlert,
+} from "reactstrap";
 
 import "../../assets/scss/custom.scss";
 import { Link } from "react-router-dom";
@@ -40,6 +48,7 @@ import {
   checkUsername,
   getAllPlansUser,
   getSFAnalysis,
+  getSFCustomersTable,
   getSFTransactionsTable,
   updateStoreFront,
 } from "../../services/dataService";
@@ -54,11 +63,15 @@ const StoreFront = () => {
   const { storeFront } = useAppState();
   const [prices, setPrices] = useState([]);
   const [maintenance, setMaintenance] = useState(storeFront?.storeMaintenance);
-  const [customerTable, setCustomerTabele] = useState([]);
+  const [customerTable, setCustomerTable] = useState([]);
   const [transactionTable, setTransactionTable] = useState([]);
   const [sfAnalysis, setSfAnalysis] = useState({});
   const [filter, setFilter] = useState("All Time");
   const [loading, setLoading] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+
+  const [navState, setNavState] = useState(0);
+
   useEffect(() => {
     setMaintenance(storeFront?.storeMaintenance);
   }, [storeFront]);
@@ -71,7 +84,15 @@ const StoreFront = () => {
       });
     };
 
+    const getSFCustomers = async () => {
+      await getSFCustomersTable(storeFront?.business_id).then((res) => {
+        console.log(res, "lllo");
+        setCustomerTable(res?.data);
+      });
+    };
+
     getSFTransactions();
+    getSFCustomers();
   }, [storeFront.business_id]);
 
   useEffect(() => {
@@ -100,6 +121,8 @@ const StoreFront = () => {
   const handleUpdate = async () => {
     if (storeFront?.storeMaintenance) {
       try {
+        setConfirm(false);
+
         setMaintenance(false);
         await updateStoreFront(
           {
@@ -110,11 +133,16 @@ const StoreFront = () => {
         );
         toast.success("Exited Maintenance");
       } catch (error) {
+        setConfirm(false);
+
         setMaintenance(true);
+
         toast.error("Error Exiting Maintenance");
       }
     } else {
       try {
+        setConfirm(false);
+
         setMaintenance(true);
         await updateStoreFront(
           {
@@ -123,9 +151,13 @@ const StoreFront = () => {
           },
           user?.access_token
         );
+
         toast.success("Entered Maintenance");
       } catch (error) {
+        setConfirm(false);
+
         setMaintenance(false);
+
         toast.error("Error Entering Maintenance");
       }
     }
@@ -191,6 +223,7 @@ const StoreFront = () => {
     },
   ];
 
+  const navItems = ["Transactions", "Customers"];
   console.log(sfAnalysis, "sf");
 
   return (
@@ -336,47 +369,120 @@ const StoreFront = () => {
           </Media>
         </Col>
 
-        <div className="sf__action__cards">
-          {maintenance ? (
-            <Button onClick={handleUpdate} color="warning">
-              Exit Maintenance
-            </Button>
-          ) : (
-            <Button onClick={handleUpdate} color="success">
-              Enter Maintenance
-            </Button>
-          )}
-          <a target="_blank" href={storeFront.storeURL}>
-            <Button color="primary">View Store Front</Button>
-          </a>
-          <CopyToClipboard
-            text={storeFront.storeURL}
-            onCopy={() => {
-              toast.success("Copied!");
-            }}
-          >
-            <Button color="primary">Share Link</Button>
-          </CopyToClipboard>{" "}
-          <Link to="/editStoreFront">
-            <Button color="primary">Edit Store Front</Button>
-          </Link>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <h3>Actions</h3>
+          <div className="sf__customer__cards">
+            {maintenance ? (
+              <Button
+                onClick={() => {
+                  setConfirm(true);
+                }}
+                color="warning"
+              >
+                Exit Maintenance
+              </Button>
+            ) : (
+              <Button
+                onClick={() => {
+                  setConfirm(true);
+                }}
+                color="success"
+              >
+                Enter Maintenance
+              </Button>
+            )}
+            <a target="_blank" href={storeFront.storeURL}>
+              <Button color="primary">View Store Front</Button>
+            </a>
+            <CopyToClipboard
+              text={storeFront.storeURL}
+              onCopy={() => {
+                toast.success("Copied!");
+              }}
+            >
+              <Button color="primary">Share Link</Button>
+            </CopyToClipboard>{" "}
+            <Link to="/editStoreFront">
+              <Button color="primary">Edit Store Front</Button>
+            </Link>
+          </div>
         </div>
 
-        <Row className="mt-3">
-          <SFTransactionsTable
-            // transactions={transactionTable}
-            transactions={transactionTable}
-            showHeader={true}
-            showSubHeader={false}
-          />
+        <Row className="mt-4">
+          {/* <h3>Sub Dealer Table Data</h3> */}
+
+          <div className="settings__nav">
+            {navItems.map((item, index) => (
+              <p
+                onClick={() => {
+                  setNavState(index);
+                }}
+                key={index}
+                className={navState == index ? "activeNav__item" : ""}
+              >
+                {item}
+              </p>
+            ))}
+          </div>
+          {navState == 0 && (
+            <>
+              <SFTransactionsTable
+                // transactions={transactionTable}
+                transactions={transactionTable ?? []}
+                showHeader={true}
+                showSubHeader={false}
+              />
+            </>
+          )}
+          {navState == 1 && (
+            <>
+              <SFCustomersTable
+                transactions={customerTable ?? []}
+                showHeader={true}
+                showSubHeader={false}
+              />
+            </>
+          )}
         </Row>
-        <Row className="mt-3">
-          <SFCustomersTable
-            transactions={[]}
-            showHeader={true}
-            showSubHeader={false}
-          />
-        </Row>
+
+        <Modal centered isOpen={confirm} toggle={() => setConfirm(!confirm)}>
+          <ModalBody>
+            <div className="add__sub__dealer__con">
+              <div className="add__sub__dealer__head">
+                {storeFront?.storeMaintenance ? (
+                  <h4>Taking Store Front out of Maintenance Mode</h4>
+                ) : (
+                  <h4>Putting Store Front into Maintenance Mode</h4>
+                )}
+              </div>
+              {storeFront?.storeMaintenance ? (
+                <p>
+                  Are you sure you want to take the store out of maintenance
+                  mode and make it accessible to customers again?
+                </p>
+              ) : (
+                <p>
+                  Are you sure you want to put the store into maintenance mode?
+                  During this time, the store will be temporary unavailable to
+                  customers
+                </p>
+              )}
+            </div>
+          </ModalBody>
+          <ModalFooter className="confirm-footer">
+            <Button
+              color="primary"
+              onClick={handleUpdate}
+              // disabled={formIsValid(errors) || loading}
+              size="lg"
+              type="submit"
+              className="submit-btn"
+            >
+              Confirm
+            </Button>{" "}
+            <Button onClick={() => setConfirm(false)}>No, Cancel</Button>
+          </ModalFooter>
+        </Modal>
       </div>
     </FullLayout>
   );

@@ -275,6 +275,32 @@ const SFCustomer = () => {
     }
   };
 
+  function getFirstLetters(inputString) {
+    // Split the input string into words based on spaces
+    const words = inputString.split(" ");
+
+    // Check if there is at least one word
+    if (words.length > 0) {
+      // Get the first letter of the first word
+      const firstLetter = words[0][0];
+
+      // Check if there is a second word
+      if (words.length > 1) {
+        // Get the first letter of the second word
+        const secondLetter = words[1][0];
+
+        // Return both first letters
+        return `${firstLetter}${secondLetter}`;
+      } else {
+        // Only one word, return its first letter
+        return firstLetter;
+      }
+    }
+
+    // No words found, return an empty string or handle as needed
+    return "";
+  }
+
   console.log(activePlan, "hhh");
 
   return (
@@ -334,13 +360,19 @@ const SFCustomer = () => {
                         </Button>
                       </div>
                       <div className="sf__customer__logo">
-                        <span>
-                          <img
-                            style={{
-                              border: `3px solid ${storeFront?.storeColor}`,
-                            }}
-                            src={storeFront?.storeImg}
-                          />
+                        <span
+                          style={{
+                            border: `3px solid ${storeFront?.storeColor}`,
+                          }}
+                        >
+                          {storeFront?.storeImg == "" ||
+                          !storeFront?.storeImg ? (
+                            <h1>
+                              {getFirstLetters(storeFront?.storeName ?? "")}
+                            </h1>
+                          ) : (
+                            <img src={storeFront?.storeImg} />
+                          )}
                         </span>
 
                         <div className="sf__customer__head">
@@ -348,52 +380,80 @@ const SFCustomer = () => {
                           <p>{storeFront?.storeDesc}</p>
                         </div>
                         <div className="sf__customer__socials">
-                          <a
-                            target="_blank"
-                            href={storeFront?.socialLinks?.whatsapp}
-                          >
-                            <BsWhatsapp
-                              cursor={"pointer"}
-                              color={storeFront.storeColor}
-                            />
-                          </a>
-                          <a
-                            target="_blank"
-                            href={storeFront?.socialLinks?.instagram}
-                          >
-                            <BsInstagram
-                              cursor={"pointer"}
-                              color={storeFront.storeColor}
-                            />
-                          </a>
-                          <a
-                            target="_blank"
-                            href={storeFront?.socialLinks?.twitter}
-                          >
-                            <RiTwitterXFill
-                              cursor={"pointer"}
-                              color={storeFront.storeColor}
-                            />
-                          </a>
-                          <a
-                            target="_blank"
-                            href={storeFront?.socialLinks?.facebook}
-                          >
-                            <BsFacebook
-                              cursor={"pointer"}
-                              color={storeFront.storeColor}
-                            />
-                          </a>
+                          {storeFront?.socialLinks?.whatsapp !== "" ||
+                          storeFront?.socialLinks?.whatsapp ? (
+                            <a
+                              target="_blank"
+                              href={`https://wa.me/${storeFront?.socialLinks?.whatsapp}?text=`}
+                            >
+                              <BsWhatsapp
+                                cursor={"pointer"}
+                                color={storeFront.storeColor}
+                              />
+                            </a>
+                          ) : (
+                            ""
+                          )}
 
-                          <a
-                            target="_blank"
-                            href={`tel:${storeFront?.socialLinks?.phoneNumber}`}
-                          >
-                            <IoMdCall
-                              cursor={"pointer"}
-                              color={storeFront.storeColor}
-                            />
-                          </a>
+                          {storeFront?.socialLinks?.instagram !== "" ||
+                          storeFront?.socialLinks?.instagram ? (
+                            <a
+                              target="_blank"
+                              href={storeFront?.socialLinks?.instagram}
+                            >
+                              <BsInstagram
+                                cursor={"pointer"}
+                                color={storeFront.storeColor}
+                              />
+                            </a>
+                          ) : (
+                            ""
+                          )}
+
+                          {storeFront?.socialLinks?.twitter !== "" ||
+                          storeFront?.socialLinks?.twitter ? (
+                            <a
+                              target="_blank"
+                              href={storeFront?.socialLinks?.twitter}
+                            >
+                              <RiTwitterXFill
+                                cursor={"pointer"}
+                                color={storeFront.storeColor}
+                              />
+                            </a>
+                          ) : (
+                            ""
+                          )}
+
+                          {storeFront?.socialLinks?.facebook !== "" ||
+                          storeFront?.socialLinks?.facebook ? (
+                            <a
+                              target="_blank"
+                              href={storeFront?.socialLinks?.facebook}
+                            >
+                              <BsFacebook
+                                cursor={"pointer"}
+                                color={storeFront.storeColor}
+                              />
+                            </a>
+                          ) : (
+                            ""
+                          )}
+
+                          {storeFront?.phoneNumber !== "" ||
+                          storeFront?.phoneNumber ? (
+                            <a
+                              target="_blank"
+                              href={`tel:${storeFront?.phoneNumber}`}
+                            >
+                              <IoMdCall
+                                cursor={"pointer"}
+                                color={storeFront.storeColor}
+                              />
+                            </a>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </div>
 
@@ -423,7 +483,6 @@ const SFCustomer = () => {
                         </button>
                       </div>
                     </div>
-
                     <div className="sf__customer__footer">
                       <img src={logo} />
                       <p>Powered by Wisper</p>
@@ -531,7 +590,9 @@ const SFCustomer = () => {
                                   <option value="select">Select a plan</option>
                                   {prices
                                     .filter(
-                                      (plan) => plan.network === account.network
+                                      (plan) =>
+                                        plan.network === account.network &&
+                                        plan.selling_price
                                     )
                                     .map((plan) => (
                                       <option

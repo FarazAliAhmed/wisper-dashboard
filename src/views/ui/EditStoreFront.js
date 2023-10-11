@@ -100,6 +100,7 @@ const ImageModal = ({ imgUrl, closeModal, avatarFunc }) => {
           <IoMdClose size={15} cursor="pointer" color="#000" />
         </span>
         <div className="avatar__modal-content">
+          <h3>Crop Store Logo</h3>
           <AvatarEditor
             ref={editorRef}
             image={imgUrl}
@@ -409,8 +410,16 @@ const EditStoreFront = () => {
         </div>
         {navState == 0 && (
           <Card body>
-            <Form onSubmit={handleSubmit}>
+            <Form
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "1rem",
+              }}
+              onSubmit={handleSubmit}
+            >
               <Row form>
+                <h3>Basic Info</h3>
                 <Col md={6}>
                   <FormGroup>
                     <Label for="storeName">Store Name</Label>
@@ -420,7 +429,9 @@ const EditStoreFront = () => {
                       value={storeInfo.storeName}
                       onChange={handleChange}
                       // invalid={errors.name}
+                      placeholder="Enter Store Name"
                       type="text"
+                      required
                     />
                   </FormGroup>
                 </Col>
@@ -434,6 +445,7 @@ const EditStoreFront = () => {
                       onChange={handleChange}
                       // invalid={errors.name}
                       type="text"
+                      required
                     />
                     <p style={{ color: "red" }}>
                       {usernameCheck &&
@@ -454,7 +466,9 @@ const EditStoreFront = () => {
                       value={storeInfo.storeDesc}
                       onChange={handleChange}
                       // invalid={errors.business_name}
+                      placeholder="Describe your store"
                       type="text"
+                      required
                     />
                   </FormGroup>
                 </Col>
@@ -481,9 +495,14 @@ const EditStoreFront = () => {
                       onChange={handleChange}
                       name="storeURL"
                       type="text"
+                      required
+                      placeholder={`${window.location.protocol}//${window.location.host}/sf/`}
                     />
                   </FormGroup>
                 </Col>
+              </Row>
+              <Row form>
+                <h3>Contact Information</h3>
 
                 <Col md={6}>
                   <FormGroup>
@@ -495,22 +514,30 @@ const EditStoreFront = () => {
                       name="phoneNumber"
                       onChange={handleChange}
                       type="number"
+                      placeholder="0704 000 0000"
                     />
                     <FormFeedback>{errors.phoneNumber}</FormFeedback>
                   </FormGroup>
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="whatsapp">Whatsapp</Label>
+                    <Label for="whatsapp">Whatsapp Number</Label>
                     <Input
                       value={storeInfo.whatsapp}
+                      invalid={errors.whatsapp}
                       id="whatsapp"
                       name="whatsapp"
                       onChange={handleChange}
-                      type="text"
+                      type="number"
+                      placeholder="0704 000 0000"
                     />
+                    <FormFeedback>{errors.whatsapp}</FormFeedback>
                   </FormGroup>
                 </Col>
+              </Row>
+              <Row form>
+                <h3>Links</h3>
+
                 <Col md={6}>
                   <FormGroup>
                     <Label for="instagram">Instagram</Label>
@@ -520,6 +547,7 @@ const EditStoreFront = () => {
                       name="instagram"
                       onChange={handleChange}
                       type="text"
+                      placeholder="Provide the link to your Instagram profile"
                     />
                   </FormGroup>
                 </Col>
@@ -532,6 +560,7 @@ const EditStoreFront = () => {
                       name="twitter"
                       onChange={handleChange}
                       type="text"
+                      placeholder="Provide the link to your X profile"
                     />
                   </FormGroup>
                 </Col>
@@ -544,12 +573,16 @@ const EditStoreFront = () => {
                       name="facebook"
                       onChange={handleChange}
                       type="text"
+                      placeholder="Provide the link to your Facebook profile"
                     />
                   </FormGroup>
                 </Col>
               </Row>
               <Button
-                disabled={formIsValid(errors) || loading}
+                style={{
+                  width: "10%",
+                }}
+                disabled={loading}
                 type="submit"
                 color="primary"
               >
@@ -607,8 +640,8 @@ const EditStoreFront = () => {
                           color="primary"
                         >
                           {storeFront.storeImg == "" || !storeFront.storeImg
-                            ? "Upload"
-                            : "Replace"}
+                            ? "Upload Store Logo"
+                            : "Update Store Logo"}
                         </Button>
                       </div>
                     </FormGroup>

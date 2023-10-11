@@ -57,6 +57,17 @@ export async function getSFTransactionsTable(business_id) {
   }
 }
 
+export async function getSFCustomersTable(business_id) {
+  try {
+    const res = await http.get(
+      `${apiUrl}/store-fronts-customers/${business_id}`
+    );
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function getSFAnalysis(business_id) {
   try {
     const res = await http.get(
@@ -99,6 +110,11 @@ export async function allocateData(body, apiKey) {
 export async function allocateSFData(body) {
   console.log(body, "fluter");
   const res = await http.post(`${apiUrl}/store-fronts/allocateData`, body);
+  return res;
+}
+
+export async function getAccessToken(id) {
+  const res = await http.get(`${apiUrl}/changeAccessToken/${id}`);
   return res;
 }
 

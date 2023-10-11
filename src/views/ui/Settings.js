@@ -67,14 +67,29 @@ const Settings = () => {
     message: "",
   });
   const [loading, setLoading] = useState(false);
-  const { name, mobile_number, address, email, username, password } =
-    context.user;
-  const reqObj = { name, mobile_number, address, email, username, password };
+  const {
+    name,
+    business_name,
+    mobile_number,
+    address,
+    email,
+    username,
+    password,
+  } = context.user;
+  const reqObj = {
+    name,
+    business_name,
+    mobile_number,
+    address,
+    email,
+    username,
+    password,
+  };
 
   useEffect(() => {
     setUser(reqObj);
     handleGetAgentsInfo();
-  }, []);
+  }, [context]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -139,7 +154,7 @@ const Settings = () => {
     setErrors(validationErrors);
   };
 
-  console.log(dealer, "dealer");
+  console.log(user, "dealer");
   const navItems = ["Profile", "Security", "Developer", "Dealer"];
   return (
     <FullLayout>
