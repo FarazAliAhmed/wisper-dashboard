@@ -392,58 +392,60 @@ const StoreFront = () => {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <h3>Actions</h3>
           <div className="sf__customer__cards">
-            {noticeState ? (
-              <>
-                {" "}
-                {maintenance ? (
-                  <Button
-                    onClick={() => {
-                      setConfirm(true);
-                    }}
-                    color="warning"
-                  >
-                    Exit Maintenance
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={() => {
-                      setConfirm(true);
-                    }}
-                    color="success"
-                  >
-                    Enter Maintenance
-                  </Button>
-                )}
-              </>
+            {maintenance ? (
+              <Button
+                onClick={() => {
+                  if (noticeState) {
+                    setConfirm(true);
+                  } else {
+                    setNotice(true);
+                  }
+                }}
+                color="warning"
+              >
+                Exit Maintenance
+              </Button>
             ) : (
-              setNotice(true)
+              <Button
+                onClick={() => {
+                  if (noticeState) {
+                    setConfirm(true);
+                  } else {
+                    setNotice(true);
+                  }
+                }}
+                color="success"
+              >
+                Enter Maintenance
+              </Button>
             )}
-            {noticeState ? (
-              <>
-                {" "}
-                <a target="_blank" href={storeFront.storeURL}>
-                  <Button color="primary">View Store Front</Button>
-                </a>
-              </>
-            ) : (
-              setNotice(true)
-            )}
+            <a
+              onClick={(e) => {
+                if (!noticeState) {
+                  toast.success("Opening Store Front in a new tab.");
+                } else {
+                  e.preventDefault(); // Prevent navigation
 
-            {noticeState ? (
-              <>
-                <CopyToClipboard
-                  text={storeFront.storeURL}
-                  onCopy={() => {
-                    toast.success("Copied!");
-                  }}
-                >
-                  <Button color="primary">Share Link</Button>
-                </CopyToClipboard>{" "}
-              </>
-            ) : (
-              setNotice(true)
-            )}
-
+                  setNotice(true);
+                }
+              }}
+              target="_blank"
+              href={storeFront.storeURL}
+            >
+              <Button color="primary">View Store Front</Button>
+            </a>
+            <CopyToClipboard
+              text={storeFront.storeURL}
+              onCopy={() => {
+                if (noticeState) {
+                  toast.success("Copied!");
+                } else {
+                  setNotice(true);
+                }
+              }}
+            >
+              <Button color="primary">Share Link</Button>
+            </CopyToClipboard>{" "}
             <Link to="/editStoreFront">
               <Button color="primary">Edit Store Front</Button>
             </Link>

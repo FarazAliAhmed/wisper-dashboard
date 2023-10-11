@@ -4,7 +4,7 @@ import { adminUrl, adminUrlV2, apiUrl } from "../../config";
 export const getBusinesses = async () => {
   try {
     const res = await http.get(`${adminUrl}/business`);
-
+    console.log(res.data, "bb");
     return res;
   } catch (e) {
     return null;
