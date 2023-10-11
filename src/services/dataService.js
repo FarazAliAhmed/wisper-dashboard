@@ -20,6 +20,16 @@ export async function getAllPlansUser(userId) {
     return null;
   }
 }
+
+export async function getSetUp(userId) {
+  try {
+    const res = await http.get(`${apiUrl}/store-fronts/notice/${userId}`);
+    console.log("plans user", res);
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
 export async function getCustomerName(phone) {
   try {
     console.log("plans user", phone);
@@ -167,7 +177,7 @@ export async function allocateAgentsPrice(body, apiKey) {
   //   amountInGB: body.amountInGB,
   // };
   const res = await http.post(
-    `${apiUrl}/subdealer/allocateData
+    `${apiUrl}/agent/allocateData
 `,
     body,
     { headers }
@@ -341,11 +351,9 @@ export async function PurchaseMegaPriceTransactions(
 
 export async function getAgents({ userId }) {
   try {
-    const subDealer = await http.get(
-      `${apiUrl}/subdealer/getAllSubdealersId/${userId}`
-    );
-    console.log(subDealer, "sub");
-    return subDealer.data;
+    const agent = await http.get(`${apiUrl}/agent/getAllAgentsId/${userId}`);
+    console.log(agent, "agent");
+    return agent.data;
   } catch (error) {
     return { data: [] };
   }
@@ -353,11 +361,9 @@ export async function getAgents({ userId }) {
 
 export async function getAgentsInfo({ userId }) {
   try {
-    const subDealer = await http.get(
-      `${apiUrl}/subdealer/getSubdealersInfo/${userId}`
-    );
-    console.log(subDealer, "subInfo");
-    return subDealer.data;
+    const agent = await http.get(`${apiUrl}/agent/getAgentsInfo/${userId}`);
+    console.log(agent, "agent");
+    return agent.data;
   } catch (error) {
     return { data: {} };
   }
@@ -365,9 +371,9 @@ export async function getAgentsInfo({ userId }) {
 
 export async function getAgentsTransactions({ userId }) {
   try {
-    const subDealer = await http.get(`${apiUrl}/subdealer/allTrx/${userId}`);
-    console.log(subDealer, "subInfoTrans");
-    return subDealer.data;
+    const agent = await http.get(`${apiUrl}/agent/allTrx/${userId}`);
+    console.log(agent, "agentInfoTrans");
+    return agent.data;
   } catch (error) {
     return { data: [] };
   }
@@ -409,7 +415,7 @@ export async function AgentsAllocationTransactions(
     console.log(userId, "ooo882");
 
     const transactions = await http.get(
-      `${apiUrl}/subdealer/getSubdealerHistory/${userId}?limit=${limit}`
+      `${apiUrl}/agent/getAgentHistory/${userId}?limit=${limit}`
     );
     console.log(transactions, "ooo");
     return transactions.data;
@@ -425,9 +431,9 @@ export async function AllAgentsAllocationTransactions(
     console.log(userId, "ooo882");
 
     const transactions = await http.get(
-      `${apiUrl}/subdealer/DealerGetHistory/${userId}?limit=${limit}`
+      `${apiUrl}/agent/DealerGetHistory/${userId}?limit=${limit}`
     );
-    console.log(transactions, "ooosubi");
+    console.log(transactions, "oooagenti");
     return transactions.data;
   } catch (error) {
     return { data: [] };

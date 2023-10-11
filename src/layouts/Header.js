@@ -28,7 +28,7 @@ const Header = ({ isAdmin }) => {
       context?.user?.isAdmin == false
     ) {
       setType("Dealer");
-    } else if (context?.user?.type == "subdealer") {
+    } else if (context?.user?.type == "agent") {
       setType("Agent");
     } else if (context?.user?.type == "lite") {
       setType("Lite");

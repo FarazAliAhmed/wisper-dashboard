@@ -174,7 +174,7 @@ const Settings = () => {
               </p>
             ) : (
               <>
-                {userObj.type == "subdealer" && (
+                {userObj.type == "agent" && (
                   <p
                     onClick={() => {
                       setNavState(index);
@@ -404,7 +404,7 @@ const Settings = () => {
 
         {navState == 3 && (
           <>
-            {userObj?.type == "subdealer" ? (
+            {userObj?.type == "agent" ? (
               <Card body>
                 <Form onSubmit={handleSubmit}>
                   <Row form>

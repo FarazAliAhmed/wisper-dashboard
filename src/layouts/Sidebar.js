@@ -357,7 +357,7 @@ const Sidebar = ({ isAdmin }) => {
     } else {
       if (user.type == "mega") {
         setNav(megaNav);
-      } else if (user.type == "subdealer") {
+      } else if (user.type == "agent") {
         setNav(agentsNav);
       } else {
         setNav(liteNav);

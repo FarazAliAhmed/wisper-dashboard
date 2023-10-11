@@ -68,7 +68,7 @@ const Dashboard = () => {
             <AdminNotifier maintenance={maintenance} />
           </Row>
         )}
-        {user?.type != "subdealer" && (
+        {user?.type != "agent" && (
           <Row>
             {user.type != "mega" && (
               <Col sm="6" lg="4">
@@ -172,7 +172,7 @@ const Dashboard = () => {
           </Row>
         )}
 
-        {user?.type == "subdealer" && (
+        {user?.type == "agent" && (
           <Row lg={12}>
             <Row lg={12}>
               <Col sm="6" lg="6">

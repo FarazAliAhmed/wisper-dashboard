@@ -76,7 +76,7 @@ const AgentsPurchaseButton = ({
               {Number(balances[bucket]) / 1000}GB)
             </h5>
             {/* <img src={warning} width={50} className="confirm-warn" alt="warn" /> */}
-            <p className="text-center">Agents: {data.subDealerName}</p>
+            <p className="text-center">Agents: {data.name}</p>
             <p className="text-center">Amount in GB: {data.amountInGB}GB</p>
           </div>
         </ModalBody>

@@ -264,9 +264,10 @@ const SFPricesTable = ({
                         <th>Network</th>
                         <th>Plans</th>
                         <th>Validity</th>
-                        <th>Cost</th>
+                        {user.type != "mega" && <th>Cost</th>}
                         <th>Selling Price</th>
-                        <th>Profit</th>
+                        {user.type != "mega" && <th>Profit</th>}
+
                         {/* <th>Date</th>
                       <th>Receipt</th> */}
                         {/* <th>Price</th> */}
@@ -282,8 +283,7 @@ const SFPricesTable = ({
                             {tx.size} - {tx.plan_type}
                           </td>
                           <td>{tx.validity}</td>
-
-                          <td>₦{tx.price}</td>
+                          {user.type != "mega" && <td>₦{tx.price}</td>}
 
                           <td>
                             {/* ₦{tx.selling_price} */}
@@ -302,10 +302,11 @@ const SFPricesTable = ({
                               </Col>
                             </Row>
                           </td>
-
-                          <td>
-                            ₦{Number(tx.selling_price) - Number(tx.price)}
-                          </td>
+                          {user.type != "mega" && (
+                            <td>
+                              ₦{Number(tx.selling_price) - Number(tx.price)}
+                            </td>
+                          )}
                         </tr>
                       ))}
                     </tbody>

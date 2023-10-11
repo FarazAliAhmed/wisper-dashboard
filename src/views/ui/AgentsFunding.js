@@ -256,7 +256,7 @@ const AgentsFunding = () => {
                     balances={mega_wallet}
                     data={{
                       dealer: user._id,
-                      subDealerName: agents?.name,
+                      name: agents?.name,
                       business_id: businessId,
                       network: bucketValue,
                       amountInGB: amountValue,

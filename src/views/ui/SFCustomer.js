@@ -87,6 +87,22 @@ const SFCustomer = () => {
     status: true,
     message: "",
   });
+  // Function to change the favicon
+  function changeFavicon(newFaviconUrl) {
+    const linkElement = document.querySelector("link[rel='icon']");
+
+    if (linkElement) {
+      // Update the href attribute of the link element to the new favicon URL
+      linkElement.href = newFaviconUrl;
+    } else {
+      // If the link element doesn't exist, create it and add it to the head
+      const newLinkElement = document.createElement("link");
+      newLinkElement.rel = "icon";
+      newLinkElement.href = newFaviconUrl;
+      document.head.appendChild(newLinkElement);
+    }
+  }
+
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchStoreFront = async () => {
@@ -97,7 +113,11 @@ const SFCustomer = () => {
         setLoading(false);
 
         // Set the page title using resp.data.storeName
-        document.title = resp.data.storeName;
+        document.title = resp.data.storeImg;
+        if (resp.data.storeImg) {
+          changeFavicon(resp.data.storeImg);
+        } else {
+        }
       } catch (error) {
         setErrors("error");
         setLoading(false);

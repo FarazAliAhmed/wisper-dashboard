@@ -260,7 +260,7 @@ const Account = (props) => {
                       />
                     </FormGroup>
                   </Col>
-                  {business?.type == "subdealer" && (
+                  {business?.type == "agent" && (
                     <Col md={12}>
                       <FormGroup>
                         <Label for="dealer">Dealer Id</Label>
@@ -340,7 +340,7 @@ const Account = (props) => {
 
           <Col lg="5">
             <Row>
-              {business.type !== "subdealer" && (
+              {business.type !== "agent" && (
                 <Col sm="6" lg="9">
                   <TopCards
                     bg="bg-light-info text-info"
@@ -371,7 +371,7 @@ const Account = (props) => {
               </Col> */}
 
               {/***Mega Wallets***/}
-              {business.type === "mega" || business.type === "subdealer" ? (
+              {business.type === "mega" || business.type === "agent" ? (
                 <>
                   {/* MTN and Airtel Wallets */}
                   {/* <Col sm="6" lg="9">

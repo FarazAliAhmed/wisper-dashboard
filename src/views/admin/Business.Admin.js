@@ -266,7 +266,7 @@ const Business = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {business.subdealer.map((tdata, index) => (
+                  {business.agent.map((tdata, index) => (
                     <tr key={index} className="border-top">
                       <td>{index}</td>
                       <td>

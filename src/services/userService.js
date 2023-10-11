@@ -8,7 +8,7 @@ export async function register(body) {
 }
 
 export async function createAgents(body) {
-  return http.post(`${apiUrl}/subdealer/createSubdealer`, body);
+  return http.post(`${apiUrl}/agent/createAgent`, body);
 }
 
 export async function update(body) {

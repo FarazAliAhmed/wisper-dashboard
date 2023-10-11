@@ -5,6 +5,7 @@ import {
   Modal,
   ModalBody,
   ModalFooter,
+  ModalHeader,
   Row,
   UncontrolledAlert,
 } from "reactstrap";
@@ -50,6 +51,7 @@ import {
   getSFAnalysis,
   getSFCustomersTable,
   getSFTransactionsTable,
+  getSetUp,
   updateStoreFront,
 } from "../../services/dataService";
 import toast from "react-hot-toast";
@@ -69,6 +71,8 @@ const StoreFront = () => {
   const [filter, setFilter] = useState("All Time");
   const [loading, setLoading] = useState(false);
   const [confirm, setConfirm] = useState(false);
+  const [notice, setNotice] = useState(false);
+  const [noticeState, setNoticeState] = useState(false);
 
   const [navState, setNavState] = useState(0);
 
@@ -104,6 +108,22 @@ const StoreFront = () => {
     };
 
     fetchAllPlansUser();
+  }, []);
+
+  useEffect(() => {
+    const fetchNotice = async () => {
+      await getSetUp(user._id).then((res) => {
+        setNoticeState(res?.data);
+        console.log(res.data, "kk");
+        if (res?.data) {
+          setNotice(false);
+        } else {
+          setNotice(true);
+        }
+      });
+    };
+
+    fetchNotice();
   }, []);
 
   useEffect(() => {
@@ -372,36 +392,58 @@ const StoreFront = () => {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <h3>Actions</h3>
           <div className="sf__customer__cards">
-            {maintenance ? (
-              <Button
-                onClick={() => {
-                  setConfirm(true);
-                }}
-                color="warning"
-              >
-                Exit Maintenance
-              </Button>
+            {noticeState ? (
+              <>
+                {" "}
+                {maintenance ? (
+                  <Button
+                    onClick={() => {
+                      setConfirm(true);
+                    }}
+                    color="warning"
+                  >
+                    Exit Maintenance
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      setConfirm(true);
+                    }}
+                    color="success"
+                  >
+                    Enter Maintenance
+                  </Button>
+                )}
+              </>
             ) : (
-              <Button
-                onClick={() => {
-                  setConfirm(true);
-                }}
-                color="success"
-              >
-                Enter Maintenance
-              </Button>
+              setNotice(true)
             )}
-            <a target="_blank" href={storeFront.storeURL}>
-              <Button color="primary">View Store Front</Button>
-            </a>
-            <CopyToClipboard
-              text={storeFront.storeURL}
-              onCopy={() => {
-                toast.success("Copied!");
-              }}
-            >
-              <Button color="primary">Share Link</Button>
-            </CopyToClipboard>{" "}
+            {noticeState ? (
+              <>
+                {" "}
+                <a target="_blank" href={storeFront.storeURL}>
+                  <Button color="primary">View Store Front</Button>
+                </a>
+              </>
+            ) : (
+              setNotice(true)
+            )}
+
+            {noticeState ? (
+              <>
+                <CopyToClipboard
+                  text={storeFront.storeURL}
+                  onCopy={() => {
+                    toast.success("Copied!");
+                  }}
+                >
+                  <Button color="primary">Share Link</Button>
+                </CopyToClipboard>{" "}
+              </>
+            ) : (
+              setNotice(true)
+            )}
+
             <Link to="/editStoreFront">
               <Button color="primary">Edit Store Front</Button>
             </Link>
@@ -484,6 +526,30 @@ const StoreFront = () => {
           </ModalFooter>
         </Modal>
       </div>
+      <Modal centered isOpen={notice}>
+        <ModalHeader toggle={() => setNotice(false)}>
+          Complete Store Front Setup
+        </ModalHeader>
+        <ModalBody>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "0.8rem",
+              textAlign: "center",
+            }}
+          >
+            To access this feature, please complete your store front setup. It's
+            essential for tailoring our services to your needs and ensuring a
+            seamless experience
+            <Link to="/editStoreFront">
+              <Button color="primary">Edit Store Front</Button>
+            </Link>
+          </div>
+        </ModalBody>
+      </Modal>
     </FullLayout>
   );
 };
