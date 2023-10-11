@@ -390,7 +390,12 @@ const EditStoreFront = () => {
     <FullLayout>
       <div>
         <div className="sf__head">
-          <h4>Edit Store Front </h4>
+          <h4>
+            <Link to="/storeFront">
+              <Button color="primary">Back</Button>
+            </Link>{" "}
+            Edit Store Front{" "}
+          </h4>
           <a target="_blank" href={storeFront.storeURL}>
             <Button color="primary">Preview</Button>
           </a>
@@ -422,31 +427,36 @@ const EditStoreFront = () => {
                 <h3>Basic Info</h3>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="storeName">Store Name</Label>
+                    <Label for="storeName">Store Name</Label>{" "}
+                    <span className="text-danger">*</span>
                     <Input
                       id="storeName"
                       name="storeName"
                       value={storeInfo.storeName}
                       onChange={handleChange}
-                      // invalid={errors.name}
+                      invalid={errors.storeName}
                       placeholder="Enter Store Name"
                       type="text"
                       required
                     />
+                    <FormFeedback>{errors.storeName}</FormFeedback>
                   </FormGroup>
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="storeName">Store User Name</Label>
+                    <Label for="storeUserName">Store User Name</Label>
+                    <span className="text-danger">*</span>
                     <Input
                       id="storeUserName"
                       name="storeUserName"
                       value={storeInfo.storeUserName}
                       onChange={handleChange}
-                      // invalid={errors.name}
+                      invalid={errors.storeUserName}
                       type="text"
                       required
                     />
+                    <FormFeedback>{errors.storeUserName}</FormFeedback>
+
                     <p style={{ color: "red" }}>
                       {usernameCheck &&
                       storeInfo.storeUserName != storeFront.storeUserName
@@ -460,16 +470,18 @@ const EditStoreFront = () => {
                     <Label for="storeDescription">
                       Store Description/Tagline
                     </Label>
+                    <span className="text-danger">*</span>
                     <Input
                       id="storeDescription"
                       name="storeDesc"
                       value={storeInfo.storeDesc}
                       onChange={handleChange}
-                      // invalid={errors.business_name}
+                      invalid={errors.storeDesc}
                       placeholder="Describe your store"
                       type="text"
                       required
                     />
+                    <FormFeedback>{errors.storeDesc}</FormFeedback>
                   </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -488,6 +500,7 @@ const EditStoreFront = () => {
                         />
                       </CopyToClipboard>{" "}
                     </Label>
+                    <span className="text-danger">*</span>
                     <Input
                       disabled
                       value={storeInfo.storeURL}
@@ -545,10 +558,12 @@ const EditStoreFront = () => {
                       value={storeInfo.instagram}
                       id="instagram"
                       name="instagram"
+                      invalid={errors.instagram}
                       onChange={handleChange}
                       type="text"
                       placeholder="Provide the link to your Instagram profile"
                     />
+                    <FormFeedback>{errors.instagram}</FormFeedback>
                   </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -558,10 +573,12 @@ const EditStoreFront = () => {
                       value={storeInfo.twitter}
                       id="twitter"
                       name="twitter"
+                      invalid={errors.twitter}
                       onChange={handleChange}
                       type="text"
                       placeholder="Provide the link to your X profile"
                     />
+                    <FormFeedback>{errors.twitter}</FormFeedback>
                   </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -570,11 +587,13 @@ const EditStoreFront = () => {
                     <Input
                       value={storeInfo.facebook}
                       id="facebook"
+                      invalid={errors.facebook}
                       name="facebook"
                       onChange={handleChange}
                       type="text"
                       placeholder="Provide the link to your Facebook profile"
                     />
+                    <FormFeedback>{errors.facebook}</FormFeedback>
                   </FormGroup>
                 </Col>
               </Row>

@@ -112,8 +112,12 @@
   gap: 0.5rem;
 
   @media (max-width: 660px) {
-    flex-direction: column;
-    gap: 0.8rem;
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: flex-start;
+    // flex-direction: column;
+    // gap: 0.8rem;
   }
 }
 

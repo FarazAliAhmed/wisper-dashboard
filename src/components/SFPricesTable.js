@@ -279,9 +279,7 @@ const SFPricesTable = ({
                       {transactionsData.map((tx, idx) => (
                         <tr key={idx} className="border-top">
                           <td>{tx.network}</td>
-                          <td>
-                            {tx.size} - {tx.plan_type}
-                          </td>
+                          <td>{tx.size.toUpperCase()}</td>
                           <td>{tx.validity}</td>
                           {user.type != "mega" && <td>₦{tx.price}</td>}
 

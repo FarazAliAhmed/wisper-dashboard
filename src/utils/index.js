@@ -5,6 +5,14 @@ export const formIsValid = (errorObject) => {
   return Object.keys(errorObject).length > 0;
 };
 
+function validateLink(link) {
+  // Regular expression to validate a general URL
+  const urlRegex =
+    /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$/;
+
+  return urlRegex.test(link);
+}
+
 export const validateProperty = (input) => {
   const { name, value } = input;
   if (name === "email") {
@@ -60,6 +68,27 @@ export const validateProperty = (input) => {
     if (value.trim() === "") return "Phone number is required";
     if (value.trim().length < 11 || value.trim().length > 11)
       return "Phone number must be 11 characters";
+  }
+
+  if (name === "storeName") {
+    if (value.trim() === "") return "Store Name is required";
+  }
+  if (name === "storeUserName") {
+    if (value.trim() === "") return "Store User Name is required";
+  }
+  if (name === "storeDesc") {
+    if (value.trim() === "") return "Store Description is required";
+  }
+
+  if (name === "instagram") {
+    if (!validateLink(value)) return `Invalid ${name} link`;
+  }
+  if (name === "twitter") {
+    if (!validateLink(value)) return `Invalid ${name} link`;
+  }
+
+  if (name === "facebook") {
+    if (!validateLink(value)) return `Invalid ${name} link`;
   }
 };
 
