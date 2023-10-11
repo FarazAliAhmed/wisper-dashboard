@@ -540,7 +540,7 @@ const SFCustomer = () => {
                             <span className="text-danger">*</span>
                             <Input
                               onChange={(e) => {
-                                setCustomerName({
+                                setCustomerEmail({
                                   ...customerEmail,
                                   email: e.target.value,
                                 });
