@@ -493,13 +493,13 @@ const StoreFront = () => {
           <ModalBody>
             <div className="add__sub__dealer__con">
               <div className="add__sub__dealer__head">
-                {storeFront?.storeMaintenance ? (
+                {maintenance ? (
                   <h4>Taking Store Front out of Maintenance Mode</h4>
                 ) : (
                   <h4>Putting Store Front into Maintenance Mode</h4>
                 )}
               </div>
-              {storeFront?.storeMaintenance ? (
+              {maintenance ? (
                 <p>
                   Are you sure you want to take the store out of maintenance
                   mode and make it accessible to customers again?

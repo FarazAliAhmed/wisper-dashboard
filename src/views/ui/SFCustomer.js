@@ -69,7 +69,7 @@ const SFCustomer = () => {
   });
 
   const [storeFront, setStoreFront] = useState({});
-  const [activePlan, setActivePlan] = useState({});
+  const [activePlan, setActivePlan] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [account, setAccount] = useState({
     phone: "",
@@ -405,7 +405,10 @@ const SFCustomer = () => {
                           storeFront?.socialLinks?.whatsapp ? (
                             <a
                               target="_blank"
-                              href={`https://wa.me/${storeFront?.socialLinks?.whatsapp}?text=`}
+                              href={`https://wa.me/${storeFront?.socialLinks?.whatsapp.replace(
+                                /^0+/,
+                                "234"
+                              )}?text=`}
                             >
                               <BsWhatsapp
                                 cursor={"pointer"}
@@ -607,6 +610,7 @@ const SFCustomer = () => {
                               className="mb-3"
                               type="select"
                               disabled={account.network == ""}
+                              required
                             >
                               {account.network == "" ? (
                                 <option value="select">
@@ -644,7 +648,6 @@ const SFCustomer = () => {
                                   : ""
                               }`}
                               type="text"
-                              required
                               name="price"
                             />
                           </FormGroup>
@@ -662,6 +665,7 @@ const SFCustomer = () => {
                             account.network == "" ||
                             activePlan == "select" ||
                             activePlan == "" ||
+                            !activePlan ||
                             activePlan.selling_price == ""
                           ) {
                             toast.error("incomplete information");
