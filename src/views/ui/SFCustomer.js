@@ -113,10 +113,11 @@ const SFCustomer = () => {
         setLoading(false);
 
         // Set the page title using resp.data.storeName
-        document.title = resp.data.storeImg;
+        if (resp.data.storeName) {
+          document.title = resp.data.storeName;
+        }
         if (resp.data.storeImg) {
           changeFavicon(resp.data.storeImg);
-        } else {
         }
       } catch (error) {
         setErrors("error");
@@ -504,7 +505,13 @@ const SFCustomer = () => {
                       </div>
                     </div>
                     <div className="sf__customer__footer">
-                      <img src={logo} />
+                      <a
+                        target="_blank"
+                        href={`${window.location.protocol}//${window.location.host} `}
+                      >
+                        <img src={logo} />
+                      </a>
+
                       <p>Powered by Wisper</p>
                     </div>
                   </div>
@@ -680,7 +687,7 @@ const SFCustomer = () => {
           )}
         </>
       )}
-      <Modal centered isOpen={isOpen}>
+      <Modal centered isOpen={isOpen} toggle={() => setIsOpen(false)}>
         <ModalHeader toggle={() => setIsOpen(false)}>Share Store</ModalHeader>
         <ModalBody>
           <div className="sf__share__con">
