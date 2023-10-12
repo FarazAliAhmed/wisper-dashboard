@@ -283,7 +283,7 @@ const SFCustomer = () => {
       try {
         await navigator.share({
           title: "Wisper Store",
-          text: `Check out this Wisper Store - ${storeFront.storeURL}`,
+          text: `Check out this Wisper Store`,
           url: storeFront.storeURL, // Replace with your desired URL
         });
         console.log("Share successful");

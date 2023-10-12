@@ -12,6 +12,8 @@ import {
 
 import "../../assets/scss/custom.scss";
 import { Link } from "react-router-dom";
+import logo from "../../assets/images/logos/wisperN.png";
+import { FiShare } from "react-icons/fi";
 
 import TopCards from "../../components/dashboard/TopCards";
 import FundCards from "../../components/dashboard/FundCards";
@@ -39,6 +41,8 @@ import airtel from "../../assets/dashboard/airtel.svg";
 import tranIcon from "../../assets/dashboard/transa.svg";
 import wallIcon from "../../assets/dashboard/walle.svg";
 import axios from "axios";
+import { BsChevronRight } from "react-icons/bs";
+
 import { IoIosOptions } from "react-icons/io";
 import WithdrawCards from "../../components/dashboard/WithdrawCards";
 import "../../assets/scss/custom.scss";
@@ -73,12 +77,42 @@ const StoreFront = () => {
   const [confirm, setConfirm] = useState(false);
   const [notice, setNotice] = useState(false);
   const [noticeState, setNoticeState] = useState(false);
+  const [copyState, setCopyState] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [navState, setNavState] = useState(0);
 
   useEffect(() => {
     setMaintenance(storeFront?.storeMaintenance);
   }, [storeFront]);
+
+  const handleShareClick = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Wisper Store",
+          text: `Check out this Wisper Store`,
+          url: storeFront.storeURL, // Replace with your desired URL
+        });
+        console.log("Share successful");
+      } catch (error) {
+        console.error("Share failed:", error);
+      }
+    } else {
+      // Fallback for browsers that do not support the Web Share API
+      alert("Native sharing is not supported on this browser.");
+    }
+  };
+  const style = {
+    background: "primary",
+    borderRadius: 3,
+    border: 0,
+    width: "100%",
+    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+    color: "black",
+    padding: "1rem",
+    cursor: "pointer",
+  };
 
   useEffect(() => {
     const getSFTransactions = async () => {
@@ -274,7 +308,7 @@ const StoreFront = () => {
                     <TopCards
                       bg="bg-light-warning text-warning"
                       title="Customers"
-                      subtitle="Total No.Customers"
+                      subtitle="Total No. Customers"
                       earning={storeFront.customer}
                       icon={customers}
                     />
@@ -283,7 +317,7 @@ const StoreFront = () => {
                     <TopCards
                       bg="bg-light-success text-success"
                       title="Products"
-                      subtitle="Total No.Products"
+                      subtitle="Total No. Products"
                       earning={prices?.length}
                       icon={products}
                     />
@@ -438,7 +472,7 @@ const StoreFront = () => {
               text={storeFront.storeURL}
               onCopy={() => {
                 if (noticeState) {
-                  toast.success("Copied!");
+                  setIsOpen(true);
                 } else {
                   setNotice(true);
                 }
@@ -551,6 +585,55 @@ const StoreFront = () => {
             </Link>
           </div>
         </ModalBody>
+      </Modal>
+      <Modal centered isOpen={isOpen} toggle={() => setIsOpen(false)}>
+        <ModalHeader toggle={() => setIsOpen(false)}>Share Store</ModalHeader>
+        <ModalBody>
+          <div className="sf__share__con">
+            <div onClick={handleShareClick} style={style}>
+              <div className="sf__share__options">
+                <span>
+                  <FiShare /> Share Options
+                </span>
+                <BsChevronRight />
+              </div>
+            </div>
+            <div style={style}>
+              <div className="sf__share__options">
+                <span>
+                  <img alt="logo" src={logo} /> {storeFront.storeURL}
+                </span>
+
+                {copyState ? (
+                  <b
+                  // onClick={() => {
+                  //   navigator.clipboard.writeText(storeFront.storeURL ?? "");
+                  //   setCopyState(!copyState);
+                  // }}
+                  >
+                    Copied{" "}
+                  </b>
+                ) : (
+                  <b
+                    onClick={() => {
+                      navigator.clipboard.writeText(storeFront.storeURL ?? "");
+                      setCopyState(!copyState);
+                    }}
+                  >
+                    Copy
+                  </b>
+                )}
+              </div>
+            </div>
+          </div>
+        </ModalBody>
+
+        {/* <ModalFooter className="confirm-footer">
+          <Button type="submit" color="primary" onClick={(e) => {}}>
+            Yes, Proceed
+          </Button>{" "}
+          <Button onClick={() => setIsOpen(false)}>No, Cancel</Button>
+        </ModalFooter> */}
       </Modal>
     </FullLayout>
   );

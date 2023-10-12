@@ -62,6 +62,7 @@ const Settings = () => {
 
   const [errors, setErrors] = useState({});
   const [errorsPass, setErrorsPass] = useState({});
+  const [currentBank, setCurrentBank] = useState({});
   const [navState, setNavState] = useState(0);
   const [serverResponse, setServerResponse] = useState({
     status: true,
@@ -132,6 +133,25 @@ const Settings = () => {
       setServerResponse({ status, message });
     }
   };
+
+  const bankCodes = [
+    { bank: "Access Bank", code: "044" },
+    { bank: "Ecobank", code: "050" },
+    { bank: "Fidelity Bank", code: "070" },
+    { bank: "First Bank of Nigeria", code: "011" },
+    { bank: "First City Monument Bank (FCMB)", code: "214" },
+    { bank: "Guaranty Trust Bank", code: "058" },
+    { bank: "Heritage Bank", code: "030" },
+    { bank: "Keystone Bank", code: "082" },
+    { bank: "Stanbic IBTC Bank", code: "221" },
+    { bank: "Sterling Bank", code: "232" },
+    { bank: "Union Bank", code: "032" },
+    { bank: "United Bank for Africa (UBA)", code: "033" },
+    { bank: "Unity Bank", code: "215" },
+    { bank: "VFD Microfinance Bank", code: "090110" },
+    { bank: "Wema Bank", code: "035" },
+    { bank: "Zenith Bank", code: "057" },
+  ];
 
   const handleChange = ({ currentTarget: input }) => {
     const validationErrors = { ...errors };
@@ -473,31 +493,31 @@ const Settings = () => {
             <Modal centered isOpen={bank} toggle={() => setBank(!bank)}>
               <ModalBody>
                 <div className="confirm ">
-                  <h5>Reset Password</h5>
+                  <h5>Add Withdrawal Account</h5>
                   <Form>
                     <Row form>
                       <Col md={12}>
-                        <FormGroup
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "flex-start",
-                            width: "100%",
-                          }}
-                        >
-                          <Label for="currentPass">
-                            Current Password{" "}
-                            <span className="text-danger">*</span>
-                          </Label>{" "}
+                        <FormGroup className="mb-3">
+                          <Label>Select Bank</Label>{" "}
+                          <span className="text-danger">*</span>
                           <Input
-                            id="currentPass"
-                            name="currentPass"
-                            value={passwordChange.currentPass}
-                            onChange={handlePassChange}
-                            type="password"
-                            invalid={errors.currentPass}
-                          />
-                          <FormFeedback>{errors.currentPass}</FormFeedback>
+                            onChange={""}
+                            name="bank"
+                            value={""}
+                            className="mb-3"
+                            type="select"
+                            // disabled={account.network == ""}
+                            required
+                          >
+                            <>
+                              <option value="select">Select Bank</option>
+                              {bankCodes.map((bank) => (
+                                <option key={bank.code} value={bank.code}>
+                                  {bank.bank}
+                                </option>
+                              ))}
+                            </>
+                          </Input>
                         </FormGroup>
                       </Col>
                       <Col md={12}>
@@ -509,18 +529,66 @@ const Settings = () => {
                             width: "100%",
                           }}
                         >
-                          <Label for="newPass">
-                            New Password <span className="text-danger">*</span>
+                          <Label for="accountNumber">
+                            Account Number{" "}
+                            <span className="text-danger">*</span>
                           </Label>
                           <Input
-                            value={passwordChange.newPass}
-                            id="newPass"
-                            name="newPass"
-                            type="password"
-                            onChange={handlePassChange}
-                            invalid={errors.newPass}
+                            value={""}
+                            id="accountNumber"
+                            name="accountNumber"
+                            type="number"
+                            onChange={""}
+                            // invalid={errors.newPass}
                           />
-                          <FormFeedback>{errors.newPass}</FormFeedback>
+                          {/* <FormFeedback>{errors.newPass}</FormFeedback> */}
+                        </FormGroup>
+                      </Col>
+                      <Col md={12}>
+                        <FormGroup
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-start",
+                            width: "100%",
+                          }}
+                        >
+                          <Label for="beneficiary">
+                            Beneficiary <span className="text-danger">*</span>
+                          </Label>
+                          <Input
+                            value={""}
+                            id="beneficiary"
+                            name="beneficiary"
+                            type="text"
+                            onChange={""}
+                            // invalid={errors.newPass}
+                          />
+                          {/* <FormFeedback>{errors.newPass}</FormFeedback> */}
+                        </FormGroup>
+                      </Col>
+
+                      <Col md={12}>
+                        <FormGroup
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-start",
+                            width: "100%",
+                          }}
+                        >
+                          <Label for="password">
+                            Password <span className="text-danger">*</span>
+                          </Label>
+                          <Input
+                            value={""}
+                            id="password"
+                            name="password"
+                            type="password"
+                            onChange={""}
+                            // invalid={errors.newPass}
+                          />
+                          {/* <FormFeedback>{errors.newPass}</FormFeedback> */}
                         </FormGroup>
                       </Col>
                     </Row>
@@ -536,7 +604,7 @@ const Settings = () => {
                     handleSubmitPassChange();
                   }}
                 >
-                  Reset password
+                  Add Account
                 </Button>{" "}
                 <Button onClick={() => setBank(false)}>No, Cancel</Button>
               </ModalFooter>
@@ -549,15 +617,40 @@ const Settings = () => {
                 }}
               >
                 <h4>My Withdrawal Account</h4>
-                <Row form>
-                  <p>
-                    When changing your password, we strongly recommend using a
-                    secure password you don't use anywhere else
-                  </p>
-                </Row>
-                <Button disabled={loading} type="submit" color="primary">
-                  <>Add Account</>
-                </Button>
+                {currentBank ? (
+                  <>
+                    <Row form>
+                      <p>Account Name: John Doe</p>
+                      <p>Account Number: 290389479</p>
+                      <p>Bank Name: United Bank for Africa</p>
+                    </Row>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "1rem",
+                      }}
+                    >
+                      <Button disabled={loading} type="submit" color="primary">
+                        Replace Account
+                      </Button>
+                      <Button disabled={loading} type="submit" color="danger">
+                        Delete Account
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <Row form>
+                      <p>
+                        When changing your password, we strongly recommend using
+                        a secure password you don't use anywhere else
+                      </p>
+                    </Row>
+                    <Button disabled={loading} type="submit" color="primary">
+                      <>Add Account</>
+                    </Button>
+                  </>
+                )}
               </Form>
             </Card>
           </>
