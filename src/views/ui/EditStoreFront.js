@@ -14,6 +14,7 @@ import {
   ModalBody,
   ModalFooter,
   Toast,
+  ModalHeader,
 } from "reactstrap";
 import "../../assets/scss/SF.scss";
 import "../../assets/scss/custom.scss";
@@ -40,6 +41,7 @@ import SFPricesTable from "../../components/SFPricesTable";
 import {
   checkUsername,
   getAllPlansUser,
+  getSetUp,
   updateStoreFront,
   uploadImage,
 } from "../../services/dataService";
@@ -206,7 +208,8 @@ const EditStoreFront = () => {
   };
 
   const setAvatarFunc = (image) => {
-    setStoreInfo({ ...storeInfo, storeImg: image });
+    setAvatar(image);
+    // setStoreInfo({ ...storeInfo, storeImg: image });
   };
 
   const [storeInfo, setStoreInfo] = useState({
@@ -256,6 +259,7 @@ const EditStoreFront = () => {
 
   useEffect(() => {
     setStoreInfo(reqObj);
+    setAvatar(storeImg);
   }, [storeFront]);
 
   useEffect(() => {
@@ -267,7 +271,8 @@ const EditStoreFront = () => {
 
     fetchUsernameChecker();
   }, [storeInfo.storeUserName]);
-
+  const [notice, setNotice] = useState(false);
+  const [noticeState, setNoticeState] = useState(false);
   const [errors, setErrors] = useState({});
   const [errorsPass, setErrorsPass] = useState({});
   const [navState, setNavState] = useState(0);
@@ -287,7 +292,7 @@ const EditStoreFront = () => {
       await updateStoreFront(
         {
           id: user?._id,
-          storeImg: storeInfo.storeImg,
+          storeImg: avatar,
           storeColor: storeInfo.storeColor,
         },
         user?.access_token
@@ -386,6 +391,22 @@ const EditStoreFront = () => {
 
   const navItems = ["Information", "Branding", "Prices"];
 
+  useEffect(() => {
+    const fetchNotice = async () => {
+      await getSetUp(user._id).then((res) => {
+        setNoticeState(res?.data);
+        console.log(res.data, "kk");
+        if (res?.data) {
+          setNotice(false);
+        } else {
+          setNotice(true);
+        }
+      });
+    };
+
+    fetchNotice();
+  }, []);
+
   return (
     <FullLayout>
       <div>
@@ -398,7 +419,19 @@ const EditStoreFront = () => {
             <h4>Edit Store Front </h4>
           </div>
 
-          <a target="_blank" href={storeFront.storeURL}>
+          <a
+            onClick={(e) => {
+              if (noticeState) {
+                toast.success("Opening Store Front in a new tab.");
+              } else {
+                e.preventDefault(); // Prevent navigation
+
+                setNotice(true);
+              }
+            }}
+            target="_blank"
+            href={storeFront.storeURL}
+          >
             <Button color="primary">Preview</Button>
           </a>
         </div>
@@ -632,13 +665,13 @@ const EditStoreFront = () => {
                           flexDirection: "column",
                         }}
                       >
-                        {storeFront.storeImg == "" || !storeFront.storeImg ? (
+                        {avatar == "" || !avatar ? (
                           ""
                         ) : (
                           <img
                             className="sf__avatar"
                             alt="avatar"
-                            src={storeInfo.storeImg}
+                            src={avatar}
                           />
                         )}
 
@@ -658,7 +691,7 @@ const EditStoreFront = () => {
                           onClick={handleFileUpload}
                           color="primary"
                         >
-                          {storeFront.storeImg == "" || !storeFront.storeImg
+                          {avatar == "" || !avatar
                             ? "Upload Store Logo"
                             : "Update Store Logo"}
                         </Button>
@@ -709,6 +742,30 @@ const EditStoreFront = () => {
           avatarFunc={setAvatarFunc}
         />
       )}
+      <Modal centered isOpen={notice}>
+        <ModalHeader toggle={() => setNotice(false)}>
+          Complete Store Front Setup
+        </ModalHeader>
+        <ModalBody>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "0.8rem",
+              textAlign: "center",
+            }}
+          >
+            To access this feature, please complete your store front setup. It's
+            essential for tailoring our services to your needs and ensuring a
+            seamless experience
+            <Link to="/editStoreFront">
+              <Button color="primary">Edit Store Front</Button>
+            </Link>
+          </div>
+        </ModalBody>
+      </Modal>
     </FullLayout>
   );
 };

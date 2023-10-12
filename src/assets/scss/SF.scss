@@ -122,16 +122,11 @@
 }
 
 .editsf__submit {
-  width: 20%;
+  width: 30%;
 
-  // @media (max-width: 660px) {
-  //   display: grid;
-  //   grid-template-columns: auto auto;
-  //   align-items: center;
-  //   justify-content: flex-start;
-  //   // flex-direction: column;
-  //   // gap: 0.8rem;
-  // }
+  @media (max-width: 660px) {
+    width: 50%;
+  }
 }
 
 .sf__customer__logo span {
