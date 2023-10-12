@@ -70,6 +70,11 @@ export const validateProperty = (input) => {
       return "Phone number must be 11 characters";
   }
 
+  if (name === "whatsapp") {
+    if (value.trim().length < 11 || value.trim().length > 11)
+      return "Whatsapp Number must be 11 characters";
+  }
+
   if (name === "storeName") {
     if (value.trim() === "") return "Store Name is required";
   }

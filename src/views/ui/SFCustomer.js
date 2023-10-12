@@ -370,7 +370,11 @@ const SFCustomer = () => {
                         <Button
                           style={{
                             border: "none",
-                            background: `${storeFront.storeColor}`,
+                            background: `${
+                              storeFront.storeColor
+                                ? storeFront.storeColor
+                                : "black"
+                            }`,
                           }}
                           onClick={() => {
                             setIsOpen(true);
@@ -383,7 +387,11 @@ const SFCustomer = () => {
                       <div className="sf__customer__logo">
                         <span
                           style={{
-                            border: `3px solid ${storeFront?.storeColor}`,
+                            border: `3px solid ${
+                              storeFront.storeColor
+                                ? storeFront.storeColor
+                                : "black"
+                            }`,
                           }}
                         >
                           {storeFront?.storeImg == "" ||
@@ -405,14 +413,18 @@ const SFCustomer = () => {
                           storeFront?.socialLinks?.whatsapp ? (
                             <a
                               target="_blank"
-                              href={`https://wa.me/${storeFront?.socialLinks?.whatsapp.replace(
+                              href={`https://wa.me/${storeFront?.socialLinks?.whatsapp?.replace(
                                 /^0+/,
                                 "234"
                               )}?text=`}
                             >
                               <BsWhatsapp
                                 cursor={"pointer"}
-                                color={storeFront.storeColor}
+                                color={
+                                  storeFront.storeColor
+                                    ? storeFront.storeColor
+                                    : "black"
+                                }
                               />
                             </a>
                           ) : (
@@ -427,7 +439,11 @@ const SFCustomer = () => {
                             >
                               <BsInstagram
                                 cursor={"pointer"}
-                                color={storeFront.storeColor}
+                                color={
+                                  storeFront.storeColor
+                                    ? storeFront.storeColor
+                                    : "black"
+                                }
                               />
                             </a>
                           ) : (
@@ -442,7 +458,11 @@ const SFCustomer = () => {
                             >
                               <RiTwitterXFill
                                 cursor={"pointer"}
-                                color={storeFront.storeColor}
+                                color={
+                                  storeFront.storeColor
+                                    ? storeFront.storeColor
+                                    : "black"
+                                }
                               />
                             </a>
                           ) : (
@@ -457,7 +477,11 @@ const SFCustomer = () => {
                             >
                               <BsFacebook
                                 cursor={"pointer"}
-                                color={storeFront.storeColor}
+                                color={
+                                  storeFront.storeColor
+                                    ? storeFront.storeColor
+                                    : "black"
+                                }
                               />
                             </a>
                           ) : (
@@ -472,7 +496,11 @@ const SFCustomer = () => {
                             >
                               <IoMdCall
                                 cursor={"pointer"}
-                                color={storeFront.storeColor}
+                                color={
+                                  storeFront.storeColor
+                                    ? storeFront.storeColor
+                                    : "black"
+                                }
                               />
                             </a>
                           ) : (
@@ -486,7 +514,11 @@ const SFCustomer = () => {
 
                         <button
                           style={{
-                            background: `${storeFront.storeColor}`,
+                            background: `${
+                              storeFront.storeColor
+                                ? storeFront.storeColor
+                                : "black"
+                            }`,
                           }}
                           onClick={() => {
                             setConfirm(true);
@@ -497,7 +529,11 @@ const SFCustomer = () => {
 
                         <button
                           style={{
-                            background: `${storeFront.storeColor}`,
+                            background: `${
+                              storeFront.storeColor
+                                ? storeFront.storeColor
+                                : "black"
+                            }`,
                           }}
                           onClick={() => {
                             toast.success("Comming Soon");

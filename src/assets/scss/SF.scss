@@ -121,6 +121,19 @@
   }
 }
 
+.editsf__submit {
+  width: 20%;
+
+  // @media (max-width: 660px) {
+  //   display: grid;
+  //   grid-template-columns: auto auto;
+  //   align-items: center;
+  //   justify-content: flex-start;
+  //   // flex-direction: column;
+  //   // gap: 0.8rem;
+  // }
+}
+
 .sf__customer__logo span {
   padding: 0;
   margin: 0;

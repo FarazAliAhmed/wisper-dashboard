@@ -14,6 +14,19 @@
   justify-content: space-between;
   width: 100%;
   margin-bottom: 1rem;
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  a {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .sf__filtering {

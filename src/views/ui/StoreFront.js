@@ -421,7 +421,7 @@ const StoreFront = () => {
             )}
             <a
               onClick={(e) => {
-                if (!noticeState) {
+                if (noticeState) {
                   toast.success("Opening Store Front in a new tab.");
                 } else {
                   e.preventDefault(); // Prevent navigation

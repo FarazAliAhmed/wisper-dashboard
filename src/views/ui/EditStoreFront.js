@@ -390,12 +390,14 @@ const EditStoreFront = () => {
     <FullLayout>
       <div>
         <div className="sf__head">
-          <h4>
+          <div>
+            {" "}
             <Link to="/storeFront">
               <Button color="primary">Back</Button>
             </Link>{" "}
-            Edit Store Front{" "}
-          </h4>
+            <h4>Edit Store Front </h4>
+          </div>
+
           <a target="_blank" href={storeFront.storeURL}>
             <Button color="primary">Preview</Button>
           </a>
@@ -598,10 +600,8 @@ const EditStoreFront = () => {
                 </Col>
               </Row>
               <Button
-                style={{
-                  width: "10%",
-                }}
-                disabled={loading}
+                className="editsf__submit"
+                disabled={formIsValid(errors) || loading}
                 type="submit"
                 color="primary"
               >
