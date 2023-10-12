@@ -34,6 +34,7 @@ import { getAgentsInfo } from "../../services/dataService";
 const Settings = () => {
   const context = useUser();
   const [confirm, setConfirm] = useState(false);
+  const [bank, setBank] = useState(false);
 
   const { user: userObj } = useUser();
   const [dealer, setDealer] = useState({});
@@ -155,7 +156,7 @@ const Settings = () => {
   };
 
   console.log(user, "dealer");
-  const navItems = ["Profile", "Security", "Developer", "Dealer"];
+  const navItems = ["Profile", "Security", "Developer", "Dealer", "Withdrawal"];
   return (
     <FullLayout>
       <div>
@@ -464,6 +465,101 @@ const Settings = () => {
             ) : (
               ""
             )}
+          </>
+        )}
+
+        {navState == 4 && (
+          <>
+            <Modal centered isOpen={bank} toggle={() => setBank(!bank)}>
+              <ModalBody>
+                <div className="confirm ">
+                  <h5>Reset Password</h5>
+                  <Form>
+                    <Row form>
+                      <Col md={12}>
+                        <FormGroup
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-start",
+                            width: "100%",
+                          }}
+                        >
+                          <Label for="currentPass">
+                            Current Password{" "}
+                            <span className="text-danger">*</span>
+                          </Label>{" "}
+                          <Input
+                            id="currentPass"
+                            name="currentPass"
+                            value={passwordChange.currentPass}
+                            onChange={handlePassChange}
+                            type="password"
+                            invalid={errors.currentPass}
+                          />
+                          <FormFeedback>{errors.currentPass}</FormFeedback>
+                        </FormGroup>
+                      </Col>
+                      <Col md={12}>
+                        <FormGroup
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-start",
+                            width: "100%",
+                          }}
+                        >
+                          <Label for="newPass">
+                            New Password <span className="text-danger">*</span>
+                          </Label>
+                          <Input
+                            value={passwordChange.newPass}
+                            id="newPass"
+                            name="newPass"
+                            type="password"
+                            onChange={handlePassChange}
+                            invalid={errors.newPass}
+                          />
+                          <FormFeedback>{errors.newPass}</FormFeedback>
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  </Form>
+                </div>
+              </ModalBody>
+              <ModalFooter className="confirm-footer">
+                <Button
+                  disabled={formIsValid(errors) || loading}
+                  color="primary"
+                  onClick={() => {
+                    setBank(false);
+                    handleSubmitPassChange();
+                  }}
+                >
+                  Reset password
+                </Button>{" "}
+                <Button onClick={() => setBank(false)}>No, Cancel</Button>
+              </ModalFooter>
+            </Modal>
+            <Card body>
+              <Form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setBank(true);
+                }}
+              >
+                <h4>My Withdrawal Account</h4>
+                <Row form>
+                  <p>
+                    When changing your password, we strongly recommend using a
+                    secure password you don't use anywhere else
+                  </p>
+                </Row>
+                <Button disabled={loading} type="submit" color="primary">
+                  <>Add Account</>
+                </Button>
+              </Form>
+            </Card>
           </>
         )}
       </div>

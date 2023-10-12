@@ -133,6 +133,16 @@ export async function uploadImage(body) {
   return res;
 }
 
+// export async function uploadImage(body) {
+//   const { prevUrl, ...rest } = body;
+//   console.log(rest, 'rest');
+//   const res = await http.post(
+//     `${apiUrl}/store-fronts-upload?prevUrl=${prevUrl}`,
+//     rest
+//   );
+//   return res;
+// }
+
 export async function updateMegaPrice(body, apiKey) {
   const headers = { "x-api-key": apiKey };
 
@@ -188,7 +198,7 @@ export async function allocateAgentsPrice(body, apiKey) {
 export async function updateStoreFront(body, apiKey) {
   const headers = { "x-api-key": apiKey };
 
-  // console.log("body", body);
+  console.log("bodyImg", body);
   // const payload = {
   //   business_id: body.business_id,
   //   network: body.network,
