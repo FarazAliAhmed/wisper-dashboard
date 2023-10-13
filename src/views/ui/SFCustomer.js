@@ -117,9 +117,7 @@ const SFCustomer = () => {
           document.title = resp.data.storeName;
         }
         if (resp.data.storeImg) {
-          document.addEventListener("DOMContentLoaded", function () {
-            changeFavicon(resp.data.storeImg);
-          });
+          await changeFavicon(resp.data.storeImg);
         }
       } catch (error) {
         setErrors("error");
