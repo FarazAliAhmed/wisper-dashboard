@@ -136,7 +136,7 @@ const StoreFront = () => {
   useEffect(() => {
     const fetchAllPlansUser = async () => {
       await getAllPlansUser(user._id).then((res) => {
-        setPrices(res?.data);
+        setPrices(res?.data.filter((plan) => plan.selling_price));
         console.log("res", res);
       });
     };

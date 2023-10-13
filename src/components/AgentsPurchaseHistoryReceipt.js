@@ -35,7 +35,14 @@ function AgentsPurchaseHistoryReceipt({ receiptData, show, toggleShow }) {
           Business ID : <strong> {receiptData.business_id} </strong> <br />
           Username : <strong> {receiptData.username} </strong> <br />
           Network : <strong> {receiptData.network} </strong> <br />
-          Date :<strong> {receiptData.date_of_payment} </strong> <br />
+          Date :
+          <strong>
+            {" "}
+            {moment(receiptData.date_of_payment).format(
+              "YYYY-MM-DD HH:mm:ss"
+            )}{" "}
+          </strong>{" "}
+          <br />
           Amount :<strong> {receiptData.volume}GB </strong> <br />
           Old Balance :<strong> {receiptData.old_bal / 1000} GB </strong> <br />
           New Balance :<strong> {receiptData.new_bal / 1000} GB </strong> <br />

@@ -15,6 +15,7 @@ import {
   // UncontrolledAlert,
   // Button,
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
 import AllocateButton from "../../components/AllocateButton";
 import { useUser } from "../../context/userContext";
@@ -155,7 +156,21 @@ const AgentsFunding = () => {
     <FullLayout>
       <div>
         <div className="data__heading">
-          <h5 className="mb-4 mt-3">Fund Data Bucket</h5>
+          {" "}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "0.5rem",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Link to={`/agents/business/${businessId}`}>
+              <Button color="primary">Back</Button>
+            </Link>{" "}
+            <h5 className="mb-4 mt-3">Fund Data Bucket</h5>
+          </div>
           {/* <h5
             // style={{
             //   fontSize: "17px",

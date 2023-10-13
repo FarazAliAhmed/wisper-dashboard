@@ -777,15 +777,38 @@ const SFCustomer = () => {
         </ModalFooter> */}
       </Modal>
 
-      <Modal centered isOpen={success} toggle={() => setSuccess(!success)}>
+      <Modal
+        centered
+        isOpen={success}
+        toggle={() => {
+          setSuccess(!success);
+          setAccount({});
+          setActivePlan("");
+          setCustomerEmail({});
+          setCustomerName({});
+        }}
+      >
         <ModalBody>
           <div className="confirm text-center">
             <img src={checked} className="confirm-checked" alt="success" />
-            <p>Data Purchase Successful</p>
+            <p>
+              You successfully purchased {activePlan?.size} worth of{" "}
+              {account.network} data to {account.phone} with ₦
+              {activePlan?.selling_price}{" "}
+            </p>
           </div>
         </ModalBody>
         <ModalFooter className="confirm-footer">
-          <Button color="secondary" onClick={() => setSuccess(false)}>
+          <Button
+            color="secondary"
+            onClick={() => {
+              setSuccess(false);
+              setAccount({});
+              setActivePlan("");
+              setCustomerEmail({});
+              setCustomerName({});
+            }}
+          >
             Close
           </Button>
         </ModalFooter>

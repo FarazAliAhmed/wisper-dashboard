@@ -110,11 +110,11 @@ const BucketHistory = () => {
         <Row className="mt-4">
           <AgentsPurchaseHistory businessId={user?._id} />
         </Row>
-        <Row>
+        {/* <Row>
           <Col lg="12">
             <SupportCard />
           </Col>
-        </Row>
+        </Row> */}
       </div>
     </FullLayout>
   );
