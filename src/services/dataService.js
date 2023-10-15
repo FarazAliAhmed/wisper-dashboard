@@ -58,19 +58,21 @@ export async function checkUsername(username) {
   }
 }
 
-export async function getSFTransactionsTable(business_id) {
+export async function getSFTransactionsTable(business_id, pagination) {
   try {
-    const res = await http.get(`${apiUrl}/store-fronts-history/${business_id}`);
+    const res = await http.get(
+      `${apiUrl}/store-fronts-history/${business_id}?limit=${pagination}`
+    );
     return res;
   } catch (error) {
     return null;
   }
 }
 
-export async function getSFCustomersTable(business_id) {
+export async function getSFCustomersTable(business_id, pagination) {
   try {
     const res = await http.get(
-      `${apiUrl}/store-fronts-customers/${business_id}`
+      `${apiUrl}/store-fronts-customers/${business_id}?limit=${pagination}`
     );
     return res;
   } catch (error) {
@@ -208,6 +210,36 @@ export async function updateStoreFront(body, apiKey) {
     `${apiUrl}/store-fronts/${body.id}
 `,
     body,
+    { headers }
+  );
+  return res;
+}
+
+export async function withdrawStoreFront(body, apiKey) {
+  const headers = { "x-api-key": apiKey };
+
+  console.log("bodyImg", body);
+  // const payload = {
+  //   business_id: body.business_id,
+  //   network: body.network,
+  //   amountInGB: body.amountInGB,
+  // };
+  const res = await http.post(
+    `${apiUrl}/store-fronts/withdrawal/${body.id}
+`,
+    body,
+    { headers }
+  );
+  return res;
+}
+
+export async function clearBankDetails(body, apiKey) {
+  const headers = { "x-api-key": apiKey };
+
+  const res = await http.put(
+    `${apiUrl}/store-fronts/clearBank/${body.id}
+`,
+    // body,
     { headers }
   );
   return res;

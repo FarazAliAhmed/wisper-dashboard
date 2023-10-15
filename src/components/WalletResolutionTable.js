@@ -21,6 +21,7 @@ import {
 import { paginate } from "../utils";
 import TransactionReceipt from "./TransactionReceipt";
 import { useUser } from "../context/userContext";
+import moment from "moment";
 
 const WalletResolutionTable = ({
   transactions,
@@ -155,17 +156,16 @@ const WalletResolutionTable = ({
                 >
                   <thead>
                     <tr>
+                      <th>Date</th>
                       <th>Data Purchase</th>
                       <th>Data Bought (GB)</th>
-                      <th>Lit Trans.</th>
-                      <th>Funding</th>
+                      <th>Wallet Bal. Start </th>
+                      <th>Wallet Bal. End </th>
                       <th>Purpose Wallet Bal</th>
                       <th>Bal.</th>
-                      <th>Wallet Bal. End </th>
-                      <th>Wallet Bal. Start </th>
+                      <th>Lit Trans.</th>
+                      <th>Funding</th>
                       <th>Status</th>
-
-                      <th>Date</th>
 
                       {/* <th>Price</th> */}
                       {/* <th>Reference</th> */}
@@ -176,24 +176,21 @@ const WalletResolutionTable = ({
                     {transactionsData.map((tx, idx) => (
                       <tr key={idx} className="border-top">
                         <td>
-                          {tx.status === "processing" ? (
-                            <span className="p-2 bg-warning rounded-circle d-inline-block ms-3"></span>
-                          ) : tx.status === "failed" ? (
-                            <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
-                          ) : (
-                            <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
-                          )}
+                          {" "}
+                          <td>
+                            {" "}
+                            {moment(tx.date).format("YYYY-MM-DD HH:mm:ss")}{" "}
+                          </td>
                         </td>
-                        {/* <td>{tx.network_provider}</td>
-                        <td>{tx.created_at}</td> */}
-                        <td>
-                          <Button
-                            className="receipt-button"
-                            onClick={() => showReceipt(tx)}
-                          >
-                            View
-                          </Button>
-                        </td>
+
+                        <td>{tx.totalDataPurchase}</td>
+                        <td>{tx.totalDataBought}</td>
+                        <td>{tx.startOfDayBalance}</td>
+                        <td></td>
+                        <td>{tx.proWalBal}</td>
+                        <td> {tx.balance}</td>
+                        <td> </td>
+                        <td> {tx.totalFunding}</td>
                         {/* <td>₦ {tx.data_price}</td> */}
                         {/* <td>{tx.transaction_ref}</td> */}
                       </tr>

@@ -230,6 +230,18 @@ const SFCustomer = () => {
     try {
       await handleSubmit(response.transaction_id);
       setConfirm(false);
+      setAccount({
+        phone: "",
+        name: "",
+        storeBusiness: "",
+        email: "",
+        price: "", // or null if not applicable
+        volume: "", // or null if not applicable
+        // status: "", // or null if not applicable
+        network: "", // or null if not applicable
+        transaction_ref: "", // Unique reference identifier
+      });
+      setActivePlan("");
       setSuccess(true);
     } catch (error) {
       setErrors(true);

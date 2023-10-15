@@ -1,8 +1,171 @@
-import { Card, CardBody } from "reactstrap";
+import React, { useEffect, useState } from "react";
+
+import {
+  Button,
+  Card,
+  CardBody,
+  Col,
+  Form,
+  FormFeedback,
+  FormGroup,
+  Input,
+  Label,
+  Modal,
+  ModalBody,
+  ModalFooter,
+} from "reactstrap";
 import "./dashboard.css";
 import { Link, Redirect } from "react-router-dom/cjs/react-router-dom";
+import toast from "react-hot-toast";
+import { useAppState } from "../../context/appContext";
+import { formIsValid, validateProperty } from "../../utils";
+import cancel from "../../assets/images/logos/cancel.png";
+import checked from "../../assets/images/logos/checked.png";
+import {
+  updateStoreFront,
+  withdrawStoreFront,
+} from "../../services/dataService";
+import { useUser } from "../../context/userContext";
 
 const WithdrawCards = (props) => {
+  const { user } = useUser();
+  const { storeFront } = useAppState();
+
+  const [withdraw, setWithdraw] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [success, setSuccess] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [notice, setNotice] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const { withdrawAccount, bankCode, bankName, acctName, storePin } =
+    storeFront;
+
+  const bankObj = {
+    withdrawAccount,
+    bankCode,
+    bankName,
+    acctName,
+    storePin,
+  };
+
+  const [withdrawDetails, setWithdrawDetails] = useState({
+    amount: "",
+    withType: "bank",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = ({ currentTarget: input }) => {
+    const validationErrors = { ...errors };
+    const errorMessage = validateProperty(input);
+    if (errorMessage) validationErrors[input.name] = errorMessage;
+    else delete validationErrors[input.name];
+
+    const { name, value } = input;
+    setWithdrawDetails({ ...withdrawDetails, [name]: value });
+    setErrors(validationErrors);
+  };
+
+  const storedModalState = JSON.parse(localStorage.getItem("modal") || "{}");
+  const storedModalItem = JSON.parse(localStorage.getItem("modalItem") || "{}");
+  const [modalState, setModalState] = useState("state0");
+
+  // useEffect(() => {
+  //   if (
+  //     storedModalState &&
+  //     storedModalState.expiration > new Date().getTime()
+  //   ) {
+  //     setModalState(storedModalState.value);
+  //   } else {
+  //     localStorage.removeItem("modal");
+  //     localStorage.removeItem("modalItem");
+
+  //     setModalState("state0");
+  //   }
+  // }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (withdrawDetails.withType == "bank") {
+      if (
+        bankObj.bankCode &&
+        bankObj.bankCode !== "" &&
+        bankObj.bankName &&
+        bankObj.bankName !== "" &&
+        bankObj.withdrawAccount &&
+        bankObj.withdrawAccount !== "" &&
+        bankObj.acctName &&
+        bankObj.acctName !== "" &&
+        bankObj.bankCode &&
+        bankObj.bankCode !== ""
+      ) {
+        try {
+          setLoading(true);
+          await withdrawStoreFront(
+            {
+              id: user?._id,
+              ...withdrawDetails,
+            },
+            user?.access_token
+          );
+          setLoading(false);
+          setMessage("Withdrawal Successful");
+          setWithdraw(false);
+          setErrors({});
+          setWithdrawDetails({
+            amount: "",
+            withType: "bank",
+            password: "",
+          });
+          setSuccess(true);
+        } catch (error) {
+          setLoading(false);
+          setMessage("Error Adding Account");
+          setWithdraw(false);
+
+          setFailed(true);
+
+          console.log(error);
+        }
+      } else {
+        setNotice(true);
+      }
+    } else {
+      try {
+        setLoading(true);
+        await withdrawStoreFront(
+          {
+            id: user?._id,
+            ...withdrawDetails,
+          },
+          user?.access_token
+        );
+        setLoading(false);
+        setMessage("Withdrawal Successful");
+        setWithdraw(false);
+        setErrors({});
+        setWithdrawDetails({
+          amount: "",
+          withType: "bank",
+          password: "",
+        });
+        setSuccess(true);
+      } catch (error) {
+        setLoading(false);
+        setMessage("Error Adding Account");
+        setWithdraw(false);
+
+        setFailed(true);
+
+        console.log(error);
+      }
+    }
+  };
+
+  console.log(withdrawDetails, "kk");
+  console.log(bankObj, "kk");
+
   return (
     <Card>
       <CardBody>
@@ -25,11 +188,195 @@ const WithdrawCards = (props) => {
             </div>
           </div>
 
-          <Link to="/megaFunding">
-            <button className="fund__wallet__btn">Withdraw</button>
-          </Link>
+          <button
+            onClick={() => {
+              setWithdraw(true);
+            }}
+            className="fund__wallet__btn"
+          >
+            Withdraw
+          </button>
         </div>
       </CardBody>
+      <Modal centered isOpen={withdraw} toggle={() => setWithdraw(!withdraw)}>
+        <ModalBody>
+          <div className="add__sub__dealer__con">
+            <div className="add__sub__dealer__head">
+              <h4>Withdraw</h4>
+              {withdrawDetails.withType == "bank" && (
+                <>
+                  {" "}
+                  {/* <h6>Withdrawl Fees</h6> */}
+                  <p style={{ color: "red" }}>NGN 5,000 and below - NGN 10</p>
+                  <p style={{ color: "red" }}>
+                    NGN 5,001 to NGN 50,000 - NGN 25
+                  </p>
+                  <p style={{ color: "red" }}>NGN 50,000 - NGN 50</p>
+                </>
+              )}
+            </div>
+            <Form>
+              {" "}
+              <Col md={12}>
+                <FormGroup
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    width: "100%",
+                  }}
+                >
+                  <Label for="withdrawAmount">
+                    Amount to Withdraw <span className="text-danger">*</span>
+                  </Label>
+                  <Input
+                    value={withdrawDetails.amount}
+                    id="amount"
+                    name="amount"
+                    type="number"
+                    onChange={handleChange}
+                    required
+                    invalid={errors.amount}
+                  />
+                  <FormFeedback>{errors.amount}</FormFeedback>
+                </FormGroup>
+              </Col>
+              <Col md={12}>
+                <FormGroup className="mb-3">
+                  <Label>Withdrawal Type</Label>{" "}
+                  <span className="text-danger">*</span>
+                  <Input
+                    onChange={handleChange}
+                    name="withType"
+                    // invalid={errors.bankCode}
+                    value={withdrawDetails.withType}
+                    className="mb-3"
+                    type="select"
+                    // disabled={account.network == ""}
+                    required
+                  >
+                    <>
+                      <option value="bank">Withdraw to Bank</option>
+                      <option value="wallet">Withdraw to Wallet</option>
+                    </>
+                  </Input>
+                  {/* <FormFeedback>{errors.bankCode}</FormFeedback> */}
+                </FormGroup>
+              </Col>{" "}
+              <Col md={12}>
+                <FormGroup
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    width: "100%",
+                  }}
+                >
+                  <Label for="password">
+                    Wisper Account Password{" "}
+                    <span className="text-danger">*</span>
+                  </Label>
+                  <Input
+                    value={withdrawDetails.password}
+                    id="password"
+                    name="password"
+                    type="password"
+                    onChange={handleChange}
+                    invalid={errors.password}
+                    required
+                  />
+                  <FormFeedback>{errors.password}</FormFeedback>
+                </FormGroup>
+              </Col>
+              <ModalFooter className="confirm-footer">
+                <Button
+                  color="primary"
+                  disabled={formIsValid(errors) || loading}
+                  onClick={handleSubmit}
+                  size="lg"
+                  type="submit"
+                  className="submit-btn"
+                >
+                  Confirm
+                </Button>{" "}
+                <Button onClick={() => setWithdraw(false)}>No, Cancel</Button>
+              </ModalFooter>
+            </Form>
+          </div>
+        </ModalBody>
+      </Modal>
+
+      <Modal
+        centered
+        isOpen={success}
+        toggle={() => {
+          setSuccess(!success);
+        }}
+      >
+        <ModalBody>
+          <div className="confirm text-center">
+            <img src={checked} className="confirm-checked" alt="success" />
+            <p>{message}</p>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button
+            color="secondary"
+            onClick={() => {
+              setSuccess(false);
+            }}
+          >
+            Close
+          </Button>
+        </ModalFooter>
+      </Modal>
+
+      <Modal
+        centered
+        isOpen={notice}
+        toggle={() => {
+          setNotice(!notice);
+        }}
+      >
+        <ModalBody>
+          <div className="confirm text-center">
+            <p>Set a withdrawal account in the settings page to proceed </p>
+            {/* <Link to={`/settings`}>
+              <Button color="primary">Set up</Button>
+            </Link> */}
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button
+            color="secondary"
+            onClick={() => {
+              setNotice(false);
+            }}
+          >
+            Close
+          </Button>
+        </ModalFooter>
+      </Modal>
+
+      {/* Failure On Data sent*/}
+      <Modal centered isOpen={failed} toggle={() => setFailed(!failed)}>
+        <ModalBody>
+          <div className="confirm text-center">
+            <img
+              src={cancel}
+              width={50}
+              className="confirm-cancel"
+              alt="confirm"
+            />
+            <p>{message}</p>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button color="secondary" onClick={() => setFailed(false)}>
+            Close
+          </Button>
+        </ModalFooter>
+      </Modal>
     </Card>
   );
 };

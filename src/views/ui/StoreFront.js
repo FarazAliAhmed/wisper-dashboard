@@ -2,6 +2,13 @@ import React, { useEffect, useState } from "react";
 import {
   Button,
   Col,
+  Form,
+  FormFeedback,
+  FormGroup,
+  Input,
+  InputGroup,
+  InputGroupText,
+  Label,
   Modal,
   ModalBody,
   ModalFooter,
@@ -24,6 +31,7 @@ import sterling_logo from "../../assets/images/logos/Sterling_Bank_Logo_Straight
 import { totalDataSold, displayBalance } from "../../utils";
 import TransactionsTable from "../../components/TransactionsTable";
 import PaymentButtonFw from "../../components/PaymentButtonFw";
+import { BeatLoader } from "react-spinners";
 
 import { useAppState } from "../../context/appContext";
 import { useUser } from "../../context/userContext";
@@ -62,6 +70,8 @@ import toast from "react-hot-toast";
 import CopyToClipboard from "react-copy-to-clipboard";
 import Slider from "./Slider/Slider";
 import Media from "react-media";
+import VerificationInput from "react-verification-input";
+
 // import PaymentButton from "../../components/PaymentButton";
 
 const StoreFront = () => {
@@ -79,6 +89,8 @@ const StoreFront = () => {
   const [noticeState, setNoticeState] = useState(false);
   const [copyState, setCopyState] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [withdraw, setWithdraw] = useState(false);
+  const [pagination, setPagination] = useState(50);
 
   const [navState, setNavState] = useState(0);
 
@@ -116,23 +128,75 @@ const StoreFront = () => {
 
   useEffect(() => {
     const getSFTransactions = async () => {
-      await getSFTransactionsTable(storeFront?.business_id).then((res) => {
-        console.log(res, "lllo");
-        setTransactionTable(res?.data);
-      });
+      await getSFTransactionsTable(storeFront?.business_id, pagination).then(
+        (res) => {
+          console.log(res, "lllo");
+          setTransactionTable(res?.data);
+        }
+      );
     };
 
     const getSFCustomers = async () => {
-      await getSFCustomersTable(storeFront?.business_id).then((res) => {
-        console.log(res, "lllo");
-        setCustomerTable(res?.data);
-      });
+      await getSFCustomersTable(storeFront?.business_id, pagination).then(
+        (res) => {
+          console.log(res, "lllo");
+          setCustomerTable(res?.data);
+        }
+      );
     };
 
     getSFTransactions();
     getSFCustomers();
   }, [storeFront.business_id]);
 
+  const fetchWithPaginate = async () => {
+    if (navState == 0) {
+      if (!loading) {
+        setLoading(true);
+        await getSFTransactionsTable(storeFront?.business_id, pagination).then(
+          (res) => {
+            console.log(res, "lllo");
+            setTransactionTable(res?.data);
+          }
+        );
+        setLoading(false);
+      }
+    } else if (navState == 1) {
+      setLoading(true);
+      await getSFCustomersTable(storeFront?.business_id, pagination).then(
+        (res) => {
+          console.log(res, "lllo");
+          setCustomerTable(res?.data);
+        }
+      );
+      setLoading(false);
+    }
+  };
+
+  const clearPagination = async () => {
+    setPagination(0);
+    if (navState == 0) {
+      if (!loading) {
+        setLoading(true);
+        await getSFTransactionsTable(storeFront?.business_id, pagination).then(
+          (res) => {
+            console.log(res, "lllo");
+            setTransactionTable(res?.data);
+          }
+        );
+        setLoading(false);
+      }
+    } else if (navState == 1) {
+      setLoading(true);
+      await getSFCustomersTable(storeFront?.business_id, pagination).then(
+        (res) => {
+          console.log(res, "lllo");
+          setCustomerTable(res?.data);
+        }
+      );
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     const fetchAllPlansUser = async () => {
       await getAllPlansUser(user._id).then((res) => {
@@ -522,6 +586,44 @@ const StoreFront = () => {
             </>
           )}
         </Row>
+
+        <div>
+          <Form>
+            <p>Enter in the number of records you want to fetch</p>
+            <div className="d-flex gap-2 flex-column flex-md-row">
+              <InputGroup className="mb-2">
+                <InputGroupText>Records:</InputGroupText>
+                <Input
+                  id="limit"
+                  name="limit"
+                  placeholder="No. of Records to Fetch"
+                  type="number"
+                  value={pagination}
+                  onChange={(e) => {
+                    setPagination(e.target.value);
+                  }}
+                />
+              </InputGroup>
+
+              <InputGroup className="mb-2 justify-content-start gap-2">
+                <Button
+                  onClick={fetchWithPaginate}
+                  color="primary"
+                  className="px-4 py-1"
+                >
+                  Fetch
+                </Button>
+                <Button
+                  onClick={clearPagination}
+                  color="secondary"
+                  className="px-3 py-1"
+                >
+                  Reset
+                </Button>
+              </InputGroup>
+            </div>
+          </Form>
+        </div>
 
         <Modal centered isOpen={confirm} toggle={() => setConfirm(!confirm)}>
           <ModalBody>

@@ -95,6 +95,35 @@ export const validateProperty = (input) => {
   if (name === "facebook") {
     if (!validateLink(value)) return `Invalid ${name} link`;
   }
+
+  if (name === "bankCode") {
+    if (value.trim() === "") return "Select Bank";
+    if (value.trim() === "select") return "Select Bank";
+  }
+
+  if (name === "withdrawAccount") {
+    if (value.trim() === "") return "Account number is required";
+    if (value.trim().length < 10 || value.trim().length > 10)
+      return "Account Number must be 10 characters";
+  }
+
+  if (name === "bankName") {
+    if (value.trim() === "") return "Bank name is required";
+  }
+
+  if (name === "acctName") {
+    if (value.trim() === "") return "Account name is required";
+  }
+
+  if (name === "amount") {
+    if (value.trim() === "") return " Amount is required";
+  }
+
+  if (name === "storePin") {
+    if (value.trim() === "") return "Store Password is required";
+    if (value.trim().length < 5)
+      return "Store Password must be a minimum of 5 characters";
+  }
 };
 
 export const validateForm = (data) => {

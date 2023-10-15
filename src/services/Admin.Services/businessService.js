@@ -71,6 +71,16 @@ export async function getGloResolution() {
   }
 }
 
+export async function getWalletResolution() {
+  try {
+    const res = await http.get(`${adminUrl}/analysis/getWalletUsage`);
+    console.log(res);
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
+
 export const getAllTrx = async () => {
   try {
     const res = await http.get(`${adminUrl}/trxAll`);

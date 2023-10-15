@@ -32,7 +32,7 @@ const GloDataResolution = () => {
       ) : (
         <AdminLayout>
           <GloDataResolutionTable
-            transactions={transactions ?? ""}
+            transactions={transactions ?? []}
             showHeader={true}
             showPageSettings={true}
           />

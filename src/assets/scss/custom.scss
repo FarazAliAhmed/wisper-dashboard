@@ -1,5 +1,15 @@
 @import "variables";
 
+/* Hide the spinner buttons on number inputs */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
 .data__heading {
   display: flex;
   flex-direction: row;
@@ -137,19 +147,60 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.8rem;
+  gap: 0.5rem;
   width: 100%;
 }
 
 .settings__nav p {
   font-weight: 500;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 17px;
+
+  @media (max-width: 660px) {
+    font-size: 14px;
+  }
 }
 
 .activeNav__item {
   color: #007bff;
 }
+
+.claim__verification {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-end;
+    align-items: center; */
+  gap: 1rem;
+}
+
+.claim__verification p {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.claim__verification p:hover {
+  color: #007bff;
+  cursor: pointer;
+}
+.verification__container {
+}
+
+.verification__character {
+  border-radius: 0.5rem;
+}
+
+.verification__character--inactive {
+  border-radius: 0.5rem;
+}
+
+.verification__character--selected {
+  border-radius: 0.5rem;
+}
+
+// .settings__text {
+//   font-size: 10px;
+// }
 
 .monnify__logo {
   width: 18rem;
