@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import {
   Card,
@@ -34,12 +34,17 @@ import _Documentation from "../../components/pages/Documentation";
 import {
   clearBankDetails,
   getAgentsInfo,
+  getBankName,
+  getCustomerName,
   updateStoreFront,
 } from "../../services/dataService";
 import { useAppState } from "../../context/appContext";
+import { SettingsNav } from "../../App";
 
 const Settings = () => {
   const { storeFront } = useAppState();
+  const { setNavStateFunc, navState: navStateValue } = useContext(SettingsNav);
+
   const context = useUser();
   const [success, setSuccess] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -83,7 +88,11 @@ const Settings = () => {
   const [message, setMessage] = useState("");
   const [errorsPass, setErrorsPass] = useState({});
   const [currentBank, setCurrentBank] = useState({});
-  const [navState, setNavState] = useState(0);
+  const [navState, setNavState] = useState(navStateValue);
+  const [accountName, setAccountName] = useState({
+    name: "",
+    state: false,
+  });
   const [serverResponse, setServerResponse] = useState({
     status: true,
     message: "",
@@ -181,19 +190,33 @@ const Settings = () => {
       setLoading(true);
       // const body = { bankDetails };
       console.log(bankDetails, "gg");
-      await updateStoreFront(
-        {
-          id: userObj?._id,
-          ...bankDetails,
-        },
-        userObj?.access_token
-      );
-      setLoading(false);
-      setBankDetails(bankDetails);
-      setErrors({});
-      setMessage("Withdrawal Account Added Successfully");
-      setBank(false);
-      setSuccess(true);
+
+      if (accountName.name !== "invalid account number") {
+        await updateStoreFront(
+          {
+            id: userObj?._id,
+            withdrawAccount: bankDetails.withdrawAccount,
+            bankName: bankDetails.bankName,
+            bankCode: bankDetails.bankCode,
+            acctName: accountName.name,
+          },
+          userObj?.access_token
+        );
+
+        setLoading(false);
+        setBankDetails({
+          withdrawAccount: bankDetails.withdrawAccount,
+          bankName: bankDetails.bankName,
+          bankCode: bankDetails.bankCode,
+          acctName: accountName.name,
+        });
+        setErrors({});
+        setMessage("Withdrawal Account Added Successfully");
+        setBank(false);
+        setSuccess(true);
+      } else {
+        toast.error("invalid account number, unable to get account name");
+      }
     } catch (error) {
       setLoading(false);
       setMessage("Error Adding Account");
@@ -292,7 +315,39 @@ const Settings = () => {
     setErrors(validationErrors);
   };
 
+  useEffect(() => {
+    const fetchBankName = async () => {
+      await getBankName({
+        withdrawAccount: bankDetails.withdrawAccount,
+        bankCode: bankDetails.bankCode,
+      })
+        .then((res) => {
+          if (res?.data) {
+            setAccountName({
+              name: res?.data?.account_name,
+              state: true,
+            });
+          } else {
+            setAccountName({
+              name: "invalid account number",
+              state: false,
+            });
+          }
+
+          console.log("resrr", res);
+        })
+        .catch((error) => {
+          toast.error("error fetching bank name");
+          console.log(error);
+        });
+    };
+
+    fetchBankName();
+  }, [bankDetails]);
+
   console.log(bankDetails, "dealer");
+  console.log(navState, "nav");
+
   const navItems = ["Profile", "Security", "Developer", "Dealer", "Withdrawal"];
   return (
     <FullLayout>
@@ -676,14 +731,15 @@ const Settings = () => {
                             Beneficiary <span className="text-danger">*</span>
                           </Label>
                           <Input
-                            value={bankDetails.acctName}
+                            value={accountName.name}
                             id="beneficiary"
                             name="acctName"
                             type="text"
-                            onChange={handleBankChange}
+                            // onChange={handleBankChange}
                             invalid={errors.acctName}
+                            disabled
                           />
-                          <FormFeedback>{errors.acctName}</FormFeedback>
+                          {/* <FormFeedback>hey</FormFeedback> */}
                         </FormGroup>
                       </Col>
 
@@ -744,9 +800,7 @@ const Settings = () => {
                 bankDetails.withdrawAccount &&
                 bankDetails.withdrawAccount !== "" &&
                 bankDetails.acctName &&
-                bankDetails.acctName !== "" &&
-                bankDetails.bankCode &&
-                bankDetails.bankCode !== "" ? (
+                bankDetails.acctName !== "" ? (
                   <>
                     <Row form>
                       <p>Account Name: {bankDetails.acctName}</p>

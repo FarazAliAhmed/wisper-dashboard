@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -112,10 +112,12 @@ const Routes = () => {
             ""
           )}
 
+          <ProtectedRoute path="/settings" component={Settings} />
+          <Route path="/sf/:storeUserName" component={SFCustomer} />
+
           <ProtectedRoute path="/monifyWallet" component={MonifyWallet} />
           <ProtectedRoute path="/storeFront" component={StoreFront} />
           <ProtectedRoute path="/editStoreFront" component={EditStoreFront} />
-          <Route path="/sf/:storeUserName" component={SFCustomer} />
 
           <ProtectedRoute path="/wallet" component={Wallet} />
           <ProtectedRoute path="/account" component={Account} />
@@ -124,7 +126,7 @@ const Routes = () => {
           <ProtectedRoute path="/transactions" component={TransactionsV2} />
           <ProtectedRoute path="/developers" component={Documentation} />
           <ProtectedRoute path="/logout" component={Logout} />
-          <ProtectedRoute path="/settings" component={Settings} />
+
           <Route exact path="/login" component={Login} />
           <Route exact path="/forgot-password" component={ForgotPassword} />
           <Route exact path="/check-email/:email" component={CheckEmail} />

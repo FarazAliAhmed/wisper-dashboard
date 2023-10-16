@@ -40,6 +40,20 @@ export async function getCustomerName(phone) {
     return null;
   }
 }
+
+export async function getBankName(body) {
+  try {
+    console.log("plans user", body);
+
+    const res = await http.get(
+      `${apiUrl}/store-fronts-bank-verify/${body.withdrawAccount}/${body.bankCode}`
+    );
+    console.log(res, "kk");
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
 export async function getBalance() {
   try {
     const res = await http.get(`${apiUrl}/balance`);
@@ -73,6 +87,17 @@ export async function getSFCustomersTable(business_id, pagination) {
   try {
     const res = await http.get(
       `${apiUrl}/store-fronts-customers/${business_id}?limit=${pagination}`
+    );
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getSFWithdrawTable(business_id, pagination) {
+  try {
+    const res = await http.get(
+      `${apiUrl}/store-fronts-withdrawal/${business_id}?limit=${pagination}`
     );
     return res;
   } catch (error) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import {
   Button,
@@ -26,12 +26,14 @@ import {
   withdrawStoreFront,
 } from "../../services/dataService";
 import { useUser } from "../../context/userContext";
+import { SettingsNav } from "../../App";
 
 const WithdrawCards = (props) => {
   const { user } = useUser();
   const { storeFront } = useAppState();
-
+  const { setNavStateFunc } = useContext(SettingsNav);
   const [withdraw, setWithdraw] = useState(false);
+  const [withdrawFee, setWithdrawFee] = useState("");
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -56,6 +58,17 @@ const WithdrawCards = (props) => {
   });
   const [loading, setLoading] = useState(false);
 
+  function calculateFee(value) {
+    if (value <= 5000) {
+      setWithdrawFee("10");
+    } else if (value > 5000 && value < 50001) {
+      setWithdrawFee("25");
+    } else if (value > 50000) {
+      setWithdrawFee("50");
+    } else {
+      setWithdrawFee("");
+    }
+  }
   const handleChange = ({ currentTarget: input }) => {
     const validationErrors = { ...errors };
     const errorMessage = validateProperty(input);
@@ -63,27 +76,17 @@ const WithdrawCards = (props) => {
     else delete validationErrors[input.name];
 
     const { name, value } = input;
+    if (name == "amount") {
+      calculateFee(value);
+    }
     setWithdrawDetails({ ...withdrawDetails, [name]: value });
+
     setErrors(validationErrors);
   };
 
   const storedModalState = JSON.parse(localStorage.getItem("modal") || "{}");
   const storedModalItem = JSON.parse(localStorage.getItem("modalItem") || "{}");
   const [modalState, setModalState] = useState("state0");
-
-  // useEffect(() => {
-  //   if (
-  //     storedModalState &&
-  //     storedModalState.expiration > new Date().getTime()
-  //   ) {
-  //     setModalState(storedModalState.value);
-  //   } else {
-  //     localStorage.removeItem("modal");
-  //     localStorage.removeItem("modalItem");
-
-  //     setModalState("state0");
-  //   }
-  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -121,7 +124,7 @@ const WithdrawCards = (props) => {
           setSuccess(true);
         } catch (error) {
           setLoading(false);
-          setMessage("Error Adding Account");
+          setMessage("Error Withdrawing");
           setWithdraw(false);
 
           setFailed(true);
@@ -129,6 +132,7 @@ const WithdrawCards = (props) => {
           console.log(error);
         }
       } else {
+        setNavStateFunc(4);
         setNotice(true);
       }
     } else {
@@ -203,20 +207,31 @@ const WithdrawCards = (props) => {
           <div className="add__sub__dealer__con">
             <div className="add__sub__dealer__head">
               <h4>Withdraw</h4>
-              {withdrawDetails.withType == "bank" && (
-                <>
-                  {" "}
-                  {/* <h6>Withdrawl Fees</h6> */}
-                  <p style={{ color: "red" }}>NGN 5,000 and below - NGN 10</p>
-                  <p style={{ color: "red" }}>
-                    NGN 5,001 to NGN 50,000 - NGN 25
-                  </p>
-                  <p style={{ color: "red" }}>NGN 50,000 - NGN 50</p>
-                </>
-              )}
             </div>
             <Form>
               {" "}
+              <Col md={12}>
+                <FormGroup className="mb-3">
+                  <Label>Withdrawal Channel</Label>{" "}
+                  <span className="text-danger">*</span>
+                  <Input
+                    onChange={handleChange}
+                    name="withType"
+                    // invalid={errors.bankCode}
+                    value={withdrawDetails.withType}
+                    className="mb-3"
+                    type="select"
+                    // disabled={account.network == ""}
+                    required
+                  >
+                    <>
+                      <option value="bank">Withdraw to Bank</option>
+                      <option value="wallet">Withdraw to Wallet</option>
+                    </>
+                  </Input>
+                  {/* <FormFeedback>{errors.bankCode}</FormFeedback> */}
+                </FormGroup>
+              </Col>{" "}
               <Col md={12}>
                 <FormGroup
                   style={{
@@ -242,27 +257,30 @@ const WithdrawCards = (props) => {
                 </FormGroup>
               </Col>
               <Col md={12}>
-                <FormGroup className="mb-3">
-                  <Label>Withdrawal Type</Label>{" "}
-                  <span className="text-danger">*</span>
+                <FormGroup
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    width: "100%",
+                  }}
+                >
+                  <Label for="withdrawAmount">
+                    Withdrawal Fee <span className="text-danger">*</span>
+                  </Label>
                   <Input
+                    value={withdrawFee}
+                    id="amount"
+                    name="withdrawFee"
+                    type="number"
                     onChange={handleChange}
-                    name="withType"
-                    // invalid={errors.bankCode}
-                    value={withdrawDetails.withType}
-                    className="mb-3"
-                    type="select"
-                    // disabled={account.network == ""}
                     required
-                  >
-                    <>
-                      <option value="bank">Withdraw to Bank</option>
-                      <option value="wallet">Withdraw to Wallet</option>
-                    </>
-                  </Input>
-                  {/* <FormFeedback>{errors.bankCode}</FormFeedback> */}
+                    disabled
+                    // invalid={errors.amount}
+                  />
+                  {/* <FormFeedback>{errors.amount}</FormFeedback> */}
                 </FormGroup>
-              </Col>{" "}
+              </Col>
               <Col md={12}>
                 <FormGroup
                   style={{
@@ -341,12 +359,12 @@ const WithdrawCards = (props) => {
         <ModalBody>
           <div className="confirm text-center">
             <p>Set a withdrawal account in the settings page to proceed </p>
-            {/* <Link to={`/settings`}>
-              <Button color="primary">Set up</Button>
-            </Link> */}
           </div>
         </ModalBody>
         <ModalFooter className="confirm-footer">
+          <Link to={`/settings`}>
+            <Button color="primary">Set up</Button>
+          </Link>
           <Button
             color="secondary"
             onClick={() => {

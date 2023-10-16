@@ -23,8 +23,9 @@ import TransactionReceipt from "./TransactionReceipt";
 import { useUser } from "../context/userContext";
 import SFReceipt from "./SFReceipt";
 import moment from "moment";
+import SFWithdrawReceipt from "./SFWithdrawReceipt";
 
-const SFTransactionsTable = ({
+const SFWithdrawTable = ({
   transactions,
   showHeader,
   showSubHeader,
@@ -117,6 +118,7 @@ const SFTransactionsTable = ({
     setTransactionsData(results);
     setSearchResults(results);
   };
+  console.log(transactionsData, "trans098");
 
   return (
     <div>
@@ -125,11 +127,13 @@ const SFTransactionsTable = ({
           <div>
             <Card>
               <CardBody>
-                {showHeader && <CardTitle tag="h5">Transactions </CardTitle>}
+                {showHeader && (
+                  <CardTitle tag="h5">Withdrawal History</CardTitle>
+                )}
 
                 {showSubHeader && (
                   <CardSubtitle className="mb-2 text-muted" tag="h6">
-                    Transactions
+                    Customers
                   </CardSubtitle>
                 )}
 
@@ -233,15 +237,13 @@ const SFTransactionsTable = ({
                 >
                   <thead>
                     <tr>
-                      <th>Customer Name</th>
-                      <th>Phone Number</th>
-                      <th>Price</th>
-                      <th>Volume</th>
+                      <th>Amount</th>
+                      <th>Tax</th>
+                      <th>Withdrawal Channel</th>
+                      <th>Date </th>
                       <th>Status</th>
-                      <th>Network</th>
-                      <th>Profit</th>
-                      <th>Date</th>
                       <th>Receipt</th>
+
                       {/* <th>Price</th> */}
                       {/* <th>Reference</th> */}
                       {/* <th>Price</th> */}
@@ -251,32 +253,28 @@ const SFTransactionsTable = ({
                     {transactionsData.map((tx, idx) => (
                       <tr key={idx} className="border-top">
                         <td>
-                          <h6 className="mb-0">{tx.name}</h6>
+                          <h6 className="mb-0">₦{tx.amount}</h6>
                           {/* <span className="text-muted">{tdata.email}</span> */}
                         </td>
                         <td>
-                          <h6 className="mb-0">{tx.phone}</h6>
+                          <h6 className="mb-0">₦{tx.tax}</h6>
                           {/* <span className="text-muted">{tdata.email}</span> */}
                         </td>
-                        <td> ₦{tx.price} </td>
-
-                        <td>{tx.volume / 1000} GB</td>
-
-                        {/* <td>{tx.price || "-"}</td> */}
+                        <td> {tx.withdrawalType} </td>
                         <td>
-                          {tx.status === "processing" ? (
-                            <span className="p-2 bg-warning rounded-circle d-inline-block ms-3"></span>
-                          ) : tx.status === "failed" ? (
-                            <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
-                          ) : (
-                            <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
-                          )}
-                        </td>
-                        <td>{tx.network}</td>
-                        <td>₦{tx.profit}</td>
-                        <td>
+                          {" "}
                           {moment(tx.date).format("YYYY-MM-DD HH:mm:ss")}{" "}
                         </td>
+
+                        <td>
+                          {" "}
+                          {tx.status == "success" ? (
+                            <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
+                          ) : (
+                            <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
+                          )}
+                        </td>
+
                         <td>
                           <Button
                             className="receipt-button"
@@ -285,14 +283,12 @@ const SFTransactionsTable = ({
                             View
                           </Button>
                         </td>
-                        {/* <td>₦ {tx.data_price}</td> */}
-                        {/* <td>{tx.transaction_ref}</td> */}
                       </tr>
                     ))}
                   </tbody>
                 </Table>
 
-                <SFReceipt
+                <SFWithdrawReceipt
                   show={show}
                   receiptData={receiptdata}
                   toggleShow={toggleShow}
@@ -312,4 +308,4 @@ const SFTransactionsTable = ({
   );
 };
 
-export default SFTransactionsTable;
+export default SFWithdrawTable;

@@ -63,6 +63,7 @@ import {
   getSFAnalysis,
   getSFCustomersTable,
   getSFTransactionsTable,
+  getSFWithdrawTable,
   getSetUp,
   updateStoreFront,
 } from "../../services/dataService";
@@ -71,6 +72,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import Slider from "./Slider/Slider";
 import Media from "react-media";
 import VerificationInput from "react-verification-input";
+import SFWithdrawTable from "../../components/SFWithdrawTable";
 
 // import PaymentButton from "../../components/PaymentButton";
 
@@ -81,6 +83,7 @@ const StoreFront = () => {
   const [maintenance, setMaintenance] = useState(storeFront?.storeMaintenance);
   const [customerTable, setCustomerTable] = useState([]);
   const [transactionTable, setTransactionTable] = useState([]);
+  const [withdrawTable, setWithdrawTable] = useState([]);
   const [sfAnalysis, setSfAnalysis] = useState({});
   const [filter, setFilter] = useState("All Time");
   const [loading, setLoading] = useState(false);
@@ -130,7 +133,7 @@ const StoreFront = () => {
     const getSFTransactions = async () => {
       await getSFTransactionsTable(storeFront?.business_id, pagination).then(
         (res) => {
-          console.log(res, "lllo");
+          console.log(res, "9999");
           setTransactionTable(res?.data);
         }
       );
@@ -145,8 +148,18 @@ const StoreFront = () => {
       );
     };
 
+    const getSFWithdraw = async () => {
+      await getSFWithdrawTable(storeFront?.business_id, pagination).then(
+        (res) => {
+          console.log(res, "lllo");
+          setWithdrawTable(res?.data);
+        }
+      );
+    };
+
     getSFTransactions();
     getSFCustomers();
+    getSFWithdraw();
   }, [storeFront.business_id]);
 
   const fetchWithPaginate = async () => {
@@ -167,6 +180,15 @@ const StoreFront = () => {
         (res) => {
           console.log(res, "lllo");
           setCustomerTable(res?.data);
+        }
+      );
+      setLoading(false);
+    } else if (navState == 2) {
+      setLoading(true);
+      await getSFWithdrawTable(storeFront?.business_id, pagination).then(
+        (res) => {
+          console.log(res, "lllo");
+          setWithdrawTable(res?.data);
         }
       );
       setLoading(false);
@@ -341,7 +363,7 @@ const StoreFront = () => {
     },
   ];
 
-  const navItems = ["Transactions", "Customers"];
+  const navItems = ["Transactions", "Customers", "Withdrawal"];
   console.log(sfAnalysis, "sf");
 
   return (
@@ -580,6 +602,16 @@ const StoreFront = () => {
             <>
               <SFCustomersTable
                 transactions={customerTable ?? []}
+                showHeader={true}
+                showSubHeader={false}
+              />
+            </>
+          )}
+
+          {navState == 2 && (
+            <>
+              <SFWithdrawTable
+                transactions={withdrawTable ?? []}
                 showHeader={true}
                 showSubHeader={false}
               />

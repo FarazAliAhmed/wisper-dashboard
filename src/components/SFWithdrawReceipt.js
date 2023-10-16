@@ -10,7 +10,7 @@ import {
 import { useUser } from "../context/userContext";
 import moment from "moment";
 
-function SFReceipt({ receiptData, show, toggleShow }) {
+function SFWithdrawReceipt({ receiptData, show, toggleShow }) {
   const { user } = useUser();
 
   return (
@@ -18,20 +18,21 @@ function SFReceipt({ receiptData, show, toggleShow }) {
       <Modal centered isOpen={show} toggle={toggleShow}>
         <ModalHeader toggle={toggleShow}>Transaction Receipt</ModalHeader>
         <ModalBody>
-          Customer Name :<strong> {receiptData.name} </strong> <br />
-          Customer Email:<strong> {receiptData.email} </strong> <br />
-          Data Volume :<strong> {receiptData.volume / 1000} GB</strong> <br />
-          Data Cost :<strong> ₦{receiptData.price}</strong> <br />
-          Profit :<strong> ₦{receiptData.profit}</strong> <br />
-          Recipient :<strong> {receiptData.phone} </strong> <br />
-          Status :<strong> {receiptData.status} </strong> <br />
-          Date :
+          Amount: <strong>₦{receiptData.amount} </strong> <br />
+          Tax: <strong>₦{receiptData.tax} </strong> <br />
+          Withdrawal Channel: <strong>
+            {" "}
+            {receiptData.withdrawalType}
+          </strong>{" "}
+          <br />
+          Description: <strong> {receiptData.description}</strong> <br />
+          Status: <strong> {receiptData.status} </strong> <br />
+          Date:
           <strong>
             {" "}
             {moment(receiptData.date).format("YYYY-MM-DD HH:mm:ss")}{" "}
           </strong>{" "}
           <br />
-          Network :<strong> {receiptData.network} </strong> <br />
           {/* Reference Code:
           <strong>
             <Button
@@ -98,4 +99,4 @@ const TransactionMessage = ({ status, volume, phone_number, created_at }) => {
   }
 };
 
-export default SFReceipt;
+export default SFWithdrawReceipt;

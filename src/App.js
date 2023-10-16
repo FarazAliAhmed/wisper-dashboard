@@ -3,13 +3,25 @@ import AppStateProvider from "./context/appContext";
 import Routes from "./routes/Router";
 import "./views/Home/home.scss";
 import { Toaster, toast } from "react-hot-toast";
+import React, { useState } from "react";
+export const SettingsNav = React.createContext();
 
 const App = () => {
+  const [navState, setNavState] = useState(0);
+
+  const setNavStateFunc = (state) => {
+    setNavState(state);
+  };
+
+  console.log(navState, "nav");
+
   return (
     <div className="dark">
       <UserProvider>
         <AppStateProvider>
-          <Routes />
+          <SettingsNav.Provider value={{ setNavStateFunc, navState }}>
+            <Routes />
+          </SettingsNav.Provider>
           <Toaster
             position="top-right"
             reverseOrder={false}

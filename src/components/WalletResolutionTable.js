@@ -157,14 +157,14 @@ const WalletResolutionTable = ({
                   <thead>
                     <tr>
                       <th>Date</th>
-                      <th>Data Purchase</th>
-                      <th>Data Bought (GB)</th>
                       <th>Wallet Bal. Start </th>
                       <th>Wallet Bal. End </th>
+                      <th>Funding</th>
+                      <th>Data Purchase (₦)</th>
+                      <th>Data Bought (GB)</th>
                       <th>Purpose Wallet Bal</th>
                       <th>Bal.</th>
-                      <th>Lit Trans.</th>
-                      <th>Funding</th>
+                      {/* <th>Lit Trans.</th> */}
                       <th>Status</th>
 
                       {/* <th>Price</th> */}
@@ -182,15 +182,27 @@ const WalletResolutionTable = ({
                             {moment(tx.date).format("YYYY-MM-DD HH:mm:ss")}{" "}
                           </td>
                         </td>
-
+                        <td>{tx.startOfDayBalance}</td>
+                        <td>
+                          {tx.endOfDayBalance
+                            ? tx.endOfDayBalance
+                            : tx.actWalBal}
+                        </td>
+                        <td>{tx.totalFunding}</td>
                         <td>{tx.totalDataPurchase}</td>
                         <td>{tx.totalDataBought}</td>
-                        <td>{tx.startOfDayBalance}</td>
-                        <td></td>
+                        {/* <td></td> */}
                         <td>{tx.proWalBal}</td>
                         <td> {tx.balance}</td>
-                        <td> </td>
-                        <td> {tx.totalFunding}</td>
+                        <td>
+                          {" "}
+                          {tx.balance > 0 ? (
+                            <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
+                          ) : (
+                            <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
+                          )}
+                        </td>
+                        {/* <td> {tx.totalFunding}</td> */}
                         {/* <td>₦ {tx.data_price}</td> */}
                         {/* <td>{tx.transaction_ref}</td> */}
                       </tr>
