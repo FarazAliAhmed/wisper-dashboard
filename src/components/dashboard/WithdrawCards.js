@@ -124,6 +124,7 @@ const WithdrawCards = (props) => {
           setSuccess(true);
         } catch (error) {
           setLoading(false);
+
           setMessage("Error Withdrawing");
           setWithdraw(false);
 
@@ -256,31 +257,33 @@ const WithdrawCards = (props) => {
                   <FormFeedback>{errors.amount}</FormFeedback>
                 </FormGroup>
               </Col>
-              <Col md={12}>
-                <FormGroup
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                    width: "100%",
-                  }}
-                >
-                  <Label for="withdrawAmount">
-                    Withdrawal Fee <span className="text-danger">*</span>
-                  </Label>
-                  <Input
-                    value={withdrawFee}
-                    id="amount"
-                    name="withdrawFee"
-                    type="number"
-                    onChange={handleChange}
-                    required
-                    disabled
-                    // invalid={errors.amount}
-                  />
-                  {/* <FormFeedback>{errors.amount}</FormFeedback> */}
-                </FormGroup>
-              </Col>
+              {withdrawDetails.withType == "bank" && (
+                <Col md={12}>
+                  <FormGroup
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      width: "100%",
+                    }}
+                  >
+                    <Label for="withdrawAmount">
+                      Withdrawal Fee <span className="text-danger">*</span>
+                    </Label>
+                    <Input
+                      value={withdrawFee}
+                      id="amount"
+                      name="withdrawFee"
+                      type="number"
+                      onChange={handleChange}
+                      required
+                      disabled
+                      // invalid={errors.amount}
+                    />
+                    {/* <FormFeedback>{errors.amount}</FormFeedback> */}
+                  </FormGroup>
+                </Col>
+              )}
               <Col md={12}>
                 <FormGroup
                   style={{
@@ -329,6 +332,7 @@ const WithdrawCards = (props) => {
         isOpen={success}
         toggle={() => {
           setSuccess(!success);
+          window.location.reload();
         }}
       >
         <ModalBody>
@@ -342,6 +346,7 @@ const WithdrawCards = (props) => {
             color="secondary"
             onClick={() => {
               setSuccess(false);
+              window.location.reload();
             }}
           >
             Close

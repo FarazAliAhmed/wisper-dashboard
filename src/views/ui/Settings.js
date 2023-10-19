@@ -242,8 +242,14 @@ const Settings = () => {
     } catch (error) {
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
-      toast.error("error changing password");
+      // toast.error("error changing password");
+      setMessage(error.response.data.error);
+      setPasswordChange({});
+
+      setFailed(true);
+      console.log(error.response.data.error, "eee");
       setServerResponse({ status, message });
+      console.log(status, message);
     }
   };
 
@@ -777,8 +783,7 @@ const Settings = () => {
                   disabled={
                     formIsValid(errors) ||
                     bankDetails.bankCode == "select" ||
-                    !bankDetails.bankCode ||
-                    bankDetails.bankCode == ""
+                    !bankDetails.bankCode
                   }
                   color="primary"
                   onClick={() => {

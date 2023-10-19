@@ -385,7 +385,11 @@ const StoreFront = () => {
                       bg="bg-light-info text-info"
                       title="Profit"
                       subtitle="SF Balance"
-                      earning={`₦${storeFront?.wallet}`}
+                      earning={
+                        storeFront?.wallet
+                          ? `₦${storeFront?.wallet}`
+                          : "fetching"
+                      }
                       icon={wallIcon}
                     />
                   </Col>
