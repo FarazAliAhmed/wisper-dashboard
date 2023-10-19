@@ -184,7 +184,7 @@ const SFCustomer = () => {
   };
 
   const paymentConfig = {
-    public_key: REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY,
+    public_key: REACT_APP_FLUTTERWAVE_PUBLIC_KEY,
     tx_ref: "trx-" + Math.floor(Math.random() * 10000000000000000),
     amount: activePlan.selling_price,
     currency: "NGN",
