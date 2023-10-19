@@ -48,7 +48,7 @@ import { numbers } from "../../networkCheckout";
 import CopyToClipboard from "react-copy-to-clipboard";
 import cancel from "../../assets/images/logos/cancel.png";
 import checked from "../../assets/images/logos/checked.png";
-const { REACT_APP_FLUTTERWAVE_PUBLIC_KEY } = process.env;
+const { REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY } = process.env;
 
 const SFCustomer = () => {
   const { storeUserName } = useParams();
@@ -184,7 +184,7 @@ const SFCustomer = () => {
   };
 
   const paymentConfig = {
-    public_key: REACT_APP_FLUTTERWAVE_PUBLIC_KEY,
+    public_key: REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY,
     tx_ref: "trx-" + Math.floor(Math.random() * 10000000000000000),
     amount: activePlan.selling_price,
     currency: "NGN",
