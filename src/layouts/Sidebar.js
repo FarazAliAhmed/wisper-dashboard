@@ -29,6 +29,12 @@ const liteNav = [
     href: "/allocate",
     icon: "bi bi-send",
   },
+
+  {
+    title: "Purchase Airtime",
+    href: "/airtime",
+    icon: "bi bi-bag",
+  },
   // {
   //   title: "Buy Bulk Data",
   //   href: "/buyBulkData",
@@ -137,11 +143,11 @@ const agentsNav = [
   //   href: "/account",
   //   icon: "bi bi-person",
   // },
-  // {
-  //   title: "Packages",
-  //   href: "/packages",
-  //   icon: "bi bi-tags",
-  // },
+  {
+    title: "Packages",
+    href: "/packages",
+    icon: "bi bi-tags",
+  },
   // {
   //   title: "Pricing",
   //   href: "/pricing",
@@ -222,11 +228,11 @@ const megaNav = [
   //   href: "/account",
   //   icon: "bi bi-person",
   // },
-  // {
-  //   title: "Packages",
-  //   href: "/packages",
-  //   icon: "bi bi-tags",
-  // },
+  {
+    title: "Packages",
+    href: "/packages",
+    icon: "bi bi-tags",
+  },
   // {
   //   title: "Pricing",
   //   href: "/pricing",

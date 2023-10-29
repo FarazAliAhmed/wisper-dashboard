@@ -119,6 +119,10 @@ export const validateProperty = (input) => {
     if (value.trim() === "") return " Amount is required";
   }
 
+  if (name === "volume") {
+    if (value.trim() === "") return " Amount is required";
+  }
+
   if (name === "storePin") {
     if (value.trim() === "") return "Store Password is required";
     if (value.trim().length < 5)

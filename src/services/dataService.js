@@ -144,6 +144,27 @@ export async function allocateData(body, apiKey) {
   return res;
 }
 
+export async function allocateAirtime(body, apiKey) {
+  const headers = { "x-api-key": apiKey };
+
+  const payload = {
+    network: body.network,
+    phone_number: body.phone_number,
+    volume: body.volume,
+    price: body.price,
+    email: body.email,
+    name: body.name,
+  };
+  // console.log("body", body);
+
+  const res = await http.post(`${apiUrl}/purchase/buyAirtime`, payload, {
+    headers,
+  });
+
+  console.log(res);
+  return res;
+}
+
 export async function allocateSFData(body) {
   console.log(body, "fluter");
   const res = await http.post(`${apiUrl}/store-fronts/allocateData`, body);
