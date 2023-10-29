@@ -112,6 +112,11 @@ const agentsNav = [
     icon: "bi bi-send",
   },
   {
+    title: "Purchase Airtime",
+    href: "/airtime",
+    icon: "bi bi-bag",
+  },
+  {
     title: "Store Front",
     href: "/storeFront",
     icon: "bi bi-shop",
@@ -195,6 +200,11 @@ const megaNav = [
     title: "Allocate Data",
     href: "/allocate",
     icon: "bi bi-send",
+  },
+  {
+    title: "Purchase Airtime",
+    href: "/airtime",
+    icon: "bi bi-bag",
   },
   {
     title: "Buy Bulk Data",
