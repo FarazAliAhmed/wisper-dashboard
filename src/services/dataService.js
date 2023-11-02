@@ -155,11 +155,31 @@ export async function allocateAirtime(body, apiKey) {
     email: body.email,
     name: body.name,
   };
-  // console.log("body", body);
+  console.log("body", payload);
 
   const res = await http.post(`${apiUrl}/purchase/buyAirtime`, payload, {
     headers,
   });
+
+  console.log(res);
+  return res;
+}
+
+export async function allocateAirtimeSF(body) {
+  // const headers = { "x-api-key": apiKey };
+
+  const payload = {
+    network: body.network,
+    phone_number: body.phone_number,
+    business_id: body.business_id, // only when using store front this is require else use the x-api-key for normal platform allocation
+    volume: body.volume,
+    price: body.price,
+    email: body.email,
+    name: body.name,
+  };
+  console.log("body", body);
+
+  const res = await http.post(`${apiUrl}/purchase/buyAirtimeSF`, payload, {});
 
   console.log(res);
   return res;

@@ -33,6 +33,7 @@ import {
 } from "reactstrap";
 import { validateProperty } from "../../utils";
 import {
+  allocateAirtimeSF,
   allocateData,
   allocateSFData,
   getAllPlansUser,
@@ -48,15 +49,27 @@ import { numbers } from "../../networkCheckout";
 import CopyToClipboard from "react-copy-to-clipboard";
 import cancel from "../../assets/images/logos/cancel.png";
 import checked from "../../assets/images/logos/checked.png";
+import { useUser } from "../../context/userContext";
 const { REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY } = process.env;
 
+const initialState = {
+  network: "airtel",
+  volume: "",
+  phone_number: "",
+};
 const SFCustomer = () => {
+  const [plan, setPlan] = useState(initialState);
+  const { user } = useUser();
+
   const { storeUserName } = useParams();
 
   const [success, setSuccess] = useState(false);
+  const [success1, setSuccess1] = useState(false);
   const [confirm, setConfirm] = useState(false);
+  const [confirm1, setConfirm1] = useState(false);
   const [prices, setPrices] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [failed1, setFailed1] = useState(false);
   const [copyState, setCopyState] = useState(false);
   const [customerName, setCustomerName] = useState({
     name: "",
@@ -78,6 +91,7 @@ const SFCustomer = () => {
     email: "",
     price: "", // or null if not applicable
     volume: "", // or null if not applicable
+    airtime_volume: "",
     // status: "", // or null if not applicable
     network: "", // or null if not applicable
     transaction_ref: "", // Unique reference identifier
@@ -199,11 +213,33 @@ const SFCustomer = () => {
       description: `Buy Data from ${storeFront.storeUserName}'store `,
     },
   };
+
+  const paymentConfig1 = {
+    public_key: REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY,
+    tx_ref: "trx-" + Math.floor(Math.random() * 10000000000000000),
+    amount: account.airtime_volume,
+    currency: "NGN",
+    payment_options: "card, mobilemoney, banktransfer, ussd",
+    customer: {
+      name: customerName.name,
+      phone_number: account.phone,
+      email: customerEmail.email,
+    },
+    customizations: {
+      title: "Purchase Airtime",
+      description: `Purchase Airtime from ${storeFront.storeUserName}'store `,
+    },
+  };
   console.log(paymentConfig);
   const initiatePayment = useFlutterwave(paymentConfig);
+  const initiatePayment1 = useFlutterwave(paymentConfig1);
 
   const makePayment = () => {
     initiatePayment({ callback: onSuccess, onClose });
+  };
+
+  const makePayment1 = () => {
+    initiatePayment1({ callback: onSuccess1, onClose1 });
   };
 
   const handleSubmit = async (response) => {
@@ -225,11 +261,57 @@ const SFCustomer = () => {
     setErrors({});
   };
 
+  const handleSubmit1 = async (response) => {
+    setLoading(true);
+
+    const res = await allocateAirtimeSF({
+      network: account.network,
+      phone_number: account.phone,
+      business_id: storeFront.business_id, // only when using store front this is require else use the x-api-key for normal platform allocation
+      volume: account.airtime_volume,
+      price: account.airtime_volume,
+      email: customerEmail.email, // optional only for store front
+      name: customerName.name,
+    });
+    setLoading(false);
+
+    setErrors({});
+  };
+
   const onSuccess = async (response) => {
     closePaymentModal();
     try {
       await handleSubmit(response.transaction_id);
       setConfirm(false);
+      setSuccess(true);
+
+      setAccount({
+        phone: "",
+        name: "",
+        storeBusiness: "",
+        email: "",
+        airtime_volume: "",
+        price: "", // or null if not applicable
+        volume: "", // or null if not applicable
+        // status: "", // or null if not applicable
+        network: "", // or null if not applicable
+        transaction_ref: "", // Unique reference identifier
+      });
+      setActivePlan("");
+    } catch (error) {
+      setErrors(true);
+      setConfirm(false);
+      setFailed(true);
+    }
+  };
+
+  const onSuccess1 = async (response) => {
+    closePaymentModal();
+    try {
+      await handleSubmit1(response.transaction_id);
+      setConfirm1(false);
+
+      setSuccess1(true);
       setAccount({
         phone: "",
         name: "",
@@ -241,15 +323,19 @@ const SFCustomer = () => {
         network: "", // or null if not applicable
         transaction_ref: "", // Unique reference identifier
       });
-      setActivePlan("");
-      setSuccess(true);
     } catch (error) {
       setErrors(true);
+      setConfirm1(false);
+      setFailed1(true);
     }
   };
 
   const onClose = () => {
     setConfirm(false);
+  };
+
+  const onClose1 = () => {
+    setConfirm1(false);
   };
 
   const handleChange = ({ currentTarget: input }) => {
@@ -334,7 +420,7 @@ const SFCustomer = () => {
     return "";
   }
 
-  console.log(activePlan, "hhh");
+  console.log(customerEmail, "hhh");
 
   return (
     <>
@@ -548,7 +634,7 @@ const SFCustomer = () => {
                             }`,
                           }}
                           onClick={() => {
-                            toast.success("Comming Soon");
+                            setConfirm1(true);
                           }}
                         >
                           Buy Airtime
@@ -733,6 +819,124 @@ const SFCustomer = () => {
                       </Button>
                     </ModalFooter>
                   </Modal>
+
+                  <Modal
+                    centered
+                    isOpen={confirm1}
+                    toggle={() => setConfirm(!confirm1)}
+                  >
+                    <ModalBody>
+                      <div className="add__sub__dealer__con">
+                        <div className="add__sub__dealer__head">
+                          <h4>Buy Airtime</h4>
+                        </div>
+                        <FormGroup className="mb-3">
+                          <Label for="airtime_volume">Amount</Label>
+                          <Input
+                            value={account.airtime_volume}
+                            invalid={errors.airtime_volume}
+                            id="airtime_volume"
+                            name="airtime_volume"
+                            onChange={handleChange}
+                            type="number"
+                          />{" "}
+                          <FormFeedback>{errors.airtime_volume}</FormFeedback>
+                        </FormGroup>
+                        <Form>
+                          <FormGroup className="mb-3">
+                            <Label>
+                              Phone number{" "}
+                              <span className="text-danger">*</span>
+                            </Label>
+                            <Input
+                              value={account.phone}
+                              invalid={errors.phone}
+                              onChange={handleChange}
+                              name="phone"
+                              required
+                              type="number"
+                            />
+                            <FormFeedback>{errors.phone}</FormFeedback>
+                          </FormGroup>
+                          <FormGroup className="mb-3">
+                            <Label>Customer Name</Label>{" "}
+                            <span className="text-danger">*</span>
+                            <Input
+                              onChange={(e) => {
+                                setCustomerName({
+                                  ...customerName,
+                                  name: e.target.value,
+                                });
+                              }}
+                              value={customerName.name}
+                              disabled={customerName.state == true}
+                              type="text"
+                              required
+                              name="name"
+                            />
+                          </FormGroup>
+
+                          <FormGroup className="mb-3">
+                            <Label>Email</Label>{" "}
+                            <span className="text-danger">*</span>
+                            <Input
+                              onChange={(e) => {
+                                setCustomerEmail({
+                                  ...customerEmail,
+                                  email: e.target.value,
+                                });
+                              }}
+                              value={customerEmail.email}
+                              disabled={customerEmail.state == true}
+                              type="text"
+                              required
+                              name="email"
+                            />
+                          </FormGroup>
+
+                          <FormGroup className="mb-3">
+                            <Label>Network</Label>{" "}
+                            <span className="text-danger">*</span>
+                            <Input
+                              onChange={handleChange}
+                              value={account.network}
+                              type="text"
+                              required
+                              name="network"
+                              disabled
+                            />
+                          </FormGroup>
+                        </Form>
+                      </div>
+                    </ModalBody>
+                    <ModalFooter className="confirm-footer">
+                      <Button
+                        color="primary"
+                        onClick={() => {
+                          if (
+                            account.phone == "" ||
+                            customerName.name == "" ||
+                            customerEmail.email == "" ||
+                            account.network == "" ||
+                            account.airtime_volume == ""
+                          ) {
+                            toast.error("incomplete information");
+                          } else {
+                            makePayment1();
+                          }
+                        }}
+                        // disabled={formIsValid(errors) || loading}
+                        size="lg"
+                        type="submit"
+                        className="submit-btn"
+                      >
+                        Pay Now
+                      </Button>{" "}
+                      <Button onClick={() => setConfirm1(false)}>
+                        No, Cancel
+                      </Button>
+                    </ModalFooter>
+                  </Modal>
                 </div>
               )}
             </>
@@ -826,6 +1030,39 @@ const SFCustomer = () => {
         </ModalFooter>
       </Modal>
 
+      <Modal
+        centered
+        isOpen={success1}
+        toggle={() => {
+          setSuccess1(!success1);
+          setAccount({});
+          setActivePlan("");
+          setCustomerEmail({});
+          setCustomerName({});
+        }}
+      >
+        <ModalBody>
+          <div className="confirm text-center">
+            <img src={checked} className="confirm-checked" alt="success" />
+            <p>You successfully purchased Airtime</p>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button
+            color="secondary"
+            onClick={() => {
+              setSuccess1(false);
+              setAccount({});
+              setActivePlan("");
+              setCustomerEmail({});
+              setCustomerName({});
+            }}
+          >
+            Close
+          </Button>
+        </ModalFooter>
+      </Modal>
+
       {/* Failure On Data sent*/}
       <Modal centered isOpen={failed} toggle={() => setFailed(!failed)}>
         <ModalBody>
@@ -841,6 +1078,25 @@ const SFCustomer = () => {
         </ModalBody>
         <ModalFooter className="confirm-footer">
           <Button color="secondary" onClick={() => setFailed(false)}>
+            Close
+          </Button>
+        </ModalFooter>
+      </Modal>
+
+      <Modal centered isOpen={failed1} toggle={() => setFailed1(!failed1)}>
+        <ModalBody>
+          <div className="confirm text-center">
+            <img
+              src={cancel}
+              width={50}
+              className="confirm-cancel"
+              alt="confirm"
+            />
+            <p>Airtime Purchase Failed</p>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button color="secondary" onClick={() => setFailed1(false)}>
             Close
           </Button>
         </ModalFooter>

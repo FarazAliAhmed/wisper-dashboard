@@ -35,7 +35,7 @@ import AllocateAirtimeButton from "../../components/AllocateAirtimeButton";
 
 const initialState = {
   network: "airtel",
-  volume: "",
+  airtime_volume: "",
   phone_number: "",
 };
 
@@ -70,11 +70,13 @@ const AllocateData = () => {
       setLoading(true);
 
       // console.log("plan", plan)
+      const { airtime_volume, ...rest } = plan;
 
       const res = await allocateAirtime(
         {
-          ...plan,
-          price: plan.volume,
+          ...rest,
+          volume: airtime_volume,
+          price: airtime_volume,
           email: user?.email,
           name: user?.name,
         },
@@ -85,8 +87,8 @@ const AllocateData = () => {
       console.log(res.data);
       return res.data;
     } catch (error) {
-      const message = error.response.data.message;
-      console.log(error.response.data.message);
+      const message = error.response.data;
+      console.log(error.response.data);
       return message;
       // setServerResponse({ status, message });
     }
@@ -163,19 +165,6 @@ const AllocateData = () => {
                   </Col>
                   <Col md={12}>
                     <FormGroup>
-                      <Label for="volume">Amount</Label>
-                      <Input
-                        value={plan.volume}
-                        id="volume"
-                        name="volume"
-                        onChange={handleChange}
-                        type="number"
-                      />{" "}
-                      <FormFeedback>{errors.phone_number}</FormFeedback>
-                    </FormGroup>
-                  </Col>
-                  <Col md={12}>
-                    <FormGroup>
                       <Label for="phone_number">Phone Number</Label>
                       <Input
                         value={plan.phone_number}
@@ -188,8 +177,22 @@ const AllocateData = () => {
                       <FormFeedback>{errors.phone_number}</FormFeedback>
                     </FormGroup>
                   </Col>
+                  <Col md={12}>
+                    <FormGroup>
+                      <Label for="airtime_volume">Amount</Label>
+                      <Input
+                        value={plan.airtime_volume}
+                        invalid={errors.airtime_volume}
+                        id="airtime_volume"
+                        name="airtime_volume"
+                        onChange={handleChange}
+                        type="number"
+                      />{" "}
+                      <FormFeedback>{errors.airtime_volume}</FormFeedback>
+                    </FormGroup>
+                  </Col>
                 </Row>
-                {Number(plan.volume) <= cash && (
+                {Number(plan.airtime_volume) <= cash && (
                   <AllocateAirtimeButton
                     setLoading={setLoading}
                     loading={loading}
