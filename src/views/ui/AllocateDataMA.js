@@ -58,12 +58,12 @@ const AllocateDataMA = () => {
     try {
       setLoading(true);
       const res = await allocateData(plan, user?.access_token);
-      // console.log("res", res);
+      console.log("res", res);
       setLoading(false);
       setPlan(initialState);
       // setServerResponse({status: true, message: "Data allocated successfully."});
       setErrors({});
-      return { status: true, message: "Data allocated successfully." };
+      return { status: true, message: res.data.gateway_response };
     } catch (error) {
       console.log("error.response.data.message:", error.response.data.message);
       setLoading(false);

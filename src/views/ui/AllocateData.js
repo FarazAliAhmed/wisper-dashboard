@@ -71,12 +71,12 @@ const AllocateData = () => {
       // console.log("plan", plan)
 
       if (plan.price) {
-        await allocateData(plan, user?.access_token);
+        const res = await allocateData(plan, user?.access_token);
         setLoading(false);
         setPlan(initialState);
         // setServerResponse({status: true, message: "Data allocated successfully."});
         setErrors({});
-        return { status: true, message: "Data allocated successfully." };
+        return { status: true, message: res.data.gateway_response };
       } else {
         toast.info("Contact Admin To Set Plan Price", {
           position: toast.POSITION.TOP_RIGHT,

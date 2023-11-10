@@ -239,10 +239,12 @@ const Settings = () => {
       setServerResponse({ status: true, message: "Updated successfully." });
       setErrors({});
       setPasswordChange({});
+      setFailed(false);
     } catch (error) {
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
       // toast.error("error changing password");
+      console.log(error.response);
       setMessage(error.response.data.error);
       setPasswordChange({});
 

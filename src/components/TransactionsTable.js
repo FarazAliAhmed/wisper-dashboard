@@ -116,6 +116,8 @@ const TransactionsTable = ({
     setSearchResults(results);
   };
 
+  console.log(transactionsData);
+
   return (
     <div>
       <Row>
@@ -256,14 +258,22 @@ const TransactionsTable = ({
                           <h6 className="mb-0">{tx.phone_number}</h6>
                           {/* <span className="text-muted">{tdata.email}</span> */}
                         </td>
-                        {user?.type == "lite" && user?.isAdmin == false ? (
-                          <td> ₦{tx.data_volume} </td>
+                        {tx.volume ? (
+                          <>
+                            <td> ₦{tx.volume} </td>
+                          </>
                         ) : (
-                          <td>{tx.data_volume / 1000} GB</td>
-                        )}
+                          <>
+                            {user?.type == "lite" && user?.isAdmin == false ? (
+                              <td> ₦{tx.data_volume} </td>
+                            ) : (
+                              <td>{tx.data_volume / 1000} GB</td>
+                            )}
 
-                        {user?.type == "lite" && (
-                          <td>{tx.lite_volume || "0 mb"}</td>
+                            {user?.type == "lite" && (
+                              <td>{tx.lite_volume || "0 mb"}</td>
+                            )}
+                          </>
                         )}
 
                         {/* <td>{tx.price || "-"}</td> */}

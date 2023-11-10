@@ -89,7 +89,7 @@ const BuyBulkData = () => {
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
-    if (cash > costValue) {
+    if (cash >= costValue) {
       try {
         setLoading(true);
 
