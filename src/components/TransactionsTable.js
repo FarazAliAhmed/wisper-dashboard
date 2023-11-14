@@ -20,6 +20,7 @@ import {
 } from "reactstrap";
 import { paginate } from "../utils";
 import TransactionReceipt from "./TransactionReceipt";
+import moment from "moment";
 import { useUser } from "../context/userContext";
 
 const TransactionsTable = ({
@@ -287,7 +288,11 @@ const TransactionsTable = ({
                           )}
                         </td>
                         <td>{tx.network_provider}</td>
-                        <td>{tx.created_at}</td>
+
+                        <td>
+                          {" "}
+                          {moment(tx.created_at).format("YYYY-MM-DD HH:mm:ss")}
+                        </td>
                         <td>
                           <Button
                             className="receipt-button"
