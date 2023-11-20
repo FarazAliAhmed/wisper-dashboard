@@ -23,8 +23,15 @@ import wallIcon from "../../assets/dashboard/walle.svg";
 
 const Dashboard = () => {
   const { user } = useUser();
-  const { transaction, business, payment, mainBalance, allTrx, allSold } =
-    useAdmin();
+  const {
+    transaction,
+    business,
+    payment,
+    mainBalance,
+    allTrx,
+    allSold,
+    airtimeApis,
+  } = useAdmin();
   const {
     currentBalance: { volume, unit, cash, mega_wallet },
   } = useAppState();
@@ -33,6 +40,8 @@ const Dashboard = () => {
   useEffect(() => {
     setBalanceDisplay(displayBalance(volume, unit, cash, mega_wallet, user));
   }, [volume, unit, cash]);
+
+  console.log(airtimeApis, "aiai");
 
   return (
     <AdminLayout>
@@ -156,6 +165,33 @@ const Dashboard = () => {
                   icon={mob9}
                 />
               </Col>
+              {airtimeApis?.map((item, index) => {
+                let img;
+                if (item?.network == "mtn") {
+                  img = mtn1;
+                } else if (item?.network == "airtel") {
+                  img = airtel;
+                } else if (item?.network == "glo") {
+                  img = glo;
+                } else if (item?.network == "9mobile") {
+                  img = mob9;
+                }
+                return (
+                  <Col key={index} sm="6" lg="4">
+                    <TopCards
+                      bg="bg-light-warning text-warning"
+                      title="Refunds"
+                      subtitle={`${item?.api} (${item?.type})`}
+                      earning={
+                        item?.unit == "mb"
+                          ? `${item?.volume}MB`
+                          : `₦${item?.volume}`
+                      }
+                      icon={img}
+                    />
+                  </Col>
+                );
+              })}
             </>
           )}
         </Row>

@@ -8,6 +8,7 @@ export async function register(body) {
 }
 
 export async function createAgents(body) {
+  console.log("aget", body);
   return http.post(`${apiUrl}/agent/createAgent`, body);
 }
 

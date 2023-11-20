@@ -27,6 +27,8 @@ function TransactionReceipt({ receiptData, show, toggleShow }) {
                 volume={receiptData.lite_volume}
                 phone_number={receiptData.phone_number}
                 created_at={receiptData.created_at}
+                type={receiptData.purchase_type}
+                airtime={receiptData.volume}
               />
             ) : (
               <TransactionMessage
@@ -34,6 +36,8 @@ function TransactionReceipt({ receiptData, show, toggleShow }) {
                 volume={receiptData.data_volume}
                 phone_number={receiptData.phone_number}
                 created_at={receiptData.created_at}
+                type={receiptData.purchase_type}
+                airtime={receiptData.volume}
               />
             )}
           </Alert>
@@ -41,13 +45,16 @@ function TransactionReceipt({ receiptData, show, toggleShow }) {
           {/* Recipient :<strong> {receiptData.phone_number} </strong> <br /> */}
           Status :<strong> {receiptData.status} </strong> <br />
           Date :<strong> {receiptData.created_at} </strong> <br />
-          Network :<strong> {receiptData.network_provider} </strong> <br />
+          Network :
+          <strong> {receiptData.network_provider?.toUpperCase()} </strong>{" "}
+          <br />
           {receiptData.desc && (
             <>
               {" "}
               Desc:<strong> {receiptData.desc} </strong> <br />
             </>
           )}
+          Cost :<strong> ₦{receiptData.volume} </strong> <br />
           Reference Code:
           <strong>
             <Button
@@ -87,28 +94,55 @@ const validityDate = ({ created_at, volume }) => {
   return created.toLocaleString("en-GB");
 };
 
-const TransactionMessage = ({ status, volume, phone_number, created_at }) => {
+const TransactionMessage = ({
+  status,
+  volume,
+  phone_number,
+  created_at,
+  type,
+  airtime,
+}) => {
   const valid_until = validityDate({ created_at, volume });
   const { user } = useUser();
 
   if (status == "success") {
     return (
       <p>
-        OK <br />
-        You have successfully credited{" "}
-        <strong>
-          {user?.type == "lite" ? <>{volume} </> : <>{volume / 1000} GB</>}
-        </strong>
-        worth of data to <strong>{phone_number}</strong>, valid till{" "}
-        {valid_until}
+        {type === "airtime" ? (
+          <>
+            <>
+              You have successfully credited{" "}
+              <strong>
+                <>₦{airtime} </>
+              </strong>
+              worth of airtime to <strong>{phone_number}</strong>
+            </>
+          </>
+        ) : (
+          <>
+            OK <br />
+            You have successfully credited{" "}
+            <strong>
+              {user?.type == "lite" ? (
+                <>{volume} </>
+              ) : (
+                <>{volume / 1000} GB&nbsp;</>
+              )}
+            </strong>
+            worth of data to <strong>{phone_number}</strong>, valid till{" "}
+            {valid_until}
+          </>
+        )}
       </p>
     );
   } else {
     return (
       <p>
         Failed <br />
-        Dear customer, transfer of <strong>{volume / 1000} GB</strong> to{" "}
-        <strong>{phone_number}</strong> was not successful. Please try again.
+        Dear customer, transfer of <strong>
+          {volume / 1000} GB&nbsp;
+        </strong> to <strong>{phone_number}</strong> was not successful. Please
+        try again.
       </p>
     );
   }

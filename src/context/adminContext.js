@@ -8,6 +8,7 @@ import {
   getMainBalance,
   getAllTrx,
   getAllSold,
+  getAirtimeApis,
 } from "../services/Admin.Services/businessService";
 const AdminContext = createContext();
 
@@ -23,6 +24,7 @@ const AdminProvider = ({ children }) => {
   const [admins, setAdmins] = useState([]);
   const [allTrx, setAllTrx] = useState(0);
   const [allSold, setAllSold] = useState(0);
+  const [airtimeApis, setAirtimeApis] = useState([]);
   const [mainBalance, setMainBalance] = useState({
     mtn_balance: "",
     airtel_balance: "",
@@ -40,6 +42,7 @@ const AdminProvider = ({ children }) => {
         getAllTrx(),
         getAllSold(),
         getMainBalance(),
+        getAirtimeApis(),
       ]);
 
       if (result[0]) {
@@ -51,6 +54,7 @@ const AdminProvider = ({ children }) => {
       setAdmins(result[4]?.data);
       setAllTrx(result[5]?.data.totalTransactions);
       setAllSold(result[6]?.data.totalDataSold);
+      setAirtimeApis(result[8]?.data);
 
       // console.log(result[2], "transaction admin")
       // console.log(result[6])
@@ -73,6 +77,7 @@ const AdminProvider = ({ children }) => {
         mainBalance,
         allTrx,
         allSold,
+        airtimeApis,
       }}
     >
       {children}

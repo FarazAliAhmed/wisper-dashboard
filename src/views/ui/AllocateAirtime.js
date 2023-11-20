@@ -191,6 +191,26 @@ const AllocateData = () => {
                       <FormFeedback>{errors.airtime_volume}</FormFeedback>
                     </FormGroup>
                   </Col>
+
+                  <Col md={12}>
+                    <FormGroup>
+                      <Label for="airtime_volume">
+                        Cost{" "}
+                        {user?.type == "mega"
+                          ? "(Enjoy 2% Cashback)"
+                          : "(Enjoy 1.5% Cashback)"}
+                      </Label>
+                      <Input
+                        value={`₦${plan.airtime_volume}`}
+                        id="airtime_volume"
+                        name="airtime_volume"
+                        disabled
+                        // onChange={handleChange}
+                        type="text"
+                      />{" "}
+                      {/* <FormFeedback>{errors.airtime_volume}</FormFeedback> */}
+                    </FormGroup>
+                  </Col>
                 </Row>
                 {Number(plan.airtime_volume) <= cash && (
                   <AllocateAirtimeButton

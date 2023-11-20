@@ -245,6 +245,7 @@ const TransactionsTable = ({
                       {user?.type == "lite" && <th>Volume</th>}
                       <th>Status</th>
                       <th>Network</th>
+                      <th>Cost</th>
                       <th>Date</th>
                       <th>Receipt</th>
                       {/* <th>Price</th> */}
@@ -288,6 +289,11 @@ const TransactionsTable = ({
                           )}
                         </td>
                         <td>{tx.network_provider}</td>
+                        <td>
+                          {tx.purchase_type == "data"
+                            ? `${tx.data_volume / 1000}GB`
+                            : `₦${tx.price}`}
+                        </td>
 
                         <td>
                           {" "}

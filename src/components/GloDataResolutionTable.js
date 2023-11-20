@@ -117,6 +117,8 @@ const GloDataResolutionTable = ({
     setSearchResults(results);
   };
 
+  console.log(transactionsData);
+
   return (
     <div>
       <Row>
@@ -180,10 +182,7 @@ const GloDataResolutionTable = ({
                       <tr key={idx} className="border-top">
                         <td>
                           {" "}
-                          <td>
-                            {" "}
-                            {moment(tx.date).format("YYYY-MM-DD HH:mm:ss")}{" "}
-                          </td>
+                          <td> {moment(tx.date).format("YYYY-MM-DD")} </td>
                         </td>
                         <td>{tx.bucketID}</td>
                         <td>{(tx.startOfDayBalance / 1000).toFixed(2)}GB</td>

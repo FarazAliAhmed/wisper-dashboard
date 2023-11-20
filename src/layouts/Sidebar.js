@@ -238,11 +238,11 @@ const megaNav = [
   //   href: "/account",
   //   icon: "bi bi-person",
   // },
-  {
-    title: "Packages",
-    href: "/packages",
-    icon: "bi bi-tags",
-  },
+  // {
+  //   title: "Packages",
+  //   href: "/packages",
+  //   icon: "bi bi-tags",
+  // },
   // {
   //   title: "Pricing",
   //   href: "/pricing",
