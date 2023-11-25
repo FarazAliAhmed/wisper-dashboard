@@ -50,7 +50,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import cancel from "../../assets/images/logos/cancel.png";
 import checked from "../../assets/images/logos/checked.png";
 import { useUser } from "../../context/userContext";
-const { REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY } = process.env;
+const { REACT_APP_FLUTTERWAVE_PUBLIC_KEY } = process.env;
 
 const initialState = {
   network: "airtel",
@@ -198,7 +198,7 @@ const SFCustomer = () => {
   };
 
   const paymentConfig = {
-    public_key: REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY,
+    public_key: REACT_APP_FLUTTERWAVE_PUBLIC_KEY,
     tx_ref: "trx-" + Math.floor(Math.random() * 10000000000000000),
     amount: activePlan.selling_price,
     currency: "NGN",
@@ -215,7 +215,7 @@ const SFCustomer = () => {
   };
 
   const paymentConfig1 = {
-    public_key: REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY,
+    public_key: REACT_APP_FLUTTERWAVE_PUBLIC_KEY,
     tx_ref: "trx-" + Math.floor(Math.random() * 10000000000000000),
     amount: account.airtime_volume,
     currency: "NGN",
@@ -830,18 +830,7 @@ const SFCustomer = () => {
                         <div className="add__sub__dealer__head">
                           <h4>Buy Airtime</h4>
                         </div>
-                        <FormGroup className="mb-3">
-                          <Label for="airtime_volume">Amount</Label>
-                          <Input
-                            value={account.airtime_volume}
-                            invalid={errors.airtime_volume}
-                            id="airtime_volume"
-                            name="airtime_volume"
-                            onChange={handleChange}
-                            type="number"
-                          />{" "}
-                          <FormFeedback>{errors.airtime_volume}</FormFeedback>
-                        </FormGroup>
+
                         <Form>
                           <FormGroup className="mb-3">
                             <Label>
@@ -857,6 +846,18 @@ const SFCustomer = () => {
                               type="number"
                             />
                             <FormFeedback>{errors.phone}</FormFeedback>
+                          </FormGroup>
+                          <FormGroup className="mb-3">
+                            <Label for="airtime_volume">Amount</Label>
+                            <Input
+                              value={account.airtime_volume}
+                              invalid={errors.airtime_volume}
+                              id="airtime_volume"
+                              name="airtime_volume"
+                              onChange={handleChange}
+                              type="number"
+                            />{" "}
+                            <FormFeedback>{errors.airtime_volume}</FormFeedback>
                           </FormGroup>
                           <FormGroup className="mb-3">
                             <Label>Customer Name</Label>{" "}

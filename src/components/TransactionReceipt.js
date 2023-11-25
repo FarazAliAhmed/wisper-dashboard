@@ -24,11 +24,13 @@ function TransactionReceipt({ receiptData, show, toggleShow }) {
             {user?.type == "lite" ? (
               <TransactionMessage
                 status={receiptData.status}
-                volume={receiptData.lite_volume}
+                data_volume={receiptData.lite_volume}
+                airtime_volume={receiptData.volume}
                 phone_number={receiptData.phone_number}
                 created_at={receiptData.created_at}
                 type={receiptData.purchase_type}
-                airtime={receiptData.volume}
+                airtime_price={receiptData.price}
+                data_price={receiptData.data_volume}
               />
             ) : (
               <TransactionMessage
@@ -54,7 +56,15 @@ function TransactionReceipt({ receiptData, show, toggleShow }) {
               Desc:<strong> {receiptData.desc} </strong> <br />
             </>
           )}
-          Cost :<strong> ₦{receiptData.volume} </strong> <br />
+          Price :
+          <strong>
+            {" "}
+            ₦
+            {receiptData.purchase_type == "data"
+              ? receiptData.data_volume
+              : receiptData.price}{" "}
+          </strong>{" "}
+          <br />
           Reference Code:
           <strong>
             <Button
@@ -100,7 +110,9 @@ const TransactionMessage = ({
   phone_number,
   created_at,
   type,
-  airtime,
+  // airtime_price,
+  data_volume,
+  airtime_volume,
 }) => {
   const valid_until = validityDate({ created_at, volume });
   const { user } = useUser();
@@ -113,7 +125,7 @@ const TransactionMessage = ({
             <>
               You have successfully credited{" "}
               <strong>
-                <>₦{airtime} </>
+                <>₦{airtime_volume} </>
               </strong>
               worth of airtime to <strong>{phone_number}</strong>
             </>
@@ -124,7 +136,7 @@ const TransactionMessage = ({
             You have successfully credited{" "}
             <strong>
               {user?.type == "lite" ? (
-                <>{volume} </>
+                <>{data_volume} </>
               ) : (
                 <>{volume / 1000} GB&nbsp;</>
               )}
@@ -138,11 +150,34 @@ const TransactionMessage = ({
   } else {
     return (
       <p>
-        Failed <br />
-        Dear customer, transfer of <strong>
-          {volume / 1000} GB&nbsp;
-        </strong> to <strong>{phone_number}</strong> was not successful. Please
-        try again.
+        {type === "airtime" ? (
+          <>
+            Failed <br />
+            Dear customer, transfer of{" "}
+            <strong>
+              <>₦{airtime_volume}</>
+            </strong>{" "}
+            to <strong>{phone_number}</strong> was not successful. Please try
+            again.
+          </>
+        ) : (
+          <>
+            Failed <br />
+            Dear customer, transfer of{" "}
+            <strong>
+              <>
+                {" "}
+                {user?.type == "lite" ? (
+                  <>{data_volume} </>
+                ) : (
+                  <>{volume / 1000} GB</>
+                )}{" "}
+              </>
+            </strong>{" "}
+            to <strong>{phone_number}</strong> was not successful. Please try
+            again.
+          </>
+        )}
       </p>
     );
   }

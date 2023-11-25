@@ -94,6 +94,7 @@ const StoreFront = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [withdraw, setWithdraw] = useState(false);
   const [pagination, setPagination] = useState(50);
+  const [costError, setCostError] = useState(null);
 
   const [navState, setNavState] = useState(0);
 

@@ -245,7 +245,9 @@ const TransactionsTable = ({
                       {user?.type == "lite" && <th>Volume</th>}
                       <th>Status</th>
                       <th>Network</th>
-                      <th>Cost</th>
+                      {user?.type == "lite" && user?.isAdmin == false ? null : (
+                        <th>Cost</th>
+                      )}
                       <th>Date</th>
                       <th>Receipt</th>
                       {/* <th>Price</th> */}
@@ -260,22 +262,28 @@ const TransactionsTable = ({
                           <h6 className="mb-0">{tx.phone_number}</h6>
                           {/* <span className="text-muted">{tdata.email}</span> */}
                         </td>
-                        {tx.volume ? (
+
+                        <td>
+                          <h6 className="mb-0">
+                            {tx.purchase_type == "data" ? (
+                              <>{tx.data_volume && `₦${tx.data_volume}`}</>
+                            ) : (
+                              <td> ₦{tx.price} </td>
+                            )}
+                          </h6>
+                          {/* <span className="text-muted">{tdata.email}</span> */}
+                        </td>
+
+                        {tx.purchase_type == "data" ? (
                           <>
-                            <td> ₦{tx.volume} </td>
-                          </>
-                        ) : (
-                          <>
-                            {user?.type == "lite" && user?.isAdmin == false ? (
-                              <td> ₦{tx.data_volume} </td>
+                            {user?.type == "lite" ? (
+                              <td>{tx.lite_volume || "0 mb"}</td>
                             ) : (
                               <td>{tx.data_volume / 1000} GB</td>
                             )}
-
-                            {user?.type == "lite" && (
-                              <td>{tx.lite_volume || "0 mb"}</td>
-                            )}
                           </>
+                        ) : (
+                          <td> {tx.volume}naira </td>
                         )}
 
                         {/* <td>{tx.price || "-"}</td> */}
@@ -289,11 +297,14 @@ const TransactionsTable = ({
                           )}
                         </td>
                         <td>{tx.network_provider}</td>
-                        <td>
-                          {tx.purchase_type == "data"
-                            ? `${tx.data_volume / 1000}GB`
-                            : `₦${tx.price}`}
-                        </td>
+                        {user?.type == "lite" &&
+                        user?.isAdmin == false ? null : (
+                          <td>
+                            {tx.purchase_type == "data"
+                              ? `${tx.data_volume / 1000}GB`
+                              : `₦${tx.price}`}
+                          </td>
+                        )}
 
                         <td>
                           {" "}
