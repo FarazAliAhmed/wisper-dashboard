@@ -50,7 +50,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import cancel from "../../assets/images/logos/cancel.png";
 import checked from "../../assets/images/logos/checked.png";
 import { useUser } from "../../context/userContext";
-const { REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY } = process.env;
+const { REACT_APP_FLUTTERWAVE_PUBLIC_KEY } = process.env;
 
 const initialState = {
   network: "airtel",
@@ -204,7 +204,7 @@ const SFCustomer = () => {
   };
 
   const paymentConfig = {
-    public_key: REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY,
+    public_key: REACT_APP_FLUTTERWAVE_PUBLIC_KEY,
     tx_ref: "trx-" + Math.floor(Math.random() * 10000000000000000),
     amount: activePlan.selling_price,
     currency: "NGN",
@@ -221,7 +221,7 @@ const SFCustomer = () => {
   };
 
   const paymentConfig1 = {
-    public_key: REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY,
+    public_key: REACT_APP_FLUTTERWAVE_PUBLIC_KEY,
     tx_ref: "trx-" + Math.floor(Math.random() * 10000000000000000),
     amount: account.airtime_volume,
     currency: "NGN",
