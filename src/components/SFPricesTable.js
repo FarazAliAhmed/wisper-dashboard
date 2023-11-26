@@ -170,10 +170,13 @@ const SFPricesTable = ({
                   {showHeader && <CardTitle tag="h5">Data Prices</CardTitle>}
 
                   {showSubHeader && (
-                    <CardSubtitle
-                      className="mb-2 text-muted"
-                      tag="h6"
-                    ></CardSubtitle>
+                    <CardSubtitle className="mb-2 text-muted" tag="h6">
+                      {" "}
+                      <p>
+                        Please Note: Profit from every transaction is credited
+                        into your StoreFront Wallet
+                      </p>
+                    </CardSubtitle>
                   )}
 
                   {showPageSettings && (

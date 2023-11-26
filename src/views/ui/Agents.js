@@ -96,8 +96,18 @@ const Agents = () => {
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
       setFailed(true);
-      setServerResponse({ status, message: "User Already Registered" });
-      // console.log(error);
+      setServerResponse({ status, message });
+      setAccount({
+        name: "",
+        email: "",
+        mobile_number: "",
+        address: "...",
+        username: "",
+        password: "",
+      });
+      // console.log(error.response);
+      // console.log(status);
+      // console.log(message);
     }
   };
 

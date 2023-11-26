@@ -728,7 +728,7 @@ const EditStoreFront = () => {
             <SFPricesTable
               transactions={prices}
               showHeader={true}
-              showSubHeader={false}
+              showSubHeader={true}
               fetchPrice={setFetchPrice}
             />
           </Row>

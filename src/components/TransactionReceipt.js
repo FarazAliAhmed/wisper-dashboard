@@ -35,11 +35,13 @@ function TransactionReceipt({ receiptData, show, toggleShow }) {
             ) : (
               <TransactionMessage
                 status={receiptData.status}
-                volume={receiptData.data_volume}
+                data_volume={receiptData.data_volume}
+                airtime_volume={receiptData.volume}
                 phone_number={receiptData.phone_number}
                 created_at={receiptData.created_at}
                 type={receiptData.purchase_type}
-                airtime={receiptData.volume}
+                airtime_price={receiptData.price}
+                data_price={"bucket"}
               />
             )}
           </Alert>
@@ -138,7 +140,7 @@ const TransactionMessage = ({
               {user?.type == "lite" ? (
                 <>{data_volume} </>
               ) : (
-                <>{volume / 1000} GB&nbsp;</>
+                <>{data_volume / 1000} GB&nbsp;</>
               )}
             </strong>
             worth of data to <strong>{phone_number}</strong>, valid till{" "}
@@ -170,7 +172,7 @@ const TransactionMessage = ({
                 {user?.type == "lite" ? (
                   <>{data_volume} </>
                 ) : (
-                  <>{volume / 1000} GB</>
+                  <>{data_volume / 1000} GB</>
                 )}{" "}
               </>
             </strong>{" "}

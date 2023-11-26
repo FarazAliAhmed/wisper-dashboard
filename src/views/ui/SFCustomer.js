@@ -50,7 +50,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import cancel from "../../assets/images/logos/cancel.png";
 import checked from "../../assets/images/logos/checked.png";
 import { useUser } from "../../context/userContext";
-const { REACT_APP_FLUTTERWAVE_PUBLIC_KEY } = process.env;
+const { REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY } = process.env;
 
 const initialState = {
   network: "airtel",
@@ -64,6 +64,12 @@ const SFCustomer = () => {
   const { storeUserName } = useParams();
 
   const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState({
+    size: "",
+    network: "",
+    phone: "",
+    price: "",
+  });
   const [success1, setSuccess1] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [confirm1, setConfirm1] = useState(false);
@@ -198,7 +204,7 @@ const SFCustomer = () => {
   };
 
   const paymentConfig = {
-    public_key: REACT_APP_FLUTTERWAVE_PUBLIC_KEY,
+    public_key: REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY,
     tx_ref: "trx-" + Math.floor(Math.random() * 10000000000000000),
     amount: activePlan.selling_price,
     currency: "NGN",
@@ -215,7 +221,7 @@ const SFCustomer = () => {
   };
 
   const paymentConfig1 = {
-    public_key: REACT_APP_FLUTTERWAVE_PUBLIC_KEY,
+    public_key: REACT_APP_FLUTTERWAVE_TEST_PUBLIC_KEY,
     tx_ref: "trx-" + Math.floor(Math.random() * 10000000000000000),
     amount: account.airtime_volume,
     currency: "NGN",
@@ -255,6 +261,13 @@ const SFCustomer = () => {
       trx_ref: String(response),
       custName: customerName.name,
       custEmail: customerEmail.email,
+    });
+
+    setSuccessMessage({
+      network: account.network,
+      size: activePlan?.size,
+      phone: account.phone,
+      price: activePlan?.price,
     });
     setLoading(false);
 
@@ -420,7 +433,7 @@ const SFCustomer = () => {
     return "";
   }
 
-  console.log(customerEmail, "hhh");
+  console.log(successMessage, "hhh");
 
   return (
     <>
@@ -1009,9 +1022,9 @@ const SFCustomer = () => {
           <div className="confirm text-center">
             <img src={checked} className="confirm-checked" alt="success" />
             <p>
-              You successfully purchased {activePlan?.size} worth of{" "}
-              {account.network} data to {account.phone} with ₦
-              {activePlan?.selling_price}{" "}
+              You successfully purchased {successMessage?.size} worth of{" "}
+              {successMessage?.network} data to {successMessage?.phone} with ₦
+              {successMessage?.price}{" "}
             </p>
           </div>
         </ModalBody>
@@ -1065,7 +1078,14 @@ const SFCustomer = () => {
       </Modal>
 
       {/* Failure On Data sent*/}
-      <Modal centered isOpen={failed} toggle={() => setFailed(!failed)}>
+      <Modal
+        centered
+        isOpen={failed}
+        toggle={() => {
+          setFailed(!failed);
+          window.location.reload();
+        }}
+      >
         <ModalBody>
           <div className="confirm text-center">
             <img
@@ -1074,17 +1094,30 @@ const SFCustomer = () => {
               className="confirm-cancel"
               alt="confirm"
             />
-            <p>Data Purchase Failed</p>
+            <p>Data purchase failed, wait for a refund</p>
           </div>
         </ModalBody>
         <ModalFooter className="confirm-footer">
-          <Button color="secondary" onClick={() => setFailed(false)}>
+          <Button
+            color="secondary"
+            onClick={() => {
+              setFailed(false);
+              window.location.reload();
+            }}
+          >
             Close
           </Button>
         </ModalFooter>
       </Modal>
 
-      <Modal centered isOpen={failed1} toggle={() => setFailed1(!failed1)}>
+      <Modal
+        centered
+        isOpen={failed1}
+        toggle={() => {
+          setFailed1(!failed1);
+          window.location.reload();
+        }}
+      >
         <ModalBody>
           <div className="confirm text-center">
             <img
@@ -1093,11 +1126,17 @@ const SFCustomer = () => {
               className="confirm-cancel"
               alt="confirm"
             />
-            <p>Airtime Purchase Failed</p>
+            <p>Airtime purchase failed, wait for a refund</p>
           </div>
         </ModalBody>
         <ModalFooter className="confirm-footer">
-          <Button color="secondary" onClick={() => setFailed1(false)}>
+          <Button
+            color="secondary"
+            onClick={() => {
+              setFailed1(false);
+              window.location.reload();
+            }}
+          >
             Close
           </Button>
         </ModalFooter>

@@ -273,6 +273,7 @@ const StoreFront = () => {
           user?.access_token
         );
         toast.success("Exited Maintenance");
+        window.location.reload();
       } catch (error) {
         setConfirm(false);
 
@@ -294,6 +295,7 @@ const StoreFront = () => {
         );
 
         toast.success("Entered Maintenance");
+        window.location.reload();
       } catch (error) {
         setConfirm(false);
 

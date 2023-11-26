@@ -266,24 +266,34 @@ const TransactionsTable = ({
                         <td>
                           <h6 className="mb-0">
                             {tx.purchase_type == "data" ? (
-                              <>{tx.data_volume && `₦${tx.data_volume}`}</>
+                              <>
+                                {user?.type == "lite"
+                                  ? `₦${tx.data_volume}`
+                                  : `${tx.data_volume / 1000} GB`}
+                              </>
                             ) : (
-                              <td> ₦{tx.price} </td>
+                              <>
+                                {user?.type == "lite" ? (
+                                  <td> ₦{tx.price} </td>
+                                ) : (
+                                  <td> {tx.volume}naira </td>
+                                )}
+                              </>
                             )}
                           </h6>
                           {/* <span className="text-muted">{tdata.email}</span> */}
                         </td>
 
-                        {tx.purchase_type == "data" ? (
-                          <>
-                            {user?.type == "lite" ? (
-                              <td>{tx.lite_volume || "0 mb"}</td>
+                        {user?.type == "lite" && (
+                          <th>
+                            {tx.purchase_type == "data" ? (
+                              <>
+                                <td>{tx.lite_volume || "0 mb"}</td>
+                              </>
                             ) : (
-                              <td>{tx.data_volume / 1000} GB</td>
+                              <td> {tx.volume}naira </td>
                             )}
-                          </>
-                        ) : (
-                          <td> {tx.volume}naira </td>
+                          </th>
                         )}
 
                         {/* <td>{tx.price || "-"}</td> */}
@@ -301,7 +311,7 @@ const TransactionsTable = ({
                         user?.isAdmin == false ? null : (
                           <td>
                             {tx.purchase_type == "data"
-                              ? `${tx.data_volume / 1000}GB`
+                              ? `bucket`
                               : `₦${tx.price}`}
                           </td>
                         )}
