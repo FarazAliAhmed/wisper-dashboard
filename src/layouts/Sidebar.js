@@ -111,11 +111,11 @@ const agentsNav = [
     href: "/allocate",
     icon: "bi bi-send",
   },
-  {
-    title: "Purchase Airtime",
-    href: "/airtime",
-    icon: "bi bi-bag",
-  },
+  // {
+  //   title: "Purchase Airtime",
+  //   href: "/airtime",
+  //   icon: "bi bi-bag",
+  // },
   {
     title: "Store Front",
     href: "/storeFront",
@@ -148,11 +148,11 @@ const agentsNav = [
   //   href: "/account",
   //   icon: "bi bi-person",
   // },
-  {
-    title: "Packages",
-    href: "/packages",
-    icon: "bi bi-tags",
-  },
+  // {
+  //   title: "Packages",
+  //   href: "/packages",
+  //   icon: "bi bi-tags",
+  // },
   // {
   //   title: "Pricing",
   //   href: "/pricing",
@@ -238,11 +238,11 @@ const megaNav = [
   //   href: "/account",
   //   icon: "bi bi-person",
   // },
-  {
-    title: "Packages",
-    href: "/packages",
-    icon: "bi bi-tags",
-  },
+  // {
+  //   title: "Packages",
+  //   href: "/packages",
+  //   icon: "bi bi-tags",
+  // },
   // {
   //   title: "Pricing",
   //   href: "/pricing",

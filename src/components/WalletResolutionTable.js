@@ -158,11 +158,13 @@ const WalletResolutionTable = ({
                     <tr>
                       <th>Date</th>
                       <th>Wallet Bal. Start </th>
-                      <th>Wallet Bal. End </th>
                       <th>Funding</th>
                       <th>Data Purchase (₦)</th>
                       <th>Data Bought (GB)</th>
                       <th>Purpose Wallet Bal</th>
+
+                      <th>Wallet Bal. End </th>
+
                       <th>Bal.</th>
                       {/* <th>Lit Trans.</th> */}
                       <th>Status</th>
@@ -183,16 +185,32 @@ const WalletResolutionTable = ({
                           </td>
                         </td>
                         <td>{tx.startOfDayBalance}</td>
+                        <td
+                          style={{
+                            color: "green",
+                            fontWeight: "800",
+                          }}
+                        >
+                          + {tx.totalFunding}
+                        </td>
+                        <td
+                          style={{
+                            color: "red",
+                            fontWeight: "800",
+                          }}
+                        >
+                          - {tx.totalDataPurchase}
+                        </td>
+                        <td>{tx.totalDataBought}</td>
+                        <td>{tx.proWalBal}</td>
+
                         <td>
                           {tx.endOfDayBalance
                             ? tx.endOfDayBalance
                             : tx.actWalBal}
                         </td>
-                        <td>{tx.totalFunding}</td>
-                        <td>{tx.totalDataPurchase}</td>
-                        <td>{tx.totalDataBought}</td>
+
                         {/* <td></td> */}
-                        <td>{tx.proWalBal}</td>
                         <td> {tx.balance}</td>
                         <td>
                           {" "}

@@ -61,9 +61,14 @@ export async function getAllPlansUser(userId) {
   }
 }
 
-export async function getGloResolution() {
+export async function getGloResolution(
+  { limit, offset, userId } = { limit: 50, offset: 0 }
+) {
+  console.log(limit, "limit5");
   try {
-    const res = await http.get(`${adminUrl}/analysis/getBucketUsage`);
+    const res = await http.get(
+      `${adminUrl}/analysis/getBucketUsage?limit=${Number(limit)}`
+    );
     console.log(res);
     return res;
   } catch (error) {
@@ -248,6 +253,16 @@ export const makeAdmin = async (email) => {
 export const makeActive = async (account_id) => {
   try {
     const res = await http.get(`${adminUrl}/account/enable/${account_id}`);
+
+    return res;
+  } catch (e) {
+    return null;
+  }
+};
+
+export const getAirtimeApis = async () => {
+  try {
+    const res = await http.get(`${apiUrl}/apiBalance/getApiBalance`);
 
     return res;
   } catch (e) {

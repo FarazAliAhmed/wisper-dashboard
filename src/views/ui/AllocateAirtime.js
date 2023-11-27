@@ -41,6 +41,7 @@ const initialState = {
 
 const AllocateData = () => {
   const [plan, setPlan] = useState(initialState);
+  const [costError, setCostError] = useState(null);
 
   const [errors, setErrors] = useState({});
   const [serverResponse, setServerResponse] = useState({
@@ -107,6 +108,14 @@ const AllocateData = () => {
     setErrors(validationErrors);
   };
 
+  useEffect(() => {
+    // console.log(cash, "lsls");
+    if (plan.airtime_volume > cash) {
+      setCostError("Insufficient funds. Fund your wallet to proceed");
+    } else {
+      setCostError(null);
+    }
+  }, [plan.airtime_volume]);
   console.log(plan.volume);
 
   return (
@@ -191,18 +200,41 @@ const AllocateData = () => {
                       <FormFeedback>{errors.airtime_volume}</FormFeedback>
                     </FormGroup>
                   </Col>
+
+                  <Col md={12}>
+                    <FormGroup>
+                      <Label for="airtime_volume">
+                        Cost{" "}
+                        {user?.type == "mega"
+                          ? "(Enjoy 2% Cashback)"
+                          : "(Enjoy 1.5% Cashback)"}
+                      </Label>
+                      <Input
+                        value={`₦${
+                          user?.type == "mega"
+                            ? plan.airtime_volume - 0.025 * plan.airtime_volume
+                            : plan.airtime_volume - 0.015 * plan.airtime_volume
+                        }`}
+                        id="airtime_volume"
+                        name="airtime_volume"
+                        disabled
+                        invalid={costError}
+                        type="text"
+                      />{" "}
+                      <FormFeedback>{costError}</FormFeedback>
+                    </FormGroup>
+                  </Col>
                 </Row>
-                {Number(plan.airtime_volume) <= cash && (
-                  <AllocateAirtimeButton
-                    setLoading={setLoading}
-                    loading={loading}
-                    handleSubmit={handleSubmit}
-                    volume={plan.volume}
-                    phone_number={plan.phone_number}
-                    valid={formIsValid(errors)}
-                    network={plan.network}
-                  />
-                )}
+
+                <AllocateAirtimeButton
+                  setLoading={setLoading}
+                  loading={loading}
+                  handleSubmit={handleSubmit}
+                  volume={plan.airtime_volume}
+                  phone_number={plan.phone_number}
+                  valid={formIsValid(errors) || costError}
+                  network={plan.network}
+                />
 
                 {/* <Button disabled={loading} type="submit" color="primary">
               Allocate

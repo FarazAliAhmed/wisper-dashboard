@@ -39,6 +39,7 @@ const WithdrawCards = (props) => {
   const [failed, setFailed] = useState(false);
   const [notice, setNotice] = useState(false);
   const [message, setMessage] = useState("");
+  const [costError, setCostError] = useState(null);
 
   const { withdrawAccount, bankCode, bankName, acctName, storePin } =
     storeFront;
@@ -168,8 +169,16 @@ const WithdrawCards = (props) => {
     }
   };
 
+  useEffect(() => {
+    // console.log(cash, "lsls");
+    if (withdrawDetails.amount > storeFront?.wallet) {
+      setCostError("Insufficient funds to withdraw");
+    } else {
+      setCostError(null);
+    }
+  }, [withdrawDetails.amount]);
   console.log(withdrawDetails, "kk");
-  console.log(bankObj, "kk");
+  console.log(user, "ooijj");
 
   return (
     <Card>
@@ -193,14 +202,16 @@ const WithdrawCards = (props) => {
             </div>
           </div>
 
-          <button
-            onClick={() => {
-              setWithdraw(true);
-            }}
-            className="fund__wallet__btn"
-          >
-            Withdraw
-          </button>
+          {user?.type !== "agent" && (
+            <button
+              onClick={() => {
+                setWithdraw(true);
+              }}
+              className="fund__wallet__btn"
+            >
+              Withdraw
+            </button>
+          )}
         </div>
       </CardBody>
       <Modal centered isOpen={withdraw} toggle={() => setWithdraw(!withdraw)}>
@@ -252,9 +263,10 @@ const WithdrawCards = (props) => {
                     type="number"
                     onChange={handleChange}
                     required
-                    invalid={errors.amount}
+                    invalid={errors.amount || costError}
                   />
                   <FormFeedback>{errors.amount}</FormFeedback>
+                  <FormFeedback>{costError}</FormFeedback>
                 </FormGroup>
               </Col>
               {withdrawDetails.withType == "bank" && (

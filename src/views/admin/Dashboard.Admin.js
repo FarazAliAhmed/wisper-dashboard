@@ -15,6 +15,7 @@ import mob9 from "../../assets/dashboard/mob9.svg";
 import airtel from "../../assets/dashboard/airtel.svg";
 import tranIcon from "../../assets/dashboard/transa.svg";
 import wallIcon from "../../assets/dashboard/walle.svg";
+import appIcon from "../../assets/images/icons/app-icon.png";
 //
 // import SupportCard from "../../components/dashboard/SupportCard";
 // import PaymentButton from "../../components/PaymentButton";
@@ -23,8 +24,15 @@ import wallIcon from "../../assets/dashboard/walle.svg";
 
 const Dashboard = () => {
   const { user } = useUser();
-  const { transaction, business, payment, mainBalance, allTrx, allSold } =
-    useAdmin();
+  const {
+    transaction,
+    business,
+    payment,
+    mainBalance,
+    allTrx,
+    allSold,
+    airtimeApis,
+  } = useAdmin();
   const {
     currentBalance: { volume, unit, cash, mega_wallet },
   } = useAppState();
@@ -34,12 +42,14 @@ const Dashboard = () => {
     setBalanceDisplay(displayBalance(volume, unit, cash, mega_wallet, user));
   }, [volume, unit, cash]);
 
+  console.log(airtimeApis, "aiai");
+
   return (
     <AdminLayout>
       <div>
         {/***Top Cards***/}
         <Row>
-          <Col sm="6" lg="4">
+          {/* <Col sm="6" lg="4">
             <TopCards
               bg="bg-light-info text-info"
               title="Profit"
@@ -66,7 +76,7 @@ const Dashboard = () => {
               earning={`${Number(user?.glo_almamgt || "0") / 1000} GB`}
               icon={glo}
             />
-          </Col>
+          </Col> */}
           {/* <Col sm="6" lg="4">
             <TopCards
               bg="bg-light-success text-success"
@@ -107,7 +117,7 @@ const Dashboard = () => {
           {user.type === "mega" && (
             <>
               {/* MTN and Airtel Wallets */}
-              <Col sm="6" lg="4">
+              {/* <Col sm="6" lg="4">
                 <TopCards
                   bg="bg-light-info text-info"
                   title="Profit"
@@ -134,10 +144,10 @@ const Dashboard = () => {
                   earning={`${mega_wallet.airtel / 1000} GB`}
                   icon={airtel}
                 />
-              </Col>
+              </Col> */}
 
               {/* Glo wallet - Hidden for now */}
-              <Col sm="6" lg="4">
+              {/* <Col sm="6" lg="4">
                 <TopCards
                   bg="bg-light-info text-info"
                   title="Profit"
@@ -155,7 +165,24 @@ const Dashboard = () => {
                   earning={`${mega_wallet["9mobile"] / 1000} GB`}
                   icon={mob9}
                 />
-              </Col>
+              </Col> */}
+              {airtimeApis?.map((item, index) => {
+                return (
+                  <Col key={index} sm="6" lg="4">
+                    <TopCards
+                      bg="bg-light-warning text-warning"
+                      title="Refunds"
+                      subtitle={`${item?.api} `}
+                      earning={
+                        item?.unit == "mb"
+                          ? `${item?.volume}MB`
+                          : `₦${item?.volume}`
+                      }
+                      icon={item.imgUrl ? item.imgUrl : appIcon}
+                    />
+                  </Col>
+                );
+              })}
             </>
           )}
         </Row>

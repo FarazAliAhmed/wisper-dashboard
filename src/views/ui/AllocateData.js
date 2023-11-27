@@ -42,6 +42,7 @@ const AllocateData = () => {
   const [plan, setPlan] = useState(initialState);
 
   const [errors, setErrors] = useState({});
+  const [costError, setCostError] = useState(null);
   const [serverResponse, setServerResponse] = useState({
     status: true,
     message: "",
@@ -58,10 +59,6 @@ const AllocateData = () => {
   const dataPlans = parseDataAllocatePlans(plansUser);
 
   // console.log("dataPlans", dataPlans)
-
-  // useEffect(() => {
-  //   parseDataPlans(plans)
-  // }, [])
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
@@ -129,7 +126,16 @@ const AllocateData = () => {
     }
   };
 
-  console.log(plansUser);
+  useEffect(() => {
+    console.log(cash, "lsls");
+    if (plan.price > cash) {
+      setCostError("Insufficient funds. Fund your wallet to proceed");
+    } else {
+      setCostError(null);
+    }
+  }, [plan.plan_id]);
+
+  console.log(costError);
 
   return (
     <FullLayout>
@@ -216,12 +222,14 @@ const AllocateData = () => {
                       <Label for="cost">Cost</Label>
                       <Input
                         value={plan.price && `₦${plan.price}`}
-                        id="phone_number"
+                        id="cost"
                         name="cost"
+                        invalid={costError}
                         disabled
                         onChange={handleChange}
                         type="text"
                       />
+                      <FormFeedback>{costError}</FormFeedback>
                     </FormGroup>
                   </Col>
                   <Col md={12}>
@@ -247,7 +255,7 @@ const AllocateData = () => {
                   plan_id={plan.plan_id}
                   phone_number={plan.phone_number}
                   plans={plansUser}
-                  valid={formIsValid(errors)}
+                  valid={formIsValid(errors) || costError}
                 />
                 {/* <Button disabled={loading} type="submit" color="primary">
               Allocate

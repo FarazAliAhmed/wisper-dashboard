@@ -50,6 +50,8 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import cancel from "../../assets/images/logos/cancel.png";
 import checked from "../../assets/images/logos/checked.png";
 import { useUser } from "../../context/userContext";
+import { Helmet } from "react-helmet";
+import StoreFront from "./StoreFront";
 const { REACT_APP_FLUTTERWAVE_PUBLIC_KEY } = process.env;
 
 const initialState = {
@@ -64,6 +66,12 @@ const SFCustomer = () => {
   const { storeUserName } = useParams();
 
   const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState({
+    size: "",
+    network: "",
+    phone: "",
+    price: "",
+  });
   const [success1, setSuccess1] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [confirm1, setConfirm1] = useState(false);
@@ -127,12 +135,12 @@ const SFCustomer = () => {
         setLoading(false);
 
         // Set the page title using resp.data.storeName
-        if (resp.data.storeName) {
-          document.title = resp.data.storeName;
-        }
-        if (resp.data.storeImg) {
-          await changeFavicon(resp.data.storeImg);
-        }
+        // if (resp.data.storeName) {
+        //   document.title = resp.data.storeName;
+        // }
+        // if (resp.data.storeImg) {
+        //   await changeFavicon(resp.data.storeImg);
+        // }
       } catch (error) {
         setErrors("error");
         setLoading(false);
@@ -256,6 +264,13 @@ const SFCustomer = () => {
       custName: customerName.name,
       custEmail: customerEmail.email,
     });
+
+    setSuccessMessage({
+      network: account.network,
+      size: activePlan?.size,
+      phone: account.phone,
+      price: activePlan?.price,
+    });
     setLoading(false);
 
     setErrors({});
@@ -347,7 +362,7 @@ const SFCustomer = () => {
     const { name, value } = input;
 
     let phoneNumberPrefix;
-    let network = "";
+    let network;
     // Determine the network based on the phone number's prefix
     if (name == "phone") {
       phoneNumberPrefix = value.substring(0, 4);
@@ -420,7 +435,7 @@ const SFCustomer = () => {
     return "";
   }
 
-  console.log(customerEmail, "hhh");
+  console.log(successMessage, "hhh");
 
   return (
     <>
@@ -446,6 +461,14 @@ const SFCustomer = () => {
             <>
               {storeFront.storeMaintenance ? (
                 <div className="sf__customer__container">
+                  <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>{storeFront?.storeName}</title>
+                    <link
+                      rel="canonical"
+                      href="https://postimgs.org/img/logo.png"
+                    />{" "}
+                  </Helmet>
                   <div className="sf__customer__content">
                     <div className="sf__customer__maintenance">
                       <img src={timer} />
@@ -461,6 +484,14 @@ const SFCustomer = () => {
                 </div>
               ) : (
                 <div className="sf__customer__container">
+                  <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>{storeFront?.storeName}</title>
+                    <link
+                      rel="canonical"
+                      href="https://postimgs.org/img/logo.png"
+                    />
+                  </Helmet>
                   <div className="sf__customer__content">
                     <div className="sf__customer__top">
                       <div className="sf__share">
@@ -830,18 +861,7 @@ const SFCustomer = () => {
                         <div className="add__sub__dealer__head">
                           <h4>Buy Airtime</h4>
                         </div>
-                        <FormGroup className="mb-3">
-                          <Label for="airtime_volume">Amount</Label>
-                          <Input
-                            value={account.airtime_volume}
-                            invalid={errors.airtime_volume}
-                            id="airtime_volume"
-                            name="airtime_volume"
-                            onChange={handleChange}
-                            type="number"
-                          />{" "}
-                          <FormFeedback>{errors.airtime_volume}</FormFeedback>
-                        </FormGroup>
+
                         <Form>
                           <FormGroup className="mb-3">
                             <Label>
@@ -858,6 +878,7 @@ const SFCustomer = () => {
                             />
                             <FormFeedback>{errors.phone}</FormFeedback>
                           </FormGroup>
+
                           <FormGroup className="mb-3">
                             <Label>Customer Name</Label>{" "}
                             <span className="text-danger">*</span>
@@ -905,6 +926,19 @@ const SFCustomer = () => {
                               name="network"
                               disabled
                             />
+                          </FormGroup>
+
+                          <FormGroup className="mb-3">
+                            <Label for="airtime_volume">Amount</Label>
+                            <Input
+                              value={account.airtime_volume}
+                              invalid={errors.airtime_volume}
+                              id="airtime_volume"
+                              name="airtime_volume"
+                              onChange={handleChange}
+                              type="number"
+                            />{" "}
+                            <FormFeedback>{errors.airtime_volume}</FormFeedback>
                           </FormGroup>
                         </Form>
                       </div>
@@ -1008,9 +1042,9 @@ const SFCustomer = () => {
           <div className="confirm text-center">
             <img src={checked} className="confirm-checked" alt="success" />
             <p>
-              You successfully purchased {activePlan?.size} worth of{" "}
-              {account.network} data to {account.phone} with ₦
-              {activePlan?.selling_price}{" "}
+              You successfully purchased {successMessage?.size} worth of{" "}
+              {successMessage?.network} data to {successMessage?.phone} with ₦
+              {successMessage?.price}{" "}
             </p>
           </div>
         </ModalBody>
@@ -1064,7 +1098,14 @@ const SFCustomer = () => {
       </Modal>
 
       {/* Failure On Data sent*/}
-      <Modal centered isOpen={failed} toggle={() => setFailed(!failed)}>
+      <Modal
+        centered
+        isOpen={failed}
+        toggle={() => {
+          setFailed(!failed);
+          window.location.reload();
+        }}
+      >
         <ModalBody>
           <div className="confirm text-center">
             <img
@@ -1073,17 +1114,30 @@ const SFCustomer = () => {
               className="confirm-cancel"
               alt="confirm"
             />
-            <p>Data Purchase Failed</p>
+            <p>Data purchase failed, wait for a refund</p>
           </div>
         </ModalBody>
         <ModalFooter className="confirm-footer">
-          <Button color="secondary" onClick={() => setFailed(false)}>
+          <Button
+            color="secondary"
+            onClick={() => {
+              setFailed(false);
+              window.location.reload();
+            }}
+          >
             Close
           </Button>
         </ModalFooter>
       </Modal>
 
-      <Modal centered isOpen={failed1} toggle={() => setFailed1(!failed1)}>
+      <Modal
+        centered
+        isOpen={failed1}
+        toggle={() => {
+          setFailed1(!failed1);
+          window.location.reload();
+        }}
+      >
         <ModalBody>
           <div className="confirm text-center">
             <img
@@ -1092,11 +1146,17 @@ const SFCustomer = () => {
               className="confirm-cancel"
               alt="confirm"
             />
-            <p>Airtime Purchase Failed</p>
+            <p>Airtime purchase failed, wait for a refund</p>
           </div>
         </ModalBody>
         <ModalFooter className="confirm-footer">
-          <Button color="secondary" onClick={() => setFailed1(false)}>
+          <Button
+            color="secondary"
+            onClick={() => {
+              setFailed1(false);
+              window.location.reload();
+            }}
+          >
             Close
           </Button>
         </ModalFooter>

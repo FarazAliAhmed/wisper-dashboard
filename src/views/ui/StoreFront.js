@@ -94,6 +94,7 @@ const StoreFront = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [withdraw, setWithdraw] = useState(false);
   const [pagination, setPagination] = useState(50);
+  const [costError, setCostError] = useState(null);
 
   const [navState, setNavState] = useState(0);
 
@@ -272,6 +273,7 @@ const StoreFront = () => {
           user?.access_token
         );
         toast.success("Exited Maintenance");
+        window.location.reload();
       } catch (error) {
         setConfirm(false);
 
@@ -293,6 +295,7 @@ const StoreFront = () => {
         );
 
         toast.success("Entered Maintenance");
+        window.location.reload();
       } catch (error) {
         setConfirm(false);
 
@@ -341,7 +344,7 @@ const StoreFront = () => {
       value: loading
         ? "loading"
         : `₦${
-            sfAnalysis?.TotalAmountSold ? sfAnalysis.TotalAmountSold[0] ?? 0 : 0
+            sfAnalysis?.TotalAmountSold ? sfAnalysis.TotalAmountSold ?? 0 : 0
           }`,
       icon: sold,
       wallet: false,
@@ -364,7 +367,7 @@ const StoreFront = () => {
   ];
 
   const navItems = ["Transactions", "Customers", "Withdrawal"];
-  console.log(sfAnalysis, "sf");
+  console.log(sfAnalysis.TotalAmountSold, "sf");
 
   return (
     <FullLayout>
@@ -470,7 +473,7 @@ const StoreFront = () => {
                           ? "loading"
                           : `₦${
                               sfAnalysis?.TotalAmountSold
-                                ? sfAnalysis.TotalAmountSold[0] ?? 0
+                                ? sfAnalysis.TotalAmountSold ?? 0
                                 : 0
                             }`
                       }

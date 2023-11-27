@@ -64,7 +64,7 @@ const AllocateAirtimeButton = ({
           <div className="confirm text-center">
             <img src={warning} width={50} className="confirm-warn" alt="warn" />
             <p className="text-center">
-              Are you sure you want to send <strong>{volume}</strong> worth of{" "}
+              Are you sure you want to send <strong>₦{volume}</strong> worth of{" "}
               <strong>{network}</strong>
               &nbsp;airtime
               {/* worth{" "} <strong>{plan?.amount}</strong>  */} to{" "}
