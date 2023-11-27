@@ -178,7 +178,7 @@ const WithdrawCards = (props) => {
     }
   }, [withdrawDetails.amount]);
   console.log(withdrawDetails, "kk");
-  console.log(bankObj, "kk");
+  console.log(user, "ooijj");
 
   return (
     <Card>
@@ -202,14 +202,16 @@ const WithdrawCards = (props) => {
             </div>
           </div>
 
-          <button
-            onClick={() => {
-              setWithdraw(true);
-            }}
-            className="fund__wallet__btn"
-          >
-            Withdraw
-          </button>
+          {user?.type !== "agent" && (
+            <button
+              onClick={() => {
+                setWithdraw(true);
+              }}
+              className="fund__wallet__btn"
+            >
+              Withdraw
+            </button>
+          )}
         </div>
       </CardBody>
       <Modal centered isOpen={withdraw} toggle={() => setWithdraw(!withdraw)}>

@@ -50,6 +50,8 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import cancel from "../../assets/images/logos/cancel.png";
 import checked from "../../assets/images/logos/checked.png";
 import { useUser } from "../../context/userContext";
+import { Helmet } from "react-helmet";
+import StoreFront from "./StoreFront";
 const { REACT_APP_FLUTTERWAVE_PUBLIC_KEY } = process.env;
 
 const initialState = {
@@ -133,12 +135,12 @@ const SFCustomer = () => {
         setLoading(false);
 
         // Set the page title using resp.data.storeName
-        if (resp.data.storeName) {
-          document.title = resp.data.storeName;
-        }
-        if (resp.data.storeImg) {
-          await changeFavicon(resp.data.storeImg);
-        }
+        // if (resp.data.storeName) {
+        //   document.title = resp.data.storeName;
+        // }
+        // if (resp.data.storeImg) {
+        //   await changeFavicon(resp.data.storeImg);
+        // }
       } catch (error) {
         setErrors("error");
         setLoading(false);
@@ -360,7 +362,7 @@ const SFCustomer = () => {
     const { name, value } = input;
 
     let phoneNumberPrefix;
-    let network = "";
+    let network;
     // Determine the network based on the phone number's prefix
     if (name == "phone") {
       phoneNumberPrefix = value.substring(0, 4);
@@ -459,6 +461,14 @@ const SFCustomer = () => {
             <>
               {storeFront.storeMaintenance ? (
                 <div className="sf__customer__container">
+                  <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>{storeFront?.storeName}</title>
+                    <link
+                      rel="canonical"
+                      href="https://postimgs.org/img/logo.png"
+                    />{" "}
+                  </Helmet>
                   <div className="sf__customer__content">
                     <div className="sf__customer__maintenance">
                       <img src={timer} />
@@ -474,6 +484,14 @@ const SFCustomer = () => {
                 </div>
               ) : (
                 <div className="sf__customer__container">
+                  <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>{storeFront?.storeName}</title>
+                    <link
+                      rel="canonical"
+                      href="https://postimgs.org/img/logo.png"
+                    />
+                  </Helmet>
                   <div className="sf__customer__content">
                     <div className="sf__customer__top">
                       <div className="sf__share">
@@ -860,18 +878,7 @@ const SFCustomer = () => {
                             />
                             <FormFeedback>{errors.phone}</FormFeedback>
                           </FormGroup>
-                          <FormGroup className="mb-3">
-                            <Label for="airtime_volume">Amount</Label>
-                            <Input
-                              value={account.airtime_volume}
-                              invalid={errors.airtime_volume}
-                              id="airtime_volume"
-                              name="airtime_volume"
-                              onChange={handleChange}
-                              type="number"
-                            />{" "}
-                            <FormFeedback>{errors.airtime_volume}</FormFeedback>
-                          </FormGroup>
+
                           <FormGroup className="mb-3">
                             <Label>Customer Name</Label>{" "}
                             <span className="text-danger">*</span>
@@ -919,6 +926,19 @@ const SFCustomer = () => {
                               name="network"
                               disabled
                             />
+                          </FormGroup>
+
+                          <FormGroup className="mb-3">
+                            <Label for="airtime_volume">Amount</Label>
+                            <Input
+                              value={account.airtime_volume}
+                              invalid={errors.airtime_volume}
+                              id="airtime_volume"
+                              name="airtime_volume"
+                              onChange={handleChange}
+                              type="number"
+                            />{" "}
+                            <FormFeedback>{errors.airtime_volume}</FormFeedback>
                           </FormGroup>
                         </Form>
                       </div>

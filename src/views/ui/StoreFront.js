@@ -344,7 +344,7 @@ const StoreFront = () => {
       value: loading
         ? "loading"
         : `₦${
-            sfAnalysis?.TotalAmountSold ? sfAnalysis.TotalAmountSold[0] ?? 0 : 0
+            sfAnalysis?.TotalAmountSold ? sfAnalysis.TotalAmountSold ?? 0 : 0
           }`,
       icon: sold,
       wallet: false,
@@ -367,7 +367,7 @@ const StoreFront = () => {
   ];
 
   const navItems = ["Transactions", "Customers", "Withdrawal"];
-  console.log(sfAnalysis, "sf");
+  console.log(sfAnalysis.TotalAmountSold, "sf");
 
   return (
     <FullLayout>
@@ -473,7 +473,7 @@ const StoreFront = () => {
                           ? "loading"
                           : `₦${
                               sfAnalysis?.TotalAmountSold
-                                ? sfAnalysis.TotalAmountSold[0] ?? 0
+                                ? sfAnalysis.TotalAmountSold ?? 0
                                 : 0
                             }`
                       }

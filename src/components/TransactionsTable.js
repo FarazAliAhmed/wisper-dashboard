@@ -276,7 +276,7 @@ const TransactionsTable = ({
                                 {user?.type == "lite" ? (
                                   <td> ₦{tx.price} </td>
                                 ) : (
-                                  <td> {tx.volume}naira </td>
+                                  <td> {tx.volume} naira </td>
                                 )}
                               </>
                             )}
@@ -291,7 +291,7 @@ const TransactionsTable = ({
                                 <td>{tx.lite_volume || "0 mb"}</td>
                               </>
                             ) : (
-                              <td> {tx.volume}naira </td>
+                              <td> {tx.volume} naira </td>
                             )}
                           </th>
                         )}
