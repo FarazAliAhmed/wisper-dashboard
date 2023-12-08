@@ -37,6 +37,7 @@ const SFPricesTable = ({
   showSubHeader,
   showPageSettings = false,
   fetchPrice,
+  setFetchPrice,
 }) => {
   const [transactionsData, setTransactionsData] = useState([...transactions]);
 
@@ -142,7 +143,7 @@ const SFPricesTable = ({
         },
         user?.access_token
       );
-      fetchPrice(true);
+      setFetchPrice(!fetchPrice);
       setLoading(false);
       toast.success("Selling Price Updated");
     } catch (error) {
@@ -305,7 +306,14 @@ const SFPricesTable = ({
                           </td>
                           {user.type != "mega" && (
                             <td>
-                              ₦{Number(tx.selling_price) - Number(tx.price)}
+                              {Number(tx.selling_price) - Number(tx.price) >
+                              0 ? (
+                                <>
+                                  ₦{Number(tx.selling_price) - Number(tx.price)}
+                                </>
+                              ) : (
+                                0
+                              )}
                             </td>
                           )}
                         </tr>

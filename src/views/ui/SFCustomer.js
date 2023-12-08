@@ -269,7 +269,7 @@ const SFCustomer = () => {
       network: account.network,
       size: activePlan?.size,
       phone: account.phone,
-      price: activePlan?.price,
+      price: activePlan?.selling_price,
     });
     setLoading(false);
 
@@ -434,8 +434,6 @@ const SFCustomer = () => {
     // No words found, return an empty string or handle as needed
     return "";
   }
-
-  console.log(successMessage, "hhh");
 
   return (
     <>

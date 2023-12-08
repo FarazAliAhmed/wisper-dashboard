@@ -729,7 +729,8 @@ const EditStoreFront = () => {
               transactions={prices}
               showHeader={true}
               showSubHeader={true}
-              fetchPrice={setFetchPrice}
+              fetchPrice={fetchPrice}
+              setFetchPrice={setFetchPrice}
             />
           </Row>
         )}

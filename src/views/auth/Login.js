@@ -17,12 +17,15 @@ import {
   // validateForm,
   handleFailedRequest,
 } from "../../utils";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 import "./auth.scss";
 
 const Login = () => {
   const [account, setAccount] = useState({ email: "", password: "" });
-  const [msgError, setMsgError] = useState("")
+  const [msgError, setMsgError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const [errors, setErrors] = useState({});
   const [serverResponse, setServerResponse] = useState({
     status: true,
@@ -44,8 +47,8 @@ const Login = () => {
         window.location = "/dashboard";
       }
     } catch (error) {
-      setMsgError("Email or password incorrect")
-      console.log(error)
+      setMsgError("Email or password incorrect");
+      console.log(error);
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
 
@@ -67,9 +70,7 @@ const Login = () => {
 
   return (
     <AuthLayout headTitle="Login" tagline="Login to continue.">
-      {msgError && (
-        <Alert color="danger">{msgError}</Alert>
-      )}
+      {msgError && <Alert color="danger">{msgError}</Alert>}
       {/* {!serverResponse.status && (
         <Alert color="danger">{serverResponse.message}</Alert>
       )} */}
@@ -86,9 +87,24 @@ const Login = () => {
           <FormFeedback>{errors.email}</FormFeedback>
         </FormGroup>
         <FormGroup className="mb-3">
-          <Label>Password</Label>
+          <Label>
+            Password{" "}
+            <i
+              className={`password-toggle-icon ${
+                showPassword ? "show" : "hide"
+              }`}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <AiOutlineEye cursor="pointer" />
+              ) : (
+                <AiOutlineEyeInvisible cursor="pointer" />
+              )}{" "}
+              {/* Eye and hide icons */}
+            </i>
+          </Label>
           <Input
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             value={account.password}
             onChange={handleChange}
@@ -113,8 +129,11 @@ const Login = () => {
             </Link>
           </small>
           <small className="text-center text-muted mt-1">
-           Can't remember your password?{" "}
-            <Link to="/forgot-password" className="text-center text-decoration-none d-block">
+            Can't remember your password?{" "}
+            <Link
+              to="/forgot-password"
+              className="text-center text-decoration-none d-block"
+            >
               Forgot Password
             </Link>
           </small>

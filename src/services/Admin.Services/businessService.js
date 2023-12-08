@@ -280,6 +280,16 @@ export const disableAccount = async (account_id) => {
   }
 };
 
+// export const disableAgentAccount = async (account_id) => {
+//   try {
+//     const res = await http.get(`${apiUrl}/account/disable/${account_id}`);
+
+//     return res;
+//   } catch (e) {
+//     return null;
+//   }
+// };
+
 export const setAccountType = async (type, account_id) => {
   try {
     const res = await http.post(`${adminUrl}/account/type`, {

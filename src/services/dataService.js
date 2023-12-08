@@ -21,6 +21,19 @@ export async function getAllPlansUser(userId) {
   }
 }
 
+export const disableAgentAccount = async (account_id) => {
+  try {
+    console.log(account_id);
+    const res = await http.post(`${apiUrl}/agent/disbaleAgentAccount`, {
+      agentId: account_id,
+    });
+
+    return res;
+  } catch (e) {
+    return null;
+  }
+};
+
 export async function getSetUp(userId) {
   try {
     const res = await http.get(`${apiUrl}/store-fronts/notice/${userId}`);

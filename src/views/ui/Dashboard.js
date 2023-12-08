@@ -22,6 +22,7 @@ import airtel from "../../assets/dashboard/airtel.svg";
 import tranIcon from "../../assets/dashboard/transa.svg";
 import wallIcon from "../../assets/dashboard/walle.svg";
 import axios from "axios";
+import UserGuide from "../../components/dashboard/UserGuide";
 
 // import PaymentButton from "../../components/PaymentButton";
 
@@ -259,8 +260,13 @@ const Dashboard = () => {
           />
         </Row>
         <Row>
-          <Col lg="12">
+          <Col lg="6">
+            {" "}
+            {/* Use half of the column width for each component */}
             <SupportCard />
+          </Col>
+          <Col lg="6">
+            <UserGuide />
           </Col>
         </Row>
       </div>

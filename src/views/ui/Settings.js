@@ -25,6 +25,8 @@ import {
   handleFailedRequest,
   validateProperty,
 } from "../../utils";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+
 import cancel from "../../assets/images/logos/cancel.png";
 import checked from "../../assets/images/logos/checked.png";
 import { toast } from "react-hot-toast";
@@ -83,6 +85,8 @@ const Settings = () => {
     currentPass: "",
     newPass: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
 
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
@@ -516,6 +520,19 @@ const Settings = () => {
                         >
                           <Label for="currentPass">
                             Current Password{" "}
+                            <i
+                              className={`password-toggle-icon ${
+                                showPassword ? "show" : "hide"
+                              }`}
+                              onClick={() => setShowPassword(!showPassword)}
+                            >
+                              {showPassword ? (
+                                <AiOutlineEye cursor="pointer" />
+                              ) : (
+                                <AiOutlineEyeInvisible cursor="pointer" />
+                              )}{" "}
+                              {/* Eye and hide icons */}
+                            </i>{" "}
                             <span className="text-danger">*</span>
                           </Label>{" "}
                           <Input
@@ -523,7 +540,7 @@ const Settings = () => {
                             name="currentPass"
                             value={passwordChange.currentPass}
                             onChange={handlePassChange}
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             invalid={errors.currentPass}
                           />
                           <FormFeedback>{errors.currentPass}</FormFeedback>
@@ -539,13 +556,27 @@ const Settings = () => {
                           }}
                         >
                           <Label for="newPass">
-                            New Password <span className="text-danger">*</span>
+                            New Password{" "}
+                            <i
+                              className={`password-toggle-icon ${
+                                showCPassword ? "show" : "hide"
+                              }`}
+                              onClick={() => setShowCPassword(!showCPassword)}
+                            >
+                              {showCPassword ? (
+                                <AiOutlineEye cursor="pointer" />
+                              ) : (
+                                <AiOutlineEyeInvisible cursor="pointer" />
+                              )}{" "}
+                              {/* Eye and hide icons */}
+                            </i>
+                            <span className="text-danger">*</span>
                           </Label>
                           <Input
                             value={passwordChange.newPass}
                             id="newPass"
                             name="newPass"
-                            type="password"
+                            type={showCPassword ? "text" : "password"}
                             onChange={handlePassChange}
                             invalid={errors.newPass}
                           />
@@ -799,7 +830,7 @@ const Settings = () => {
             </Modal>
             <Card body>
               <Form>
-                <h4>My Withdrawal Account</h4>
+                <h4>Manage Your Withdrawal Account</h4>
                 {bankDetails.bankCode &&
                 bankDetails.bankCode !== "" &&
                 bankDetails.bankName &&
@@ -845,10 +876,7 @@ const Settings = () => {
                 ) : (
                   <>
                     <Row form>
-                      <p>
-                        When changing your password, we strongly recommend using
-                        a secure password you don't use anywhere else
-                      </p>
+                      <p>Add, Updated, or Delete Your Bank Account Details</p>
                     </Row>
                     <Button
                       onClick={(e) => {

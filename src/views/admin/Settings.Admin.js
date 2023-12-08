@@ -30,6 +30,7 @@ import { BeatLoader } from "react-spinners";
 
 import _Documentation from "../../components/pages/Documentation";
 import AdminLayout from "../../layouts/AdminLayout";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Settings = () => {
   const context = useUser();
@@ -49,6 +50,9 @@ const Settings = () => {
   const [errors, setErrors] = useState({});
   const [errorsPass, setErrorsPass] = useState({});
   const [navState, setNavState] = useState(0);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
+
   const [serverResponse, setServerResponse] = useState({
     status: true,
     message: "",
@@ -292,6 +296,19 @@ const Settings = () => {
                         >
                           <Label for="currentPass">
                             Current Password{" "}
+                            <i
+                              className={`password-toggle-icon ${
+                                showPassword ? "show" : "hide"
+                              }`}
+                              onClick={() => setShowPassword(!showPassword)}
+                            >
+                              {showPassword ? (
+                                <AiOutlineEye cursor="pointer" />
+                              ) : (
+                                <AiOutlineEyeInvisible cursor="pointer" />
+                              )}{" "}
+                              {/* Eye and hide icons */}
+                            </i>
                             <span className="text-danger">*</span>
                           </Label>{" "}
                           <Input
@@ -299,7 +316,7 @@ const Settings = () => {
                             name="currentPass"
                             value={passwordChange.currentPass}
                             onChange={handlePassChange}
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             invalid={errors.currentPass}
                           />
                           <FormFeedback>{errors.currentPass}</FormFeedback>
@@ -315,13 +332,27 @@ const Settings = () => {
                           }}
                         >
                           <Label for="newPass">
-                            New Password <span className="text-danger">*</span>
+                            New Password
+                            <i
+                              className={`password-toggle-icon ${
+                                showCPassword ? "show" : "hide"
+                              }`}
+                              onClick={() => setShowCPassword(!showCPassword)}
+                            >
+                              {showCPassword ? (
+                                <AiOutlineEye cursor="pointer" />
+                              ) : (
+                                <AiOutlineEyeInvisible cursor="pointer" />
+                              )}{" "}
+                              {/* Eye and hide icons */}
+                            </i>
+                            <span className="text-danger">*</span>
                           </Label>
                           <Input
                             value={passwordChange.newPass}
                             id="newPass"
                             name="newPass"
-                            type="password"
+                            type={showCPassword ? "text" : "password"}
                             onChange={handlePassChange}
                             invalid={errors.newPass}
                           />

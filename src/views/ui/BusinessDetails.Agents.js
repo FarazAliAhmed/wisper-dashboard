@@ -9,6 +9,9 @@ import {
   Button,
   Row,
   Col,
+  ModalFooter,
+  Modal,
+  ModalBody,
 } from "reactstrap";
 import TopCards from "../../components/dashboard/TopCards";
 
@@ -21,6 +24,7 @@ import airtel from "../../assets/dashboard/airtel.svg";
 import tranIcon from "../../assets/dashboard/transa.svg";
 import wallIcon from "../../assets/dashboard/walle.svg";
 import "../../assets/scss/custom.scss";
+import warning from "../../assets/images/logos/warning.png";
 
 import {
   getSingleBusiness,
@@ -42,16 +46,21 @@ import AdminMonifyHistory from "../../components/AdminMonifyHistory";
 import AdminPurchaseHistory from "../../components/AdminPurchaseHistory";
 import moment from "moment";
 import {
+  disableAgentAccount,
   getAgentsInfo,
   getAgentsTransactions,
 } from "../../services/dataService";
 import AgentsPurchaseHistory from "../../components/AgentsPurchaseHistory";
+import toast from "react-hot-toast";
 
 const BusinessDetails = (props) => {
+  const [confirm, setConfirm] = useState(false);
+
   const [business, setBusiness] = useState({});
   const [balanceDisplay, setBalanceDisplay] = useState("");
   const [isAdmin, setIsAdmin] = useState();
   const [active, setActive] = useState(true);
+  const [accountStatus, setAccountStatus] = useState(true);
   const [type, setType] = useState();
   const [loading, setLoading] = useState(false);
   const [cashBalance, setCashBalance] = useState(0);
@@ -78,6 +87,7 @@ const BusinessDetails = (props) => {
     });
     setAgents(resp?.subdealers);
     setBalances(resp?.dataBalance);
+    setAccountStatus(resp?.subdealers?.active);
     setLoading(false);
   };
 
@@ -104,15 +114,24 @@ const BusinessDetails = (props) => {
   };
 
   const handleSetActive = async () => {
-    setLoading(true);
-    await makeActive(business._id);
-    setLoading(false);
-    setActive(true);
+    // setLoading(true);
+    // await makeActive(business._id);
+    // setLoading(false);
+    // setActive(true);
+    toast.error("Unavailable at the moment");
   };
 
-  const handleRemoveActive = async () => {
+  const handleDisableActive = async () => {
     setLoading(true);
-    await disableAccount(business._id);
+    try {
+      const res = await disableAgentAccount(businessId);
+      toast.success(res.data.message);
+      setAccountStatus(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("An error occured");
+    }
+
     setLoading(false);
     setActive(false);
   };
@@ -131,7 +150,7 @@ const BusinessDetails = (props) => {
     setType("mega");
   };
 
-  console.log(balances, "bb");
+  console.log(agents, "bb");
 
   const navItems = ["Transactions", "Allocation"];
   const dateObject = moment(business?.createdAt);
@@ -333,24 +352,26 @@ const BusinessDetails = (props) => {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <h3>Actions</h3>
           <div className="sf__customer__cards">
-            <Button disabled={loading} onClick={""} color="danger">
+            {/* <Button disabled={loading} onClick={""} color="danger">
               {loading ? "Please wait..." : "Remove agents"}
-            </Button>
+            </Button> */}
             {/* {!isAdmin && (
         <Button disabled={loading} onClick={handleMakeAdmin} color="success">
           {loading ? "Please wait..." : "Make admin"}
         </Button>
       )} */}
-            {active && (
+            {accountStatus && (
               <Button
                 disabled={loading}
-                onClick={handleRemoveActive}
+                onClick={() => {
+                  setConfirm(true);
+                }}
                 color="warning"
               >
                 {loading ? "Please wait..." : "Disable Account"}
               </Button>
             )}
-            {!active && (
+            {!accountStatus && (
               <Button disabled={loading} onClick={handleSetActive} color="info">
                 {loading ? "Please wait..." : "Enable Account"}
               </Button>
@@ -422,6 +443,33 @@ const BusinessDetails = (props) => {
             </>
           )}
         </Row>
+
+        <Modal centered isOpen={confirm} toggle={() => setConfirm(!confirm)}>
+          <ModalBody>
+            <div className="confirm text-center">
+              <img
+                src={warning}
+                width={50}
+                className="confirm-warn"
+                alt="warn"
+              />
+
+              <h5>Are you sure you want to disable this agent's account?</h5>
+            </div>
+          </ModalBody>
+          <ModalFooter className="confirm-footer">
+            <Button
+              color="primary"
+              onClick={() => {
+                setConfirm(false);
+                handleDisableActive();
+              }}
+            >
+              Confirm
+            </Button>{" "}
+            <Button onClick={() => setConfirm(false)}>No, Cancel</Button>
+          </ModalFooter>
+        </Modal>
       </div>
     </AdminLayout>
   );

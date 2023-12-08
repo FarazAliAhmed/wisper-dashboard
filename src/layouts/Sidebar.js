@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Button, Nav, NavItem } from "reactstrap";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  Nav,
+  NavItem,
+} from "reactstrap";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 import { useAppState } from "../context/appContext";
 import { useUser } from "../context/userContext";
 import { useAdmin } from "../context/adminContext";
 import { displayBalance } from "../utils";
+import warning from "../assets/images/logos/warning.png";
 
 // Businesses Navigation Bar
 const liteNav = [
@@ -361,6 +369,8 @@ const Sidebar = ({ isAdmin }) => {
   let location = useLocation();
   const [balanceDisplay, setBalanceDisplay] = useState("");
   const [nav, setNav] = useState([]);
+  const [confirm, setConfirm] = useState(false);
+
   const [adminBalance, setAdminBalance] = useState({
     mtn_balance: "",
     airtel_balance: "",
@@ -420,23 +430,72 @@ const Sidebar = ({ isAdmin }) => {
       }
       <div className="pt-4 mt-2">
         <Nav vertical className="sidebarNav">
-          {nav.map((navi, index) => (
-            <NavItem key={index} className="sidenav-bg">
-              <Link
-                to={navi.href}
-                className={
-                  location.pathname === navi.href
-                    ? "text-primary nav-link py-3"
-                    : "nav-link text-secondary py-3"
-                }
-              >
-                <i className={navi.icon}></i>
-                <span className="ms-3 d-inline-block">{navi.title}</span>
-              </Link>
-            </NavItem>
-          ))}
+          {nav.map((navi, index) => {
+            if (index == nav.length - 1) {
+              return (
+                <p
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    setConfirm(true);
+                  }}
+                  className={
+                    location.pathname === navi.href
+                      ? "text-primary nav-link py-3"
+                      : "nav-link text-secondary py-3"
+                  }
+                >
+                  <i className={navi.icon}></i>
+                  <span className="ms-3 d-inline-block">{navi.title}</span>
+                </p>
+              );
+            } else {
+              return (
+                <NavItem key={index} className="sidenav-bg">
+                  <Link
+                    to={navi.href}
+                    className={
+                      location.pathname === navi.href
+                        ? "text-primary nav-link py-3"
+                        : "nav-link text-secondary py-3"
+                    }
+                  >
+                    <i className={navi.icon}></i>
+                    <span className="ms-3 d-inline-block">{navi.title}</span>
+                  </Link>
+                </NavItem>
+              );
+            }
+          })}
         </Nav>
       </div>
+      <Modal centered isOpen={confirm} toggle={() => setConfirm(!confirm)}>
+        <ModalBody>
+          <div className="confirm text-center">
+            <img src={warning} width={50} className="confirm-warn" alt="warn" />
+
+            <h6>
+              Are you sure you want to logout of your account? if you log out,
+              you will need to enter your credentials to access your account
+              again
+            </h6>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button
+            color="primary"
+            onClick={() => {
+              setConfirm(false);
+            }}
+          >
+            <Link className="text-decoration-none text-white" to="/logout">
+              Yes, Log Out
+            </Link>
+          </Button>{" "}
+          <Button onClick={() => setConfirm(false)}>No, Stay Logged In</Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 };

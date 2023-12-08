@@ -235,7 +235,6 @@ const StoreFront = () => {
     const fetchNotice = async () => {
       await getSetUp(user._id).then((res) => {
         setNoticeState(res?.data);
-        console.log(res.data, "kk");
         if (res?.data) {
           setNotice(false);
         } else {
@@ -367,7 +366,7 @@ const StoreFront = () => {
   ];
 
   const navItems = ["Transactions", "Customers", "Withdrawal"];
-  console.log(sfAnalysis.TotalAmountSold, "sf");
+  console.log(sfAnalysis?.TotalAmountSold, "sf");
 
   return (
     <FullLayout>

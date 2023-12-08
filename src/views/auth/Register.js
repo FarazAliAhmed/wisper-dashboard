@@ -21,6 +21,7 @@ import { register } from "../../services/userService";
 
 import "./auth.scss";
 import authService from "../../services/authService";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Register = () => {
   const [account, setAccount] = useState({
@@ -33,6 +34,7 @@ const Register = () => {
     password: "",
   });
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const [serverResponse, setServerResponse] = useState({
     status: true,
     message: "",
@@ -151,13 +153,29 @@ const Register = () => {
           />
         </FormGroup>
         <FormGroup className="mb-3">
-          <Label>Password</Label> <span className="text-danger">*</span>
+          <Label>
+            Password{" "}
+            <i
+              className={`password-toggle-icon ${
+                showPassword ? "show" : "hide"
+              }`}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <AiOutlineEye cursor="pointer" />
+              ) : (
+                <AiOutlineEyeInvisible cursor="pointer" />
+              )}{" "}
+              {/* Eye and hide icons */}
+            </i>
+          </Label>{" "}
+          <span className="text-danger">*</span>
           <Input
             value={account.password}
             onChange={handleChange}
             invalid={errors.password}
             name="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             required
           />
           <FormFeedback>{errors.password}</FormFeedback>
