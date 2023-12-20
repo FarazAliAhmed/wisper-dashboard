@@ -7,6 +7,9 @@ import {
   Input,
   FormFeedback,
   Alert,
+  Modal,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import AuthLayout from "../../layouts/AuthLayout";
@@ -18,13 +21,16 @@ import {
   handleFailedRequest,
 } from "../../utils";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import warning from "../../assets/images/logos/warning.png";
 
 import "./auth.scss";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const [account, setAccount] = useState({ email: "", password: "" });
   const [msgError, setMsgError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [modalState, setModalState] = useState(false);
 
   const [errors, setErrors] = useState({});
   const [serverResponse, setServerResponse] = useState({
@@ -41,19 +47,39 @@ const Login = () => {
       await authService.login(account.email, account.password);
       setLoading(false);
       const user = getCurrentUser();
+
       if (user.isAdmin) {
         window.location = "/admin";
       } else {
         window.location = "/dashboard";
       }
     } catch (error) {
-      setMsgError("Email or password incorrect");
-      console.log(error);
+      console.log(error.response, "res");
       setLoading(false);
-      const { status, message } = handleFailedRequest(error);
+      const errorMessage = error.response?.data;
+      if (errorMessage == "Email not confirmed") {
+        setModalState(true);
+      } else {
+        setMsgError("Email or password incorrect");
+        const { status, message } = handleFailedRequest(error);
 
-      setServerResponse({ status, message });
+        setServerResponse({ status, message });
+      }
+
       // console.log(error);
+    }
+  };
+
+  const resendLinkFunc = async () => {
+    try {
+      setLoading(true);
+      const res = await authService.resendLink(account.email);
+      setLoading(false);
+      toast.success(res.data?.message);
+    } catch (error) {
+      console.log(error.response, "res");
+      setLoading(false);
+      toast.error("error sending confirmation link");
     }
   };
 
@@ -139,6 +165,53 @@ const Login = () => {
           </small>
         </div>
       </Form>
+
+      <Modal
+        centered
+        isOpen={modalState}
+        toggle={() => {
+          setModalState(!modalState);
+        }}
+      >
+        <ModalBody>
+          <div className="confirm text-center">
+            <img src={warning} width={50} className="confirm-warn" alt="warn" />
+
+            <h6>
+              We noticed that you attempted to log in to your account at Wisper.
+              However, your email address hasn't been verified yet. For full
+              access to our platform's features, please check your email inbox
+              (including spam/junk folders) for a email confirmation message
+              from us. Click on the confirmation link provided in the email to
+              confirm your email address. If you cannot find the verification
+              email, you can request a new one by clicking the "Resend Link"
+              button. This will send a new confirmation message to the email
+              address associated with your account. If you encounter any
+              difficulties or need further assistance, please feel free to
+              contact our support team at support@wisper.ng.
+            </h6>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button
+            color="primary"
+            disabled={loading}
+            onClick={() => {
+              setModalState(false);
+              resendLinkFunc();
+            }}
+          >
+            Resend Link
+          </Button>{" "}
+          <Button
+            onClick={() => {
+              setModalState(!modalState);
+            }}
+          >
+            Close
+          </Button>
+        </ModalFooter>
+      </Modal>
     </AuthLayout>
   );
 };

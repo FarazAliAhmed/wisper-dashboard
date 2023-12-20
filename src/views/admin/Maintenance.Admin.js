@@ -16,6 +16,7 @@ import airtel from "../../assets/dashboard/airtel.svg";
 import tranIcon from "../../assets/dashboard/transa.svg";
 import wallIcon from "../../assets/dashboard/walle.svg";
 import AdminMegaControls from "../../components/AdminMegaControls";
+import AdminAirtimeControls from "../../components/AdminAirtimeControls";
 //
 // import SupportCard from "../../components/dashboard/SupportCard";
 // import PaymentButton from "../../components/PaymentButton";
@@ -45,6 +46,9 @@ const Maintenance = () => {
         </Row>
         <Row>
           <AdminMegaControls />
+        </Row>
+        <Row>
+          <AdminAirtimeControls />
         </Row>
       </div>
     </AdminLayout>

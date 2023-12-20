@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row, UncontrolledAlert } from "reactstrap";
+import {
+  Button,
+  Col,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Row,
+  UncontrolledAlert,
+} from "reactstrap";
 
 import "../../assets/scss/custom.scss";
 import TopCards from "../../components/dashboard/TopCards";
@@ -28,6 +37,7 @@ import UserGuide from "../../components/dashboard/UserGuide";
 
 const Dashboard = () => {
   const { user } = useUser();
+
   const {
     currentBalance: { volume, unit, cash, mega_wallet },
     transactions,

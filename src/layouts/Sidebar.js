@@ -438,6 +438,7 @@ const Sidebar = ({ isAdmin }) => {
                     cursor: "pointer",
                   }}
                   onClick={() => {
+                    showMobilemenu();
                     setConfirm(true);
                   }}
                   className={

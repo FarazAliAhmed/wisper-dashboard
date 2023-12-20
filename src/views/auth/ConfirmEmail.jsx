@@ -20,8 +20,9 @@ import {
 // import { withRouter } from 'react-router-dom';
 import "./auth.scss";
 import confirmed from "../../assets/dashboard/confirmed.svg";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ConfirmEmail = ({ match }) => {
   const history = useHistory();
@@ -35,52 +36,29 @@ const ConfirmEmail = ({ match }) => {
   });
   const [loading, setLoading] = useState(false);
 
-  const { email, token } = match.params;
+  // const token = match.params;
 
-  console.log(email, token);
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get("token");
+
+  // console.log(token);
+
+  console.log("res", token);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (account.password === account.cpassword) {
-      try {
-        setLoading(true);
-        const res = await authService.resetPassword(
-          account.password,
-          email,
-          token
-        );
-        setLoading(false);
-
-        if (res) {
-          toast.success("Password Changed", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-          history.push("/login");
-          // window.location = "/login";
-        } else {
-          toast.error("Link Expired", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-          setMsgError("Link Expired");
-          throw new Error("Link Expired");
-        }
-      } catch (error) {
-        toast.error("An error occured", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-        console.log(error);
-        setMsgError("Email or password incorrect");
-        console.log(error);
-        setLoading(false);
-        const { status, message } = handleFailedRequest(error);
-
-        setServerResponse({ status, message });
-        // console.log(error);
-      }
-    } else {
-      setMsgError("Password does not match");
-      return;
+    try {
+      setLoading(true);
+      const res = await authService.confirmEmail(token);
+      console.log(res, "res");
+      toast.success(res.data?.message);
+      setLoading(false);
+      window.location = "/login";
+    } catch (error) {
+      setLoading(false);
+      console.log(error.response, "res");
+      toast.error(error.response?.data?.message);
     }
   };
 
@@ -95,6 +73,19 @@ const ConfirmEmail = ({ match }) => {
     setErrors(validationErrors);
   };
 
+  const resendLinkFunc = async () => {
+    try {
+      setLoading(true);
+      const res = await authService.resendLink(account.email);
+      setLoading(false);
+      toast.success(res.data?.message);
+    } catch (error) {
+      console.log(error.response, "res");
+      setLoading(false);
+      toast.error("error sending confirmation link");
+    }
+  };
+
   return (
     <AuthLayout>
       <ToastContainer />
@@ -102,38 +93,38 @@ const ConfirmEmail = ({ match }) => {
       {/* {!serverResponse.status && (
         <Alert color="danger">{serverResponse.message}</Alert>
       )} */}
-      <div
-        className="gap-2 -pb-4 mt-4"
-        style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
-        <img src={confirmed} style={{ width: "5rem" }} />
-        <h1 style={{ fontSize: "1.3rem" }} className="text-center">
-          Email verified
-        </h1>
-        <p
+      <Form onSubmit={handleSubmit}>
+        <div
           style={{
-            fontSize: "0.8rem",
-            textAlign: "center",
-            color: "#434343",
-            width: "90%",
+            marginBottom: "2rem",
           }}
         >
-          Your email has been verified, you are now registered with Wisper, you
-          can login with your details , we will redirect you automatically in
-          few minutes.
-        </p>
+          <h1>Email Confirmation</h1>
+        </div>
 
-        <div className="d-grid gap-2 mt-2" style={{ width: "60%" }}>
-          <Button className="submit-btn" style={{ width: "100%" }}>
-            Continue
+        <FormGroup className="mb-3">
+          <Label>Email address</Label>
+          <Input
+            type="email"
+            name="email"
+            value={account.email}
+            onChange={handleChange}
+            invalid={errors.email}
+          />
+          <FormFeedback>{errors.email}</FormFeedback>
+        </FormGroup>
+
+        <div className="d-grid gap-2 mt-4">
+          <Button
+            disabled={formIsValid(errors) || loading}
+            size="lg"
+            type="submit"
+            className="submit-btn"
+          >
+            Confirm Email
           </Button>
         </div>
-      </div>
+      </Form>
     </AuthLayout>
   );
 };

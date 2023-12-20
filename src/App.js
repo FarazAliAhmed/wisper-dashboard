@@ -8,6 +8,7 @@ export const SettingsNav = React.createContext();
 
 const App = () => {
   const [navState, setNavState] = useState(0);
+  const [modalState, setModalState] = useState(false);
 
   const setNavStateFunc = (state) => {
     setNavState(state);

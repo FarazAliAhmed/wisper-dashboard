@@ -13,35 +13,51 @@ export async function login(email, password) {
   localStorage.setItem(tokenKey, jwt);
 }
 
+export async function resendLink(email) {
+  const res = await http.post(`${apiEndpoint}resendConfirmEmail`, { email });
+  console.log("res", res);
+  return res;
+}
+
+export async function resetLink(email) {
+  const res = await http.post(`${apiEndpoint}resetActivationEmail`, { email });
+  return res;
+}
+
+export async function confirmEmail(token) {
+  const res = await http.post(`${apiEndpoint}confirmEmail`, { token });
+  return res;
+}
+
 const forgotPassword = async (email, url) => {
- 
   try {
-    const res  = await axios.post(`${apiUrl}/forgot_password`, { email, url });
-    
-    if(res.data.status == "User Does Not Exists!!!"){
-      return false
+    const res = await axios.post(`${apiUrl}/forgot_password`, { email, url });
+
+    if (res.data.status == "User Does Not Exists!!!") {
+      return false;
     }
-    return true
+    return true;
     // Handle the response data
   } catch (error) {
     console.error(error);
-    return false
+    return false;
     // Handle the error
   }
 };
 
 const resetPassword = async (password, email, token) => {
- 
   try {
-   const res = await axios.post(`${apiUrl}/reset_password/${email}/${token}`, { password });
+    const res = await axios.post(`${apiUrl}/reset_password/${email}/${token}`, {
+      password,
+    });
 
-    if(res.data.status == "User Not Exists!!"){
-      return false
+    if (res.data.status == "User Not Exists!!") {
+      return false;
     }
-    return true
+    return true;
   } catch (error) {
     console.error(error);
-    return false
+    return false;
     // Handle the error
   }
 };
@@ -81,5 +97,8 @@ export default {
   getCurrentUser,
   getJwt,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  resendLink,
+  resetLink,
+  confirmEmail,
 };

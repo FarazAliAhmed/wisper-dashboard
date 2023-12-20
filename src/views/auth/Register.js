@@ -7,9 +7,13 @@ import {
   Input,
   FormFeedback,
   Alert,
+  Modal,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import AuthLayout from "../../layouts/AuthLayout";
+import checked from "../../assets/images/logos/checked.png";
 
 import {
   formIsValid,
@@ -34,6 +38,7 @@ const Register = () => {
     password: "",
   });
   const [errors, setErrors] = useState({});
+  const [modalState, setModalState] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [serverResponse, setServerResponse] = useState({
     status: true,
@@ -48,14 +53,16 @@ const Register = () => {
       setLoading(true);
       const response = await register(account);
       setLoading(false);
-      authService.loginWithJwt(response.headers["x-auth-token"]);
+      console.log(response, "res");
+      setModalState(true);
+      // authService.loginWithJwt(response.headers["x-auth-token"]);
       setErrors({});
-      window.location = "/dashboard";
     } catch (error) {
       setLoading(false);
+      console.log(error.response, "res");
       const { status, message } = handleFailedRequest(error);
 
-      setServerResponse({ status, message: "User Already Registered" });
+      setServerResponse({ status, message: error.response?.data?.message });
       // console.log(error);
     }
   };
@@ -198,6 +205,49 @@ const Register = () => {
           </small>
         </div>
       </Form>
+
+      <Modal
+        centered
+        isOpen={modalState}
+        toggle={() => {
+          setModalState(!modalState);
+          window.location = "/login";
+        }}
+      >
+        <ModalBody>
+          <div className="confirm text-center">
+            <img
+              src={checked}
+              width={50}
+              className="confirm-checked"
+              alt="warn"
+            />
+
+            <h6>
+              Congratulations! Your registration with Wisper was successful. A
+              confirmation email has been sent to the email address you provided
+              during registration. To ensure the security of your account and
+              access all the exciting features, please check your email inbox
+              (including spam/junk folders) for the confirmation message. Click
+              on the verification link provided in the email to complete the
+              registration process. If you haven't received the email within a
+              few minutes or encounter any issues, please don't hesitate to
+              contact our support team at support@wisper.ng. Thank you for
+              joining our community. We're excited to have you on board!
+            </h6>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button
+            onClick={() => {
+              setModalState(!modalState);
+              window.location = "/login";
+            }}
+          >
+            Close
+          </Button>
+        </ModalFooter>
+      </Modal>
     </AuthLayout>
   );
 };
