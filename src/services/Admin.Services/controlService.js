@@ -122,3 +122,41 @@ export async function getAirtimeMaintenance() {
     return null;
   }
 }
+
+export async function getSFMaintenance() {
+  try {
+    const res = await http.get(`${adminUrl}/getSFMaintenance`);
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
+
+export const enterSFNetworkMaintenance = async (feature) => {
+  // if (!plan_types.includes(plan_type)) return null;
+
+  try {
+    const resp = await http.post(`${adminUrl}/sFMaintenance/enter/${feature}`);
+    // toast.success("maintenance entered");
+    console.log(resp, "sres");
+    return resp.data;
+  } catch (e) {
+    // toast.error("error entering maintenance");
+    // return null;
+  }
+};
+
+export const exitSFNetworkMaintenance = async (feature) => {
+  // if (!plan_types.includes(plan_type)) return null;
+
+  try {
+    const resp = await http.post(`${adminUrl}/sFMaintenance/exit/${feature}`);
+    // toast.success("maintenance exited");
+    console.log(resp, "leave");
+    return resp.data;
+  } catch (e) {
+    // toast.error("error exiting maintenance");
+
+    return null;
+  }
+};

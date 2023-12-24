@@ -152,6 +152,8 @@ const Agents = () => {
     setSearchResults(results);
   };
 
+  console.log(searchValue);
+
   return (
     <FullLayout>
       <div className="sub__dealers__container">

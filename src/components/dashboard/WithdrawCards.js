@@ -28,6 +28,7 @@ import {
 import { useUser } from "../../context/userContext";
 import { SettingsNav } from "../../App";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { getSFMaintenance } from "../../services/Admin.Services/controlService";
 
 const WithdrawCards = (props) => {
   const { user } = useUser();
@@ -41,6 +42,7 @@ const WithdrawCards = (props) => {
   const [notice, setNotice] = useState(false);
   const [message, setMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [maintenance, setMaintenance] = useState({});
 
   const [costError, setCostError] = useState(null);
 
@@ -180,6 +182,20 @@ const WithdrawCards = (props) => {
       setCostError(null);
     }
   }, [withdrawDetails.amount]);
+
+  useEffect(async () => {
+    const getSFMaintenanceFunc = async () => {
+      // setLoading(true);
+      const resp = await getSFMaintenance();
+      setMaintenance(resp?.data?.maintenance);
+      console.log(resp, "air8");
+
+      // setLoading(false);
+    };
+
+    getSFMaintenanceFunc();
+  }, []);
+
   console.log(withdrawDetails, "kk");
   console.log(user, "ooijj");
 
@@ -208,7 +224,16 @@ const WithdrawCards = (props) => {
           {user?.type !== "agent" && (
             <button
               onClick={() => {
-                setWithdraw(true);
+                if (
+                  maintenance["withdrawal"] &&
+                  maintenance["withdrawal"] == true
+                ) {
+                  toast.error(
+                    "The Store front withdrawal feature is on maintenance, check in later!"
+                  );
+                } else {
+                  setWithdraw(true);
+                }
               }}
               className="fund__wallet__btn"
             >

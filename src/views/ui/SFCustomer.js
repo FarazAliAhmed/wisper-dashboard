@@ -52,6 +52,7 @@ import checked from "../../assets/images/logos/checked.png";
 import { useUser } from "../../context/userContext";
 import { Helmet } from "react-helmet";
 import StoreFront from "./StoreFront";
+import { getSFMaintenance } from "../../services/Admin.Services/controlService";
 const { REACT_APP_FLUTTERWAVE_PUBLIC_KEY } = process.env;
 
 const initialState = {
@@ -62,6 +63,7 @@ const initialState = {
 const SFCustomer = () => {
   const [plan, setPlan] = useState(initialState);
   const { user } = useUser();
+  const [maintenance, setMaintenance] = useState({});
 
   const { storeUserName } = useParams();
 
@@ -435,6 +437,21 @@ const SFCustomer = () => {
     return "";
   }
 
+  useEffect(async () => {
+    const getSFMaintenanceFunc = async () => {
+      // setLoading(true);
+      const resp = await getSFMaintenance();
+      setMaintenance(resp?.data?.maintenance);
+      console.log(resp, "air8");
+
+      // setLoading(false);
+    };
+
+    getSFMaintenanceFunc();
+  }, []);
+
+  console.log(storeFront, "df");
+
   return (
     <>
       {loading ? (
@@ -648,26 +665,47 @@ const SFCustomer = () => {
                             }`,
                           }}
                           onClick={() => {
-                            setConfirm(true);
+                            if (
+                              maintenance["purchase"] &&
+                              maintenance["purchase"] == true
+                            ) {
+                              toast.error(
+                                "The Store front Data Purchase feature is on maintenance, check in later!"
+                              );
+                            } else {
+                              setConfirm(true);
+                            }
                           }}
                         >
                           Buy Data
                         </button>
 
-                        <button
-                          style={{
-                            background: `${
-                              storeFront.storeColor
-                                ? storeFront.storeColor
-                                : "black"
-                            }`,
-                          }}
-                          onClick={() => {
-                            setConfirm1(true);
-                          }}
-                        >
-                          Buy Airtime
-                        </button>
+                        {!storeFront?.userType == "glo_dealer" ||
+                        !storeFront?.userType == "glo_agent" ? (
+                          <button
+                            style={{
+                              background: `${
+                                storeFront.storeColor
+                                  ? storeFront.storeColor
+                                  : "black"
+                              }`,
+                            }}
+                            onClick={() => {
+                              if (
+                                maintenance["purchase"] &&
+                                maintenance["purchase"] == true
+                              ) {
+                                toast.error(
+                                  "The Store front Airtime Purchase feature is on maintenance, check in later!"
+                                );
+                              } else {
+                                setConfirm1(true);
+                              }
+                            }}
+                          >
+                            Buy Airtime
+                          </button>
+                        ) : null}
                       </div>
                     </div>
                     <div className="sf__customer__footer">

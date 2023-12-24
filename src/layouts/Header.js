@@ -37,6 +37,10 @@ const Header = ({ isAdmin }) => {
       setType("Agent");
     } else if (context?.user?.type == "lite") {
       setType("Lite");
+    } else if (context?.user?.type == "glo_dealer") {
+      setType("Glo Dealer");
+    } else if (context?.user?.type == "glo_agent") {
+      setType("Glo Agent");
     }
   }, []);
 

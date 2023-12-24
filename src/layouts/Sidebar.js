@@ -188,6 +188,96 @@ const agentsNav = [
   },
 ];
 
+const gloAgentsNav = [
+  {
+    title: "Dashboard",
+    href: "/dashboard",
+    icon: "bi bi-house",
+  },
+  // {
+  //   title: "Buy Data",
+  //   href: "/allocate-data",
+  //   icon: "bi bi-reception-4",
+  // },
+  // {
+  //   title: "Fund Wallet",
+  //   href: "/wallet",
+  //   icon: "bi bi-wallet",
+  // },
+  {
+    title: "Allocate Data",
+    href: "/allocate",
+    icon: "bi bi-send",
+  },
+  // {
+  //   title: "Purchase Airtime",
+  //   href: "/airtime",
+  //   icon: "bi bi-bag",
+  // },
+  {
+    title: "Store Front",
+    href: "/storeFront",
+    icon: "bi bi-shop",
+  },
+  // {
+  //   title: "Edit Store Front",
+  //   href: "/editStoreFront",
+  //   icon: "bi bi-pencil-square",
+  // },
+  {
+    title: "Bucket History",
+    href: "/bucketHistory",
+    icon: "bi bi-bag",
+  },
+  // {
+  //   title: "Buy Bulk Data",
+  //   href: "/buyBulkData",
+  //   icon: "bi bi-bag",
+  // },
+
+  // {
+  //   title: "Wallet",
+  //   href: "/monifyWallet",
+  //   icon: "bi bi-wallet2",
+  // },
+
+  // {
+  //   title: "Account",
+  //   href: "/account",
+  //   icon: "bi bi-person",
+  // },
+  // {
+  //   title: "Packages",
+  //   href: "/packages",
+  //   icon: "bi bi-tags",
+  // },
+  // {
+  //   title: "Pricing",
+  //   href: "/pricing",
+  //   icon: "bi bi-tags",
+  // },
+  // {
+  //   title: "Payments",
+  //   href: "/payments",
+  //   icon: "bi bi-credit-card",
+  // },
+  {
+    title: "Transactions",
+    href: "/transactions",
+    icon: "bi bi-cash-stack",
+  },
+  {
+    title: "Settings",
+    href: "/settings",
+    icon: "bi bi-code-slash",
+  },
+  {
+    title: "Logout",
+    href: "/logout",
+    icon: "bi bi-box-arrow-right",
+  },
+];
+
 const megaNav = [
   {
     title: "Dashboard",
@@ -214,6 +304,96 @@ const megaNav = [
     href: "/airtime",
     icon: "bi bi-bag",
   },
+  {
+    title: "Buy Bulk Data",
+    href: "/buyBulkData",
+    icon: "bi bi-bag",
+  },
+  {
+    title: "Agents",
+    href: "/agents",
+    icon: "bi bi-person-check",
+  },
+  {
+    title: "Store Front",
+    href: "/storeFront",
+    icon: "bi bi-shop",
+  },
+  // {
+  //   title: "Edit Store Front",
+  //   href: "/editStoreFront",
+  //   icon: "bi bi-pencil-square",
+  // },
+
+  {
+    title: "Wallet",
+    href: "/monifyWallet",
+    icon: "bi bi-wallet2",
+  },
+
+  // {
+  //   title: "Account",
+  //   href: "/account",
+  //   icon: "bi bi-person",
+  // },
+  // {
+  //   title: "Packages",
+  //   href: "/packages",
+  //   icon: "bi bi-tags",
+  // },
+  // {
+  //   title: "Pricing",
+  //   href: "/pricing",
+  //   icon: "bi bi-tags",
+  // },
+  // {
+  //   title: "Payments",
+  //   href: "/payments",
+  //   icon: "bi bi-credit-card",
+  // },
+  {
+    title: "Transactions",
+    href: "/transactions",
+    icon: "bi bi-cash-stack",
+  },
+  {
+    title: "Settings",
+    href: "/settings",
+    icon: "bi bi-code-slash",
+  },
+  {
+    title: "Logout",
+    href: "/logout",
+    icon: "bi bi-box-arrow-right",
+  },
+];
+
+const gloMegaNav = [
+  {
+    title: "Dashboard",
+    href: "/dashboard",
+    icon: "bi bi-house",
+  },
+  // {
+  //   title: "Buy Data",
+  //   href: "/allocate-data",
+  //   icon: "bi bi-reception-4",
+  // },
+  // {
+  //   title: "Fund Wallet",
+  //   href: "/wallet",
+  //   icon: "bi bi-wallet",
+  // },
+  {
+    title: "Allocate Data",
+    href: "/allocate",
+    icon: "bi bi-send",
+  },
+  // {
+  //   title: "Purchase Airtime",
+  //   href: "/airtime",
+  //   icon: "bi bi-bag",
+  // },
   {
     title: "Buy Bulk Data",
     href: "/buyBulkData",
@@ -385,6 +565,10 @@ const Sidebar = ({ isAdmin }) => {
         setNav(megaNav);
       } else if (user.type == "agent") {
         setNav(agentsNav);
+      } else if (user.type == "glo_agent") {
+        setNav(gloAgentsNav);
+      } else if (user.type == "glo_dealer") {
+        setNav(gloMegaNav);
       } else {
         setNav(liteNav);
       }
