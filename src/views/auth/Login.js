@@ -60,7 +60,7 @@ const Login = () => {
       if (errorMessage == "Email not confirmed") {
         setModalState(true);
       } else {
-        setMsgError("Email or password incorrect");
+        setMsgError(error.response.data);
         const { status, message } = handleFailedRequest(error);
 
         setServerResponse({ status, message });
