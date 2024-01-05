@@ -731,16 +731,19 @@ const EditStoreFront = () => {
         )}
         {navState == 2 && (
           <>
-            {" "}
-            <Row className="mt-1">
-              <SFAirtimePricesTable
-                transactions={prices}
-                showHeader={true}
-                showSubHeader={true}
-                fetchPrice={fetchPrice}
-                setFetchPrice={setFetchPrice}
-              />
-            </Row>
+            {user?.type !== "glo_dealer" ||
+              (user?.type !== "glo_agent" && (
+                <Row className="mt-1">
+                  <SFAirtimePricesTable
+                    transactions={prices}
+                    showHeader={true}
+                    showSubHeader={true}
+                    fetchPrice={fetchPrice}
+                    setFetchPrice={setFetchPrice}
+                  />
+                </Row>
+              ))}
+
             <Row className="mt-1">
               <SFPricesTable
                 transactions={

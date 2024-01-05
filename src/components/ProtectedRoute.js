@@ -56,7 +56,7 @@ const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
       const res = await authService.resetLink(account.email);
       setLoading(false);
       toast.success(res.data?.message);
-      window.location = "/login";
+      setModalValueState(4);
     } catch (error) {
       console.log(error.response, "res");
       setLoading(false);
@@ -97,9 +97,7 @@ const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
             <ModalBody>
               <div className="confirm text-center">
                 Welcome back! To continue enjoying all the features of the
-                Wisper Platform, please verify your email address. Click on
-                'Verify Email' to confirm your email address and ensure
-                uninterrupted access to your account."
+                Wisper Platform, please verify your email address.
               </div>
             </ModalBody>
             <ModalFooter className="confirm-footer">
@@ -122,26 +120,87 @@ const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
 
             <ModalBody>
               <div className="confirm ">
-                If the default email is not an active email, change it to an
-                active email (make sure the email has not been registered on
-                wisper before) and verify the new email, else leave the form
-                field as the default email. A confirmation email will be sent to
-                the email address you have provided . To ensure the security of
-                your account and access all the exciting features, please check
-                your email inbox (including spam/junk folders) for the
-                confirmation message. Click on the verification link provided in
-                the email. If you haven't received the email within a few
-                minutes or encounter any issues, please don't hesitate to
-                contact our support team at support@wisper.ng.
+                Click the 'Send Link' button to receive a confirmation link at
+                your registered email address. Please follow this link to verify
+                your email and continue
               </div>
 
               <Form
                 style={{
-                  marginTop: "2rem",
+                  marginTop: "1rem",
                 }}
               >
-                <FormGroup className="mb-3">
+                <FormGroup className="">
                   <Label>Email address</Label>
+                  <Input
+                    type="email"
+                    name="email"
+                    value={account.email}
+                    onChange={handleChange}
+                    invalid={errors.email}
+                    disabled
+                  />
+                  <FormFeedback>{errors.email}</FormFeedback>
+                </FormGroup>
+                <p
+                  style={{
+                    color: "blue",
+                    cursor: "pointer",
+                    fontSize: 15,
+                    marginTop: 0,
+                  }}
+                  onClick={() => {
+                    setModalValueState(3);
+                  }}
+                >
+                  Update Email Address
+                </p>
+                <div className="d-grid gap-2 mt-4">
+                  <ModalFooter className="confirm-footer">
+                    <Button
+                      color="primary"
+                      disabled={formIsValid(errors) || loading}
+                      size="lg"
+                      // type="submit"
+                      className="submit-btn"
+                      onClick={() => {
+                        resetLinkFunc();
+                      }}
+                    >
+                      Send Link
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setModalValueState(1);
+                      }}
+                    >
+                      Back
+                    </Button>
+                  </ModalFooter>
+                </div>
+              </Form>
+            </ModalBody>
+          </>
+        )}
+
+        {modalValueState === 3 && (
+          <>
+            <ModalHeader>Update Your Email Address</ModalHeader>
+
+            <ModalBody>
+              <div className="confirm ">
+                To ensure you always receive important notifications, please
+                update your email address below. We'll send a confirmation link
+                to your new email for verification
+              </div>
+
+              <Form
+                style={{
+                  marginTop: "1rem",
+                }}
+              >
+                <FormGroup className="">
+                  <Label>New Email address</Label>
                   <Input
                     type="email"
                     name="email"
@@ -161,15 +220,14 @@ const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
                       // type="submit"
                       className="submit-btn"
                       onClick={() => {
-                        setModalValueState(2);
                         resetLinkFunc();
                       }}
                     >
-                      Send Link
+                      Update Email
                     </Button>
                     <Button
                       onClick={() => {
-                        setModalValueState(1);
+                        setModalValueState(2);
                       }}
                     >
                       Back
@@ -177,6 +235,52 @@ const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
                   </ModalFooter>
                 </div>
               </Form>
+            </ModalBody>
+          </>
+        )}
+
+        {modalValueState === 4 && (
+          <>
+            <ModalHeader>Confirmation Link Sent</ModalHeader>
+
+            <ModalBody>
+              <div className="confirm ">
+                A confirmation link has been sent to your email address. Please
+                check your inbox (and spam folder) to verify your email.
+              </div>
+
+              <div className="d-grid gap-2 mt-4">
+                <ModalFooter className="confirm-footer">
+                  <Button
+                    color="primary"
+                    disabled={formIsValid(errors) || loading}
+                    size="lg"
+                    // type="submit"
+                    className="submit-btn"
+                    onClick={() => {
+                      resetLinkFunc();
+                    }}
+                  >
+                    Resend Link
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setModalValueState(3);
+                    }}
+                  >
+                    Update Email
+                  </Button>
+                  <a
+                    className="cursor-pointer"
+                    href="mailto:support@wisper.ng?subject=Support Inquiry&body=Hello%20Wisper%20Support%2C%0D%0A%0D%0AI%20need%20assistance%20with%3A%0D%0A%0D%0A%0D%0AThank%20you%21"
+                    target="_blank"
+                  >
+                    <Button color="primary " className="btn-block">
+                      Contact Support
+                    </Button>
+                  </a>
+                </ModalFooter>
+              </div>
             </ModalBody>
           </>
         )}
