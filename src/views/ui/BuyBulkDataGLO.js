@@ -129,18 +129,22 @@ const BuyBulkDataGLO = () => {
   const handleAmountChange = (e) => {
     const value = e.target.value;
     setAmountValue(value);
-    if (bucketValue == "glo") {
-      setCostValue(megaPriceUser.glo * value);
-    } else if (bucketValue == "mtn_sme") {
-      setCostValue(megaPriceUser.mtn_sme * value);
-    } else if (bucketValue == "mtn_gifting") {
-      setCostValue(megaPriceUser.mtn_gifting * value);
-    } else if (bucketValue == "airtel") {
-      setCostValue(megaPriceUser.airtel * value);
-    } else if (bucketValue == "9mobile") {
-      setCostValue(megaPriceUser["9mobile"] * value);
+    let data;
+    if (megaPriceUser.gloDealer && bucketValue == "glo") {
+      if (value >= 10001) {
+        data = megaPriceUser.gloDealer[0];
+      } else {
+        data = megaPriceUser.gloDealer.filter(
+          (item) => item?.rangeStart <= value && value <= item?.rangeEnd
+        )[0];
+      }
+
+      console.log(data, "gkd");
+      setCostValue(data ? data.pricePerGB * value : 0);
     }
   };
+
+  console.log(megaPriceUser, "sks");
 
   return (
     <FullLayout>
