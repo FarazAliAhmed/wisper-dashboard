@@ -102,7 +102,7 @@ const ConfirmEmail = ({ match }) => {
           <h1>Email Confirmation</h1>
         </div>
 
-        <FormGroup className="mb-3">
+        {/* <FormGroup className="mb-3">
           <Label>Email address</Label>
           <Input
             type="email"
@@ -112,7 +112,7 @@ const ConfirmEmail = ({ match }) => {
             invalid={errors.email}
           />
           <FormFeedback>{errors.email}</FormFeedback>
-        </FormGroup>
+        </FormGroup> */}
 
         <div className="d-grid gap-2 mt-4">
           <Button
