@@ -47,6 +47,7 @@ import AdminPurchaseHistory from "../../components/AdminPurchaseHistory";
 import moment from "moment";
 import {
   disableAgentAccount,
+  enableAgentAccount,
   getAgentsInfo,
   getAgentsTransactions,
 } from "../../services/dataService";
@@ -55,6 +56,7 @@ import toast from "react-hot-toast";
 
 const BusinessDetailsGLO = (props) => {
   const [confirm, setConfirm] = useState(false);
+  const [confirm1, setConfirm1] = useState(false);
 
   const [business, setBusiness] = useState({});
   const [balanceDisplay, setBalanceDisplay] = useState("");
@@ -113,12 +115,19 @@ const BusinessDetailsGLO = (props) => {
     setIsAdmin(true);
   };
 
-  const handleSetActive = async () => {
-    // setLoading(true);
-    // await makeActive(business._id);
-    // setLoading(false);
-    // setActive(true);
-    toast.error("Unavailable at the moment");
+  const handleEnableActive = async () => {
+    setLoading(true);
+    try {
+      const res = await enableAgentAccount(businessId);
+      toast.success(res.data.message);
+      setAccountStatus(true);
+    } catch (error) {
+      console.log(error);
+      toast.error("An error occured");
+    }
+
+    setLoading(false);
+    setActive(false);
   };
 
   const handleDisableActive = async () => {
@@ -332,7 +341,13 @@ const BusinessDetailsGLO = (props) => {
               </Button>
             )}
             {!accountStatus && (
-              <Button disabled={loading} onClick={handleSetActive} color="info">
+              <Button
+                disabled={loading}
+                onClick={() => {
+                  setConfirm1(true);
+                }}
+                color="info"
+              >
                 {loading ? "Please wait..." : "Enable Account"}
               </Button>
             )}
@@ -428,6 +443,33 @@ const BusinessDetailsGLO = (props) => {
               Confirm
             </Button>{" "}
             <Button onClick={() => setConfirm(false)}>No, Cancel</Button>
+          </ModalFooter>
+        </Modal>
+
+        <Modal centered isOpen={confirm1} toggle={() => setConfirm1(!confirm1)}>
+          <ModalBody>
+            <div className="confirm text-center">
+              <img
+                src={warning}
+                width={50}
+                className="confirm-warn"
+                alt="warn"
+              />
+
+              <h5>Are you sure you want to enable this agent's account?</h5>
+            </div>
+          </ModalBody>
+          <ModalFooter className="confirm-footer">
+            <Button
+              color="primary"
+              onClick={() => {
+                setConfirm1(false);
+                handleEnableActive();
+              }}
+            >
+              Confirm
+            </Button>{" "}
+            <Button onClick={() => setConfirm1(false)}>No, Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>

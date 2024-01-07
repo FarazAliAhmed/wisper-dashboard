@@ -190,7 +190,7 @@ export const generateCreditPayment = async (body) => {
 export const adminMonifyCreditPurchase = async (body) => {
   try {
     console.log(body, "body");
-    const res = await http.post(`${apiUrl}/monnifyAdminAddBalance`, body);
+    const res = await http.post(`${adminUrl}/monnifyAdminAddBalance`, body);
 
     return res;
   } catch (e) {
@@ -202,7 +202,7 @@ export const adminMonifyDebitPurchase = async (body) => {
   try {
     console.log(body, "body");
 
-    const res = await http.post(`${apiUrl}/monnifyAdminDebitBalance`, body);
+    const res = await http.post(`${adminUrl}/monnifyAdminDebitBalance`, body);
 
     return res;
   } catch (e) {
