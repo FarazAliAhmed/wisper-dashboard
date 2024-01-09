@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Form,
   FormGroup,
@@ -25,12 +25,15 @@ import warning from "../../assets/images/logos/warning.png";
 
 import "./auth.scss";
 import { toast } from "react-hot-toast";
+import { SettingsNav } from "../../App";
 
 const Login = () => {
   const [account, setAccount] = useState({ email: "", password: "" });
   const [msgError, setMsgError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [modalState, setModalState] = useState(false);
+
+  const { verificationMessage } = useContext(SettingsNav);
 
   const [errors, setErrors] = useState({});
   const [serverResponse, setServerResponse] = useState({
@@ -100,6 +103,10 @@ const Login = () => {
       {/* {!serverResponse.status && (
         <Alert color="danger">{serverResponse.message}</Alert>
       )} */}
+
+      {verificationMessage && (
+        <Alert color="success">{verificationMessage}</Alert>
+      )}
       <Form onSubmit={handleSubmit}>
         <FormGroup className="mb-3">
           <Label>Email address</Label>

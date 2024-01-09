@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Form,
   FormGroup,
@@ -23,9 +23,11 @@ import confirmed from "../../assets/dashboard/confirmed.svg";
 import { ToastContainer } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import toast from "react-hot-toast";
+import { SettingsNav } from "../../App";
 
 const ConfirmEmail = ({ match }) => {
   const history = useHistory();
+  const { setVerificationMessage } = useContext(SettingsNav);
 
   const [account, setAccount] = useState({ password: "", cpassword: "" });
   const [msgError, setMsgError] = useState("");
@@ -45,22 +47,20 @@ const ConfirmEmail = ({ match }) => {
 
   console.log("res", token);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    const handleSubmit = async () => {
+      try {
+        const res = await authService.confirmEmail(token);
+        setVerificationMessage(res.data?.message);
+        history.push("/login");
+      } catch (error) {
+        setVerificationMessage(error.response?.data?.message);
+        history.push("/login");
+      }
+    };
 
-    try {
-      setLoading(true);
-      const res = await authService.confirmEmail(token);
-      console.log(res, "res");
-      toast.success(res.data?.message);
-      setLoading(false);
-      window.location = "/login";
-    } catch (error) {
-      setLoading(false);
-      console.log(error.response, "res");
-      toast.error(error.response?.data?.message);
-    }
-  };
+    handleSubmit();
+  }, []);
 
   const handleChange = ({ currentTarget: input }) => {
     const validationErrors = { ...errors };
@@ -93,38 +93,7 @@ const ConfirmEmail = ({ match }) => {
       {/* {!serverResponse.status && (
         <Alert color="danger">{serverResponse.message}</Alert>
       )} */}
-      <Form onSubmit={handleSubmit}>
-        <div
-          style={{
-            marginBottom: "2rem",
-          }}
-        >
-          <h1>Email Confirmation</h1>
-        </div>
-
-        {/* <FormGroup className="mb-3">
-          <Label>Email address</Label>
-          <Input
-            type="email"
-            name="email"
-            value={account.email}
-            onChange={handleChange}
-            invalid={errors.email}
-          />
-          <FormFeedback>{errors.email}</FormFeedback>
-        </FormGroup> */}
-
-        <div className="d-grid gap-2 mt-4">
-          <Button
-            disabled={formIsValid(errors) || loading}
-            size="lg"
-            type="submit"
-            className="submit-btn"
-          >
-            Confirm Email
-          </Button>
-        </div>
-      </Form>
+      {/*  */}
     </AuthLayout>
   );
 };

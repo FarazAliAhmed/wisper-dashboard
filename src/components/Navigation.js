@@ -26,33 +26,26 @@ const Navigation = () => {
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="me-auto" navbar>
-            {/* <NavItem>
-              <NavLink href="#">About Us</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#">Services</NavLink>
-            </NavItem> */}
-            {/* <UncontrolledDropdown inNavbar nav>
-              <DropdownToggle caret nav>
-                Options
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>Option 1</DropdownItem>
-                <DropdownItem>Option 2</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Reset</DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown> */}
-          </Nav>
-          <Link to="/login">
-            <Button color="info">Login</Button>
-          </Link>
-          <Link className="register-btn" to="/register">
-            <Button className="btn" outline color="secondary">
-              Register
-            </Button>
-          </Link>
+          <div className="pt-4 mt-2">
+            <Nav
+              vertical
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "1rem",
+              }}
+              className="sidebarNav"
+            >
+              <Link to="/login">
+                <Button color="info">Login</Button>
+              </Link>
+              <Link to="/register">
+                <Button className="btn" outline color="secondary">
+                  Register
+                </Button>
+              </Link>
+            </Nav>
+          </div>
         </Collapse>
       </Navbar>
     </div>
