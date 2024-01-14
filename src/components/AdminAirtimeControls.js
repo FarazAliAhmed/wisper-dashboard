@@ -37,7 +37,7 @@ const AdminAirtimeControls = () => {
   const [message, setMessage] = useState("");
   const [serverResp, setResp] = useState("none");
 
-  useEffect(async () => {
+  useEffect(() => {
     const getAirtimeMaintenanceFunc = async () => {
       // setLoading(true);
       const resp = await getAirtimeMaintenance();

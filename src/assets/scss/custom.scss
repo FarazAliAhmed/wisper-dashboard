@@ -371,3 +371,13 @@ input[type="number"] {
   flex-wrap: wrap;
   margin-top: 1rem;
 }
+
+.nav__auth__div {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}

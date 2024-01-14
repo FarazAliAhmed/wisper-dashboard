@@ -183,7 +183,7 @@ const WithdrawCards = (props) => {
     }
   }, [withdrawDetails.amount]);
 
-  useEffect(async () => {
+  useEffect(() => {
     const getSFMaintenanceFunc = async () => {
       // setLoading(true);
       const resp = await getSFMaintenance();

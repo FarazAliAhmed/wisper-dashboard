@@ -437,7 +437,7 @@ const SFCustomer = () => {
     return "";
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     const getSFMaintenanceFunc = async () => {
       // setLoading(true);
       const resp = await getSFMaintenance();

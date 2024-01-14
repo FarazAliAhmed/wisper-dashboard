@@ -75,7 +75,7 @@ const BuyBulkDataGLO = () => {
 
   // console.log("dataPlans", dataPlans)
 
-  useEffect(async () => {
+  useEffect(() => {
     const getMegaMaintenanceFunc = async () => {
       // setLoading(true);
       const resp = await getMegaMaintenance();

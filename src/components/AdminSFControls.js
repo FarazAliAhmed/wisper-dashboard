@@ -40,7 +40,7 @@ const AdminSFControls = () => {
   const [message, setMessage] = useState("");
   const [serverResp, setResp] = useState("none");
 
-  useEffect(async () => {
+  useEffect(() => {
     const getSFMaintenanceFunc = async () => {
       // setLoading(true);
       const resp = await getSFMaintenance();

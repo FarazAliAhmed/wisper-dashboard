@@ -34,7 +34,7 @@ const AdminMegaControls = () => {
   const [message, setMessage] = useState("");
   const [serverResp, setResp] = useState("none");
 
-  useEffect(async () => {
+  useEffect(() => {
     const getMegaMaintenanceFunc = async () => {
       // setLoading(true);
       const resp = await getMegaMaintenance();
