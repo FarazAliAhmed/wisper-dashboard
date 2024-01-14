@@ -64,7 +64,7 @@
     ]
   },
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "devDependencies": {
     "react-error-overlay": "^6.0.9"
