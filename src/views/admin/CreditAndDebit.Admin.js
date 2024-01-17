@@ -16,6 +16,9 @@ import {
 
 import AdminLayout from "../../layouts/AdminLayout";
 import {
+  adminMonifyCreditPurchase,
+  adminMonifyDebitPurchase,
+  adminMonifyPurchase,
   creditBusiness,
   debitBusiness,
   generateCreditPayment,
@@ -91,63 +94,34 @@ const AllocateData = () => {
 
         setIsSuccess(true);
         if (values.action_type === "credit") {
-          const res = await creditBusiness({
+          const genCred = await adminMonifyCreditPurchase({
             business_id: values.business_id,
-            credit_amount:
-              values.unit == "data" ? values.amount * 1000 : values.amount,
-            unit: values.unit,
-            wallet: values.wallet,
-          });
-
-          response = res.data.message;
-
-          const genCred = await generateCreditPayment({
-            business_id: values.business_id,
-            volume: values.amount * 1000,
-            amount: values.amount_cash,
-            wallet: values.wallet,
-            old: mega_wallet[values.wallet],
-            new:
-              values.unit == "data"
-                ? values.amount * 1000 + mega_wallet[values.wallet]
-                : values.amount,
-            pay_type: values.pay_type,
-            payment_ref:
-              "AD-trx-" + Math.floor(Math.random() * 10000000000000000),
+            amount: values.amount,
           });
 
           setIsSuccess(true);
-
+          window.location.reload();
           console.log("genCred", genCred);
         } else if (values.action_type === "debit") {
-          const res = await debitBusiness({
+          // const res = await debitBusiness({
+          //   business_id: values.business_id,
+          //   debit_amount:
+          //     values.unit == "data" ? values.amount * 1000 : values.amount,
+          //   unit: values.unit,
+          //   wallet: values.wallet,
+          // });
+
+          // response = res.data.message;
+
+          // const val_MB = values.amount * 1000;
+
+          const debCred = await adminMonifyDebitPurchase({
             business_id: values.business_id,
-            debit_amount:
-              values.unit == "data" ? values.amount * 1000 : values.amount,
-            unit: values.unit,
-            wallet: values.wallet,
-          });
-
-          response = res.data.message;
-
-          const val_MB = values.amount * 1000;
-
-          const debCred = await generateCreditPayment({
-            business_id: values.business_id,
-            volume: values.amount * 1000,
-            amount: 0,
-            wallet: values.wallet,
-            old: mega_wallet[values.wallet],
-            new:
-              values.unit == "data"
-                ? mega_wallet[values.wallet] - val_MB
-                : values.amount,
-            pay_type: "debit",
-            payment_ref:
-              "AD-trx-" + Math.floor(Math.random() * 10000000000000000),
+            amount: values.amount,
           });
 
           setIsSuccess(true);
+          window.location.reload();
 
           console.log("debCred", debCred);
 
@@ -169,8 +143,10 @@ const AllocateData = () => {
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
       setServerResponse({ status, message });
+      setIsSuccess(false);
     }
   };
+  // console.log(values);
 
   const handleChange = async ({ currentTarget: input }) => {
     const { name, value } = input;
@@ -331,7 +307,7 @@ const AllocateData = () => {
                   </Col>
                   <Col md={12}>
                     <FormGroup>
-                      <Label for="unit">Business Type</Label>
+                      <Label for="unit">Funding Type</Label>
                       <Input
                         onChange={handleChange}
                         required
@@ -339,9 +315,13 @@ const AllocateData = () => {
                         className="mb-3"
                         type="select"
                       >
-                        <option selected>--- Select type ---</option>
-                        <option value="money">Lite</option>
-                        <option value="data">Mega</option>
+                        {/* <option selected>--- Select type ---</option> */}
+                        <option value="money">
+                          Wallet Funding (Lite and Mega Users)
+                        </option>
+                        {/* <option value="data">
+                          Bucket Funding (Mega Users Only)
+                        </option> */}
                       </Input>
                     </FormGroup>
                   </Col>

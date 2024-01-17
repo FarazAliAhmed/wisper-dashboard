@@ -1,10 +1,10 @@
 import http from "../httpService";
-import { adminUrl, adminUrlV2 } from "../../config";
+import { adminUrl, adminUrlV2, apiUrl } from "../../config";
 
 export const getBusinesses = async () => {
   try {
     const res = await http.get(`${adminUrl}/business`);
-
+    console.log(res.data, "bb");
     return res;
   } catch (e) {
     return null;
@@ -61,6 +61,31 @@ export async function getAllPlansUser(userId) {
   }
 }
 
+export async function getGloResolution(
+  { limit, offset, userId } = { limit: 50, offset: 0 }
+) {
+  console.log(limit, "limit5");
+  try {
+    const res = await http.get(
+      `${adminUrl}/analysis/getBucketUsage?limit=${Number(limit)}`
+    );
+    console.log(res);
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getWalletResolution() {
+  try {
+    const res = await http.get(`${adminUrl}/analysis/getWalletUsage`);
+    console.log(res);
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
+
 export const getAllTrx = async () => {
   try {
     const res = await http.get(`${adminUrl}/trxAll`);
@@ -101,6 +126,37 @@ export const getMainBalance = async () => {
   }
 };
 
+export const getTotalBalance = async () => {
+  try {
+    const res = await http.get(`${adminUrl}/analysis/calwalbal`);
+    return res.data.totalWalletBalance;
+  } catch (e) {
+    return null;
+  }
+};
+
+export const getAllWalletTransactions = async (
+  { limit, offset, userId } = { limit: 50, offset: 0 }
+) => {
+  try {
+    const res = await http.get(`${apiUrl}/monnifyGetAll?limit=${limit}`);
+    return res.data;
+  } catch (e) {
+    return null;
+  }
+};
+
+export const getAllBulkDataPurchaseTransactions = async (
+  { limit, offset, userId } = { limit: 50, offset: 0 }
+) => {
+  try {
+    const res = await http.get(`${apiUrl}/getAllMegaHistory?limit=${limit}`);
+    return res.data;
+  } catch (e) {
+    return null;
+  }
+};
+
 export const creditBusiness = async (body) => {
   try {
     const res = await http.post(`${adminUrl}/credit`, body);
@@ -130,6 +186,39 @@ export const generateCreditPayment = async (body) => {
     return e;
   }
 };
+
+export const adminMonifyCreditPurchase = async (body) => {
+  try {
+    console.log(body, "body");
+    const res = await http.post(`${adminUrl}/monnifyAdminAddBalance`, body);
+
+    return res;
+  } catch (e) {
+    return e;
+  }
+};
+
+export const adminMonifyDebitPurchase = async (body) => {
+  try {
+    console.log(body, "body");
+
+    const res = await http.post(`${adminUrl}/monnifyAdminDebitBalance`, body);
+
+    return res;
+  } catch (e) {
+    return e;
+  }
+};
+
+// export const purchaseAdminMegaData = async (body) => {
+//   try {
+//     const res = await http.post(`${apiUrl}/purchaseAdminMegaData`, body);
+
+//     return res;
+//   } catch (e) {
+//     return e;
+//   }
+// };
 
 export const updatePayType = async (body) => {
   try {
@@ -171,6 +260,16 @@ export const makeActive = async (account_id) => {
   }
 };
 
+export const getAirtimeApis = async () => {
+  try {
+    const res = await http.get(`${apiUrl}/apiBalance/getApiBalance`);
+
+    return res;
+  } catch (e) {
+    return null;
+  }
+};
+
 export const disableAccount = async (account_id) => {
   try {
     const res = await http.get(`${adminUrl}/account/disable/${account_id}`);
@@ -180,6 +279,16 @@ export const disableAccount = async (account_id) => {
     return null;
   }
 };
+
+// export const disableAgentAccount = async (account_id) => {
+//   try {
+//     const res = await http.get(`${apiUrl}/account/disable/${account_id}`);
+
+//     return res;
+//   } catch (e) {
+//     return null;
+//   }
+// };
 
 export const setAccountType = async (type, account_id) => {
   try {
