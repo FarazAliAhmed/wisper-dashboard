@@ -20,16 +20,16 @@ import {
 } from "reactstrap";
 import { paginate } from "../utils";
 import TransactionReceipt from "./TransactionReceipt";
+import moment from "moment";
 import { useUser } from "../context/userContext";
 
 const TransactionsTable = ({
   transactions,
   showHeader,
+  showSubHeader,
   showPageSettings = false,
 }) => {
   const [transactionsData, setTransactionsData] = useState([...transactions]);
-
-  // console.log(transactions);
 
   const { user } = useUser();
 
@@ -117,6 +117,8 @@ const TransactionsTable = ({
     setSearchResults(results);
   };
 
+  console.log(transactionsData);
+
   return (
     <div>
       <Row>
@@ -127,9 +129,12 @@ const TransactionsTable = ({
                 {showHeader && (
                   <CardTitle tag="h5">Transactions History</CardTitle>
                 )}
-                <CardSubtitle className="mb-2 text-muted" tag="h6">
-                  Recent Transactions
-                </CardSubtitle>
+
+                {showSubHeader && (
+                  <CardSubtitle className="mb-2 text-muted" tag="h6">
+                    Recent Transactions
+                  </CardSubtitle>
+                )}
 
                 <div className="legend-container">
                   <p className="legend">
@@ -240,6 +245,9 @@ const TransactionsTable = ({
                       {user?.type == "lite" && <th>Volume</th>}
                       <th>Status</th>
                       <th>Network</th>
+                      {user?.type == "lite" && user?.isAdmin == false ? null : (
+                        <th>Cost</th>
+                      )}
                       <th>Date</th>
                       <th>Receipt</th>
                       {/* <th>Price</th> */}
@@ -251,21 +259,41 @@ const TransactionsTable = ({
                     {transactionsData.map((tx, idx) => (
                       <tr key={idx} className="border-top">
                         <td>
-                          <div className="d-flex align-items-center p-2">
-                            <div className="ms-3">
-                              <h6 className="mb-0">{tx.phone_number}</h6>
-                              {/* <span className="text-muted">{tdata.email}</span> */}
-                            </div>
-                          </div>
+                          <h6 className="mb-0">{tx.phone_number}</h6>
+                          {/* <span className="text-muted">{tdata.email}</span> */}
                         </td>
-                        {user?.type == "lite" && user?.isAdmin == false ? (
-                          <td> ₦{tx.data_volume} </td>
-                        ) : (
-                          <td>{tx.data_volume / 1000} GB</td>
-                        )}
+
+                        <td>
+                          <h6 className="mb-0">
+                            {tx.purchase_type == "data" ? (
+                              <>
+                                {user?.type == "lite"
+                                  ? `₦${tx.data_volume}`
+                                  : `${tx.data_volume / 1000} GB`}
+                              </>
+                            ) : (
+                              <>
+                                {user?.type == "lite" ? (
+                                  <td> ₦{tx.price} </td>
+                                ) : (
+                                  <td> {tx.volume} naira </td>
+                                )}
+                              </>
+                            )}
+                          </h6>
+                          {/* <span className="text-muted">{tdata.email}</span> */}
+                        </td>
 
                         {user?.type == "lite" && (
-                          <td>{tx.lite_volume || "0 mb"}</td>
+                          <th>
+                            {tx.purchase_type == "data" ? (
+                              <>
+                                <td>{tx.lite_volume || "0 mb"}</td>
+                              </>
+                            ) : (
+                              <td> {tx.volume} naira </td>
+                            )}
+                          </th>
                         )}
 
                         {/* <td>{tx.price || "-"}</td> */}
@@ -279,7 +307,19 @@ const TransactionsTable = ({
                           )}
                         </td>
                         <td>{tx.network_provider}</td>
-                        <td>{tx.created_at}</td>
+                        {user?.type == "lite" &&
+                        user?.isAdmin == false ? null : (
+                          <td>
+                            {tx.purchase_type == "data"
+                              ? `bucket`
+                              : `₦${tx.price}`}
+                          </td>
+                        )}
+
+                        <td>
+                          {" "}
+                          {moment(tx.created_at).format("YYYY-MM-DD HH:mm:ss")}
+                        </td>
                         <td>
                           <Button
                             className="receipt-button"

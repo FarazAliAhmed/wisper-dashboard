@@ -35,6 +35,12 @@ import {
   getBusinessTransactionFromAllTransactions,
 } from "../../utils";
 import { useAdmin } from "../../context/adminContext";
+import MonifyHistory from "../../components/MonifyHistory";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import AdminMonifyHistory from "../../components/AdminMonifyHistory";
+import AdminPurchaseHistory from "../../components/AdminPurchaseHistory";
+import moment from "moment";
+import AdminAgents from "../ui/AdminAgents";
 
 const Account = (props) => {
   const [business, setBusiness] = useState({});
@@ -43,6 +49,9 @@ const Account = (props) => {
   const [active, setActive] = useState();
   const [type, setType] = useState();
   const [loading, setLoading] = useState(false);
+  const [cashBalance, setCashBalance] = useState(0);
+  const [subBalance, setSubBalance] = useState({});
+  const [navState, setNavState] = useState(0);
 
   const businessId = props.match.params.businessId;
 
@@ -71,11 +80,11 @@ const Account = (props) => {
           res.data.business
         )
       );
+      setCashBalance(wallet_balance);
+      setSubBalance(mega_wallet);
     }
     fetchBusinessDetails();
   }, []);
-
-  console.log("bal", balanceDisplay);
 
   const handleRemoveAdmin = async () => {
     setLoading(true);
@@ -119,56 +128,20 @@ const Account = (props) => {
     setType("mega");
   };
 
+  const navItems = ["Transactions", "Wallet", "Data Purchase", "Agents"];
+  const dateObject = moment(business?.createdAt);
+
+  const formattedDate = dateObject.format("YYYY-MM-DD");
+
+  // Get the time in the format "HH:MM:SS"
+  const formattedTime = dateObject.format("HH:mm:ss");
   return (
     <AdminLayout>
-      <Link to="/admin/business">
-        <Button color="primary">Back</Button>
-      </Link>{" "}
-      &nbsp;
-      {isAdmin && (
-        <Button disabled={loading} onClick={handleRemoveAdmin} color="danger">
-          {loading ? "Please wait..." : "Remove from admin"}
-        </Button>
-      )}
-      {!isAdmin && (
-        <Button disabled={loading} onClick={handleMakeAdmin} color="success">
-          {loading ? "Please wait..." : "Make admin"}
-        </Button>
-      )}
-      &nbsp;
-      {active && (
-        <Button disabled={loading} onClick={handleRemoveActive} color="warning">
-          {loading ? "Please wait..." : "Disable Account"}
-        </Button>
-      )}
-      {!active && (
-        <Button disabled={loading} onClick={handleSetActive} color="info">
-          {loading ? "Please wait..." : "Enable Account"}
-        </Button>
-      )}
-      &nbsp;
-      {type === "lite" && (
-        <Button disabled={loading} onClick={handleSetTypeMega} color="dark">
-          {loading ? "Please wait..." : "Make Mega"}
-        </Button>
-      )}
-      {type === "lite" && (
-        <Button
-          className="mx-2"
-          disabled={loading}
-          onClick={() =>
-            (window.location.href = `/admin/user_packages/${businessId}`)
-          }
-          color="primary"
-        >
-          {loading ? "Please wait..." : "Pricing"}
-        </Button>
-      )}
-      {type === "mega" && (
-        <Button disabled={loading} onClick={handleSetTypeLite} color="primary">
-          {loading ? "Please wait..." : "Make Lite"}
-        </Button>
-      )}
+      <div className="business__action__cards">
+        <Link to="/admin/business">
+          <Button color="primary">Back</Button>
+        </Link>{" "}
+      </div>
       <div>
         <h5 className="mb-4 mt-3">Business Account</h5>
 
@@ -179,12 +152,24 @@ const Account = (props) => {
                 <Row form>
                   <Col md={12}>
                     <FormGroup>
-                      <Label for="fullName">Business Name</Label>
+                      <Label for="fullName">Full Name</Label>
                       <Input
                         disabled
                         id="fullName"
                         value={business?.name}
                         name="name"
+                        type="text"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col md={12}>
+                    <FormGroup>
+                      <Label for="businessName">Business Name</Label>
+                      <Input
+                        disabled
+                        id="businessName"
+                        value={business?.business_name}
+                        name="business_name"
                         type="text"
                       />
                     </FormGroup>
@@ -213,6 +198,20 @@ const Account = (props) => {
                       />
                     </FormGroup>
                   </Col>
+                  {business?.type == "agent" && (
+                    <Col md={12}>
+                      <FormGroup>
+                        <Label for="dealer">Dealer Id</Label>
+                        <Input
+                          value={business?.dealer}
+                          disabled
+                          id="dealer"
+                          name="dealer"
+                          type="text"
+                        />
+                      </FormGroup>
+                    </Col>
+                  )}
                   <Col md={12}>
                     <FormGroup>
                       <Label for="username">Username</Label>
@@ -264,7 +263,7 @@ const Account = (props) => {
                     <FormGroup>
                       <Label for="dateJoined">Date joined</Label>
                       <Input
-                        value={business?.createdAt}
+                        value={`${formattedDate} ${formattedTime}`}
                         disabled
                         id="dateJoined"
                         name="dateJoined"
@@ -279,20 +278,17 @@ const Account = (props) => {
 
           <Col lg="5">
             <Row>
-              <Col sm="6" lg="9">
-                <TopCards
-                  bg="bg-light-info text-info"
-                  title="Profit"
-                  subtitle="Balance"
-                  earning={
-                    balanceDisplay.toLowerCase() == "0 mb" ||
-                    balanceDisplay.toLowerCase() == "mb 0"
-                      ? "₦ 0"
-                      : balanceDisplay
-                  }
-                  icon={wallIcon}
-                />
-              </Col>
+              {business.type !== "agent" && (
+                <Col sm="6" lg="9">
+                  <TopCards
+                    bg="bg-light-info text-info"
+                    title="Profit"
+                    subtitle="Balance"
+                    earning={`₦${cashBalance}`}
+                    icon={wallIcon}
+                  />
+                </Col>
+              )}
               {/* <Col sm="6" lg="9">
                 <TopCards
                   bg="bg-light-danger text-danger"
@@ -313,7 +309,7 @@ const Account = (props) => {
               </Col> */}
 
               {/***Mega Wallets***/}
-              {business.type === "mega" && (
+              {business.type === "mega" || business.type === "agent" ? (
                 <>
                   {/* MTN and Airtel Wallets */}
                   {/* <Col sm="6" lg="9">
@@ -366,20 +362,156 @@ const Account = (props) => {
                     />
                   </Col>
                 </>
+              ) : (
+                ""
               )}
             </Row>
           </Col>
         </Row>
 
-        <Row className="mt-4">
-          <h5 className="mb-4 mt-3">Business Transactions</h5>
-          <TransactionsTable
-            transactions={getBusinessTransactionFromAllTransactions(
-              transaction,
-              businessId
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <h3>Actions</h3>
+          <div className="sf__customer__cards">
+            {isAdmin && (
+              <Button
+                disabled={loading}
+                onClick={handleRemoveAdmin}
+                color="danger"
+              >
+                {loading ? "Please wait..." : "Remove from admin"}
+              </Button>
             )}
-            showHeader={true}
-          />
+            {!isAdmin && (
+              <Button
+                disabled={loading}
+                onClick={handleMakeAdmin}
+                color="success"
+              >
+                {loading ? "Please wait..." : "Make admin"}
+              </Button>
+            )}
+            {active && (
+              <Button
+                disabled={loading}
+                onClick={handleRemoveActive}
+                color="warning"
+              >
+                {loading ? "Please wait..." : "Disable Account"}
+              </Button>
+            )}
+            {!active && (
+              <Button disabled={loading} onClick={handleSetActive} color="info">
+                {loading ? "Please wait..." : "Enable Account"}
+              </Button>
+            )}
+            {type === "lite" && (
+              <Button
+                disabled={loading}
+                onClick={handleSetTypeMega}
+                color="dark"
+              >
+                {loading ? "Please wait..." : "Make Mega"}
+              </Button>
+            )}
+            {type === "lite" && (
+              <Button
+                // className="mx-2"
+                disabled={loading}
+                onClick={() =>
+                  (window.location.href = `/admin/user_packages/${businessId}`)
+                }
+                color="primary"
+              >
+                {loading ? "Please wait..." : "Pricing"}
+              </Button>
+            )}
+            {type === "mega" && (
+              <Button
+                // className="mx-2"
+                disabled={loading}
+                onClick={() =>
+                  (window.location.href = `/admin/updateMegaPrice/${businessId}`)
+                }
+                color="primary"
+              >
+                {loading ? "Please wait..." : "Pricing"}
+              </Button>
+            )}
+            {type === "mega" && (
+              <Button
+                disabled={loading}
+                onClick={handleSetTypeLite}
+                color="primary"
+              >
+                {loading ? "Please wait..." : "Make Lite"}
+              </Button>
+            )}
+          </div>
+        </div>
+
+        <Row className="mt-4">
+          {/* <h3>Business Table Data</h3> */}
+
+          <div className="settings__nav">
+            {navItems.map((item, index) =>
+              index !== 3 ? (
+                <p
+                  onClick={() => {
+                    setNavState(index);
+                  }}
+                  key={index}
+                  className={navState === index ? "activeNav__item" : ""}
+                >
+                  {item}
+                </p>
+              ) : (
+                <>
+                  {business.type == "mega" && (
+                    <p
+                      onClick={() => {
+                        setNavState(index);
+                      }}
+                      key={index}
+                      className={navState === index ? "activeNav__item" : ""}
+                    >
+                      {item}
+                    </p>
+                  )}
+                </>
+              )
+            )}
+          </div>
+          {navState == 0 && (
+            <>
+              {/* <h5 className="mb-4 mt-3">Business Transactions</h5> */}
+              <TransactionsTable
+                transactions={getBusinessTransactionFromAllTransactions(
+                  transaction,
+                  businessId
+                )}
+                showHeader={true}
+              />
+            </>
+          )}
+          {navState == 1 && (
+            <>
+              {/* <h5 className="mb-4 mt-3">Business Transactions</h5> */}
+              <AdminMonifyHistory businessId={businessId} />
+            </>
+          )}
+          {navState == 2 && (
+            <>
+              {/* <h5 className="mb-4 mt-3">Business Transactions</h5> */}
+              <AdminPurchaseHistory businessId={businessId} />
+            </>
+          )}
+
+          {navState == 3 && (
+            <>
+              {/* <h5 className="mb-4 mt-3">Business Transactions</h5> */}
+              <AdminAgents businessId={businessId} />
+            </>
+          )}
         </Row>
       </div>
     </AdminLayout>

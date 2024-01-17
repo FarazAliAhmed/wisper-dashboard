@@ -9,6 +9,7 @@ import {
   Row,
   Col,
   CardBody,
+  FormFeedback,
 } from "reactstrap";
 import AllocateButton from "../../components/AllocateButton";
 import { useAppState } from "../../context/appContext";
@@ -16,9 +17,12 @@ import { useUser } from "../../context/userContext";
 
 import AdminLayout from "../../layouts/AdminLayout";
 import { allocateData } from "../../services/dataService";
-import { handleFailedRequest, parseDataPlans } from "../../utils";
+import {
+  handleFailedRequest,
+  parseDataPlans,
+  validateProperty,
+} from "../../utils";
 // import dataPlans from "../../utils/plansTable";
-
 
 const initialState = {
   network: "airtel",
@@ -31,13 +35,14 @@ const initialState = {
 const AllocateData = () => {
   const [plan, setPlan] = useState(initialState);
 
-  const { plans } = useAppState()
-  const dataPlans = parseDataPlans(plans)
+  const { plans } = useAppState();
+  const dataPlans = parseDataPlans(plans);
 
-  // const [serverResponse, setServerResponse] = useState({
-  //   status: true,
-  //   message: "",
-  // });
+  const [errors, setErrors] = useState({});
+  const [serverResponse, setServerResponse] = useState({
+    status: true,
+    message: "",
+  });
 
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
@@ -60,6 +65,11 @@ const AllocateData = () => {
   };
 
   const handleChange = ({ currentTarget: input }) => {
+    const validationErrors = { ...errors };
+    const errorMessage = validateProperty(input);
+    if (errorMessage) validationErrors[input.name] = errorMessage;
+    else delete validationErrors[input.name];
+
     const { name, type, value, checked } = input;
 
     if (type === "checkbox") {
@@ -148,6 +158,7 @@ const AllocateData = () => {
                         onChange={handleChange}
                         type="number"
                       />
+                      <FormFeedback>{errors.phone_number}</FormFeedback>
                     </FormGroup>
                   </Col>
                   <Col md={12}>
@@ -196,11 +207,12 @@ const AllocateData = () => {
                 <p>Code For Data Balance</p>
                 <Card className="shadow-none code-balance">
                   <CardBody>
-                    <div className="py-2 border-bottom">MTN [SME] *461*4#</div>
                     <div className="py-2 border-bottom">
-                      MTN [Gifting] *131*4# or *460*260#
+                      MTN *321*3*3# or *312*5#
                     </div>
-                    <div className="py-2 ">Airtel *140#</div>
+                    <div className="py-2 border-bottom">Airtel CG *140#</div>
+                    <div className="py-2 border-bottom">GLO *127*0#</div>
+                    <div className="py-2 border-bottom">9Mobile *228#</div>
                   </CardBody>
                 </Card>
               </div>

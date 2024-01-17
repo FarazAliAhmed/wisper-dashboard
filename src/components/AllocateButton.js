@@ -7,7 +7,7 @@ import cancel from "../assets/images/logos/cancel.png";
 import checked from "../assets/images/logos/checked.png";
 import loadingGIF from "../assets/images/logos/loading2.gif";
 
-import { useAppState } from '../context/appContext'
+import { useAppState } from "../context/appContext";
 
 const AllocateButton = ({
   loading,
@@ -16,6 +16,7 @@ const AllocateButton = ({
   phone_number,
   handleSubmit,
   plans,
+  valid,
 }) => {
   const [success, setSuccess] = useState(false);
   const [confirm, setConfirm] = useState(false);
@@ -37,7 +38,7 @@ const AllocateButton = ({
   const handleAllocate = async () => {
     // setConfirm(false)
     const status = await handleSubmit();
-    console.log({status})
+    console.log({ status });
     if (status?.status) {
       setMessage(status?.message);
       setSuccess(true);
@@ -45,7 +46,9 @@ const AllocateButton = ({
         setSuccess(false);
       }, 5000);
     } else {
-      setMessage(status?.message || "You do not have a price for this data plan");
+      setMessage(
+        status?.message || "You do not have a price for this data plan"
+      );
       setFailed(true);
     }
   };
@@ -53,7 +56,7 @@ const AllocateButton = ({
   return (
     <>
       {/* <Button className="fund-button">Fund Account</Button> */}
-      <Button color="primary" onClick={handleSend}>
+      <Button disabled={valid || loading} color="primary" onClick={handleSend}>
         Allocate
       </Button>
 
@@ -63,9 +66,9 @@ const AllocateButton = ({
           <div className="confirm text-center">
             <img src={warning} width={50} className="confirm-warn" alt="warn" />
             <p className="text-center">
-              Are you sure you want to send <strong>{plan?.size}</strong> 
-              {/* worth{" "} <strong>{plan?.amount}</strong>  */}
-              {" "} to <strong>{phone_number}</strong>
+              Are you sure you want to send <strong>{plan?.size}</strong>
+              {/* worth{" "} <strong>{plan?.amount}</strong>  */} to{" "}
+              <strong>{phone_number}</strong>
             </p>
           </div>
         </ModalBody>

@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   CardBody,
+  FormFeedback,
   // UncontrolledAlert,
   // Button,
 } from "reactstrap";
@@ -17,7 +18,12 @@ import { useAppState } from "../../context/appContext";
 
 import FullLayout from "../../layouts/FullLayout";
 import { allocateData } from "../../services/dataService";
-import { handleFailedRequest, parseDataPlans } from "../../utils";
+import {
+  formIsValid,
+  handleFailedRequest,
+  parseDataPlans,
+  validateProperty,
+} from "../../utils";
 // import dataPlans from "../../utils/plansTable";
 
 import "./../../assets/scss/custom.scss";
@@ -30,6 +36,7 @@ const initialState = {
 
 const AllocateDataMA = () => {
   const [plan, setPlan] = useState(initialState);
+  const [errors, setErrors] = useState({});
 
   // const [serverResponse, setServerResponse] = useState({
   //   status: true,
@@ -51,11 +58,12 @@ const AllocateDataMA = () => {
     try {
       setLoading(true);
       const res = await allocateData(plan, user?.access_token);
-      // console.log("res", res);
+      console.log("res", res);
       setLoading(false);
       setPlan(initialState);
-      return { status: true, message: "Data allocated successfully." };
       // setServerResponse({status: true, message: "Data allocated successfully."});
+      setErrors({});
+      return { status: true, message: res.data.gateway_response };
     } catch (error) {
       console.log("error.response.data.message:", error.response.data.message);
       setLoading(false);
@@ -66,9 +74,17 @@ const AllocateDataMA = () => {
   };
 
   const handleChange = ({ currentTarget: input }) => {
+    const validationErrors = { ...errors };
+    const errorMessage = validateProperty(input);
+    if (errorMessage) validationErrors[input.name] = errorMessage;
+    else delete validationErrors[input.name];
+
     const { name, value } = input;
     setPlan({ ...plan, [name]: value });
+    setErrors(validationErrors);
   };
+
+  console.log(errors, "errors");
   return (
     <FullLayout>
       <div>
@@ -132,7 +148,7 @@ const AllocateDataMA = () => {
                               key={`${plan.network}-${plan.dataId}`}
                               value={plan.dataId}
                             >
-                              {plan.size} ({plan.duration}) - {plan.plan_type}
+                              {plan.size} ({plan.duration})
                             </option>
                           ))}
                       </Input>
@@ -143,11 +159,14 @@ const AllocateDataMA = () => {
                       <Label for="phone_number">Phone Number</Label>
                       <Input
                         value={plan.phone_number}
+                        invalid={errors.phone_number}
                         id="phone_number"
                         name="phone_number"
                         onChange={handleChange}
+                        required
                         type="number"
                       />
+                      <FormFeedback>{errors.phone_number}</FormFeedback>
                     </FormGroup>
                   </Col>
                 </Row>
@@ -159,6 +178,7 @@ const AllocateDataMA = () => {
                   plan_id={plan.plan_id}
                   phone_number={plan.phone_number}
                   plans={plans}
+                  valid={formIsValid(errors)}
                 />
                 {/* <Button disabled={loading} type="submit" color="primary">
               Allocate
@@ -170,11 +190,12 @@ const AllocateDataMA = () => {
                 <p>Code For Data Balance</p>
                 <Card className="shadow-none code-balance">
                   <CardBody>
-                    <div className="py-2 border-bottom">MTN [SME] *461*4#</div>
                     <div className="py-2 border-bottom">
-                      MTN [Gifting] *131*4# or *460*260#
+                      MTN *321*3*3# or *312*5#
                     </div>
-                    <div className="py-2 ">Airtel *140#</div>
+                    <div className="py-2 border-bottom">Airtel CG *140#</div>
+                    <div className="py-2 border-bottom">GLO *127*0#</div>
+                    <div className="py-2 border-bottom">9Mobile *228#</div>
                   </CardBody>
                 </Card>
               </div>

@@ -1,17 +1,251 @@
 @import "variables";
 
+/* Hide the spinner buttons on number inputs */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+.data__heading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.sf__head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 1rem;
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  a {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.sf__filtering {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  // gap: 0.5rem;
+  padding: 0.4rem 0.4rem;
+  padding-left: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #007bff;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: center;
+  background-color: #007bff;
+  color: white;
+  // width: 100%;
+}
+.sf__filtering > select {
+  all: unset;
+  padding: 0rem 0.2rem;
+  background-color: #007bff;
+}
+
+.sf__action__cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 3rem;
+
+  @media (max-width: 660px) {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+}
+
+.business__action__cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1rem;
+
+  @media (max-width: 660px) {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+}
+.add__sub__dealer__con {
+  width: 100%;
+}
+
+.add__sub__dealer__head {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+.sub__dealers__container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.sub__dealers__head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center !important;
+  width: 100%;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+
+  @media (max-width: 570px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+.sub__dealers__head > button {
+  all: unset;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  color: white;
+}
+
+.sub__dealers__head > input {
+  all: unset;
+  padding: 0.5rem 1rem;
+  border: 1px solid gray;
+  border-radius: 0.5rem;
+  background-color: white;
+  cursor: pointer;
+
+  &:hover {
+    border: 1px solid #007bff;
+  }
+}
+
+.settings__nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.settings__nav p {
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 17px;
+
+  @media (max-width: 660px) {
+    font-size: 14px;
+  }
+}
+
+.activeNav__item {
+  color: #007bff;
+}
+
+.claim__verification {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-end;
+    align-items: center; */
+  gap: 1rem;
+}
+
+.claim__verification p {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.claim__verification p:hover {
+  color: #007bff;
+  cursor: pointer;
+}
+.verification__container {
+}
+
+.verification__character {
+  border-radius: 0.5rem;
+}
+
+.verification__character--inactive {
+  border-radius: 0.5rem;
+}
+
+.verification__character--selected {
+  border-radius: 0.5rem;
+}
+
+// .settings__text {
+//   font-size: 10px;
+// }
+
+.monnify__logo {
+  width: 18rem;
+  margin-bottom: 1rem;
+}
+
+.data__heading h5 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+}
 .bank-details {
-  background-image: url("../images/bg/wisper.jpg");
+  // background-image: url("../images/bg/wisper.jpg");
+  margin: 0 0.2em;
   margin-bottom: 20px;
-  padding: 60px 0px;
-  color: #fff;
+  padding: 10px 0px;
+  border-radius: 1rem;
+
+  color: black;
 }
 
 .sterling__logo {
-  width: 12em;
+  width: 10rem;
+  // height: 3.5rem;
   background-color: #fff;
-  padding: 1em;
-  margin-bottom: 1em;
+
+  border-radius: 1rem;
+}
+
+.wema__logo {
+  width: 10rem;
+  // height: 3.5rem;
+  background-color: #fff;
+
+  border-radius: 1rem;
+}
+
+.moniepoint__logo {
+  width: 10rem;
+  // height: 3.5rem;
+  background-color: #fff;
+  padding: 0.1rem;
+  border-radius: 1rem;
 }
 
 // Component: PaymentButton

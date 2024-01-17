@@ -16,8 +16,9 @@
 .bank-details {
   background-image: url("../images/bg/wisper.jpg");
   margin-bottom: 20px;
-  padding: 60px 0px;
+  padding: 20px 0px;
   color: #fff;
+  width: 100%;
 }
 
 .sterling__logo {
@@ -57,8 +58,8 @@
   .legend-container {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
     position: unset;
     gap: 0;
   }
@@ -76,36 +77,44 @@
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   gap: 1em;
 }
 
 .confirm-warn {
   width: 4em;
-  -webkit-filter: invert(76%) sepia(21%) saturate(1888%) hue-rotate(355deg) brightness(107%) contrast(111%);
-          filter: invert(76%) sepia(21%) saturate(1888%) hue-rotate(355deg) brightness(107%) contrast(111%);
+  -webkit-filter: invert(76%) sepia(21%) saturate(1888%) hue-rotate(355deg)
+    brightness(107%) contrast(111%);
+  filter: invert(76%) sepia(21%) saturate(1888%) hue-rotate(355deg)
+    brightness(107%) contrast(111%);
 }
 
 .confirm-cancel {
   width: 4em;
-  -webkit-filter: invert(19%) sepia(89%) saturate(7228%) hue-rotate(352deg) brightness(83%) contrast(105%);
-          filter: invert(19%) sepia(89%) saturate(7228%) hue-rotate(352deg) brightness(83%) contrast(105%);
+  -webkit-filter: invert(19%) sepia(89%) saturate(7228%) hue-rotate(352deg)
+    brightness(83%) contrast(105%);
+  filter: invert(19%) sepia(89%) saturate(7228%) hue-rotate(352deg)
+    brightness(83%) contrast(105%);
 }
 
 .confirm-checked {
   width: 4em;
-  -webkit-filter: invert(54%) sepia(13%) saturate(1994%) hue-rotate(68deg) brightness(101%) contrast(92%);
-          filter: invert(54%) sepia(13%) saturate(1994%) hue-rotate(68deg) brightness(101%) contrast(92%);
+  -webkit-filter: invert(54%) sepia(13%) saturate(1994%) hue-rotate(68deg)
+    brightness(101%) contrast(92%);
+  filter: invert(54%) sepia(13%) saturate(1994%) hue-rotate(68deg)
+    brightness(101%) contrast(92%);
 }
 
 .allocate-loading {
   width: 4em;
-  -webkit-filter: invert(79%) sepia(35%) saturate(776%) hue-rotate(78deg) brightness(85%) contrast(89%);
-          filter: invert(79%) sepia(35%) saturate(776%) hue-rotate(78deg) brightness(85%) contrast(89%);
+  -webkit-filter: invert(79%) sepia(35%) saturate(776%) hue-rotate(78deg)
+    brightness(85%) contrast(89%);
+  filter: invert(79%) sepia(35%) saturate(776%) hue-rotate(78deg)
+    brightness(85%) contrast(89%);
 }
 
 .confirm-footer {
@@ -113,8 +122,8 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .btn-block {
@@ -127,7 +136,7 @@
   /* color: rgb(54, 153, 255); */
 }
 
-.pagination{
+.pagination {
   flex-wrap: wrap;
 }
 

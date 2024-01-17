@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Navbar,
@@ -14,10 +14,26 @@ import wisperSmall from "../assets/images/logos/wisper-white.png";
 import user1 from "../assets/images/users/user1.jpg";
 import { useUser } from "../context/userContext";
 
-const Header = ({isAdmin}) => {
+const Header = ({ isAdmin }) => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const [type, setType] = React.useState("");
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const context = useUser();
+
+  useEffect(() => {
+    if (context?.user?.type == "mega" && context?.user?.isAdmin == true) {
+      setType("Admin");
+    } else if (
+      context?.user?.type == "mega" &&
+      context?.user?.isAdmin == false
+    ) {
+      setType("Dealer");
+    } else if (context?.user?.type == "agent") {
+      setType("Agent");
+    } else if (context?.user?.type == "lite") {
+      setType("Lite");
+    }
+  }, []);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const Handletoggle = () => {
@@ -27,13 +43,13 @@ const Header = ({isAdmin}) => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
   return (
-    <Navbar color={isAdmin ? "danger": "primary"} dark expand="xs">
+    <Navbar color={isAdmin ? "danger" : "primary"} dark expand="xs">
       <div className="d-flex align-items-center">
         <NavbarBrand href="/" className="d-lg-none">
           <img src={wisperSmall} width={80} alt="wisper logo" />
         </NavbarBrand>
         <Button
-          color={isAdmin ? "danger": "primary"}
+          color={isAdmin ? "danger" : "primary"}
           className="d-lg-none"
           onClick={() => showMobilemenu()}
         >
@@ -67,28 +83,34 @@ const Header = ({isAdmin}) => {
             ></img>
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem header>{context?.user?.username}</DropdownItem>
-              <Link className="text-decoration-none text-dark" to={isAdmin ? "/admin" :"/dashboard"}>
-            <DropdownItem className="text-dark">
-                Dashboard
-            </DropdownItem>
-              </Link>
-              <Link className="text-decoration-none text-dark" to={isAdmin ? "/admin/account" : "/account"}>
-            <DropdownItem className="text-dark">
-                Edit Account
-            </DropdownItem>
-              </Link>
+            <div className="text-decoration-none text-dark">
+              <DropdownItem className="text-dark">Wisper - {type}</DropdownItem>
+            </div>
+
             <DropdownItem divider />
-              <Link className="text-decoration-none text-dark" to={isAdmin ? "/admin/allocate" : "/allocate"}>
-            <DropdownItem className="text-dark">
-                Allocate Data
-            </DropdownItem>
-              </Link>
-              <Link className="text-decoration-none text-danger" to="/logout">
-            <DropdownItem className="text-danger">
-                Logout
-            </DropdownItem>
-              </Link>
+            <Link
+              className="text-decoration-none text-dark"
+              to={isAdmin ? "/admin" : "/dashboard"}
+            >
+              <DropdownItem className="text-dark">Dashboard</DropdownItem>
+            </Link>
+            <Link
+              className="text-decoration-none text-dark"
+              to={isAdmin ? "/admin/account" : "/settings"}
+            >
+              <DropdownItem className="text-dark">Settings</DropdownItem>
+            </Link>
+            <Link
+              className="text-decoration-none text-dark"
+              to={isAdmin ? "/admin/allocate" : "/allocate"}
+            >
+              <DropdownItem className="text-dark">Allocate Data</DropdownItem>
+            </Link>
+            <DropdownItem divider />
+
+            <Link className="text-decoration-none text-danger" to="/logout">
+              <DropdownItem className="text-danger">Logout</DropdownItem>
+            </Link>
           </DropdownMenu>
         </Dropdown>
       </Collapse>

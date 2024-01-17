@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row } from "reactstrap";
+import { Col, Row, UncontrolledAlert } from "reactstrap";
 
 import "../../assets/scss/custom.scss";
 import TopCards from "../../components/dashboard/TopCards";
+import FundCards from "../../components/dashboard/FundCards";
 import SupportCard from "../../components/dashboard/SupportCard";
 import FullLayout from "../../layouts/FullLayout";
 import sterling_logo from "../../assets/images/logos/Sterling_Bank_Logo_Straight.png";
@@ -57,52 +58,67 @@ const Dashboard = () => {
   return (
     <FullLayout>
       <div>
+        {/* <UncontrolledAlert dismissible={false} color="success">
+          Account Type - {user?.type}
+        </UncontrolledAlert> */}
+        <h4>Balances</h4>
         {/***Top Cards***/}
         {maintenance.notice && (
           <Row>
             <AdminNotifier maintenance={maintenance} />
           </Row>
         )}
-        <Row>
+        {user?.type != "agent" && (
+          <Row>
+            {user.type != "mega" && (
+              <Col sm="6" lg="4">
+                <FundCards
+                  bg="bg-light-info text-info"
+                  title="Profit"
+                  subtitle="Wallet Balance"
+                  earning={`₦${cash}`}
+                  icon={wallIcon}
+                />
+              </Col>
+            )}
+            {/* 
           {user.type != "mega" && (
             <Col sm="6" lg="4">
               <TopCards
-                bg="bg-light-info text-info"
-                title="Profit"
-                subtitle="Balance"
-                earning={
-                  balanceDisplay.toLowerCase() == "0 mb"
-                    ? "₦ 0"
-                    : balanceDisplay
-                }
-                icon={wallIcon}
+                bg="bg-light-danger text-danger"
+                title="Refunds"
+                subtitle="Total transactions "
+                earning={`${singleTrx}`}
+                icon={tranIcon}
               />
             </Col>
           )}
-          <Col sm="6" lg="4">
-            <TopCards
-              bg="bg-light-danger text-danger"
-              title="Refunds"
-              subtitle="Total transactions "
-              earning={`${singleTrx}`}
-              icon={tranIcon}
-            />
-          </Col>
-          <Col sm="6" lg="4">
-            <TopCards
-              bg="bg-light-warning text-warning"
-              title="New Project"
-              subtitle="Total data sold"
-              earning={`${singleSold / 1000} GB`}
-              icon={wallIcon}
-            />
-          </Col>
+          {user.type != "mega" && (
+            <Col sm="6" lg="4">
+              <TopCards
+                bg="bg-light-warning text-warning"
+                title="New Project"
+                subtitle="Total data sold"
+                earning={`${singleSold / 1000} GB`}
+                icon={wallIcon}
+              />
+            </Col>
+          )} */}
 
-          {/***Mega Wallets***/}
-          {user.type === "mega" && (
-            <>
-              {/* MTN and Airtel Wallets */}
-              {/* <Col sm="6" lg="4">
+            {/***Mega Wallets***/}
+            {user.type === "mega" && (
+              <>
+                <Col sm="6" lg="4">
+                  <FundCards
+                    bg="bg-light-info text-info"
+                    title="Profit"
+                    subtitle="Wallet Balance"
+                    earning={`₦${cash}`}
+                    icon={wallIcon}
+                  />
+                </Col>
+                {/* MTN and Airtel Wallets */}
+                {/* <Col sm="6" lg="4">
                 <TopCards
                   bg="bg-light-info text-info"
                   title="Profit"
@@ -111,7 +127,55 @@ const Dashboard = () => {
                   icon="bi bi-wallet-fill"
                 />
               </Col> */}
-              <Col sm="6" lg="4">
+                <Col sm="6" lg="4">
+                  <TopCards
+                    bg="bg-light-warning text-warning"
+                    title="Refunds"
+                    subtitle="MTN"
+                    earning={`${mega_wallet.mtn_gifting / 1000} GB`}
+                    icon={mtn1}
+                  />
+                </Col>
+                <Col sm="6" lg="4">
+                  <TopCards
+                    bg="bg-light-success text-success"
+                    title="New Project"
+                    subtitle="Airtel"
+                    earning={`${mega_wallet.airtel / 1000} GB`}
+                    icon={airtel}
+                  />
+                </Col>
+
+                {/* Glo wallet - Hidden for now */}
+                <Col sm="6" lg="4">
+                  <TopCards
+                    bg="bg-light-info text-info"
+                    title="Profit"
+                    subtitle="GLO"
+                    earning={`${mega_wallet.glo / 1000} GB`}
+                    icon={glo}
+                  />
+                </Col>
+
+                {/* 9Mobile wallet */}
+                <Col sm="6" lg="4">
+                  <TopCards
+                    bg="bg-light-info text-info"
+                    title="Profit"
+                    subtitle="9 Mobile"
+                    earning={`${mega_wallet["9mobile"] / 1000} GB`}
+                    icon={mob9}
+                  />
+                </Col>
+              </>
+            )}
+          </Row>
+        )}
+
+        {user?.type == "agent" && (
+          <Row lg={12}>
+            <Row lg={12}>
+              <Col sm="6" lg="6">
                 <TopCards
                   bg="bg-light-warning text-warning"
                   title="Refunds"
@@ -120,7 +184,7 @@ const Dashboard = () => {
                   icon={mtn1}
                 />
               </Col>
-              <Col sm="6" lg="4">
+              <Col sm="6" lg="6">
                 <TopCards
                   bg="bg-light-success text-success"
                   title="New Project"
@@ -129,9 +193,10 @@ const Dashboard = () => {
                   icon={airtel}
                 />
               </Col>
-
-              {/* Glo wallet - Hidden for now */}
-              <Col sm="6" lg="4">
+            </Row>
+            {/* Glo wallet - Hidden for now */}
+            <Row lg={12}>
+              <Col sm="6" lg="6">
                 <TopCards
                   bg="bg-light-info text-info"
                   title="Profit"
@@ -142,7 +207,7 @@ const Dashboard = () => {
               </Col>
 
               {/* 9Mobile wallet */}
-              <Col sm="6" lg="4">
+              <Col sm="6" lg="6">
                 <TopCards
                   bg="bg-light-info text-info"
                   title="Profit"
@@ -151,14 +216,16 @@ const Dashboard = () => {
                   icon={mob9}
                 />
               </Col>
-            </>
-          )}
-        </Row>
+            </Row>
+          </Row>
+        )}
 
         {user ? (
           user?.type === "mega" ? (
+            <></>
+          ) : (
             // <Row className="bank-details">
-            //   {/* <Col>
+            //   <Col>
             //     <div>
             //       <img className="sterling__logo" src={sterling_logo} alt="" />
             //     </div>
@@ -175,15 +242,10 @@ const Dashboard = () => {
             //   <p className="text-warning">
             //     Send payment receipt to admin for validation, after which
             //     balance would be credited.
-            //   </p> */}
+            //   </p>
             // </Row>
-            <div></div>
-          ) : (
-            <Row>
-              <Col>
-                <PaymentButtonFw />
-              </Col>
-            </Row>
+            // <div></div>
+            ""
           )
         ) : (
           ""
@@ -193,6 +255,7 @@ const Dashboard = () => {
           <TransactionsTable
             transactions={transactions.slice(0, 5)}
             showHeader={false}
+            showSubHeader={true}
           />
         </Row>
         <Row>

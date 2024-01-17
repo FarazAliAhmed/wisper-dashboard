@@ -4,12 +4,183 @@ import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 import { useAppState } from "../context/appContext";
 import { useUser } from "../context/userContext";
-import { useAdmin } from "../context/adminContext"
+import { useAdmin } from "../context/adminContext";
 import { displayBalance } from "../utils";
 
-
 // Businesses Navigation Bar
-const navigation = [
+const liteNav = [
+  {
+    title: "Dashboard",
+    href: "/dashboard",
+    icon: "bi bi-house",
+  },
+  // {
+  //   title: "Buy Data",
+  //   href: "/allocate-data",
+  //   icon: "bi bi-reception-4",
+  // },
+  // {
+  //   title: "Fund Wallet",
+  //   href: "/wallet",
+  //   icon: "bi bi-wallet",
+  // },
+  {
+    title: "Allocate Data",
+    href: "/allocate",
+    icon: "bi bi-send",
+  },
+
+  {
+    title: "Purchase Airtime",
+    href: "/airtime",
+    icon: "bi bi-bag",
+  },
+  // {
+  //   title: "Buy Bulk Data",
+  //   href: "/buyBulkData",
+  //   icon: "bi bi-bag",
+  // },
+  // {
+  //   title: "Account",
+  //   href: "/account",
+  //   icon: "bi bi-person",
+  // },
+  {
+    title: "Packages",
+    href: "/packages",
+    icon: "bi bi-tags",
+  },
+
+  // {
+  //   title: "Payments",
+  //   href: "/payments",
+  //   icon: "bi bi-credit-card",
+  // },
+  {
+    title: "Store Front",
+    href: "/storeFront",
+    icon: "bi bi-shop",
+  },
+  // {
+  //   title: "Edit Store Front",
+  //   href: "/editStoreFront",
+  //   icon: "bi bi-pencil-square",
+  // },
+
+  {
+    title: "Wallet",
+    href: "/monifyWallet",
+    icon: "bi bi-wallet2",
+  },
+
+  {
+    title: "Transactions",
+    href: "/transactions",
+    icon: "bi bi-cash-stack",
+  },
+  {
+    title: "Settings",
+    href: "/settings",
+    icon: "bi bi-code-slash",
+  },
+  {
+    title: "Logout",
+    href: "/logout",
+    icon: "bi bi-box-arrow-right",
+  },
+];
+
+const agentsNav = [
+  {
+    title: "Dashboard",
+    href: "/dashboard",
+    icon: "bi bi-house",
+  },
+  // {
+  //   title: "Buy Data",
+  //   href: "/allocate-data",
+  //   icon: "bi bi-reception-4",
+  // },
+  // {
+  //   title: "Fund Wallet",
+  //   href: "/wallet",
+  //   icon: "bi bi-wallet",
+  // },
+  {
+    title: "Allocate Data",
+    href: "/allocate",
+    icon: "bi bi-send",
+  },
+  // {
+  //   title: "Purchase Airtime",
+  //   href: "/airtime",
+  //   icon: "bi bi-bag",
+  // },
+  {
+    title: "Store Front",
+    href: "/storeFront",
+    icon: "bi bi-shop",
+  },
+  // {
+  //   title: "Edit Store Front",
+  //   href: "/editStoreFront",
+  //   icon: "bi bi-pencil-square",
+  // },
+  {
+    title: "Bucket History",
+    href: "/bucketHistory",
+    icon: "bi bi-bag",
+  },
+  // {
+  //   title: "Buy Bulk Data",
+  //   href: "/buyBulkData",
+  //   icon: "bi bi-bag",
+  // },
+
+  // {
+  //   title: "Wallet",
+  //   href: "/monifyWallet",
+  //   icon: "bi bi-wallet2",
+  // },
+
+  // {
+  //   title: "Account",
+  //   href: "/account",
+  //   icon: "bi bi-person",
+  // },
+  // {
+  //   title: "Packages",
+  //   href: "/packages",
+  //   icon: "bi bi-tags",
+  // },
+  // {
+  //   title: "Pricing",
+  //   href: "/pricing",
+  //   icon: "bi bi-tags",
+  // },
+  // {
+  //   title: "Payments",
+  //   href: "/payments",
+  //   icon: "bi bi-credit-card",
+  // },
+  {
+    title: "Transactions",
+    href: "/transactions",
+    icon: "bi bi-cash-stack",
+  },
+  {
+    title: "Settings",
+    href: "/settings",
+    icon: "bi bi-code-slash",
+  },
+  {
+    title: "Logout",
+    href: "/logout",
+    icon: "bi bi-box-arrow-right",
+  },
+];
+
+const megaNav = [
   {
     title: "Dashboard",
     href: "/dashboard",
@@ -31,33 +202,65 @@ const navigation = [
     icon: "bi bi-send",
   },
   {
-    title: "Account",
-    href: "/account",
-    icon: "bi bi-person",
+    title: "Purchase Airtime",
+    href: "/airtime",
+    icon: "bi bi-bag",
   },
   {
-    title: "Packages",
-    href: "/packages",
-    icon: "bi bi-tags",
+    title: "Buy Bulk Data",
+    href: "/buyBulkData",
+    icon: "bi bi-bag",
   },
+  {
+    title: "Agents",
+    href: "/agents",
+    icon: "bi bi-person-check",
+  },
+  {
+    title: "Store Front",
+    href: "/storeFront",
+    icon: "bi bi-shop",
+  },
+  // {
+  //   title: "Edit Store Front",
+  //   href: "/editStoreFront",
+  //   icon: "bi bi-pencil-square",
+  // },
+
+  {
+    title: "Wallet",
+    href: "/monifyWallet",
+    icon: "bi bi-wallet2",
+  },
+
+  // {
+  //   title: "Account",
+  //   href: "/account",
+  //   icon: "bi bi-person",
+  // },
+  // {
+  //   title: "Packages",
+  //   href: "/packages",
+  //   icon: "bi bi-tags",
+  // },
   // {
   //   title: "Pricing",
   //   href: "/pricing",
   //   icon: "bi bi-tags",
   // },
-  {
-    title: "Payments",
-    href: "/payments",
-    icon: "bi bi-credit-card",
-  },
+  // {
+  //   title: "Payments",
+  //   href: "/payments",
+  //   icon: "bi bi-credit-card",
+  // },
   {
     title: "Transactions",
     href: "/transactions",
     icon: "bi bi-cash-stack",
   },
   {
-    title: "API Settings",
-    href: "/developers",
+    title: "Settings",
+    href: "/settings",
     icon: "bi bi-code-slash",
   },
   {
@@ -66,7 +269,6 @@ const navigation = [
     icon: "bi bi-box-arrow-right",
   },
 ];
-
 
 // Admin Navigation Bar
 const adminNav = [
@@ -80,21 +282,33 @@ const adminNav = [
     href: "/admin/business",
     icon: "bi bi-person",
   },
-  {
-    title: "Wallets",
-    href: "/admin/wallet",
-    icon: "bi bi-cash",
-  },
+  // {
+  //   title: "Wallets",
+  //   href: "/admin/wallet",
+  //   icon: "bi bi-cash",
+  // },
   {
     title: "Allocate Data",
     href: "/admin/allocate",
     icon: "bi bi-send",
   },
+
   {
-    title: "Payments",
-    href: "/admin/payment",
-    icon: "bi bi-credit-card",
+    title: "Wallet Transactions",
+    href: "/admin/walletTransactions",
+    icon: "bi bi-wallet2",
   },
+  {
+    title: "Bulk Data History",
+    href: "/admin/bulkDataHistory",
+    icon: "bi bi-bag",
+  },
+
+  // {
+  //   title: "Payments",
+  //   href: "/admin/payment",
+  //   icon: "bi bi-credit-card",
+  // },
   {
     title: "Transactions",
     href: "/admin/transaction",
@@ -105,26 +319,37 @@ const adminNav = [
     href: "/admin/modify-account",
     icon: "bi bi-wrench",
   },
-  {
-    title: "Packages",
-    href: "/admin/packages",
-    icon: "bi bi-tags",
-  },
+
   // {
-  //   title: "Pricing",
-  //   href: "/admin/pricing",
+  //   title: "Packages",
+  //   href: "/admin/packages",
   //   icon: "bi bi-tags",
   // },
   {
-    title: "API Settings",
-    href: "/admin/developers",
-    icon: "bi bi-code-slash",
+    title: "Glo Data Resolution",
+    href: "/admin/gloRes",
+    icon: "bi bi-server",
   },
   {
-    title: "Account",
-    href: "/admin/account",
-    icon: "bi bi-person",
+    title: "Wallet Resolution",
+    href: "/admin/walletRes",
+    icon: "bi bi-wallet-fill",
   },
+  {
+    title: "Maintenance",
+    href: "/admin/maintenance",
+    icon: "bi bi-cone-striped",
+  },
+  {
+    title: "Settings",
+    href: "/admin/settings",
+    icon: "bi bi-code-slash",
+  },
+  // {
+  //   title: "Account",
+  //   href: "/admin/account",
+  //   icon: "bi bi-person",
+  // },
   {
     title: "Logout",
     href: "/logout",
@@ -135,15 +360,24 @@ const adminNav = [
 const Sidebar = ({ isAdmin }) => {
   let location = useLocation();
   const [balanceDisplay, setBalanceDisplay] = useState("");
-  const [nav, setNav] = useState(navigation);
+  const [nav, setNav] = useState([]);
   const [adminBalance, setAdminBalance] = useState({
     mtn_balance: "",
     airtel_balance: "",
-  })
+  });
+  const { user } = useUser();
 
   useEffect(() => {
     if (isAdmin) {
       setNav(adminNav);
+    } else {
+      if (user.type == "mega") {
+        setNav(megaNav);
+      } else if (user.type == "agent") {
+        setNav(agentsNav);
+      } else {
+        setNav(liteNav);
+      }
     }
   }, [isAdmin]);
 
@@ -151,8 +385,7 @@ const Sidebar = ({ isAdmin }) => {
     currentBalance: { volume, unit, cash, mega_wallet },
   } = useAppState();
 
-  const { user } = useUser();
-  const adminContext = useAdmin();  
+  const adminContext = useAdmin();
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
@@ -183,7 +416,7 @@ const Sidebar = ({ isAdmin }) => {
         // </> : <>
         // <div></div>
         // {/* <div className="mt-2 text-muted fw-bold">TOTAL: {balanceDisplay}</div> */}
-        // </> 
+        // </>
       }
       <div className="pt-4 mt-2">
         <Nav vertical className="sidebarNav">

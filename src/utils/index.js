@@ -5,12 +5,30 @@ export const formIsValid = (errorObject) => {
   return Object.keys(errorObject).length > 0;
 };
 
+function validateLink(link) {
+  // Regular expression to validate a general URL
+  const urlRegex =
+    /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$/;
+
+  return urlRegex.test(link);
+}
+
 export const validateProperty = (input) => {
   const { name, value } = input;
   if (name === "email") {
     if (value.trim() === "") return "Email is required";
   }
   if (name === "password") {
+    if (value.trim() === "") return "Password is required";
+    if (value.trim().length < 5)
+      return "Password must be a minimum of 5 characters";
+  }
+  if (name === "newPass") {
+    if (value.trim() === "") return "Password is required";
+    if (value.trim().length < 5)
+      return "Password must be a minimum of 5 characters";
+  }
+  if (name === "currentPass") {
     if (value.trim() === "") return "Password is required";
     if (value.trim().length < 5)
       return "Password must be a minimum of 5 characters";
@@ -24,6 +42,96 @@ export const validateProperty = (input) => {
     if (value.trim() === "") return "Name is required";
     if (value.trim().length < 5)
       return "Name must be a minimum of 5 characters";
+  }
+  if (name === "business_name") {
+    if (value.trim() === "") return "Business Name is required";
+    if (value.trim().length < 5)
+      return " Business Name must be a minimum of 5 characters";
+  }
+  if (name === "mobile_number") {
+    if (value.trim() === "") return "Phone number is required";
+    if (value.trim().length < 11 || value.trim().length > 11)
+      return "Phone number must be 11 characters";
+  }
+
+  if (name === "phone_number") {
+    if (value.trim() === "") return "Phone number is required";
+    if (value.trim().length < 11 || value.trim().length > 11)
+      return "Phone number must be 11 characters";
+  }
+  if (name === "phoneNumber") {
+    if (value.trim() === "") return "Phone number is required";
+    if (value.trim().length < 11 || value.trim().length > 11)
+      return "Phone number must be 11 characters";
+  }
+  if (name === "phone") {
+    if (value.trim() === "") return "Phone number is required";
+    if (value.trim().length < 11 || value.trim().length > 11)
+      return "Phone number must be 11 characters";
+  }
+
+  if (name === "whatsapp") {
+    if (value.trim().length < 11 || value.trim().length > 11)
+      return "Whatsapp Number must be 11 characters";
+  }
+
+  if (name === "storeName") {
+    if (value.trim() === "") return "Store Name is required";
+  }
+  if (name === "storeUserName") {
+    if (value.trim() === "") return "Store User Name is required";
+  }
+  if (name === "storeDesc") {
+    if (value.trim() === "") return "Store Description is required";
+  }
+
+  if (name === "instagram") {
+    if (!validateLink(value)) return `Invalid ${name} link`;
+  }
+  if (name === "twitter") {
+    if (!validateLink(value)) return `Invalid ${name} link`;
+  }
+
+  if (name === "facebook") {
+    if (!validateLink(value)) return `Invalid ${name} link`;
+  }
+
+  if (name === "bankCode") {
+    if (value.trim() === "") return "Select Bank";
+    if (value.trim() === "select") return "Select Bank";
+  }
+
+  if (name === "withdrawAccount") {
+    if (value.trim() === "") return "Account number is required";
+    if (value.trim().length < 10 || value.trim().length > 10)
+      return "Account Number must be 10 characters";
+  }
+
+  if (name === "bankName") {
+    if (value.trim() === "") return "Bank name is required";
+  }
+
+  if (name === "acctName") {
+    if (value.trim() === "") return "Account name is required";
+  }
+
+  if (name === "amount") {
+    if (value.trim() === "") return " Amount is required";
+  }
+
+  if (name === "volume") {
+    if (value.trim() === "") return " Amount is required";
+  }
+
+  if (name === "airtime_volume") {
+    if (value.trim() === "") return " Amount is required";
+    if (Number(value) < 50) return "Minimum amount is ₦50 ";
+  }
+
+  if (name === "storePin") {
+    if (value.trim() === "") return "Store Password is required";
+    if (value.trim().length < 5)
+      return "Store Password must be a minimum of 5 characters";
   }
 };
 

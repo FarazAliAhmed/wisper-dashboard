@@ -15,7 +15,11 @@ import { useUser } from "../../context/userContext";
 
 import FullLayout from "../../layouts/FullLayout";
 import { update } from "../../services/userService";
-import { handleFailedRequest, validateProperty } from "../../utils";
+import {
+  formIsValid,
+  handleFailedRequest,
+  validateProperty,
+} from "../../utils";
 
 const Account = () => {
   const context = useUser();
@@ -153,7 +157,11 @@ const Account = () => {
                 </FormGroup>
               </Col>
             </Row>
-            <Button disabled={loading} type="submit" color="primary">
+            <Button
+              disabled={formIsValid(errors) || loading}
+              type="submit"
+              color="primary"
+            >
               Update
             </Button>
           </Form>

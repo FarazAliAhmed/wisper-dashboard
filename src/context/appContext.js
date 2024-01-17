@@ -8,6 +8,8 @@ import {
   getSingleTrx,
   getSingleSold,
   getAllPlansUser,
+  getUserMegaPrice,
+  getStoreFront,
 } from "../services/dataService";
 import { useUser } from "./userContext";
 // import { getMainBalance } from "../services/Admin.Services/businessService";
@@ -37,6 +39,8 @@ const AppStateProvider = ({ children }) => {
   const [payments, setPayments] = useState([]);
   const [plans, setPlans] = useState([]);
   const [plansUser, setPlansUser] = useState([]);
+  const [megaPriceUser, setMegaPriceUser] = useState([]);
+  const [storeFront, setStoreFront] = useState({});
   const [maintenance, setMaintenance] = useState({
     mtn_sme: false,
     mtn_gifting: false,
@@ -59,6 +63,8 @@ const AppStateProvider = ({ children }) => {
         getSingleTrx(user?._id),
         getSingleSold(user?._id),
         getAllPlansUser(user?._id),
+        getUserMegaPrice(user?._id),
+        getStoreFront(user?._id),
       ]);
       const balanceRes = results[0];
       const transactionRes = results[1];
@@ -66,6 +72,8 @@ const AppStateProvider = ({ children }) => {
       const planRes = results[3];
       const maintenanceRes = results[4];
       const planResUser = results[7];
+      const megaPriceUser = results[8];
+      const storeFront = results[9];
 
       // console.log("result 1", results[1])
 
@@ -127,6 +135,15 @@ const AppStateProvider = ({ children }) => {
         setPlansUser(planResUser.data);
       }
 
+      if (megaPriceUser) {
+        // console.log("planResUser", planResUser)
+        setMegaPriceUser(megaPriceUser.data);
+      }
+      if (storeFront) {
+        // console.log("planResUser", planResUser)
+        setStoreFront(storeFront.data);
+      }
+
       if (maintenanceRes) {
         setMaintenance(maintenanceRes.data.maintenance);
       }
@@ -148,6 +165,8 @@ const AppStateProvider = ({ children }) => {
         setMaintenance,
         singleTrx,
         singleSold,
+        megaPriceUser,
+        storeFront,
       }}
     >
       {children}
