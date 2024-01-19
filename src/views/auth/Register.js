@@ -224,16 +224,10 @@ const Register = () => {
             />
 
             <h6>
-              Congratulations! Your registration with Wisper was successful. A
-              confirmation email has been sent to the email address you provided
-              during registration. To ensure the security of your account and
-              access all the exciting features, please check your email inbox
-              (including spam/junk folders) for the confirmation message. Click
-              on the verification link provided in the email to complete the
-              registration process. If you haven't received the email within a
-              few minutes or encounter any issues, please don't hesitate to
-              contact our support team at support@wisper.ng. Thank you for
-              joining our community. We're excited to have you on board!
+              Congratulations on your successful registration! 🎉 Check your
+              email (including the spam folder) for a verification link. Simply
+              click on it to verify your email. We are excited to
+              have you onboard!
             </h6>
           </div>
         </ModalBody>

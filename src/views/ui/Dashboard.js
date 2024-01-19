@@ -180,6 +180,21 @@ const Dashboard = () => {
                 </Col>
               </>
             )}
+
+            {user.type === "glo_dealer" && (
+              <>
+                {/* Glo wallet - Hidden for now */}
+                <Col sm="6" lg="4">
+                  <TopCards
+                    bg="bg-light-info text-info"
+                    title="Profit"
+                    subtitle="GLO"
+                    earning={`${mega_wallet.glo / 1000} GB`}
+                    icon={glo}
+                  />
+                </Col>
+              </>
+            )}
           </Row>
         )}
 
