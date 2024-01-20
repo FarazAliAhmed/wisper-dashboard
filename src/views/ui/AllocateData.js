@@ -55,10 +55,10 @@ const AllocateData = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
 
-  const { plansUser } = useAppState();
-  const dataPlans = parseDataAllocatePlans(plansUser);
+  const { plans } = useAppState();
+  const dataPlans = parseDataPlans(plans);
 
-  // console.log("dataPlans", dataPlans)
+  console.log("dataPlans", plans);
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
@@ -72,6 +72,7 @@ const AllocateData = () => {
         setLoading(false);
         setPlan(initialState);
         // setServerResponse({status: true, message: "Data allocated successfully."});
+        window.location.reload();
         setErrors({});
         return { status: true, message: res.data.gateway_response };
       } else {
@@ -107,13 +108,18 @@ const AllocateData = () => {
 
     // console.log(dataPlans)
     // Assuming the object array is called 'dataPlans'
-    const matchedItem = dataPlans.find((item) => item.id == value);
+    const matchedItem = dataPlans.find((item) => item.dataId == value);
 
-    // console.log("matchedItem", matchedItem)
+    console.log("matchedItem", matchedItem);
 
     if (matchedItem && name === "plan_id") {
-      const { size, price } = matchedItem;
-      const updatedPlan = { ...plan, [name]: value, volume: size, price };
+      const { size, amount } = matchedItem;
+      const updatedPlan = {
+        ...plan,
+        [name]: value,
+        volume: size,
+        price: amount,
+      };
       setPlan(updatedPlan);
       setErrors(validationErrors);
 
@@ -135,7 +141,7 @@ const AllocateData = () => {
     }
   }, [plan.plan_id]);
 
-  console.log(costError);
+  console.log(plan, "ll");
 
   return (
     <FullLayout>
@@ -208,10 +214,10 @@ const AllocateData = () => {
                           )
                           .map((plan) => (
                             <option
-                              key={`${plan.network}-${plan.id}`}
-                              value={plan.id}
+                              key={`${plan.network}-${plan.dataId}`}
+                              value={plan.dataId}
                             >
-                              {plan.size} ({plan.validity})
+                              {plan.size} ({plan.duration})
                             </option>
                           ))}
                       </Input>
@@ -254,7 +260,7 @@ const AllocateData = () => {
                   handleSubmit={handleSubmit}
                   plan_id={plan.plan_id}
                   phone_number={plan.phone_number}
-                  plans={plansUser}
+                  plans={plans}
                   valid={formIsValid(errors) || costError}
                 />
                 {/* <Button disabled={loading} type="submit" color="primary">
