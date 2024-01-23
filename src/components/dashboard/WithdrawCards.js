@@ -135,8 +135,6 @@ const WithdrawCards = (props) => {
           setWithdraw(false);
 
           setFailed(true);
-
-          console.log(error);
         }
       } else {
         setNavStateFunc(4);
@@ -168,14 +166,11 @@ const WithdrawCards = (props) => {
         setWithdraw(false);
 
         setFailed(true);
-
-        console.log(error);
       }
     }
   };
 
   useEffect(() => {
-    // console.log(cash, "lsls");
     if (withdrawDetails.amount > storeFront?.wallet) {
       setCostError("Insufficient funds to withdraw");
     } else {
@@ -188,16 +183,12 @@ const WithdrawCards = (props) => {
       // setLoading(true);
       const resp = await getSFMaintenance();
       setMaintenance(resp?.data?.maintenance);
-      console.log(resp, "air8");
 
       // setLoading(false);
     };
 
     getSFMaintenanceFunc();
   }, []);
-
-  console.log(withdrawDetails, "kk");
-  console.log(user, "ooijj");
 
   return (
     <Card>

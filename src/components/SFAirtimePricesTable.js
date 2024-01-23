@@ -157,8 +157,6 @@ const SFAirtimePricesTable = ({
     setNewPrice({ ...newPrice, [name]: value });
   };
 
-  console.log(planId);
-  console.log(newPrice);
   const networks = ["MTN", "GLO", "AIRTEL", "9MOBILE"];
 
   return (

@@ -146,8 +146,6 @@ const AdminBulkDataHistory = () => {
     }
   };
 
-  console.log("tra", transactions);
-
   return (
     <div>
       {loading ? (

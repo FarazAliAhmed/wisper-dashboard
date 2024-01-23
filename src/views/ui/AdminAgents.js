@@ -117,7 +117,6 @@ const AdminAgents = ({ businessId }) => {
       const resp = await getAgents({
         userId: businessId,
       });
-      console.log("lsk", resp);
       setAgents(resp?.subdealers);
       setLoading(false);
     };

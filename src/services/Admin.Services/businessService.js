@@ -4,7 +4,6 @@ import { adminUrl, adminUrlV2, apiUrl } from "../../config";
 export const getBusinesses = async () => {
   try {
     const res = await http.get(`${adminUrl}/business`);
-    console.log(res.data, "bb");
     return res;
   } catch (e) {
     return null;
@@ -54,7 +53,6 @@ export const getTransactions = async () => {
 export async function getAllPlansUser(userId) {
   try {
     const res = await http.get(`${adminUrl}/plans_user/${userId}`);
-    console.log(res);
     return res;
   } catch (error) {
     return null;
@@ -64,12 +62,10 @@ export async function getAllPlansUser(userId) {
 export async function getGloResolution(
   { limit, offset, userId } = { limit: 50, offset: 0 }
 ) {
-  console.log(limit, "limit5");
   try {
     const res = await http.get(
       `${adminUrl}/analysis/getBucketUsage?limit=${Number(limit)}`
     );
-    console.log(res);
     return res;
   } catch (error) {
     return null;
@@ -79,7 +75,6 @@ export async function getGloResolution(
 export async function getWalletResolution() {
   try {
     const res = await http.get(`${adminUrl}/analysis/getWalletUsage`);
-    console.log(res);
     return res;
   } catch (error) {
     return null;
@@ -189,7 +184,6 @@ export const generateCreditPayment = async (body) => {
 
 export const adminMonifyCreditPurchase = async (body) => {
   try {
-    console.log(body, "body");
     const res = await http.post(`${adminUrl}/monnifyAdminAddBalance`, body);
 
     return res;
@@ -200,8 +194,6 @@ export const adminMonifyCreditPurchase = async (body) => {
 
 export const adminMonifyDebitPurchase = async (body) => {
   try {
-    console.log(body, "body");
-
     const res = await http.post(`${adminUrl}/monnifyAdminDebitBalance`, body);
 
     return res;

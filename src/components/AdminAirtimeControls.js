@@ -42,7 +42,6 @@ const AdminAirtimeControls = () => {
       // setLoading(true);
       const resp = await getAirtimeMaintenance();
       setMaintenance(resp?.data?.maintenance);
-      console.log(resp, "airmen");
 
       // setLoading(false);
     };
@@ -54,11 +53,9 @@ const AdminAirtimeControls = () => {
     setMaintenance({ ...maintenance, [network]: status });
     if (status) {
       const res = await enterAirtimeNetworkMaintenance(network);
-      console.log(res);
       toast.success(res?.message);
     } else {
       const res = await exitAirtimeNetworkMaintenance(network);
-      console.log(res);
       toast.success(res?.message);
     }
   };

@@ -58,8 +58,6 @@ const AllocateData = () => {
   const { plans } = useAppState();
   const dataPlans = parseDataPlans(plans);
 
-  console.log("dataPlans", plans);
-
   const handleSubmit = async (e) => {
     // e.preventDefault();
     try {
@@ -110,8 +108,6 @@ const AllocateData = () => {
     // Assuming the object array is called 'dataPlans'
     const matchedItem = dataPlans.find((item) => item.dataId == value);
 
-    console.log("matchedItem", matchedItem);
-
     if (matchedItem && name === "plan_id") {
       const { size, amount } = matchedItem;
       const updatedPlan = {
@@ -122,8 +118,6 @@ const AllocateData = () => {
       };
       setPlan(updatedPlan);
       setErrors(validationErrors);
-
-      console.log("Updated Plan:", updatedPlan);
     } else {
       setPlan({ ...plan, [name]: value });
       setErrors(validationErrors);
@@ -133,15 +127,12 @@ const AllocateData = () => {
   };
 
   useEffect(() => {
-    console.log(cash, "lsls");
     if (plan.price > cash) {
       setCostError("Insufficient funds. Fund your wallet to proceed");
     } else {
       setCostError(null);
     }
   }, [plan.plan_id]);
-
-  console.log(plan, "ll");
 
   return (
     <FullLayout>

@@ -56,11 +56,7 @@ const AdminProvider = ({ children }) => {
       setAllSold(result[6]?.data.totalDataSold);
       setAirtimeApis(result[8]?.data);
 
-      // console.log(result[2], "transaction admin")
-      // console.log(result[6])
-
       if (result[7]) {
-        // console.log("result 7", result[7])
         setMainBalance(result[7]?.data);
       }
     }

@@ -45,8 +45,6 @@ const ConfirmEmail = ({ match }) => {
 
   // console.log(token);
 
-  console.log("res", token);
-
   useEffect(() => {
     const handleSubmit = async () => {
       try {

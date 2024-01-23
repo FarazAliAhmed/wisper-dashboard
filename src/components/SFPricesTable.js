@@ -157,9 +157,6 @@ const SFPricesTable = ({
     setNewPrice({ ...newPrice, [name]: value });
   };
 
-  console.log(planId);
-  console.log(newPrice);
-
   return (
     <>
       <div>

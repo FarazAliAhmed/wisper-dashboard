@@ -80,8 +80,6 @@ const BusinessDetails = (props) => {
 
   // console.log(transaction);
 
-  console.log("bal", balances);
-
   const handleGetAgentsInfo = async () => {
     setLoading(true);
     const resp = await getAgentsInfo({
@@ -158,8 +156,6 @@ const BusinessDetails = (props) => {
     setLoading(false);
     setType("mega");
   };
-
-  console.log(agents, "bb");
 
   const navItems = ["Transactions", "Allocation"];
   const dateObject = moment(business?.createdAt);

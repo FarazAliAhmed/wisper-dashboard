@@ -53,7 +53,6 @@ import { AiFillEye } from "react-icons/ai";
 import SFAirtimePricesTable from "../../components/SFAirtimePricesTable";
 
 const ImageModal = ({ imgUrl, closeModal, avatarFunc }) => {
-  console.log(imgUrl);
   const editorRef = useRef(null);
   const [loading, setLoading] = useState();
   const onClickSave = async () => {
@@ -80,9 +79,6 @@ const ImageModal = ({ imgUrl, closeModal, avatarFunc }) => {
               setLoading(false);
               toast.success(`Successfully uploaded! Please save changes `);
             });
-            // console.log(formData);
-
-            // console.log(formData);
           }
         }, "image/jpeg");
       }
@@ -94,7 +90,6 @@ const ImageModal = ({ imgUrl, closeModal, avatarFunc }) => {
 
   const formdata = new FormData();
   formdata.append("image", "sksk");
-  console.log(formdata);
 
   return (
     <div className="avatar__modal-overlay">
@@ -256,7 +251,6 @@ const EditStoreFront = () => {
         );
         setPrices(res?.data);
         setGloPrices(gloPricesData);
-        console.log("rp", res);
       });
     };
 
@@ -393,15 +387,12 @@ const EditStoreFront = () => {
   //   setStoreInfo({ ...storeInfo, [name]: value });
   // };
 
-  console.log(prices, "oo");
-
   const navItems = ["Information", "Branding", "Prices"];
 
   useEffect(() => {
     const fetchNotice = async () => {
       await getSetUp(user._id).then((res) => {
         setNoticeState(res?.data);
-        console.log(res.data, "kk");
         if (res?.data) {
           setNotice(false);
         } else {

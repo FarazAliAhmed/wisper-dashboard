@@ -39,8 +39,6 @@ const SetPassword = ({ match }) => {
 
   const { email, token } = match.params;
 
-  console.log(email, token);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -53,8 +51,6 @@ const SetPassword = ({ match }) => {
           token
         );
         setLoading(false);
-
-        console.log("res", res);
 
         if (res) {
           toast.success("Password Changed", {

@@ -45,7 +45,6 @@ const AdminSFControls = () => {
       // setLoading(true);
       const resp = await getSFMaintenance();
       setMaintenance(resp?.data?.maintenance);
-      console.log(resp, "air8");
 
       // setLoading(false);
     };
@@ -57,11 +56,9 @@ const AdminSFControls = () => {
     setMaintenance({ ...maintenance, [feature]: status });
     if (status) {
       const res = await enterSFNetworkMaintenance(feature);
-      console.log(res);
       toast.success(res?.message);
     } else {
       const res = await exitSFNetworkMaintenance(feature);
-      console.log(res);
       toast.success(res?.message);
     }
   };

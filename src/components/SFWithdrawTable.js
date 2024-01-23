@@ -118,7 +118,6 @@ const SFWithdrawTable = ({
     setTransactionsData(results);
     setSearchResults(results);
   };
-  console.log(transactionsData, "trans098");
 
   return (
     <div>

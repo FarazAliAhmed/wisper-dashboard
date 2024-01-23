@@ -101,7 +101,6 @@ const AllocateData = () => {
 
           setIsSuccess(true);
           window.location.reload();
-          console.log("genCred", genCred);
         } else if (values.action_type === "debit") {
           // const res = await debitBusiness({
           //   business_id: values.business_id,
@@ -123,8 +122,6 @@ const AllocateData = () => {
           setIsSuccess(true);
           window.location.reload();
 
-          console.log("debCred", debCred);
-
           // console.log("sjjs", res);
         }
         setIsSuccess(true);
@@ -135,11 +132,8 @@ const AllocateData = () => {
         });
 
         setLoading(false);
-
-        console.log(serverResponse);
       }
     } catch (error) {
-      console.log(error);
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
       setServerResponse({ status, message });
@@ -154,7 +148,6 @@ const AllocateData = () => {
     setValues({ ...values, [name]: value });
 
     if (name == "business_id" && value.length == 24) {
-      console.log("value", value);
       const businessId = value;
 
       const mega_user = await getSingleBusiness(businessId);

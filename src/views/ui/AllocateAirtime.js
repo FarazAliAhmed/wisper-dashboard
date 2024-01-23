@@ -85,7 +85,6 @@ const AllocateData = () => {
       );
       setLoading(false);
       setPlan(initialState);
-      console.log(res.data);
       return res.data;
     } catch (error) {
       const message = error.response.data;
@@ -116,7 +115,6 @@ const AllocateData = () => {
       setCostError(null);
     }
   }, [plan.airtime_volume]);
-  console.log(plan.volume);
 
   return (
     <FullLayout>

@@ -67,7 +67,6 @@ const AgentsFunding = () => {
     currentBalance: { volume, unit, cash, mega_wallet },
   } = useAppState();
 
-  console.log("jj", megaPriceUser);
   // const [serverResponse, setServerResponse] = useState({
   //   status: true,
   //   message: "",
@@ -81,8 +80,6 @@ const AgentsFunding = () => {
 
   const { plansUser } = useAppState();
   const dataPlans = parseDataAllocatePlans(plansUser);
-
-  // console.log("dataPlans", dataPlans)
 
   // useEffect(() => {
   //   parseDataPlans(plans)
@@ -149,8 +146,6 @@ const AgentsFunding = () => {
       setCostValue(megaPriceUser["9mobile"] * value);
     }
   };
-
-  console.log(volume, "ppp");
 
   return (
     <FullLayout>

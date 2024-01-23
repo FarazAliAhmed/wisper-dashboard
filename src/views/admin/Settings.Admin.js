@@ -101,15 +101,12 @@ const Settings = () => {
   };
 
   const handleSubmitPassChange = async () => {
-    console.log(passwordChange);
-
     try {
       setLoading(true);
       const body = {
         oldPassword: passwordChange.currentPass,
         newPassword: passwordChange.newPass,
       };
-      console.log(body);
 
       await changePass(body);
       setLoading(false);
@@ -139,7 +136,6 @@ const Settings = () => {
   const handlePassChange = ({ currentTarget: input }) => {
     const validationErrors = { ...errorsPass };
     const errorMessage = validateProperty(input);
-    console.log("eee", errorMessage);
     if (errorMessage) validationErrors[input.name] = errorMessage;
     else delete validationErrors[input.name];
 

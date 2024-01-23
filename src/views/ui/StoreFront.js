@@ -110,7 +110,6 @@ const StoreFront = () => {
           text: `Check out this Wisper Store`,
           url: storeFront.storeURL, // Replace with your desired URL
         });
-        console.log("Share successful");
       } catch (error) {
         console.error("Share failed:", error);
       }
@@ -134,7 +133,6 @@ const StoreFront = () => {
     const getSFTransactions = async () => {
       await getSFTransactionsTable(storeFront?.business_id, pagination).then(
         (res) => {
-          console.log(res, "9999");
           setTransactionTable(res?.data);
         }
       );
@@ -143,7 +141,6 @@ const StoreFront = () => {
     const getSFCustomers = async () => {
       await getSFCustomersTable(storeFront?.business_id, pagination).then(
         (res) => {
-          console.log(res, "lllo");
           setCustomerTable(res?.data);
         }
       );
@@ -152,7 +149,6 @@ const StoreFront = () => {
     const getSFWithdraw = async () => {
       await getSFWithdrawTable(storeFront?.business_id, pagination).then(
         (res) => {
-          console.log(res, "lllo");
           setWithdrawTable(res?.data);
         }
       );
@@ -169,7 +165,6 @@ const StoreFront = () => {
         setLoading(true);
         await getSFTransactionsTable(storeFront?.business_id, pagination).then(
           (res) => {
-            console.log(res, "lllo");
             setTransactionTable(res?.data);
           }
         );
@@ -179,7 +174,6 @@ const StoreFront = () => {
       setLoading(true);
       await getSFCustomersTable(storeFront?.business_id, pagination).then(
         (res) => {
-          console.log(res, "lllo");
           setCustomerTable(res?.data);
         }
       );
@@ -188,7 +182,6 @@ const StoreFront = () => {
       setLoading(true);
       await getSFWithdrawTable(storeFront?.business_id, pagination).then(
         (res) => {
-          console.log(res, "lllo");
           setWithdrawTable(res?.data);
         }
       );
@@ -203,7 +196,6 @@ const StoreFront = () => {
         setLoading(true);
         await getSFTransactionsTable(storeFront?.business_id, pagination).then(
           (res) => {
-            console.log(res, "lllo");
             setTransactionTable(res?.data);
           }
         );
@@ -213,7 +205,6 @@ const StoreFront = () => {
       setLoading(true);
       await getSFCustomersTable(storeFront?.business_id, pagination).then(
         (res) => {
-          console.log(res, "lllo");
           setCustomerTable(res?.data);
         }
       );
@@ -224,7 +215,6 @@ const StoreFront = () => {
     const fetchAllPlansUser = async () => {
       await getAllPlansUser(user._id).then((res) => {
         setPrices(res?.data.filter((plan) => plan.selling_price));
-        console.log("res", res);
       });
     };
 
@@ -250,7 +240,6 @@ const StoreFront = () => {
     const getSfAnalysis = async () => {
       setLoading(true);
       await getSFAnalysis(storeFront?.business_id).then((res) => {
-        console.log(res, "anaa");
         setSfAnalysis(res?.data[filter]);
         setLoading(false);
       });
@@ -366,7 +355,6 @@ const StoreFront = () => {
   ];
 
   const navItems = ["Transactions", "Customers", "Withdrawal"];
-  console.log(sfAnalysis?.TotalAmountSold, "sf");
 
   return (
     <FullLayout>

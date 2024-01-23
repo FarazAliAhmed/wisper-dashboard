@@ -59,20 +59,15 @@ const Documentation = () => {
     setGloTableData(gloPlans);
   }, []);
 
-  console.log("ao", gloTableData);
-
   const handleSubmit = async () => {
     await getAccessToken(user?._id)
       .then((res) => {
         setToken(res.data.newAccessToken);
-        console.log(res, "kk");
         setSuccess(true);
         setConfirm(false);
       })
       .catch((error) => {
         setFailed(true);
-        console.log(error, "kk");
-
         setConfirm(false);
       });
   };

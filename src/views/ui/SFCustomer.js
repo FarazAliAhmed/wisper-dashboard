@@ -156,7 +156,6 @@ const SFCustomer = () => {
     const fetchAllPlansUser = async () => {
       await getAllPlansUser(storeFront.business_id).then((res) => {
         setPrices(res?.data);
-        console.log("res", res);
       });
     };
 
@@ -188,8 +187,6 @@ const SFCustomer = () => {
             state: false,
           });
         }
-
-        console.log("resrr", res);
       });
     };
 
@@ -240,7 +237,6 @@ const SFCustomer = () => {
       description: `Purchase Airtime from ${storeFront.storeUserName}'store `,
     },
   };
-  console.log(paymentConfig);
   const initiatePayment = useFlutterwave(paymentConfig);
   const initiatePayment1 = useFlutterwave(paymentConfig1);
 
@@ -401,7 +397,6 @@ const SFCustomer = () => {
           text: `Check out this Wisper Store`,
           url: storeFront.storeURL, // Replace with your desired URL
         });
-        console.log("Share successful");
       } catch (error) {
         console.error("Share failed:", error);
       }
@@ -442,15 +437,12 @@ const SFCustomer = () => {
       // setLoading(true);
       const resp = await getSFMaintenance();
       setMaintenance(resp?.data?.maintenance);
-      console.log(resp, "air8");
 
       // setLoading(false);
     };
 
     getSFMaintenanceFunc();
   }, []);
-
-  console.log(storeFront, "df");
 
   return (
     <>

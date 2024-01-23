@@ -21,7 +21,6 @@ const WalletResolution = () => {
       const res = await getWalletResolution();
       setTransactions(res?.data);
       setLoading(false);
-      console.log("res", res);
     };
 
     fetchGloResolution();

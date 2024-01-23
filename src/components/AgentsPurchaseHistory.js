@@ -40,7 +40,6 @@ const AgentsPurchaseHistory = ({ businessId }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
-  console.log(businessId, "bus");
   const [filter, setFilter] = useState({});
   const [pagination, setPagination] = useState({
     limit: 50,
@@ -140,7 +139,6 @@ const AgentsPurchaseHistory = ({ businessId }) => {
     } else {
       if (!loading) {
         setLoading(true);
-        console.log(pagination, "pag");
         const resp = await AgentsAllocationTransactions(pagination);
         setTransactions(resp);
         setLoading(false);

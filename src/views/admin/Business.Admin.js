@@ -38,7 +38,6 @@ const Business = () => {
 
     setSearchResults(results);
   };
-  console.log("jj", business);
 
   return (
     <AdminLayout>

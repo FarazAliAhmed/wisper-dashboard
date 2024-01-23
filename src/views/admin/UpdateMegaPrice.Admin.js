@@ -88,7 +88,6 @@ const Pricing = () => {
       setLoading(true);
       await updateMegaPrice(plan, user?.access_token);
       setLoading(false);
-      console.log("success");
       toast.success("successfully updated");
 
       return { status: true, message: "Mega Price updated successfully." };

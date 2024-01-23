@@ -15,7 +15,6 @@ export async function login(email, password) {
 
 export async function resendLink(email) {
   const res = await http.post(`${apiEndpoint}resendConfirmEmail`, { email });
-  console.log("res", res);
   return res;
 }
 

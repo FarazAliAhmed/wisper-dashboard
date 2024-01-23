@@ -15,8 +15,6 @@ const App = () => {
     setNavState(state);
   };
 
-  console.log(navState, "nav");
-
   return (
     <div className="dark">
       <UserProvider>

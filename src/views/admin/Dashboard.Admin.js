@@ -42,8 +42,6 @@ const Dashboard = () => {
     setBalanceDisplay(displayBalance(volume, unit, cash, mega_wallet, user));
   }, [volume, unit, cash]);
 
-  console.log(airtimeApis, "aiai");
-
   return (
     <AdminLayout>
       <div>

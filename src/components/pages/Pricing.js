@@ -22,7 +22,6 @@ const Pricing = () => {
       setTableDataAll(plans);
     } else {
       setTableDataAll(plansUser);
-      console.log(plansUser.length);
     }
   }, [user]);
 

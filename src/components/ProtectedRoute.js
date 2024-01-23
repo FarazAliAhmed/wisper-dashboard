@@ -58,7 +58,6 @@ const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
       toast.success(res.data?.message);
       setModalValueState(4);
     } catch (error) {
-      console.log(error.response, "res");
       setLoading(false);
       toast.error(error.response?.data?.message);
     }

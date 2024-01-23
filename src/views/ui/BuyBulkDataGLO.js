@@ -139,12 +139,9 @@ const BuyBulkDataGLO = () => {
         )[0];
       }
 
-      console.log(data, "gkd");
       setCostValue(data ? data.pricePerGB * value : 0);
     }
   };
-
-  console.log(megaPriceUser, "sks");
 
   return (
     <FullLayout>

@@ -58,7 +58,6 @@ const AllocateDataMA = () => {
     try {
       setLoading(true);
       const res = await allocateData(plan, user?.access_token);
-      console.log("res", res);
       setLoading(false);
       setPlan(initialState);
       // setServerResponse({status: true, message: "Data allocated successfully."});

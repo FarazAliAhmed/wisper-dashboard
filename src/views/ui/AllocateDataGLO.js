@@ -58,14 +58,12 @@ const AllocateDataGLO = () => {
     try {
       setLoading(true);
       const res = await allocateData(plan, user?.access_token);
-      console.log("res", res);
       setLoading(false);
       setPlan(initialState);
       // setServerResponse({status: true, message: "Data allocated successfully."});
       setErrors({});
       return { status: true, message: res.data.gateway_response };
     } catch (error) {
-      console.log(error.response, "ert");
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
       return { status, message };
@@ -84,7 +82,6 @@ const AllocateDataGLO = () => {
     setErrors(validationErrors);
   };
 
-  console.log(plan, "errors");
   return (
     <FullLayout>
       <div>

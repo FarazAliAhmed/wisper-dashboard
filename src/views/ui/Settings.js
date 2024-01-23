@@ -193,7 +193,6 @@ const Settings = () => {
     try {
       setLoading(true);
       // const body = { bankDetails };
-      console.log(bankDetails, "gg");
 
       if (accountName.name !== "invalid account number") {
         await updateStoreFront(
@@ -345,8 +344,6 @@ const Settings = () => {
               state: false,
             });
           }
-
-          console.log("resrr", res);
         })
         .catch((error) => {
           toast.error("error fetching bank name");
@@ -356,9 +353,6 @@ const Settings = () => {
 
     fetchBankName();
   }, [bankDetails]);
-
-  console.log(bankDetails, "dealer");
-  console.log(navState, "nav");
 
   const navItems = ["Profile", "Security", "Developer", "Dealer", "Withdrawal"];
   return (

@@ -89,7 +89,6 @@ export const enterAirtimeNetworkMaintenance = async (plan_type) => {
       `${adminUrl}/airtimeMaintenance/enter/${plan_type}`
     );
     // toast.success("maintenance entered");
-    console.log(resp, "sres");
     return resp.data;
   } catch (e) {
     // toast.error("error entering maintenance");
@@ -105,7 +104,6 @@ export const exitAirtimeNetworkMaintenance = async (plan_type) => {
       `${adminUrl}/airtimeMaintenance/exit/${plan_type}`
     );
     // toast.success("maintenance exited");
-    console.log(resp, "leave");
     return resp.data;
   } catch (e) {
     // toast.error("error exiting maintenance");
@@ -138,7 +136,6 @@ export const enterSFNetworkMaintenance = async (feature) => {
   try {
     const resp = await http.post(`${adminUrl}/sFMaintenance/enter/${feature}`);
     // toast.success("maintenance entered");
-    console.log(resp, "sres");
     return resp.data;
   } catch (e) {
     // toast.error("error entering maintenance");
@@ -152,7 +149,6 @@ export const exitSFNetworkMaintenance = async (feature) => {
   try {
     const resp = await http.post(`${adminUrl}/sFMaintenance/exit/${feature}`);
     // toast.success("maintenance exited");
-    console.log(resp, "leave");
     return resp.data;
   } catch (e) {
     // toast.error("error exiting maintenance");
