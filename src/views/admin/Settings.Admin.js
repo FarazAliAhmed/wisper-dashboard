@@ -31,6 +31,7 @@ import { BeatLoader } from "react-spinners";
 import _Documentation from "../../components/pages/Documentation";
 import AdminLayout from "../../layouts/AdminLayout";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import MegaPriceSettings from "../../components/admin/MegaPriceSettings";
 
 const Settings = () => {
   const context = useUser();
@@ -144,7 +145,7 @@ const Settings = () => {
     setErrors(validationErrors);
   };
 
-  const navItems = ["Profile", "Security", "Developer"];
+  const navItems = ["Profile", "Security", "Developer", "MegaPrice"];
   return (
     <AdminLayout>
       <div>
@@ -403,6 +404,12 @@ const Settings = () => {
         {navState == 2 && (
           <>
             <_Documentation />
+          </>
+        )}
+
+        {navState == 3 && (
+          <>
+            <MegaPriceSettings />
           </>
         )}
       </div>

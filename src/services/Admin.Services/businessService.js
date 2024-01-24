@@ -322,3 +322,13 @@ export async function FilterTransactionsV2(
     return { data: [] };
   }
 }
+
+// change mega price
+export async function updateAllMegaPrice(body) {
+  return http.post(`${apiUrl}/defaultPrice`, body);
+}
+
+// get mega price
+export async function getMegaPriceAdmin(body) {
+  return http.get(`${apiUrl}/getOneMegaPrice`);
+}
