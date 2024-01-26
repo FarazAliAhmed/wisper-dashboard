@@ -191,7 +191,6 @@ export const totalDataSold = (dataTransactions = []) => {
 // }
 
 export const displayBalance = (volume, unit, cash, mega_wallet, user) => {
-  console.log(user);
   if (user?.type === "mega") {
     const totalArray = Object.values(mega_wallet);
     const totalBalance = totalArray.reduce((prev, curr) => {

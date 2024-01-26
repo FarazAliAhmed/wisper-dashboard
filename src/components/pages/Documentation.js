@@ -43,6 +43,8 @@ const Documentation = () => {
   const [token, setToken] = useState("");
   const [webhook, setWebhook] = useState();
   const [callback, setCallback] = useState();
+  const [tableData, setTableData] = useState([]);
+  const [gloTableData, setGloTableData] = useState([]);
 
   useEffect(() => {
     setWebhook(user?.webhook);
@@ -50,20 +52,23 @@ const Documentation = () => {
     setToken(user?.access_token);
   }, [user]);
 
-  const tableData = parseDataPlans(plans);
+  useEffect(() => {
+    const gloPlans = parseDataPlans(plans).filter(
+      (item) => item?.network == "glo"
+    );
+    setTableData(parseDataPlans(plans));
+    setGloTableData(gloPlans);
+  }, []);
 
   const handleSubmit = async () => {
     await getAccessToken(user?._id)
       .then((res) => {
         setToken(res.data.newAccessToken);
-        console.log(res, "kk");
         setSuccess(true);
         setConfirm(false);
       })
       .catch((error) => {
         setFailed(true);
-        console.log(error, "kk");
-
         setConfirm(false);
       });
   };
@@ -195,25 +200,47 @@ const Documentation = () => {
                 <th>Validity</th>
               </tr>
             </thead>
-            <tbody>
-              {tableData
-                .sort((a, b) => a["network"].localeCompare(b["network"]))
-                .sort((a, b) => a["plan_type"].localeCompare(b["plan_type"]))
-                .map((tdata, index) => (
-                  <tr key={index} className="border-top">
-                    <td>
-                      <div className="d-flex align-items-center py-2">
-                        <h6 className="mb-0">{tdata.dataId}</h6>
-                      </div>
-                    </td>
-                    <td>{tdata.network}</td>
-                    {/* <td>{tdata.plan_type.toUpperCase()}</td> */}
-                    {/* <td>{tdata.amount}</td> */}
-                    <td>{tdata.size}</td>
-                    <td>{tdata.duration}</td>
-                  </tr>
-                ))}
-            </tbody>
+            {user?.type == "glo_dealer" || user?.type == "glo_agent" ? (
+              <tbody>
+                {gloTableData
+                  .sort((a, b) => a["network"].localeCompare(b["network"]))
+                  .sort((a, b) => a["plan_type"].localeCompare(b["plan_type"]))
+                  .map((tdata, index) => (
+                    <tr key={index} className="border-top">
+                      <td>
+                        <div className="d-flex align-items-center py-2">
+                          <h6 className="mb-0">{tdata.dataId}</h6>
+                        </div>
+                      </td>
+                      <td>{tdata.network}</td>
+                      {/* <td>{tdata.plan_type.toUpperCase()}</td> */}
+                      {/* <td>{tdata.amount}</td> */}
+                      <td>{tdata.size}</td>
+                      <td>{tdata.duration}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            ) : (
+              <tbody>
+                {tableData
+                  .sort((a, b) => a["network"].localeCompare(b["network"]))
+                  .sort((a, b) => a["plan_type"].localeCompare(b["plan_type"]))
+                  .map((tdata, index) => (
+                    <tr key={index} className="border-top">
+                      <td>
+                        <div className="d-flex align-items-center py-2">
+                          <h6 className="mb-0">{tdata.dataId}</h6>
+                        </div>
+                      </td>
+                      <td>{tdata.network}</td>
+                      {/* <td>{tdata.plan_type.toUpperCase()}</td> */}
+                      {/* <td>{tdata.amount}</td> */}
+                      <td>{tdata.size}</td>
+                      <td>{tdata.duration}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            )}
           </Table>
         </CardBody>
       </Card>

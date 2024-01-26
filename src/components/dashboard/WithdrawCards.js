@@ -27,6 +27,8 @@ import {
 } from "../../services/dataService";
 import { useUser } from "../../context/userContext";
 import { SettingsNav } from "../../App";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { getSFMaintenance } from "../../services/Admin.Services/controlService";
 
 const WithdrawCards = (props) => {
   const { user } = useUser();
@@ -39,6 +41,9 @@ const WithdrawCards = (props) => {
   const [failed, setFailed] = useState(false);
   const [notice, setNotice] = useState(false);
   const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [maintenance, setMaintenance] = useState({});
+
   const [costError, setCostError] = useState(null);
 
   const { withdrawAccount, bankCode, bankName, acctName, storePin } =
@@ -130,8 +135,6 @@ const WithdrawCards = (props) => {
           setWithdraw(false);
 
           setFailed(true);
-
-          console.log(error);
         }
       } else {
         setNavStateFunc(4);
@@ -163,22 +166,29 @@ const WithdrawCards = (props) => {
         setWithdraw(false);
 
         setFailed(true);
-
-        console.log(error);
       }
     }
   };
 
   useEffect(() => {
-    // console.log(cash, "lsls");
     if (withdrawDetails.amount > storeFront?.wallet) {
       setCostError("Insufficient funds to withdraw");
     } else {
       setCostError(null);
     }
   }, [withdrawDetails.amount]);
-  console.log(withdrawDetails, "kk");
-  console.log(user, "ooijj");
+
+  useEffect(() => {
+    const getSFMaintenanceFunc = async () => {
+      // setLoading(true);
+      const resp = await getSFMaintenance();
+      setMaintenance(resp?.data?.maintenance);
+
+      // setLoading(false);
+    };
+
+    getSFMaintenanceFunc();
+  }, []);
 
   return (
     <Card>
@@ -205,7 +215,16 @@ const WithdrawCards = (props) => {
           {user?.type !== "agent" && (
             <button
               onClick={() => {
-                setWithdraw(true);
+                if (
+                  maintenance["withdrawal"] &&
+                  maintenance["withdrawal"] == true
+                ) {
+                  toast.error(
+                    "The Store front withdrawal feature is on maintenance, check in later!"
+                  );
+                } else {
+                  setWithdraw(true);
+                }
               }}
               className="fund__wallet__btn"
             >
@@ -307,17 +326,32 @@ const WithdrawCards = (props) => {
                 >
                   <Label for="password">
                     Wisper Account Password{" "}
+                    <i
+                      className={`password-toggle-icon ${
+                        showPassword ? "show" : "hide"
+                      }`}
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? (
+                        <AiOutlineEye cursor="pointer" />
+                      ) : (
+                        <AiOutlineEyeInvisible cursor="pointer" />
+                      )}{" "}
+                      {/* Eye and hide icons */}
+                    </i>
                     <span className="text-danger">*</span>
                   </Label>
+
                   <Input
                     value={withdrawDetails.password}
                     id="password"
                     name="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     onChange={handleChange}
                     invalid={errors.password}
                     required
                   />
+
                   <FormFeedback>{errors.password}</FormFeedback>
                 </FormGroup>
               </Col>

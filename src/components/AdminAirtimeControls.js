@@ -21,12 +21,15 @@ import {
   exitNetworkMaintenance,
   enterMegaNetworkMaintenance,
   exitMegaNetworkMaintenance,
+  getAirtimeMaintenance,
+  enterAirtimeNetworkMaintenance,
+  exitAirtimeNetworkMaintenance,
 } from "../services/Admin.Services/controlService";
 import AdminNotifier from "./AdminNotifier";
 import { getMegaMaintenance } from "../services/dataService";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
-const AdminMegaControls = () => {
+const AdminAirtimeControls = () => {
   const [maintenance, setMaintenance] = useState("");
   //   const { maintenance, setMaintenance } = useAppState();
 
@@ -35,23 +38,25 @@ const AdminMegaControls = () => {
   const [serverResp, setResp] = useState("none");
 
   useEffect(() => {
-    const getMegaMaintenanceFunc = async () => {
+    const getAirtimeMaintenanceFunc = async () => {
       // setLoading(true);
-      const resp = await getMegaMaintenance();
+      const resp = await getAirtimeMaintenance();
       setMaintenance(resp?.data?.maintenance);
 
       // setLoading(false);
     };
 
-    getMegaMaintenanceFunc();
+    getAirtimeMaintenanceFunc();
   }, []);
 
-  const setNetworkMaintenance = (network, status) => {
+  const setNetworkMaintenance = async (network, status) => {
     setMaintenance({ ...maintenance, [network]: status });
     if (status) {
-      enterMegaNetworkMaintenance(network);
+      const res = await enterAirtimeNetworkMaintenance(network);
+      toast.success(res?.message);
     } else {
-      exitMegaNetworkMaintenance(network);
+      const res = await exitAirtimeNetworkMaintenance(network);
+      toast.success(res?.message);
     }
   };
 
@@ -74,7 +79,7 @@ const AdminMegaControls = () => {
 
         <Col md={12}>
           <div className="mt-3">
-            <h5>Bulk Data Purchase Maintenance Mode</h5>
+            <h5>Airtime Purchase Maintenance Mode</h5>
           </div>
           <div>
             <Table className="no-wrap mt-3 align-middle" responsive borderless>
@@ -90,26 +95,26 @@ const AdminMegaControls = () => {
                 <tr className="border-top">
                   <td>1</td>
                   <td>
-                    <h6 className="mb-0">MTN SME</h6>
+                    <h6 className="mb-0">MTN</h6>
                   </td>
                   <td>
-                    {maintenance["mtn_sme"] ? (
+                    {maintenance["mtn"] ? (
                       <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
                     ) : (
                       <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
                     )}
                   </td>
                   <td>
-                    {maintenance["mtn_sme"] ? (
+                    {maintenance["mtn"] ? (
                       <Button
-                        onClick={() => setNetworkMaintenance("mtn_sme", false)}
+                        onClick={() => setNetworkMaintenance("mtn", false)}
                         color="success"
                       >
                         <strong>Exit</strong>
                       </Button>
                     ) : (
                       <Button
-                        onClick={() => setNetworkMaintenance("mtn_sme", true)}
+                        onClick={() => setNetworkMaintenance("mtn", true)}
                         color="warning"
                       >
                         <strong>Enter</strong>
@@ -117,42 +122,9 @@ const AdminMegaControls = () => {
                     )}
                   </td>
                 </tr>
+
                 <tr className="border-top">
                   <td>2</td>
-                  <td>
-                    <h6 className="mb-0">MTN GIFTING</h6>
-                  </td>
-                  <td>
-                    {maintenance["mtn_gifting"] ? (
-                      <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
-                    ) : (
-                      <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
-                    )}
-                  </td>
-                  <td>
-                    {maintenance["mtn_gifting"] ? (
-                      <Button
-                        onClick={() =>
-                          setNetworkMaintenance("mtn_gifting", false)
-                        }
-                        color="success"
-                      >
-                        <strong>Exit</strong>
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() =>
-                          setNetworkMaintenance("mtn_gifting", true)
-                        }
-                        color="warning"
-                      >
-                        <strong>Enter</strong>
-                      </Button>
-                    )}
-                  </td>
-                </tr>
-                <tr className="border-top">
-                  <td>3</td>
                   <td>
                     <h6 className="mb-0">AIRTEL</h6>
                   </td>
@@ -182,7 +154,7 @@ const AdminMegaControls = () => {
                   </td>
                 </tr>
                 <tr className="border-top">
-                  <td>4</td>
+                  <td>3</td>
                   <td>
                     <h6 className="mb-0">GLO</h6>
                   </td>
@@ -212,7 +184,7 @@ const AdminMegaControls = () => {
                   </td>
                 </tr>
                 <tr className="border-top">
-                  <td>5</td>
+                  <td>4</td>
                   <td>
                     <h6 className="mb-0">9MOBILE</h6>
                   </td>
@@ -250,4 +222,4 @@ const AdminMegaControls = () => {
   );
 };
 
-export default AdminMegaControls;
+export default AdminAirtimeControls;

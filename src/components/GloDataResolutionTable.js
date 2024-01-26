@@ -117,8 +117,6 @@ const GloDataResolutionTable = ({
     setSearchResults(results);
   };
 
-  console.log(transactionsData);
-
   return (
     <div>
       <Row>

@@ -15,6 +15,7 @@ import {
   // UncontrolledAlert,
   // Button,
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
 import AllocateButton from "../../components/AllocateButton";
 import { useUser } from "../../context/userContext";
@@ -23,7 +24,8 @@ import { useAppState } from "../../context/appContext";
 import FullLayout from "../../layouts/FullLayout";
 import {
   allocateData,
-  getMegaMaintenance,
+  allocateAgentsPrice,
+  getAgentsInfo,
   purchaseMegaPrice,
 } from "../../services/dataService";
 import {
@@ -43,6 +45,9 @@ import { toast } from "react-hot-toast";
 import PurchaseButton from "../../components/PurchaseButton";
 import { set } from "lodash";
 import PurchaseHistory from "../../components/PurchaseHistory";
+import { useParams } from "react-router-dom";
+import AgentsPurchaseButton from "../../components/AgentsPurchaseButton";
+import AllAgentsPurchaseHistory from "../../components/AllAgentsPurchaseHistory";
 
 const initialState = {
   network: "airtel",
@@ -50,9 +55,13 @@ const initialState = {
   phone_number: "",
 };
 
-const BuyBulkData = () => {
+const AgentsFundingGLO = () => {
+  const { businessId } = useParams();
+
   const [plan, setPlan] = useState(initialState);
   const [confirmState, setConfirmState] = useState(false);
+  const [agents, setAgents] = useState({});
+
   const {
     megaPriceUser,
     currentBalance: { volume, unit, cash, mega_wallet },
@@ -62,7 +71,6 @@ const BuyBulkData = () => {
   //   status: true,
   //   message: "",
   // });
-  const [maintenance, setMaintenance] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [bucketValue, setBucketValue] = useState("glo");
@@ -75,47 +83,46 @@ const BuyBulkData = () => {
 
   // console.log("dataPlans", dataPlans)
 
-  useEffect(() => {
-    const getMegaMaintenanceFunc = async () => {
-      // setLoading(true);
-      const resp = await getMegaMaintenance();
-      setMaintenance(resp?.data?.maintenance);
-      // setSubDealers(resp);
-      // setLoading(false);
-    };
+  // useEffect(() => {
+  //   parseDataPlans(plans)
+  // }, [])
+  const handleGetAgentsInfo = async () => {
+    const resp = await getAgentsInfo({
+      userId: businessId,
+    });
+    setAgents(resp?.subdealers);
+  };
 
-    getMegaMaintenanceFunc();
+  useEffect(() => {
+    handleGetAgentsInfo();
   }, []);
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
-    if (cash >= costValue) {
-      try {
-        setLoading(true);
+    try {
+      setLoading(true);
 
-        await purchaseMegaPrice(
-          {
-            business_id: user?._id,
-            network: bucketValue,
-            amountInGB: amountValue,
-          },
-          user?.access_token
-        );
-        setLoading(false);
-        // setPlan(initialState);
-        toast.success("data successfully purchased");
-        window.location.reload();
+      await allocateAgentsPrice(
+        {
+          dealer: user._id,
+          business_id: businessId,
+          network: bucketValue,
+          amountInGB: amountValue,
+        },
+        user?.access_token
+      );
+      setLoading(false);
+      // setPlan(initialState);
+      toast.success("data successfully allocated");
+      window.location.reload();
 
-        return { status: true, message: "Data allocated successfully." };
-      } catch (error) {
-        setLoading(false);
-        toast.error("error purchasing");
-        const { status, message } = handleFailedRequest(error);
-        return { status, message };
-        // setServerResponse({ status, message });
-      }
-    } else {
-      toast.error("Insufficient Funds");
+      return { status: true, message: "Data allocated successfully." };
+    } catch (error) {
+      setLoading(false);
+      toast.error("error allocating");
+      const { status, message } = handleFailedRequest(error);
+      return { status, message };
+      // setServerResponse({ status, message });
     }
   };
 
@@ -146,15 +153,29 @@ const BuyBulkData = () => {
     <FullLayout>
       <div>
         <div className="data__heading">
-          <h5 className="mb-4 mt-3">Buy Bulk Data</h5>
-          <h5
+          {" "}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "0.5rem",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Link to={`/agents/business/${businessId}`}>
+              <Button color="primary">Back</Button>
+            </Link>{" "}
+            <h5 className="mb-4 mt-3">Fund Data Bucket</h5>
+          </div>
+          {/* <h5
             // style={{
             //   fontSize: "17px",
             // }}
             className="mb-4 mt-3"
           >
             <img src={wallIcon} /> ₦{cash}
-          </h5>
+          </h5> */}
         </div>
 
         <Card body>
@@ -178,6 +199,19 @@ const BuyBulkData = () => {
                 <Row form>
                   <Col md={12}>
                     <FormGroup>
+                      <Label for="amount">Name of Agent</Label>
+                      <Input
+                        value={agents?.name}
+                        id="name"
+                        name="name"
+                        readOnly
+                        // onChange={handleAmountChange}
+                        type="text"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col md={12}>
+                    <FormGroup>
                       <Label for="network">Select Bucket</Label>
                       <Input
                         onChange={handleChange}
@@ -189,33 +223,7 @@ const BuyBulkData = () => {
                         <option selected disabled>
                           ---Select Bucket---
                         </option>
-                        {!maintenance["airtel"] && (
-                          <option value="airtel">
-                            AIRTEL: {Number(mega_wallet.airtel) / 1000}GB
-                          </option>
-                        )}
-                        {!maintenance["glo"] && (
-                          <option value="glo">
-                            GLO: {Number(mega_wallet.glo) / 1000}GB{" "}
-                          </option>
-                        )}
-                        {!maintenance["9mobile"] && (
-                          <option value="9mobile">
-                            9MOBILE: {Number(mega_wallet["9mobile"]) / 1000}GB{" "}
-                          </option>
-                        )}
-                        {!maintenance["mtn_gifting"] && (
-                          <option value="mtn_gifting">
-                            MTN GIFTING:{" "}
-                            {Number(mega_wallet.mtn_gifting) / 1000}
-                            GB
-                          </option>
-                        )}
-                        {!maintenance["mtn_sme"] && (
-                          <option value="mtn_sme">
-                            MTN[SME]: {Number(mega_wallet.mtn_sme) / 1000}GB
-                          </option>
-                        )}
+                        <option value="glo">GLO</option>
                       </Input>
                     </FormGroup>
                   </Col>
@@ -232,7 +240,7 @@ const BuyBulkData = () => {
                       />
                     </FormGroup>
                   </Col>
-                  <Col md={12}>
+                  {/* <Col md={12}>
                     <FormGroup>
                       <Label for="cost">Cost of Data</Label>
                       <Input
@@ -244,18 +252,35 @@ const BuyBulkData = () => {
                         readOnly
                       />
                     </FormGroup>
-                  </Col>
+                  </Col> */}
                 </Row>
+                {Number(mega_wallet[bucketValue]) / 1000 >=
+                Number(amountValue) ? (
+                  <AgentsPurchaseButton
+                    setLoading={setLoading}
+                    loading={loading}
+                    handleSubmit={handleSubmit}
+                    bucket={bucketValue}
+                    balances={mega_wallet}
+                    data={{
+                      dealer: user._id,
+                      name: agents?.name,
+                      business_id: businessId,
+                      network: bucketValue,
+                      amountInGB: amountValue,
+                    }}
+                  />
+                ) : (
+                  <p
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    insufficient {bucketValue} data
+                  </p>
+                )}
+                {/* toast.error(`insufficient ${bucket} data `); */}
 
-                <PurchaseButton
-                  setLoading={setLoading}
-                  loading={loading}
-                  handleSubmit={handleSubmit}
-                  amount={amountValue}
-                  cost={costValue}
-                  megaPrices={megaPriceUser}
-                  bucket={bucketValue}
-                />
                 {/* <Button
                   onClick={(e) => {
                     e.preventDefault();
@@ -271,38 +296,11 @@ const BuyBulkData = () => {
             </Col>
             <Col md={5}>
               <div>
-                <p>Data Price / GB</p>
+                <p>Bucket Balances</p>
                 <Card className="shadow-none code-balance">
                   <CardBody>
                     <div className="py-2 border-bottom">
-                      MTN [SME]:{" "}
-                      {!maintenance["mtn_sme"]
-                        ? ` ₦${megaPriceUser.mtn_sme}`
-                        : "unavailable"}
-                    </div>
-                    <div className="py-2 border-bottom">
-                      GLO:{" "}
-                      {!maintenance["glo"]
-                        ? ` ₦${megaPriceUser.glo}`
-                        : "unavailable"}
-                    </div>
-                    <div className="py-2 border-bottom">
-                      MTN CG:{" "}
-                      {!maintenance["mtn_gifting"]
-                        ? ` ₦${megaPriceUser.mtn_gifting}`
-                        : "unavailable"}
-                    </div>
-                    <div className="py-2 border-bottom ">
-                      9MOBILE:{" "}
-                      {!maintenance["9mobile"]
-                        ? ` ₦${megaPriceUser["9mobile"]}`
-                        : "unavailable"}
-                    </div>
-                    <div className="py-2 ">
-                      Airtel:{" "}
-                      {!maintenance["airtel"]
-                        ? ` ₦${megaPriceUser.airtel}`
-                        : "unavailable"}
+                      GLO: {Number(mega_wallet.glo) / 1000}GB{" "}
                     </div>
                   </CardBody>
                 </Card>
@@ -310,10 +308,10 @@ const BuyBulkData = () => {
             </Col>
           </Row>
         </Card>
-        <PurchaseHistory />
+        <AllAgentsPurchaseHistory />
       </div>
     </FullLayout>
   );
 };
 
-export default BuyBulkData;
+export default AgentsFundingGLO;

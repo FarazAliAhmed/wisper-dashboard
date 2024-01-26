@@ -50,9 +50,9 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { set } from "lodash";
 import { IoMdClose } from "react-icons/io";
 import { AiFillEye } from "react-icons/ai";
+import SFAirtimePricesTable from "../../components/SFAirtimePricesTable";
 
 const ImageModal = ({ imgUrl, closeModal, avatarFunc }) => {
-  console.log(imgUrl);
   const editorRef = useRef(null);
   const [loading, setLoading] = useState();
   const onClickSave = async () => {
@@ -79,9 +79,6 @@ const ImageModal = ({ imgUrl, closeModal, avatarFunc }) => {
               setLoading(false);
               toast.success(`Successfully uploaded! Please save changes `);
             });
-            // console.log(formData);
-
-            // console.log(formData);
           }
         }, "image/jpeg");
       }
@@ -93,7 +90,6 @@ const ImageModal = ({ imgUrl, closeModal, avatarFunc }) => {
 
   const formdata = new FormData();
   formdata.append("image", "sksk");
-  console.log(formdata);
 
   return (
     <div className="avatar__modal-overlay">
@@ -141,6 +137,7 @@ const EditStoreFront = () => {
   const { user } = useUser();
   const { storeFront } = useAppState();
   const [prices, setPrices] = useState([]);
+  const [gloPrices, setGloPrices] = useState([]);
   const [fetchPrice, setFetchPrice] = useState(false);
   const [usernameCheck, setUsernameCheck] = useState([]);
 
@@ -249,8 +246,11 @@ const EditStoreFront = () => {
   useEffect(() => {
     const fetchAllPlansUser = async () => {
       await getAllPlansUser(user._id).then((res) => {
+        const gloPricesData = res?.data.filter(
+          (item) => item?.network == "glo"
+        );
         setPrices(res?.data);
-        console.log("res", res);
+        setGloPrices(gloPricesData);
       });
     };
 
@@ -387,15 +387,12 @@ const EditStoreFront = () => {
   //   setStoreInfo({ ...storeInfo, [name]: value });
   // };
 
-  console.log(prices, "oo");
-
   const navItems = ["Information", "Branding", "Prices"];
 
   useEffect(() => {
     const fetchNotice = async () => {
       await getSetUp(user._id).then((res) => {
         setNoticeState(res?.data);
-        console.log(res.data, "kk");
         if (res?.data) {
           setNotice(false);
         } else {
@@ -724,14 +721,34 @@ const EditStoreFront = () => {
           </Card>
         )}
         {navState == 2 && (
-          <Row className="mt-1">
-            <SFPricesTable
-              transactions={prices}
-              showHeader={true}
-              showSubHeader={true}
-              fetchPrice={setFetchPrice}
-            />
-          </Row>
+          <>
+            {user?.type !== "glo_dealer" ||
+              (user?.type !== "glo_agent" && (
+                <Row className="mt-1">
+                  <SFAirtimePricesTable
+                    transactions={prices}
+                    showHeader={true}
+                    showSubHeader={true}
+                    fetchPrice={fetchPrice}
+                    setFetchPrice={setFetchPrice}
+                  />
+                </Row>
+              ))}
+
+            <Row className="mt-1">
+              <SFPricesTable
+                transactions={
+                  user?.type == "glo_dealer" || user?.type == "glo_agent"
+                    ? gloPrices
+                    : prices
+                }
+                showHeader={true}
+                showSubHeader={true}
+                fetchPrice={fetchPrice}
+                setFetchPrice={setFetchPrice}
+              />
+            </Row>
+          </>
         )}
       </div>
       {openModal && (

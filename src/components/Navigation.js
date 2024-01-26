@@ -45,14 +45,16 @@ const Navigation = () => {
               </DropdownMenu>
             </UncontrolledDropdown> */}
           </Nav>
-          <Link to="/login">
-            <Button color="info">Login</Button>
-          </Link>
-          <Link className="register-btn" to="/register">
-            <Button className="btn" outline color="secondary">
-              Register
-            </Button>
-          </Link>
+          <div className="nav__auth__div">
+            <Link to="/login">
+              <Button color="info">Login</Button>
+            </Link>
+            <Link to="/register">
+              <Button className="btn" outline color="secondary">
+                Register
+              </Button>
+            </Link>
+          </div>
         </Collapse>
       </Navbar>
     </div>

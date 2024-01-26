@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Form,
   FormGroup,
@@ -7,6 +7,9 @@ import {
   Input,
   FormFeedback,
   Alert,
+  Modal,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import AuthLayout from "../../layouts/AuthLayout";
@@ -17,12 +20,21 @@ import {
   // validateForm,
   handleFailedRequest,
 } from "../../utils";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import warning from "../../assets/images/logos/warning.png";
 
 import "./auth.scss";
+import { toast } from "react-hot-toast";
+import { SettingsNav } from "../../App";
 
 const Login = () => {
   const [account, setAccount] = useState({ email: "", password: "" });
-  const [msgError, setMsgError] = useState("")
+  const [msgError, setMsgError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [modalState, setModalState] = useState(false);
+
+  const { verificationMessage } = useContext(SettingsNav);
+
   const [errors, setErrors] = useState({});
   const [serverResponse, setServerResponse] = useState({
     status: true,
@@ -38,19 +50,39 @@ const Login = () => {
       await authService.login(account.email, account.password);
       setLoading(false);
       const user = getCurrentUser();
+
       if (user.isAdmin) {
         window.location = "/admin";
       } else {
         window.location = "/dashboard";
       }
     } catch (error) {
-      setMsgError("Email or password incorrect")
-      console.log(error)
+      console.log(error.response, "res");
       setLoading(false);
-      const { status, message } = handleFailedRequest(error);
+      const errorMessage = error.response?.data;
+      if (errorMessage == "Email not confirmed") {
+        setModalState(true);
+      } else {
+        setMsgError(error.response.data);
+        const { status, message } = handleFailedRequest(error);
 
-      setServerResponse({ status, message });
+        setServerResponse({ status, message });
+      }
+
       // console.log(error);
+    }
+  };
+
+  const resendLinkFunc = async () => {
+    try {
+      setLoading(true);
+      const res = await authService.resendLink(account.email);
+      setLoading(false);
+      toast.success(res.data?.message);
+    } catch (error) {
+      console.log(error.response, "res");
+      setLoading(false);
+      toast.error("error sending confirmation link");
     }
   };
 
@@ -67,12 +99,14 @@ const Login = () => {
 
   return (
     <AuthLayout headTitle="Login" tagline="Login to continue.">
-      {msgError && (
-        <Alert color="danger">{msgError}</Alert>
-      )}
+      {msgError && <Alert color="danger">{msgError}</Alert>}
       {/* {!serverResponse.status && (
         <Alert color="danger">{serverResponse.message}</Alert>
       )} */}
+
+      {verificationMessage && (
+        <Alert color="success">{verificationMessage}</Alert>
+      )}
       <Form onSubmit={handleSubmit}>
         <FormGroup className="mb-3">
           <Label>Email address</Label>
@@ -86,9 +120,24 @@ const Login = () => {
           <FormFeedback>{errors.email}</FormFeedback>
         </FormGroup>
         <FormGroup className="mb-3">
-          <Label>Password</Label>
+          <Label>
+            Password{" "}
+            <i
+              className={`password-toggle-icon ${
+                showPassword ? "show" : "hide"
+              }`}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <AiOutlineEye cursor="pointer" />
+              ) : (
+                <AiOutlineEyeInvisible cursor="pointer" />
+              )}{" "}
+              {/* Eye and hide icons */}
+            </i>
+          </Label>
           <Input
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             value={account.password}
             onChange={handleChange}
@@ -113,13 +162,63 @@ const Login = () => {
             </Link>
           </small>
           <small className="text-center text-muted mt-1">
-           Can't remember your password?{" "}
-            <Link to="/forgot-password" className="text-center text-decoration-none d-block">
+            Can't remember your password?{" "}
+            <Link
+              to="/forgot-password"
+              className="text-center text-decoration-none d-block"
+            >
               Forgot Password
             </Link>
           </small>
         </div>
       </Form>
+
+      <Modal
+        centered
+        isOpen={modalState}
+        toggle={() => {
+          setModalState(!modalState);
+        }}
+      >
+        <ModalBody>
+          <div className="confirm text-center">
+            <img src={warning} width={50} className="confirm-warn" alt="warn" />
+
+            <h6>
+              We noticed that you attempted to log in to your account at Wisper.
+              However, your email address hasn't been verified yet. For full
+              access to our platform's features, please check your email inbox
+              (including spam/junk folders) for a email confirmation message
+              from us. Click on the confirmation link provided in the email to
+              confirm your email address. If you cannot find the verification
+              email, you can request a new one by clicking the "Resend Link"
+              button. This will send a new confirmation message to the email
+              address associated with your account. If you encounter any
+              difficulties or need further assistance, please feel free to
+              contact our support team at support@wisper.ng.
+            </h6>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button
+            color="primary"
+            disabled={loading}
+            onClick={() => {
+              setModalState(false);
+              resendLinkFunc();
+            }}
+          >
+            Resend Link
+          </Button>{" "}
+          <Button
+            onClick={() => {
+              setModalState(!modalState);
+            }}
+          >
+            Close
+          </Button>
+        </ModalFooter>
+      </Modal>
     </AuthLayout>
   );
 };

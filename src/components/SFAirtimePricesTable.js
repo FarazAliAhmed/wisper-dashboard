@@ -31,7 +31,7 @@ import { BeatLoader } from "react-spinners";
 import { updateSellingPrice, updateStoreFront } from "../services/dataService";
 import toast from "react-hot-toast";
 
-const SFPricesTable = ({
+const SFAirtimePricesTable = ({
   transactions,
   showHeader,
   showSubHeader,
@@ -157,6 +157,8 @@ const SFPricesTable = ({
     setNewPrice({ ...newPrice, [name]: value });
   };
 
+  const networks = ["MTN", "GLO", "AIRTEL", "9MOBILE"];
+
   return (
     <>
       <div>
@@ -165,14 +167,13 @@ const SFPricesTable = ({
             <div>
               <Card>
                 <CardBody>
-                  {showHeader && <CardTitle tag="h5">Data Pricing</CardTitle>}
+                  {showHeader && <CardTitle tag="h5">Airtime Profit</CardTitle>}
 
                   {showSubHeader && (
                     <CardSubtitle className="mb-2 text-muted" tag="h6">
-                      {" "}
                       <p>
-                        Please Note: Profit from every transaction is credited
-                        into your StoreFront Wallet
+                        What You Profit from Each Airtime Purchase on Your Store
+                        Front
                       </p>
                     </CardSubtitle>
                   )}
@@ -263,61 +264,25 @@ const SFPricesTable = ({
                     <thead>
                       <tr>
                         <th>Network</th>
-                        <th>Plans</th>
-                        <th>Validity</th>
-                        {user.type != "mega" && <th>Cost</th>}
-                        <th>Selling Price</th>
-                        {user.type != "mega" && <th>Profit</th>}
-
-                        {/* <th>Date</th>
-                      <th>Receipt</th> */}
-                        {/* <th>Price</th> */}
-                        {/* <th>Reference</th> */}
-                        {/* <th>Price</th> */}
+                        <th>Airtime Amount</th>
+                        <th>Profit</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {transactionsData.map((tx, idx) => (
+                      {networks.map((tx, idx) => (
                         <tr key={idx} className="border-top">
-                          <td>{tx.network}</td>
-                          <td>{tx.size.toUpperCase()}</td>
-                          <td>{tx.validity}</td>
-                          {user.type != "mega" && <td>₦{tx.price}</td>}
-
+                          <td>{tx}</td>
+                          <td>{"Any Amount"}</td>
                           <td>
-                            {/* ₦{tx.selling_price} */}
-                            <Row form>
-                              <Col md={12}>
-                                <Button
-                                  color="primary"
-                                  onClick={() => {
-                                    setPlanId(tx.plan_id);
-                                    setNewPrice(tx.selling_price);
-                                    setConfirm(true);
-                                  }}
-                                >
-                                  Edit (₦{tx.selling_price})
-                                </Button>
-                              </Col>
-                            </Row>
+                            {user.type == "lite"
+                              ? "1.5% For each airtime amount"
+                              : "2% For each airtime amount"}
                           </td>
-                          {user.type != "mega" && (
-                            <td>
-                              {Number(tx.selling_price) - Number(tx.price) >
-                              0 ? (
-                                <>
-                                  ₦{Number(tx.selling_price) - Number(tx.price)}
-                                </>
-                              ) : (
-                                0
-                              )}
-                            </td>
-                          )}
                         </tr>
                       ))}
                     </tbody>
                   </Table>
-
+                  {/* 
                   <SFReceipt
                     show={show}
                     receiptData={receiptdata}
@@ -328,7 +293,19 @@ const SFPricesTable = ({
                     pageSize={pageSize}
                     currentPage={currentPage}
                     onPageChange={handlePageChange}
-                  />
+                  /> */}
+                  <CardTitle
+                    className="mt-2"
+                    style={{ fontWeight: 800 }}
+                    tag="h6"
+                  >
+                    Note on Profit Allocation:
+                  </CardTitle>
+                  <CardSubtitle className="mb-2 " tag="p">
+                    <b>Important:</b> All profits from airtime sales are
+                    credited directly into your Storefront wallet. This ensures
+                    seamless management and accessibility of your earnings.
+                  </CardSubtitle>
                 </CardBody>
               </Card>
             </div>
@@ -383,4 +360,4 @@ const SFPricesTable = ({
   );
 };
 
-export default SFPricesTable;
+export default SFAirtimePricesTable;

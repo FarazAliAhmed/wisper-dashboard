@@ -146,8 +146,6 @@ const AdminWalletTransactions = () => {
     }
   };
 
-  console.log(transactions);
-
   return (
     <div
       style={{

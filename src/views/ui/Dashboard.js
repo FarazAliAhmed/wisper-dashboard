@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row, UncontrolledAlert } from "reactstrap";
+import {
+  Button,
+  Col,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Row,
+  UncontrolledAlert,
+} from "reactstrap";
 
 import "../../assets/scss/custom.scss";
 import TopCards from "../../components/dashboard/TopCards";
@@ -22,11 +31,13 @@ import airtel from "../../assets/dashboard/airtel.svg";
 import tranIcon from "../../assets/dashboard/transa.svg";
 import wallIcon from "../../assets/dashboard/walle.svg";
 import axios from "axios";
+import UserGuide from "../../components/dashboard/UserGuide";
 
 // import PaymentButton from "../../components/PaymentButton";
 
 const Dashboard = () => {
   const { user } = useUser();
+
   const {
     currentBalance: { volume, unit, cash, mega_wallet },
     transactions,
@@ -169,6 +180,21 @@ const Dashboard = () => {
                 </Col>
               </>
             )}
+
+            {user.type === "glo_dealer" && (
+              <>
+                {/* Glo wallet - Hidden for now */}
+                <Col sm="6" lg="4">
+                  <TopCards
+                    bg="bg-light-info text-info"
+                    title="Profit"
+                    subtitle="GLO"
+                    earning={`${mega_wallet.glo / 1000} GB`}
+                    icon={glo}
+                  />
+                </Col>
+              </>
+            )}
           </Row>
         )}
 
@@ -259,8 +285,13 @@ const Dashboard = () => {
           />
         </Row>
         <Row>
-          <Col lg="12">
+          <Col lg="6">
+            {" "}
+            {/* Use half of the column width for each component */}
             <SupportCard />
+          </Col>
+          <Col lg="6">
+            <UserGuide />
           </Col>
         </Row>
       </div>

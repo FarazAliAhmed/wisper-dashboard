@@ -62,20 +62,24 @@ const Pricing = () => {
   const { plans } = useAppState();
   const dataPlans = parseDataPlans(plans);
 
-  useEffect(async () => {
-    await getUserMegaPrice(id).then((res) => {
-      if (res) {
-        const data = res.data;
-        setPlan({
-          business_id: data.business_id,
-          mtn_sme: data.mtn_sme,
-          mtn_gifting: data.mtn_gifting,
-          airtel: data.airtel,
-          "9mobile": data["9mobile"],
-          glo: data.glo,
-        });
-      }
-    });
+  useEffect(() => {
+    const getUserMegaPriceFunc = async () => {
+      await getUserMegaPrice(id).then((res) => {
+        if (res) {
+          const data = res.data;
+          setPlan({
+            business_id: data.business_id,
+            mtn_sme: data.mtn_sme,
+            mtn_gifting: data.mtn_gifting,
+            airtel: data.airtel,
+            "9mobile": data["9mobile"],
+            glo: data.glo,
+          });
+        }
+      });
+    };
+
+    getUserMegaPriceFunc();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -84,7 +88,6 @@ const Pricing = () => {
       setLoading(true);
       await updateMegaPrice(plan, user?.access_token);
       setLoading(false);
-      console.log("success");
       toast.success("successfully updated");
 
       return { status: true, message: "Mega Price updated successfully." };

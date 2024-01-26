@@ -3,23 +3,27 @@ import { Link } from "react-router-dom";
 
 import "./../../assets/scss/custom.scss";
 
-const SupportCard = () => {
+const UserGuide = () => {
   return (
     <Card>
       <CardBody>
         <Row>
           <Col sm="12" md="12" lg="12">
-            <CardTitle tag="h5">Contact Support</CardTitle>
-            <p>Get in touch with our support team</p>
+            <CardTitle tag="h5">User Guide Download</CardTitle>
+            <p>Learn How to Navigate and Utilize the Wisper Platform</p>
           </Col>
           <Col sm="12" md="12" lg="12" className="chat-btn">
             <a
               className="cursor-pointer"
-              href="mailto:support@wisper.ng?subject=Support Inquiry&body=Hello%20Wisper%20Support%2C%0D%0A%0D%0AI%20need%20assistance%20with%3A%0D%0A%0D%0A%0D%0AThank%20you%21"
+              href="https://docs.google.com/document/d/1i3bljCeFRYr9Afd_I0UkDIOfiOORTvfS/edit?usp=sharing&ouid=117079378487353153089&rtpof=true&sd=true"
+              download="UserGuide.pdf"
               target="_blank"
+              style={{
+                textDecoration: "none",
+              }}
             >
               <Button color="primary " className="btn-block">
-                Send Message
+                Download Guide
               </Button>
             </a>
           </Col>
@@ -29,4 +33,4 @@ const SupportCard = () => {
   );
 };
 
-export default SupportCard;
+export default UserGuide;

@@ -10,8 +10,6 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
 const PricingUser = ({ businessId }) => {
-  console.log("businessId", businessId);
-
   const jwtToken = localStorage.getItem("token");
 
   // const { user } = useUser();
@@ -37,7 +35,6 @@ const PricingUser = ({ businessId }) => {
         const response = await axios.get(
           `${adminUrl}/plans_user/${businessId}`
         );
-        console.log(response, "resuuu");
         setUserPlans(response?.data);
       } catch (error) {
         console.error("Error:", error.response.data.error);
@@ -47,7 +44,6 @@ const PricingUser = ({ businessId }) => {
     getPlansByUserId();
   }, [businessId]);
 
-  console.log(tableDataAll);
   useEffect(() => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${jwtToken}`;
   }, [jwtToken]);
@@ -72,8 +68,6 @@ const PricingUser = ({ businessId }) => {
         validity,
       };
 
-      console.log(newPlan);
-
       const response = await axios.post(
         `${adminUrl}/plans_user/${businessId}`,
         newPlan
@@ -83,7 +77,6 @@ const PricingUser = ({ businessId }) => {
         position: toast.POSITION.TOP_RIGHT,
       });
 
-      console.log(response);
       window.location.reload();
     } catch (error) {
       toast.error("Error Occured Try Again!!!", {
@@ -106,7 +99,6 @@ const PricingUser = ({ businessId }) => {
         newPlan
       );
 
-      console.log(response);
       document.getElementById(`myInput${dataId}`).value = "";
 
       toast.info("Price Updated", {
@@ -179,7 +171,6 @@ const PricingUser = ({ businessId }) => {
                           const matchingPlan = userPlans.find(
                             (obj) => obj.plan_id === tdata.dataId
                           );
-                          console.log(matchingPlan, "match");
                           if (matchingPlan) {
                             const price = matchingPlan.price;
                             return "₦" + price;

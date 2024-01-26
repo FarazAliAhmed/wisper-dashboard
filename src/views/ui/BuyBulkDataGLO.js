@@ -50,7 +50,7 @@ const initialState = {
   phone_number: "",
 };
 
-const BuyBulkData = () => {
+const BuyBulkDataGLO = () => {
   const [plan, setPlan] = useState(initialState);
   const [confirmState, setConfirmState] = useState(false);
   const {
@@ -129,16 +129,17 @@ const BuyBulkData = () => {
   const handleAmountChange = (e) => {
     const value = e.target.value;
     setAmountValue(value);
-    if (bucketValue == "glo") {
-      setCostValue(megaPriceUser.glo * value);
-    } else if (bucketValue == "mtn_sme") {
-      setCostValue(megaPriceUser.mtn_sme * value);
-    } else if (bucketValue == "mtn_gifting") {
-      setCostValue(megaPriceUser.mtn_gifting * value);
-    } else if (bucketValue == "airtel") {
-      setCostValue(megaPriceUser.airtel * value);
-    } else if (bucketValue == "9mobile") {
-      setCostValue(megaPriceUser["9mobile"] * value);
+    let data;
+    if (megaPriceUser.gloDealer && bucketValue == "glo") {
+      if (value >= 10001) {
+        data = megaPriceUser.gloDealer[0];
+      } else {
+        data = megaPriceUser.gloDealer.filter(
+          (item) => item?.rangeStart <= value && value <= item?.rangeEnd
+        )[0];
+      }
+
+      setCostValue(data ? data.pricePerGB * value : 0);
     }
   };
 
@@ -189,31 +190,10 @@ const BuyBulkData = () => {
                         <option selected disabled>
                           ---Select Bucket---
                         </option>
-                        {!maintenance["airtel"] && (
-                          <option value="airtel">
-                            AIRTEL: {Number(mega_wallet.airtel) / 1000}GB
-                          </option>
-                        )}
+
                         {!maintenance["glo"] && (
                           <option value="glo">
                             GLO: {Number(mega_wallet.glo) / 1000}GB{" "}
-                          </option>
-                        )}
-                        {!maintenance["9mobile"] && (
-                          <option value="9mobile">
-                            9MOBILE: {Number(mega_wallet["9mobile"]) / 1000}GB{" "}
-                          </option>
-                        )}
-                        {!maintenance["mtn_gifting"] && (
-                          <option value="mtn_gifting">
-                            MTN GIFTING:{" "}
-                            {Number(mega_wallet.mtn_gifting) / 1000}
-                            GB
-                          </option>
-                        )}
-                        {!maintenance["mtn_sme"] && (
-                          <option value="mtn_sme">
-                            MTN[SME]: {Number(mega_wallet.mtn_sme) / 1000}GB
                           </option>
                         )}
                       </Input>
@@ -271,39 +251,25 @@ const BuyBulkData = () => {
             </Col>
             <Col md={5}>
               <div>
-                <p>Data Price / GB</p>
+                <p> GLO Data Price</p>
                 <Card className="shadow-none code-balance">
                   <CardBody>
                     <div className="py-2 border-bottom">
-                      MTN [SME]:{" "}
-                      {!maintenance["mtn_sme"]
-                        ? ` ₦${megaPriceUser.mtn_sme}`
-                        : "unavailable"}
+                      10,001+ GB = N230/GB
                     </div>
                     <div className="py-2 border-bottom">
-                      GLO:{" "}
-                      {!maintenance["glo"]
-                        ? ` ₦${megaPriceUser.glo}`
-                        : "unavailable"}
+                      5,001 to 10,000 GB = N235/GB
                     </div>
                     <div className="py-2 border-bottom">
-                      MTN CG:{" "}
-                      {!maintenance["mtn_gifting"]
-                        ? ` ₦${megaPriceUser.mtn_gifting}`
-                        : "unavailable"}
+                      2,501 to 5,000 GB = N240/GB
                     </div>
                     <div className="py-2 border-bottom ">
-                      9MOBILE:{" "}
-                      {!maintenance["9mobile"]
-                        ? ` ₦${megaPriceUser["9mobile"]}`
-                        : "unavailable"}
+                      1,001 to 2,500 GB = N245/GB
                     </div>
-                    <div className="py-2 ">
-                      Airtel:{" "}
-                      {!maintenance["airtel"]
-                        ? ` ₦${megaPriceUser.airtel}`
-                        : "unavailable"}
-                    </div>
+                    <div className="py-2 ">501 to 1,000 GB = N245/GB</div>
+                    <div className="py-2 ">201 to 500 GB = N250/GB</div>
+                    <div className="py-2 ">101 to 200 GB = N255/GB</div>
+                    <div className="py-2 ">1 to 100 GB = N255/GB</div>
                   </CardBody>
                 </Card>
               </div>
@@ -316,4 +282,4 @@ const BuyBulkData = () => {
   );
 };
 
-export default BuyBulkData;
+export default BuyBulkDataGLO;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Navbar,
@@ -9,12 +9,17 @@ import {
   DropdownItem,
   Dropdown,
   Button,
+  Modal,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import wisperSmall from "../assets/images/logos/wisper-white.png";
 import user1 from "../assets/images/users/user1.jpg";
 import { useUser } from "../context/userContext";
+import warning from "../assets/images/logos/warning.png";
 
 const Header = ({ isAdmin }) => {
+  const [confirm, setConfirm] = useState(false);
   const [isOpen, setIsOpen] = React.useState(false);
   const [type, setType] = React.useState("");
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
@@ -32,6 +37,10 @@ const Header = ({ isAdmin }) => {
       setType("Agent");
     } else if (context?.user?.type == "lite") {
       setType("Lite");
+    } else if (context?.user?.type == "glo_dealer") {
+      setType("Glo Dealer");
+    } else if (context?.user?.type == "glo_agent") {
+      setType("Glo Agent");
     }
   }, []);
 
@@ -108,12 +117,43 @@ const Header = ({ isAdmin }) => {
             </Link>
             <DropdownItem divider />
 
-            <Link className="text-decoration-none text-danger" to="/logout">
-              <DropdownItem className="text-danger">Logout</DropdownItem>
-            </Link>
+            <DropdownItem
+              onClick={() => {
+                setConfirm(true);
+              }}
+              className="text-danger"
+            >
+              Logout
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </Collapse>
+      <Modal centered isOpen={confirm} toggle={() => setConfirm(!confirm)}>
+        <ModalBody>
+          <div className="confirm text-center">
+            <img src={warning} width={50} className="confirm-warn" alt="warn" />
+
+            <h6>
+              Are you sure you want to logout of your account? if you log out,
+              you will need to enter your credentials to access your account
+              again
+            </h6>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button
+            color="primary"
+            onClick={() => {
+              setConfirm(false);
+            }}
+          >
+            <Link className="text-decoration-none text-white" to="/logout">
+              Yes, Log Out
+            </Link>
+          </Button>{" "}
+          <Button onClick={() => setConfirm(false)}>No, Stay Logged In</Button>
+        </ModalFooter>
+      </Modal>
     </Navbar>
   );
 };

@@ -15,42 +15,33 @@ import {
 import AllocateButton from "../../components/AllocateButton";
 import { useUser } from "../../context/userContext";
 import { useAppState } from "../../context/appContext";
-import wallIcon from "../../assets/dashboard/walle.svg";
 
-import "./../../assets/scss/custom.scss";
 import FullLayout from "../../layouts/FullLayout";
 import { allocateData } from "../../services/dataService";
 import {
   formIsValid,
   handleFailedRequest,
-  parseDataAllocatePlans,
   parseDataPlans,
   validateProperty,
 } from "../../utils";
 // import dataPlans from "../../utils/plansTable";
 
 import "./../../assets/scss/custom.scss";
-import { ToastContainer, toast } from "react-toastify";
 
 const initialState = {
-  network: "airtel",
+  network: "glo",
   plan_id: "",
   phone_number: "",
 };
 
-const AllocateData = () => {
+const AllocateDataGLO = () => {
   const [plan, setPlan] = useState(initialState);
-
   const [errors, setErrors] = useState({});
-  const [costError, setCostError] = useState(null);
-  const [serverResponse, setServerResponse] = useState({
-    status: true,
-    message: "",
-  });
-  const {
-    megaPriceUser,
-    currentBalance: { volume, unit, cash, mega_wallet },
-  } = useAppState();
+
+  // const [serverResponse, setServerResponse] = useState({
+  //   status: true,
+  //   message: "",
+  // });
 
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
@@ -58,33 +49,21 @@ const AllocateData = () => {
   const { plans } = useAppState();
   const dataPlans = parseDataPlans(plans);
 
+  // useEffect(() => {
+  //   parseDataPlans(plans)
+  // }, [])
+
   const handleSubmit = async (e) => {
     // e.preventDefault();
     try {
       setLoading(true);
-
-      // console.log("plan", plan)
-
-      if (plan.price) {
-        const res = await allocateData(plan, user?.access_token);
-        setLoading(false);
-        setPlan(initialState);
-        // setServerResponse({status: true, message: "Data allocated successfully."});
-        window.location.reload();
-        setErrors({});
-        return { status: true, message: res.data.gateway_response };
-      } else {
-        toast.info("Contact Admin To Set Plan Price", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-        setLoading(false);
-        return;
-      }
+      const res = await allocateData(plan, user?.access_token);
+      setLoading(false);
+      setPlan(initialState);
       // setServerResponse({status: true, message: "Data allocated successfully."});
+      setErrors({});
+      return { status: true, message: res.data.gateway_response };
     } catch (error) {
-      toast.error("An Error Occured Try Again", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
       return { status, message };
@@ -99,56 +78,14 @@ const AllocateData = () => {
     else delete validationErrors[input.name];
 
     const { name, value } = input;
-
-    // console.log("name", name)
-    // console.log("value", value)
-    // console.log("value", value)
-
-    // console.log(dataPlans)
-    // Assuming the object array is called 'dataPlans'
-    const matchedItem = dataPlans.find((item) => item.dataId == value);
-
-    if (matchedItem && name === "plan_id") {
-      const { size, amount } = matchedItem;
-      const updatedPlan = {
-        ...plan,
-        [name]: value,
-        volume: size,
-        price: amount,
-      };
-      setPlan(updatedPlan);
-      setErrors(validationErrors);
-    } else {
-      setPlan({ ...plan, [name]: value });
-      setErrors(validationErrors);
-
-      // console.log('Updated Plan:', plan); // Log the original plan object
-    }
+    setPlan({ ...plan, [name]: value });
+    setErrors(validationErrors);
   };
-
-  useEffect(() => {
-    if (plan.price > cash) {
-      setCostError("Insufficient funds. Fund your wallet to proceed");
-    } else {
-      setCostError(null);
-    }
-  }, [plan.plan_id]);
 
   return (
     <FullLayout>
       <div>
-        <ToastContainer />
-        <div className="data__heading">
-          <h5 className="mb-4 mt-3">Allocate Data</h5>
-          <h5
-            // style={{
-            //   fontSize: "17px",
-            // }}
-            className="mb-4 mt-3"
-          >
-            <img src={wallIcon} /> ₦{cash}
-          </h5>
-        </div>
+        <h5 className="mb-4 mt-3">Allocate Data Mega</h5>
         <Card body>
           {/* {serverResponse.message.length > 0 && (
             <>
@@ -179,12 +116,12 @@ const AllocateData = () => {
                         type="select"
                       >
                         <option disabled>---Select network ---</option>
-                        <option selected value="airtel">
+                        {/* <option selected value="airtel">
                           Airtel
-                        </option>
+                        </option> */}
                         <option value="glo">GLO</option>
-                        <option value="mtn">MTN</option>
-                        <option value="9mobile">9MOBILE</option>
+                        {/* <option value="mtn">MTN</option>
+                        <option value="9mobile">9MOBILE</option> */}
                       </Input>
                     </FormGroup>
                   </Col>
@@ -216,21 +153,6 @@ const AllocateData = () => {
                   </Col>
                   <Col md={12}>
                     <FormGroup>
-                      <Label for="cost">Cost</Label>
-                      <Input
-                        value={plan.price && `₦${plan.price}`}
-                        id="cost"
-                        name="cost"
-                        invalid={costError}
-                        disabled
-                        onChange={handleChange}
-                        type="text"
-                      />
-                      <FormFeedback>{costError}</FormFeedback>
-                    </FormGroup>
-                  </Col>
-                  <Col md={12}>
-                    <FormGroup>
                       <Label for="phone_number">Phone Number</Label>
                       <Input
                         value={plan.phone_number}
@@ -238,6 +160,7 @@ const AllocateData = () => {
                         id="phone_number"
                         name="phone_number"
                         onChange={handleChange}
+                        required
                         type="number"
                       />
                       <FormFeedback>{errors.phone_number}</FormFeedback>
@@ -252,7 +175,7 @@ const AllocateData = () => {
                   plan_id={plan.plan_id}
                   phone_number={plan.phone_number}
                   plans={plans}
-                  valid={formIsValid(errors) || costError}
+                  valid={formIsValid(errors)}
                 />
                 {/* <Button disabled={loading} type="submit" color="primary">
               Allocate
@@ -264,12 +187,12 @@ const AllocateData = () => {
                 <p>Code For Data Balance</p>
                 <Card className="shadow-none code-balance">
                   <CardBody>
-                    <div className="py-2 border-bottom">
+                    {/* <div className="py-2 border-bottom">
                       MTN *321*3*3# or *312*5#
-                    </div>
-                    <div className="py-2 border-bottom">Airtel CG *140#</div>
+                    </div> */}
+                    {/* <div className="py-2 border-bottom">Airtel CG *140#</div> */}
                     <div className="py-2 border-bottom">GLO *127*0#</div>
-                    <div className="py-2 border-bottom">9Mobile *228#</div>
+                    {/* <div className="py-2 border-bottom">9Mobile *228#</div> */}
                   </CardBody>
                 </Card>
               </div>
@@ -281,4 +204,4 @@ const AllocateData = () => {
   );
 };
 
-export default AllocateData;
+export default AllocateDataGLO;

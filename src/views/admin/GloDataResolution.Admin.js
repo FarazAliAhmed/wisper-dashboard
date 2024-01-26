@@ -24,7 +24,6 @@ const GloDataResolution = () => {
     offset: 0,
     userId: user._id,
   });
-  console.log(pagination, "limit");
 
   const [date, setDate] = useState({
     start_date: undefined,

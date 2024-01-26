@@ -42,11 +42,9 @@ const WalletTransaction = () => {
 
   useEffect(() => {
     const fetchT = async () => {
-      console.log("sjsjsj");
       await getTotalBalance()
         .then((res) => {
           setBalanceDisplay(res?.totalWalletBalance);
-          console.log(res?.totalWalletBalance);
         })
         .catch((e) => {
           console.log(e);

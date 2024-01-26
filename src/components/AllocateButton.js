@@ -38,7 +38,6 @@ const AllocateButton = ({
   const handleAllocate = async () => {
     // setConfirm(false)
     const status = await handleSubmit();
-    console.log({ status });
     if (status?.status) {
       setMessage(status?.message);
       setSuccess(true);

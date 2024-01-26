@@ -128,7 +128,6 @@ const Agents = () => {
       const resp = await getAgents({
         userId: user?._id,
       });
-      console.log("lsk", resp);
       setAgents(resp?.subdealers);
       setLoading(false);
     };

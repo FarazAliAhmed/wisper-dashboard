@@ -117,8 +117,6 @@ const TransactionsTable = ({
     setSearchResults(results);
   };
 
-  console.log(transactionsData);
-
   return (
     <div>
       <Row>

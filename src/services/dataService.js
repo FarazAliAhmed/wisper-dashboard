@@ -14,17 +14,39 @@ export async function getAllPlans() {
 export async function getAllPlansUser(userId) {
   try {
     const res = await http.get(`${adminUrl}/plans_user/${userId}`);
-    console.log("plans user", res);
     return res;
   } catch (error) {
     return null;
   }
 }
 
+export const enableAgentAccount = async (account_id) => {
+  try {
+    const res = await http.put(`${apiUrl}/agent/enableAgentAccount`, {
+      agentId: account_id,
+    });
+
+    return res;
+  } catch (e) {
+    return null;
+  }
+};
+
+export const disableAgentAccount = async (account_id) => {
+  try {
+    const res = await http.put(`${apiUrl}/agent/disableAgentAccount`, {
+      agentId: account_id,
+    });
+
+    return res;
+  } catch (e) {
+    return null;
+  }
+};
+
 export async function getSetUp(userId) {
   try {
     const res = await http.get(`${apiUrl}/store-fronts/notice/${userId}`);
-    console.log("plans user", res);
     return res;
   } catch (error) {
     return null;
@@ -32,8 +54,6 @@ export async function getSetUp(userId) {
 }
 export async function getCustomerName(phone) {
   try {
-    console.log("plans user", phone);
-
     const res = await http.get(`${apiUrl}/store-fronts-phone/${phone}`);
     return res;
   } catch (error) {
@@ -43,12 +63,9 @@ export async function getCustomerName(phone) {
 
 export async function getBankName(body) {
   try {
-    console.log("plans user", body);
-
     const res = await http.get(
       `${apiUrl}/store-fronts-bank-verify/${body.withdrawAccount}/${body.bankCode}`
     );
-    console.log(res, "kk");
     return res;
   } catch (error) {
     return null;
@@ -110,7 +127,6 @@ export async function getSFAnalysis(business_id) {
     const res = await http.get(
       `${apiUrl}/store-fronts/analysis/${business_id}`
     );
-    console.log(res);
     return res;
   } catch (error) {
     return null;
@@ -129,7 +145,6 @@ export async function getSFAnalysis(business_id) {
 export async function allocateData(body, apiKey) {
   const headers = { "x-api-key": apiKey };
 
-  // console.log("body", body);
   const payload = {
     network: body.network,
     plan_id: body.plan_id,
@@ -155,13 +170,11 @@ export async function allocateAirtime(body, apiKey) {
     email: body.email,
     name: body.name,
   };
-  console.log("body", payload);
 
   const res = await http.post(`${apiUrl}/purchase/buyAirtime`, payload, {
     headers,
   });
 
-  console.log(res);
   return res;
 }
 
@@ -177,16 +190,13 @@ export async function allocateAirtimeSF(body) {
     email: body.email,
     name: body.name,
   };
-  console.log("body", body);
 
   const res = await http.post(`${apiUrl}/purchase/buyAirtimeSF`, payload, {});
 
-  console.log(res);
   return res;
 }
 
 export async function allocateSFData(body) {
-  console.log(body, "fluter");
   const res = await http.post(`${apiUrl}/store-fronts/allocateData`, body);
   return res;
 }
@@ -214,7 +224,6 @@ export async function uploadImage(body) {
 export async function updateMegaPrice(body, apiKey) {
   const headers = { "x-api-key": apiKey };
 
-  // console.log("body", body);
   const payload = {
     business_id: body.business_id,
     mtn_sme: body.mtn_sme,
@@ -230,7 +239,6 @@ export async function updateMegaPrice(body, apiKey) {
 export async function purchaseMegaPrice(body, apiKey) {
   const headers = { "x-api-key": apiKey };
 
-  // console.log("body", body);
   const payload = {
     business_id: body.business_id,
     network: body.network,
@@ -266,7 +274,6 @@ export async function allocateAgentsPrice(body, apiKey) {
 export async function updateStoreFront(body, apiKey) {
   const headers = { "x-api-key": apiKey };
 
-  console.log("bodyImg", body);
   // const payload = {
   //   business_id: body.business_id,
   //   network: body.network,
@@ -284,7 +291,6 @@ export async function updateStoreFront(body, apiKey) {
 export async function withdrawStoreFront(body, apiKey) {
   const headers = { "x-api-key": apiKey };
 
-  console.log("bodyImg", body);
   // const payload = {
   //   business_id: body.business_id,
   //   network: body.network,
@@ -322,7 +328,6 @@ export async function updateSellingPrice(body, apiKey) {
   // };
 
   const { id, ...rest } = body;
-  console.log(rest);
   const res = await http.post(`${apiUrl}/admin/update_selling/${id}`, rest, {
     headers,
   });
@@ -343,7 +348,6 @@ export async function getStoreFront(id) {
   try {
     const res = await http.get(`${apiUrl}/store-fronts/${id}`);
     // console.log(res, "jj1");
-    console.log("ssf", res);
 
     return res;
   } catch (error) {
@@ -355,7 +359,6 @@ export async function getUsernameStoreFront(username) {
   try {
     const res = await http.get(`${apiUrl}/store-fronts-username/${username}`);
     // console.log(res, "jj1");
-    console.log("ssf", res);
 
     return res;
   } catch (error) {
@@ -406,7 +409,6 @@ export async function getAllTransactionsV2(
     const transactions = await http.get(
       `${apiUrlV2}/transactions?limit=${limit}&offset=${offset}`
     );
-    // console.log({ transactions });
     return transactions.data;
   } catch (error) {
     return { data: [] };
@@ -435,7 +437,6 @@ export async function getMegaPurchaseTransactions(
     const transactions = await http.get(
       `${apiUrl}/getMegaHistory/${userId}?limit=${limit}`
     );
-    // console.log(limit, "trans56");
     return transactions.data;
   } catch (error) {
     return { data: [] };
@@ -450,7 +451,6 @@ export async function PurchaseMegaPriceTransactions(
     const transactions = await http.get(
       `${apiUrl}/getMegaHistory/${userId}?limit=${limit}`
     );
-    // console.log(transactions, "moni");
     return transactions.data;
   } catch (error) {
     return { data: [] };
@@ -460,7 +460,6 @@ export async function PurchaseMegaPriceTransactions(
 export async function getAgents({ userId }) {
   try {
     const agent = await http.get(`${apiUrl}/agent/getAllAgentsId/${userId}`);
-    console.log(agent, "agent");
     return agent.data;
   } catch (error) {
     return { data: [] };
@@ -470,7 +469,6 @@ export async function getAgents({ userId }) {
 export async function getAgentsInfo({ userId }) {
   try {
     const agent = await http.get(`${apiUrl}/agent/getAgentsInfo/${userId}`);
-    console.log(agent, "agent");
     return agent.data;
   } catch (error) {
     return { data: {} };
@@ -480,7 +478,6 @@ export async function getAgentsInfo({ userId }) {
 export async function getAgentsTransactions({ userId }) {
   try {
     const agent = await http.get(`${apiUrl}/agent/allTrx/${userId}`);
-    console.log(agent, "agentInfoTrans");
     return agent.data;
   } catch (error) {
     return { data: [] };
@@ -494,7 +491,6 @@ export async function getMonifyTransactions(
     const transactions = await http.get(
       `${apiUrl}/getMonnifyTrx/${userId}?limit=${limit}`
     );
-    // console.log(transactions, "moni");
     return transactions.data;
   } catch (error) {
     return { data: [] };
@@ -509,7 +505,6 @@ export async function PurchaseMonifyTransactions(
     const transactions = await http.get(
       `${apiUrl}/getMonnifyTrx/${userId}?limit=${limit}`
     );
-    // console.log(transactions, "monify");
     return transactions.data;
   } catch (error) {
     return { data: [] };
@@ -520,12 +515,9 @@ export async function AgentsAllocationTransactions(
   { limit, offset, userId } = { limit: 50, offset: 0 }
 ) {
   try {
-    console.log(userId, "ooo882");
-
     const transactions = await http.get(
       `${apiUrl}/agent/getAgentHistory/${userId}?limit=${limit}`
     );
-    console.log(transactions, "ooo");
     return transactions.data;
   } catch (error) {
     return { data: [] };
@@ -536,12 +528,9 @@ export async function AllAgentsAllocationTransactions(
   { limit, offset, userId } = { limit: 50, offset: 0 }
 ) {
   try {
-    console.log(userId, "ooo882");
-
     const transactions = await http.get(
       `${apiUrl}/agent/DealerGetHistory/${userId}?limit=${limit}`
     );
-    console.log(transactions, "oooagenti");
     return transactions.data;
   } catch (error) {
     return { data: [] };

@@ -28,8 +28,10 @@ const Settings = lazy(() => import("../views/ui/Settings.js"));
 const Register = lazy(() => import("../views/auth/Register"));
 const Dashboard = lazy(() => import("../views/ui/Dashboard.js"));
 const AllocateData = lazy(() => import("../views/ui/AllocateData"));
+const AllocateDataGLO = lazy(() => import("../views/ui/AllocateDataGLO"));
 const AllocateAirtime = lazy(() => import("../views/ui/AllocateAirtime"));
 const BuyBulkData = lazy(() => import("../views/ui/BuyBulkData"));
+const BuyBulkDataGLO = lazy(() => import("../views/ui/BuyBulkDataGLO"));
 const BucketHistory = lazy(() => import("../views/ui/BucketHistory.js"));
 const MonifyWallet = lazy(() => import("../views/ui/MonifyWallet.js"));
 const StoreFront = lazy(() => import("../views/ui/StoreFront.js"));
@@ -48,8 +50,14 @@ const Agents = lazy(() => import("../views/ui/Agents.js"));
 const AgentsBusinessDetails = lazy(() =>
   import("../views/ui/BusinessDetails.Agents.js")
 );
+const AgentsBusinessDetailsGLO = lazy(() =>
+  import("../views/ui/BusinessDetails.AgentsGLO.js")
+);
 
 const AgentsBusinessFund = lazy(() => import("../views/ui/AgentsFunding.js"));
+const AgentsBusinessFundGLO = lazy(() =>
+  import("../views/ui/AgentsFundingGLO.js")
+);
 
 const Routes = () => {
   const { user } = useUser();
@@ -67,6 +75,8 @@ const Routes = () => {
           <ProtectedRoute path="/packages" component={ViewPricing} />
           {user?.type == "mega" || user?.type == "agent" ? (
             <ProtectedRoute path="/allocate" component={AllocateDataMA} />
+          ) : user?.type == "glo_dealer" || user?.type == "glo_agent" ? (
+            <ProtectedRoute path="/allocate" component={AllocateDataGLO} />
           ) : (
             <ProtectedRoute path="/allocate" component={AllocateData} />
           )}
@@ -75,15 +85,21 @@ const Routes = () => {
 
           {user?.type == "mega" ? (
             <ProtectedRoute path="/buyBulkData" component={BuyBulkData} />
+          ) : user?.type == "glo_dealer" || user?.type == "glo_agent" ? (
+            <ProtectedRoute path="/buyBulkData" component={BuyBulkDataGLO} />
           ) : (
             ""
           )}
           {user?.type == "agent" ? (
             <ProtectedRoute path="/bucketHistory" component={BucketHistory} />
+          ) : user?.type == "glo_dealer" || user?.type == "glo_agent" ? (
+            <ProtectedRoute path="/bucketHistory" component={BucketHistory} />
           ) : (
             ""
           )}
           {user?.type == "mega" ? (
+            <ProtectedRoute exact path="/agents" component={Agents} />
+          ) : user?.type == "glo_dealer" ? (
             <ProtectedRoute exact path="/agents" component={Agents} />
           ) : (
             ""
@@ -95,6 +111,12 @@ const Routes = () => {
               path="/agents/business/:businessId"
               component={AgentsBusinessDetails}
             />
+          ) : user?.type == "glo_dealer" ? (
+            <ProtectedRoute
+              exact
+              path="/agents/business/:businessId"
+              component={AgentsBusinessDetailsGLO}
+            />
           ) : (
             ""
           )}
@@ -104,6 +126,12 @@ const Routes = () => {
               exact
               path="/agents/fund/:businessId"
               component={AgentsBusinessFund}
+            />
+          ) : user?.type == "glo_dealer" ? (
+            <ProtectedRoute
+              exact
+              path="/agents/fund/:businessId"
+              component={AgentsBusinessFundGLO}
             />
           ) : (
             ""

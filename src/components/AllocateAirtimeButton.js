@@ -36,7 +36,6 @@ const AllocateAirtimeButton = ({
   const handleAllocate = async () => {
     // setConfirm(false)
     const status = await handleSubmit();
-    console.log(status);
     if (!status.error) {
       setMessage(status?.data);
       setSuccess(true);

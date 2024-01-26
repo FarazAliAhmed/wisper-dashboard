@@ -117,8 +117,6 @@ const Payments = () => {
       );
 
       window.location = "/admin/payment";
-
-      console.log("upt pay type", genCred);
     } catch (error) {
       console.log(error);
     }

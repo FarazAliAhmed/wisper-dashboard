@@ -52,6 +52,7 @@ import checked from "../../assets/images/logos/checked.png";
 import { useUser } from "../../context/userContext";
 import { Helmet } from "react-helmet";
 import StoreFront from "./StoreFront";
+import { getSFMaintenance } from "../../services/Admin.Services/controlService";
 const { REACT_APP_FLUTTERWAVE_PUBLIC_KEY } = process.env;
 
 const initialState = {
@@ -62,6 +63,7 @@ const initialState = {
 const SFCustomer = () => {
   const [plan, setPlan] = useState(initialState);
   const { user } = useUser();
+  const [maintenance, setMaintenance] = useState({});
 
   const { storeUserName } = useParams();
 
@@ -154,7 +156,6 @@ const SFCustomer = () => {
     const fetchAllPlansUser = async () => {
       await getAllPlansUser(storeFront.business_id).then((res) => {
         setPrices(res?.data);
-        console.log("res", res);
       });
     };
 
@@ -186,8 +187,6 @@ const SFCustomer = () => {
             state: false,
           });
         }
-
-        console.log("resrr", res);
       });
     };
 
@@ -238,7 +237,6 @@ const SFCustomer = () => {
       description: `Purchase Airtime from ${storeFront.storeUserName}'store `,
     },
   };
-  console.log(paymentConfig);
   const initiatePayment = useFlutterwave(paymentConfig);
   const initiatePayment1 = useFlutterwave(paymentConfig1);
 
@@ -269,7 +267,7 @@ const SFCustomer = () => {
       network: account.network,
       size: activePlan?.size,
       phone: account.phone,
-      price: activePlan?.price,
+      price: activePlan?.selling_price,
     });
     setLoading(false);
 
@@ -399,7 +397,6 @@ const SFCustomer = () => {
           text: `Check out this Wisper Store`,
           url: storeFront.storeURL, // Replace with your desired URL
         });
-        console.log("Share successful");
       } catch (error) {
         console.error("Share failed:", error);
       }
@@ -435,7 +432,17 @@ const SFCustomer = () => {
     return "";
   }
 
-  console.log(successMessage, "hhh");
+  useEffect(() => {
+    const getSFMaintenanceFunc = async () => {
+      // setLoading(true);
+      const resp = await getSFMaintenance();
+      setMaintenance(resp?.data?.maintenance);
+
+      // setLoading(false);
+    };
+
+    getSFMaintenanceFunc();
+  }, []);
 
   return (
     <>
@@ -650,26 +657,47 @@ const SFCustomer = () => {
                             }`,
                           }}
                           onClick={() => {
-                            setConfirm(true);
+                            if (
+                              maintenance["purchase"] &&
+                              maintenance["purchase"] == true
+                            ) {
+                              toast.error(
+                                "The Store front Data Purchase feature is on maintenance, check in later!"
+                              );
+                            } else {
+                              setConfirm(true);
+                            }
                           }}
                         >
                           Buy Data
                         </button>
 
-                        <button
-                          style={{
-                            background: `${
-                              storeFront.storeColor
-                                ? storeFront.storeColor
-                                : "black"
-                            }`,
-                          }}
-                          onClick={() => {
-                            setConfirm1(true);
-                          }}
-                        >
-                          Buy Airtime
-                        </button>
+                        {!storeFront?.userType == "glo_dealer" ||
+                        !storeFront?.userType == "glo_agent" ? (
+                          <button
+                            style={{
+                              background: `${
+                                storeFront.storeColor
+                                  ? storeFront.storeColor
+                                  : "black"
+                              }`,
+                            }}
+                            onClick={() => {
+                              if (
+                                maintenance["purchase"] &&
+                                maintenance["purchase"] == true
+                              ) {
+                                toast.error(
+                                  "The Store front Airtime Purchase feature is on maintenance, check in later!"
+                                );
+                              } else {
+                                setConfirm1(true);
+                              }
+                            }}
+                          >
+                            Buy Airtime
+                          </button>
+                        ) : null}
                       </div>
                     </div>
                     <div className="sf__customer__footer">

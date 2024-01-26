@@ -54,7 +54,7 @@ import {
 import AgentsPurchaseHistory from "../../components/AgentsPurchaseHistory";
 import toast from "react-hot-toast";
 
-const BusinessDetails = (props) => {
+const BusinessDetailsGLO = (props) => {
   const [confirm, setConfirm] = useState(false);
   const [confirm1, setConfirm1] = useState(false);
 
@@ -300,35 +300,6 @@ const BusinessDetails = (props) => {
 
               {/***Mega Wallets***/}
 
-              {/* MTN and Airtel Wallets */}
-              <Col sm="6" lg="9">
-                <TopCards
-                  bg="bg-light-info text-info"
-                  title="Profit"
-                  subtitle="MTN SME"
-                  earning={`${balances?.mega_wallet?.mtn_sme / 1000} GB`}
-                  icon={mtn1}
-                />
-              </Col>
-              <Col sm="6" lg="9">
-                <TopCards
-                  bg="bg-light-warning text-warning"
-                  title="Refunds"
-                  subtitle="MTN Gifting"
-                  earning={`${balances?.mega_wallet?.mtn_gifting / 1000} GB`}
-                  icon={mtn1}
-                />
-              </Col>
-              <Col sm="6" lg="9">
-                <TopCards
-                  bg="bg-light-success text-success"
-                  title="New Project"
-                  subtitle="Airtel"
-                  earning={`${balances?.mega_wallet?.airtel / 1000} GB`}
-                  icon={airtel}
-                />
-              </Col>
-
               {/* Glo wallet - Hidden for now */}
               <Col sm="6" lg="9">
                 <TopCards
@@ -337,17 +308,6 @@ const BusinessDetails = (props) => {
                   subtitle="GLO"
                   earning={`${balances?.mega_wallet?.glo / 1000} GB`}
                   icon={glo}
-                />
-              </Col>
-
-              {/* 9Mobile wallet */}
-              <Col sm="6" lg="9">
-                <TopCards
-                  bg="bg-light-info text-info"
-                  title="Profit"
-                  subtitle="9Mobile"
-                  earning={`${balances?.mega_wallet?.["9mobile"] / 1000} GB`}
-                  icon={mob9}
                 />
               </Col>
             </Row>
@@ -513,4 +473,4 @@ const BusinessDetails = (props) => {
   );
 };
 
-export default BusinessDetails;
+export default BusinessDetailsGLO;

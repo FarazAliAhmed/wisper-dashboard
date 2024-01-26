@@ -7,9 +7,13 @@ import {
   Input,
   FormFeedback,
   Alert,
+  Modal,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import AuthLayout from "../../layouts/AuthLayout";
+import checked from "../../assets/images/logos/checked.png";
 
 import {
   formIsValid,
@@ -21,6 +25,7 @@ import { register } from "../../services/userService";
 
 import "./auth.scss";
 import authService from "../../services/authService";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Register = () => {
   const [account, setAccount] = useState({
@@ -33,6 +38,8 @@ const Register = () => {
     password: "",
   });
   const [errors, setErrors] = useState({});
+  const [modalState, setModalState] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [serverResponse, setServerResponse] = useState({
     status: true,
     message: "",
@@ -46,14 +53,16 @@ const Register = () => {
       setLoading(true);
       const response = await register(account);
       setLoading(false);
-      authService.loginWithJwt(response.headers["x-auth-token"]);
+      console.log(response, "res");
+      setModalState(true);
+      // authService.loginWithJwt(response.headers["x-auth-token"]);
       setErrors({});
-      window.location = "/dashboard";
     } catch (error) {
       setLoading(false);
+      console.log(error.response, "res");
       const { status, message } = handleFailedRequest(error);
 
-      setServerResponse({ status, message: "User Already Registered" });
+      setServerResponse({ status, message: error.response?.data?.message });
       // console.log(error);
     }
   };
@@ -151,13 +160,29 @@ const Register = () => {
           />
         </FormGroup>
         <FormGroup className="mb-3">
-          <Label>Password</Label> <span className="text-danger">*</span>
+          <Label>
+            Password{" "}
+            <i
+              className={`password-toggle-icon ${
+                showPassword ? "show" : "hide"
+              }`}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <AiOutlineEye cursor="pointer" />
+              ) : (
+                <AiOutlineEyeInvisible cursor="pointer" />
+              )}{" "}
+              {/* Eye and hide icons */}
+            </i>
+          </Label>{" "}
+          <span className="text-danger">*</span>
           <Input
             value={account.password}
             onChange={handleChange}
             invalid={errors.password}
             name="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             required
           />
           <FormFeedback>{errors.password}</FormFeedback>
@@ -180,6 +205,43 @@ const Register = () => {
           </small>
         </div>
       </Form>
+
+      <Modal
+        centered
+        isOpen={modalState}
+        toggle={() => {
+          setModalState(!modalState);
+          window.location = "/login";
+        }}
+      >
+        <ModalBody>
+          <div className="confirm text-center">
+            <img
+              src={checked}
+              width={50}
+              className="confirm-checked"
+              alt="warn"
+            />
+
+            <h6>
+              Congratulations on your successful registration! 🎉 Check your
+              email (including the spam folder) for a verification link. Simply
+              click on it to verify your email. We are excited to
+              have you onboard!
+            </h6>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button
+            onClick={() => {
+              setModalState(!modalState);
+              window.location = "/login";
+            }}
+          >
+            Close
+          </Button>
+        </ModalFooter>
+      </Modal>
     </AuthLayout>
   );
 };

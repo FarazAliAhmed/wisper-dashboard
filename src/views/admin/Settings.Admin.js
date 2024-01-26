@@ -30,6 +30,8 @@ import { BeatLoader } from "react-spinners";
 
 import _Documentation from "../../components/pages/Documentation";
 import AdminLayout from "../../layouts/AdminLayout";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import MegaPriceSettings from "../../components/admin/MegaPriceSettings";
 
 const Settings = () => {
   const context = useUser();
@@ -49,6 +51,9 @@ const Settings = () => {
   const [errors, setErrors] = useState({});
   const [errorsPass, setErrorsPass] = useState({});
   const [navState, setNavState] = useState(0);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
+
   const [serverResponse, setServerResponse] = useState({
     status: true,
     message: "",
@@ -97,15 +102,12 @@ const Settings = () => {
   };
 
   const handleSubmitPassChange = async () => {
-    console.log(passwordChange);
-
     try {
       setLoading(true);
       const body = {
         oldPassword: passwordChange.currentPass,
         newPassword: passwordChange.newPass,
       };
-      console.log(body);
 
       await changePass(body);
       setLoading(false);
@@ -135,7 +137,6 @@ const Settings = () => {
   const handlePassChange = ({ currentTarget: input }) => {
     const validationErrors = { ...errorsPass };
     const errorMessage = validateProperty(input);
-    console.log("eee", errorMessage);
     if (errorMessage) validationErrors[input.name] = errorMessage;
     else delete validationErrors[input.name];
 
@@ -144,7 +145,7 @@ const Settings = () => {
     setErrors(validationErrors);
   };
 
-  const navItems = ["Profile", "Security", "Developer"];
+  const navItems = ["Profile", "Security", "Developer", "MegaPrice"];
   return (
     <AdminLayout>
       <div>
@@ -292,6 +293,19 @@ const Settings = () => {
                         >
                           <Label for="currentPass">
                             Current Password{" "}
+                            <i
+                              className={`password-toggle-icon ${
+                                showPassword ? "show" : "hide"
+                              }`}
+                              onClick={() => setShowPassword(!showPassword)}
+                            >
+                              {showPassword ? (
+                                <AiOutlineEye cursor="pointer" />
+                              ) : (
+                                <AiOutlineEyeInvisible cursor="pointer" />
+                              )}{" "}
+                              {/* Eye and hide icons */}
+                            </i>
                             <span className="text-danger">*</span>
                           </Label>{" "}
                           <Input
@@ -299,7 +313,7 @@ const Settings = () => {
                             name="currentPass"
                             value={passwordChange.currentPass}
                             onChange={handlePassChange}
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             invalid={errors.currentPass}
                           />
                           <FormFeedback>{errors.currentPass}</FormFeedback>
@@ -315,13 +329,27 @@ const Settings = () => {
                           }}
                         >
                           <Label for="newPass">
-                            New Password <span className="text-danger">*</span>
+                            New Password
+                            <i
+                              className={`password-toggle-icon ${
+                                showCPassword ? "show" : "hide"
+                              }`}
+                              onClick={() => setShowCPassword(!showCPassword)}
+                            >
+                              {showCPassword ? (
+                                <AiOutlineEye cursor="pointer" />
+                              ) : (
+                                <AiOutlineEyeInvisible cursor="pointer" />
+                              )}{" "}
+                              {/* Eye and hide icons */}
+                            </i>
+                            <span className="text-danger">*</span>
                           </Label>
                           <Input
                             value={passwordChange.newPass}
                             id="newPass"
                             name="newPass"
-                            type="password"
+                            type={showCPassword ? "text" : "password"}
                             onChange={handlePassChange}
                             invalid={errors.newPass}
                           />
@@ -376,6 +404,12 @@ const Settings = () => {
         {navState == 2 && (
           <>
             <_Documentation />
+          </>
+        )}
+
+        {navState == 3 && (
+          <>
+            <MegaPriceSettings />
           </>
         )}
       </div>

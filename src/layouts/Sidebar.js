@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Button, Nav, NavItem } from "reactstrap";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  Nav,
+  NavItem,
+} from "reactstrap";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 import { useAppState } from "../context/appContext";
 import { useUser } from "../context/userContext";
 import { useAdmin } from "../context/adminContext";
 import { displayBalance } from "../utils";
+import warning from "../assets/images/logos/warning.png";
 
 // Businesses Navigation Bar
 const liteNav = [
@@ -91,6 +99,96 @@ const liteNav = [
 ];
 
 const agentsNav = [
+  {
+    title: "Dashboard",
+    href: "/dashboard",
+    icon: "bi bi-house",
+  },
+  // {
+  //   title: "Buy Data",
+  //   href: "/allocate-data",
+  //   icon: "bi bi-reception-4",
+  // },
+  // {
+  //   title: "Fund Wallet",
+  //   href: "/wallet",
+  //   icon: "bi bi-wallet",
+  // },
+  {
+    title: "Allocate Data",
+    href: "/allocate",
+    icon: "bi bi-send",
+  },
+  // {
+  //   title: "Purchase Airtime",
+  //   href: "/airtime",
+  //   icon: "bi bi-bag",
+  // },
+  {
+    title: "Store Front",
+    href: "/storeFront",
+    icon: "bi bi-shop",
+  },
+  // {
+  //   title: "Edit Store Front",
+  //   href: "/editStoreFront",
+  //   icon: "bi bi-pencil-square",
+  // },
+  {
+    title: "Bucket History",
+    href: "/bucketHistory",
+    icon: "bi bi-bag",
+  },
+  // {
+  //   title: "Buy Bulk Data",
+  //   href: "/buyBulkData",
+  //   icon: "bi bi-bag",
+  // },
+
+  // {
+  //   title: "Wallet",
+  //   href: "/monifyWallet",
+  //   icon: "bi bi-wallet2",
+  // },
+
+  // {
+  //   title: "Account",
+  //   href: "/account",
+  //   icon: "bi bi-person",
+  // },
+  // {
+  //   title: "Packages",
+  //   href: "/packages",
+  //   icon: "bi bi-tags",
+  // },
+  // {
+  //   title: "Pricing",
+  //   href: "/pricing",
+  //   icon: "bi bi-tags",
+  // },
+  // {
+  //   title: "Payments",
+  //   href: "/payments",
+  //   icon: "bi bi-credit-card",
+  // },
+  {
+    title: "Transactions",
+    href: "/transactions",
+    icon: "bi bi-cash-stack",
+  },
+  {
+    title: "Settings",
+    href: "/settings",
+    icon: "bi bi-code-slash",
+  },
+  {
+    title: "Logout",
+    href: "/logout",
+    icon: "bi bi-box-arrow-right",
+  },
+];
+
+const gloAgentsNav = [
   {
     title: "Dashboard",
     href: "/dashboard",
@@ -270,6 +368,96 @@ const megaNav = [
   },
 ];
 
+const gloMegaNav = [
+  {
+    title: "Dashboard",
+    href: "/dashboard",
+    icon: "bi bi-house",
+  },
+  // {
+  //   title: "Buy Data",
+  //   href: "/allocate-data",
+  //   icon: "bi bi-reception-4",
+  // },
+  // {
+  //   title: "Fund Wallet",
+  //   href: "/wallet",
+  //   icon: "bi bi-wallet",
+  // },
+  {
+    title: "Allocate Data",
+    href: "/allocate",
+    icon: "bi bi-send",
+  },
+  // {
+  //   title: "Purchase Airtime",
+  //   href: "/airtime",
+  //   icon: "bi bi-bag",
+  // },
+  {
+    title: "Buy Bulk Data",
+    href: "/buyBulkData",
+    icon: "bi bi-bag",
+  },
+  {
+    title: "Agents",
+    href: "/agents",
+    icon: "bi bi-person-check",
+  },
+  {
+    title: "Store Front",
+    href: "/storeFront",
+    icon: "bi bi-shop",
+  },
+  // {
+  //   title: "Edit Store Front",
+  //   href: "/editStoreFront",
+  //   icon: "bi bi-pencil-square",
+  // },
+
+  {
+    title: "Wallet",
+    href: "/monifyWallet",
+    icon: "bi bi-wallet2",
+  },
+
+  // {
+  //   title: "Account",
+  //   href: "/account",
+  //   icon: "bi bi-person",
+  // },
+  // {
+  //   title: "Packages",
+  //   href: "/packages",
+  //   icon: "bi bi-tags",
+  // },
+  // {
+  //   title: "Pricing",
+  //   href: "/pricing",
+  //   icon: "bi bi-tags",
+  // },
+  // {
+  //   title: "Payments",
+  //   href: "/payments",
+  //   icon: "bi bi-credit-card",
+  // },
+  {
+    title: "Transactions",
+    href: "/transactions",
+    icon: "bi bi-cash-stack",
+  },
+  {
+    title: "Settings",
+    href: "/settings",
+    icon: "bi bi-code-slash",
+  },
+  {
+    title: "Logout",
+    href: "/logout",
+    icon: "bi bi-box-arrow-right",
+  },
+];
+
 // Admin Navigation Bar
 const adminNav = [
   {
@@ -361,6 +549,8 @@ const Sidebar = ({ isAdmin }) => {
   let location = useLocation();
   const [balanceDisplay, setBalanceDisplay] = useState("");
   const [nav, setNav] = useState([]);
+  const [confirm, setConfirm] = useState(false);
+
   const [adminBalance, setAdminBalance] = useState({
     mtn_balance: "",
     airtel_balance: "",
@@ -375,6 +565,10 @@ const Sidebar = ({ isAdmin }) => {
         setNav(megaNav);
       } else if (user.type == "agent") {
         setNav(agentsNav);
+      } else if (user.type == "glo_agent") {
+        setNav(gloAgentsNav);
+      } else if (user.type == "glo_dealer") {
+        setNav(gloMegaNav);
       } else {
         setNav(liteNav);
       }
@@ -420,23 +614,73 @@ const Sidebar = ({ isAdmin }) => {
       }
       <div className="pt-4 mt-2">
         <Nav vertical className="sidebarNav">
-          {nav.map((navi, index) => (
-            <NavItem key={index} className="sidenav-bg">
-              <Link
-                to={navi.href}
-                className={
-                  location.pathname === navi.href
-                    ? "text-primary nav-link py-3"
-                    : "nav-link text-secondary py-3"
-                }
-              >
-                <i className={navi.icon}></i>
-                <span className="ms-3 d-inline-block">{navi.title}</span>
-              </Link>
-            </NavItem>
-          ))}
+          {nav.map((navi, index) => {
+            if (index == nav.length - 1) {
+              return (
+                <p
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    showMobilemenu();
+                    setConfirm(true);
+                  }}
+                  className={
+                    location.pathname === navi.href
+                      ? "text-primary nav-link py-3"
+                      : "nav-link text-secondary py-3"
+                  }
+                >
+                  <i className={navi.icon}></i>
+                  <span className="ms-3 d-inline-block">{navi.title}</span>
+                </p>
+              );
+            } else {
+              return (
+                <NavItem key={index} className="sidenav-bg">
+                  <Link
+                    to={navi.href}
+                    className={
+                      location.pathname === navi.href
+                        ? "text-primary nav-link py-3"
+                        : "nav-link text-secondary py-3"
+                    }
+                  >
+                    <i className={navi.icon}></i>
+                    <span className="ms-3 d-inline-block">{navi.title}</span>
+                  </Link>
+                </NavItem>
+              );
+            }
+          })}
         </Nav>
       </div>
+      <Modal centered isOpen={confirm} toggle={() => setConfirm(!confirm)}>
+        <ModalBody>
+          <div className="confirm text-center">
+            <img src={warning} width={50} className="confirm-warn" alt="warn" />
+
+            <h6>
+              Are you sure you want to logout of your account? if you log out,
+              you will need to enter your credentials to access your account
+              again
+            </h6>
+          </div>
+        </ModalBody>
+        <ModalFooter className="confirm-footer">
+          <Button
+            color="primary"
+            onClick={() => {
+              setConfirm(false);
+            }}
+          >
+            <Link className="text-decoration-none text-white" to="/logout">
+              Yes, Log Out
+            </Link>
+          </Button>{" "}
+          <Button onClick={() => setConfirm(false)}>No, Stay Logged In</Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 };

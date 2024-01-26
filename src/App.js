@@ -8,18 +8,25 @@ export const SettingsNav = React.createContext();
 
 const App = () => {
   const [navState, setNavState] = useState(0);
+  const [modalState, setModalState] = useState(false);
+  const [verificationMessage, setVerificationMessage] = useState("");
 
   const setNavStateFunc = (state) => {
     setNavState(state);
   };
 
-  console.log(navState, "nav");
-
   return (
     <div className="dark">
       <UserProvider>
         <AppStateProvider>
-          <SettingsNav.Provider value={{ setNavStateFunc, navState }}>
+          <SettingsNav.Provider
+            value={{
+              setNavStateFunc,
+              navState,
+              verificationMessage,
+              setVerificationMessage,
+            }}
+          >
             <Routes />
           </SettingsNav.Provider>
           <Toaster
