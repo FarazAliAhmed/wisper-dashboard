@@ -158,6 +158,7 @@ const SFAirtimePricesTable = ({
   };
 
   const networks = ["MTN", "GLO", "AIRTEL", "9MOBILE"];
+  const networksGLO = ["GLO"];
 
   return (
     <>
@@ -268,19 +269,35 @@ const SFAirtimePricesTable = ({
                         <th>Profit</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      {networks.map((tx, idx) => (
-                        <tr key={idx} className="border-top">
-                          <td>{tx}</td>
-                          <td>{"Any Amount"}</td>
-                          <td>
-                            {user.type == "lite"
-                              ? "1.5% For each airtime amount"
-                              : "2% For each airtime amount"}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
+                    {user?.type == "glo_dealer" || user?.type == "glo_agent" ? (
+                      <tbody>
+                        {networksGLO.map((tx, idx) => (
+                          <tr key={idx} className="border-top">
+                            <td>{tx}</td>
+                            <td>{"Any Amount"}</td>
+                            <td>
+                              {user.type == "lite"
+                                ? "1.5% For each airtime amount"
+                                : "2% For each airtime amount"}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    ) : (
+                      <tbody>
+                        {networks.map((tx, idx) => (
+                          <tr key={idx} className="border-top">
+                            <td>{tx}</td>
+                            <td>{"Any Amount"}</td>
+                            <td>
+                              {user.type == "lite"
+                                ? "1.5% For each airtime amount"
+                                : "2% For each airtime amount"}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    )}
                   </Table>
                   {/* 
                   <SFReceipt

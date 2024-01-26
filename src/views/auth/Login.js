@@ -185,17 +185,10 @@ const Login = () => {
             <img src={warning} width={50} className="confirm-warn" alt="warn" />
 
             <h6>
-              We noticed that you attempted to log in to your account at Wisper.
-              However, your email address hasn't been verified yet. For full
-              access to our platform's features, please check your email inbox
-              (including spam/junk folders) for a email confirmation message
-              from us. Click on the confirmation link provided in the email to
-              confirm your email address. If you cannot find the verification
-              email, you can request a new one by clicking the "Resend Link"
-              button. This will send a new confirmation message to the email
-              address associated with your account. If you encounter any
-              difficulties or need further assistance, please feel free to
-              contact our support team at support@wisper.ng.
+              Congratulations on your successful registration! 🎉 Check your
+              email (including the spam folder) for a verification link. Simply
+              click on it to verify your email. We are excited to
+              have you onboard!
             </h6>
           </div>
         </ModalBody>
