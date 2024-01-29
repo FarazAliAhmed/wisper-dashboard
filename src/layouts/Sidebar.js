@@ -668,16 +668,16 @@ const Sidebar = ({ isAdmin }) => {
           </div>
         </ModalBody>
         <ModalFooter className="confirm-footer">
-          <Button
-            color="primary"
-            onClick={() => {
-              setConfirm(false);
-            }}
-          >
-            <Link className="text-decoration-none text-white" to="/logout">
+          <Link className="text-decoration-none text-white" to="/logout">
+            <Button
+              color="primary"
+              onClick={() => {
+                setConfirm(false);
+              }}
+            >
               Yes, Log Out
-            </Link>
-          </Button>{" "}
+            </Button>{" "}
+          </Link>
           <Button onClick={() => setConfirm(false)}>No, Stay Logged In</Button>
         </ModalFooter>
       </Modal>
