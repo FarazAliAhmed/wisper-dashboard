@@ -66,13 +66,30 @@ const AllocateData = () => {
       // console.log("plan", plan)
 
       if (plan.price) {
-        const res = await allocateData(plan, user?.access_token);
-        setLoading(false);
-        setPlan(initialState);
-        // setServerResponse({status: true, message: "Data allocated successfully."});
-        window.location.reload();
-        setErrors({});
-        return { status: true, message: res.data.gateway_response };
+        const { network, ...rest } = plan;
+        if (plan.network == "mtn_sme" || plan.network == "mtn_gifting") {
+          const res = await allocateData(
+            {
+              network: "mtn",
+              ...rest,
+            },
+            user?.access_token
+          );
+          setLoading(false);
+          setPlan(initialState);
+          // setServerResponse({status: true, message: "Data allocated successfully."});
+          window.location.reload();
+          setErrors({});
+          return { status: true, message: res.data.gateway_response };
+        } else {
+          const res = await allocateData(plan, user?.access_token);
+          setLoading(false);
+          setPlan(initialState);
+          // setServerResponse({status: true, message: "Data allocated successfully."});
+          window.location.reload();
+          setErrors({});
+          return { status: true, message: res.data.gateway_response };
+        }
       } else {
         toast.info("Contact Admin To Set Plan Price", {
           position: toast.POSITION.TOP_RIGHT,

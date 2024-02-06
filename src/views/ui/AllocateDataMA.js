@@ -53,16 +53,53 @@ const AllocateDataMA = () => {
   //   parseDataPlans(plans)
   // }, [])
 
+  // const handleSubmit = async (e) => {
+  //   // e.preventDefault();
+  //   try {
+  //     setLoading(true);
+  //     const res = await allocateData(plan, user?.access_token);
+  //     setLoading(false);
+  //     setPlan(initialState);
+  //     // setServerResponse({status: true, message: "Data allocated successfully."});
+  //     setErrors({});
+  //     return { status: true, message: res.data.gateway_response };
+  //   } catch (error) {
+  //     console.log("error.response.data.message:", error.response.data.message);
+  //     setLoading(false);
+  //     const { status, message } = handleFailedRequest(error);
+  //     return { status, message };
+  //     // setServerResponse({ status, message });
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     // e.preventDefault();
     try {
       setLoading(true);
-      const res = await allocateData(plan, user?.access_token);
-      setLoading(false);
-      setPlan(initialState);
+
+      const { network, ...rest } = plan;
+      if (plan.network == "mtn_sme" || plan.network == "mtn_gifting") {
+        const res = await allocateData(
+          {
+            network: "mtn",
+            ...rest,
+          },
+          user?.access_token
+        );
+        setLoading(false);
+        setPlan(initialState);
+        // setServerResponse({status: true, message: "Data allocated successfully."});
+        setErrors({});
+        return { status: true, message: res.data.gateway_response };
+      } else {
+        const res = await allocateData(plan, user?.access_token);
+        setPlan(initialState);
+        // setServerResponse({status: true, message: "Data allocated successfully."});
+        setErrors({});
+        return { status: true, message: res.data.gateway_response };
+      }
+
       // setServerResponse({status: true, message: "Data allocated successfully."});
-      setErrors({});
-      return { status: true, message: res.data.gateway_response };
     } catch (error) {
       console.log("error.response.data.message:", error.response.data.message);
       setLoading(false);

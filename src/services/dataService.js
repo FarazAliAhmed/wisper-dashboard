@@ -155,6 +155,8 @@ export async function allocateData(body, apiKey) {
     volume: body.volume,
   };
 
+  console.log(body, "pp");
+
   const res = await http.post(`${apiUrl}/buy`, payload, { headers });
   return res;
 }
