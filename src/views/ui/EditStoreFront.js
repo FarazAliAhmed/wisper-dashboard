@@ -249,7 +249,16 @@ const EditStoreFront = () => {
         const gloPricesData = res?.data.filter(
           (item) => item?.network == "glo"
         );
-        setPrices(res?.data);
+        const sortedData = res?.data.sort((a, b) => {
+          if (a.network < b.network) {
+            return -1;
+          }
+          if (a.network > b.network) {
+            return 1;
+          }
+          return 0;
+        });
+        setPrices(sortedData);
         setGloPrices(gloPricesData);
       });
     };
@@ -722,18 +731,17 @@ const EditStoreFront = () => {
         )}
         {navState == 2 && (
           <>
-            {user?.type !== "glo_dealer" ||
-              (user?.type !== "glo_agent" && (
-                <Row className="mt-1">
-                  <SFAirtimePricesTable
-                    transactions={prices}
-                    showHeader={true}
-                    showSubHeader={true}
-                    fetchPrice={fetchPrice}
-                    setFetchPrice={setFetchPrice}
-                  />
-                </Row>
-              ))}
+            {user?.type == "dealer" || user?.type == "lite" ? (
+              <Row className="mt-1">
+                <SFAirtimePricesTable
+                  transactions={prices}
+                  showHeader={true}
+                  showSubHeader={true}
+                  fetchPrice={fetchPrice}
+                  setFetchPrice={setFetchPrice}
+                />
+              </Row>
+            ) : null}
 
             <Row className="mt-1">
               <SFPricesTable
