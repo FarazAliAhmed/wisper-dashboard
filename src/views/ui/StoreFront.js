@@ -225,6 +225,8 @@ const StoreFront = () => {
     const fetchNotice = async () => {
       await getSetUp(user._id).then((res) => {
         setNoticeState(res?.data);
+        console.log(res?.data, "notice");
+
         if (res?.data) {
           setNotice(false);
         } else {
@@ -700,15 +702,31 @@ const StoreFront = () => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              alignItems: "center",
+              alignItems: "flex-start",
               gap: "0.8rem",
-              textAlign: "center",
+              textAlign: "left",
             }}
           >
-            To access this feature, please complete your store front setup. It's
-            essential for tailoring our services to your needs and ensuring a
-            seamless experience
-            <Link to="/editStoreFront">
+            To access this feature, please make sure you complete your store
+            front setup.
+            <ul>
+              <li>Set up your StoreFront Name</li>
+              <li>Set up your StoreFront Username</li>
+              <li>Set up at least one Selling price</li>
+            </ul>
+            <Link
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "0.8rem",
+                textAlign: "left",
+                width: "100%",
+                textDecoration: "none",
+              }}
+              to="/editStoreFront"
+            >
               <Button color="primary">Edit Store Front</Button>
             </Link>
           </div>

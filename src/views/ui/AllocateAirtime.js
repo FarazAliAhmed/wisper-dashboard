@@ -83,6 +83,8 @@ const AllocateData = () => {
         },
         user?.access_token
       );
+      console.log(res, "aitre");
+
       setLoading(false);
       setPlan(initialState);
       return res.data;

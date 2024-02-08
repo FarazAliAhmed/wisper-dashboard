@@ -249,7 +249,8 @@ const EditStoreFront = () => {
         const gloPricesData = res?.data.filter(
           (item) => item?.network == "glo"
         );
-        const sortedData = res?.data.sort((a, b) => {
+        const allPrices = res?.data.filter((item) => item?.plan_type !== "sme");
+        const sortedData = allPrices.sort((a, b) => {
           if (a.network < b.network) {
             return -1;
           }
@@ -731,7 +732,7 @@ const EditStoreFront = () => {
         )}
         {navState == 2 && (
           <>
-            {user?.type == "dealer" || user?.type == "lite" ? (
+            {user?.type == "mega" || user?.type == "lite" ? (
               <Row className="mt-1">
                 <SFAirtimePricesTable
                   transactions={prices}

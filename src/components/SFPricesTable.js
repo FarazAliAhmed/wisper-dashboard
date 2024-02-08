@@ -165,7 +165,11 @@ const SFPricesTable = ({
             <div>
               <Card>
                 <CardBody>
-                  {showHeader && <CardTitle tag="h5">Data Pricing</CardTitle>}
+                  {showHeader && (
+                    <CardTitle tag="h5">
+                      Edit Your Data Selling Pricing
+                    </CardTitle>
+                  )}
 
                   {showSubHeader && (
                     <CardSubtitle className="mb-2 text-muted" tag="h6">
