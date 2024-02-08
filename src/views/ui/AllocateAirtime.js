@@ -212,7 +212,7 @@ const AllocateData = () => {
                       <Input
                         value={`₦${
                           user?.type == "mega"
-                            ? plan.airtime_volume - 0.025 * plan.airtime_volume
+                            ? plan.airtime_volume - 0.02 * plan.airtime_volume
                             : plan.airtime_volume - 0.015 * plan.airtime_volume
                         }`}
                         id="airtime_volume"
