@@ -778,15 +778,32 @@ const EditStoreFront = () => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              alignItems: "center",
+              alignItems: "flex-start",
               gap: "0.8rem",
-              textAlign: "center",
+              textAlign: "left",
             }}
           >
-            To access this feature, please complete your store front setup. It's
-            essential for tailoring our services to your needs and ensuring a
-            seamless experience
-            <Link to="/editStoreFront">
+            Edit your storefront seamlessly:
+            <ul>
+              <li>Update your store information in the "Information" tab.</li>
+              <li>Brand your store by clicking on the "Branding" tab.</li>
+              <li>
+                Set your selling prices for each data plan in the "Prices" tab.
+              </li>
+            </ul>
+            <Link
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "0.8rem",
+                textAlign: "left",
+                width: "100%",
+                textDecoration: "none",
+              }}
+              to="/editStoreFront"
+            >
               <Button color="primary">Edit Store Front</Button>
             </Link>
           </div>

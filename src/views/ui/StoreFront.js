@@ -702,31 +702,15 @@ const StoreFront = () => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              alignItems: "flex-start",
+              alignItems: "center",
               gap: "0.8rem",
-              textAlign: "left",
+              textAlign: "center",
             }}
           >
-            To access this feature, please make sure you complete your store
-            front setup.
-            <ul>
-              <li>Set up your StoreFront Name</li>
-              <li>Set up your StoreFront Username</li>
-              <li>Set up at least one Selling price</li>
-            </ul>
-            <Link
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "0.8rem",
-                textAlign: "left",
-                width: "100%",
-                textDecoration: "none",
-              }}
-              to="/editStoreFront"
-            >
+            To access this feature, please complete your store front setup. It's
+            essential for tailoring our services to your needs and ensuring a
+            seamless experience
+            <Link to="/editStoreFront">
               <Button color="primary">Edit Store Front</Button>
             </Link>
           </div>
