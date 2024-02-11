@@ -271,11 +271,12 @@ const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
                   </Button>
                   <a
                     className="cursor-pointer"
-                    href="mailto:support@wisper.ng?subject=Support Inquiry&body=Hello%20Wisper%20Support%2C%0D%0A%0D%0AI%20need%20assistance%20with%3A%0D%0A%0D%0A%0D%0AThank%20you%21"
+                    href="https://wa.me/2349041182322?text=I'm%20interested%20in%20your%20services."
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <Button color="primary " className="btn-block">
-                      Contact Support
+                    <Button color="primary" className="btn-block">
+                      Send Message
                     </Button>
                   </a>
                 </ModalFooter>
