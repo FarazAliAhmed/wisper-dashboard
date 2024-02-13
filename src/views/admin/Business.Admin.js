@@ -97,6 +97,7 @@ const Business = () => {
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Type</th>
+                    <th>Verification Status</th>
                     <th>Created At</th>
                   </tr>
                 </thead>
@@ -118,6 +119,7 @@ const Business = () => {
                       <td>{tdata.email}</td>
                       <td>{tdata.mobile_number}</td>
                       <td>{tdata.type}</td>
+                      <td>{tdata.confirmed ? "Verified" : "Pending"}</td>
                       <td>{tdata.createdAt.split("T")[0]}</td>
                     </tr>
                   ))}
@@ -154,6 +156,8 @@ const Business = () => {
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Type</th>
+                    <th>Verification Status</th>
+
                     <th>Created At</th>
                   </tr>
                 </thead>
@@ -175,6 +179,8 @@ const Business = () => {
                       <td>{tdata.email}</td>
                       <td>{tdata.mobile_number}</td>
                       <td>{tdata.type}</td>
+                      <td>{tdata.confirmed ? "Verified" : "Pending"}</td>
+
                       <td>{tdata.createdAt.split("T")[0]}</td>
                     </tr>
                   ))}
@@ -211,6 +217,8 @@ const Business = () => {
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Address</th>
+                    <th>Verification Status</th>
+
                     <th>Created At</th>
                   </tr>
                 </thead>
@@ -232,6 +240,8 @@ const Business = () => {
                       <td>{tdata.email}</td>
                       <td>{tdata.mobile_number}</td>
                       <td>{tdata.type}</td>
+                      <td>{tdata.confirmed ? "Verified" : "Pending"}</td>
+
                       <td>{tdata.createdAt.split("T")[0]}</td>
                     </tr>
                   ))}
@@ -261,6 +271,8 @@ const Business = () => {
                     <th>Username</th>
                     <th>Email</th>
                     <th>Phone</th>
+                    <th>Verification Status</th>
+
                     <th>Created At</th>
                   </tr>
                 </thead>
@@ -281,6 +293,8 @@ const Business = () => {
                       <td>{tdata.username}</td>
                       <td>{tdata.email}</td>
                       <td>{tdata.mobile_number}</td>
+                      <td>{tdata.confirmed ? "Verified" : "Pending"}</td>
+
                       <td>{tdata.createdAt.split("T")[0]}</td>
                     </tr>
                   ))}
@@ -310,6 +324,8 @@ const Business = () => {
                     <th>Username</th>
                     <th>Email</th>
                     <th>Phone</th>
+                    <th>Verification Status</th>
+
                     <th>Created At</th>
                   </tr>
                 </thead>
@@ -330,6 +346,8 @@ const Business = () => {
                       <td>{tdata.username}</td>
                       <td>{tdata.email}</td>
                       <td>{tdata.mobile_number}</td>
+                      <td>{tdata.confirmed ? "Verified" : "Pending"}</td>
+
                       <td>{tdata.createdAt.split("T")[0]}</td>
                     </tr>
                   ))}
