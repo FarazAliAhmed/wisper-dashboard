@@ -508,7 +508,7 @@ const StoreFront = () => {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <h3>Actions</h3>
           <div className="sf__customer__cards">
-            {maintenance ? (
+            {/* {maintenance ? (
               <Button
                 onClick={() => {
                   if (noticeState) {
@@ -534,16 +534,10 @@ const StoreFront = () => {
               >
                 Enter Maintenance
               </Button>
-            )}
+            )} */}
             <a
               onClick={(e) => {
-                if (noticeState) {
-                  toast.success("Opening Store Front in a new tab.");
-                } else {
-                  e.preventDefault(); // Prevent navigation
-
-                  setNotice(true);
-                }
+                toast.success("Opening Store Front in a new tab.");
               }}
               target="_blank"
               href={storeFront.storeURL}
@@ -553,11 +547,7 @@ const StoreFront = () => {
             <CopyToClipboard
               text={storeFront.storeURL}
               onCopy={() => {
-                if (noticeState) {
-                  setIsOpen(true);
-                } else {
-                  setNotice(true);
-                }
+                setIsOpen(true);
               }}
             >
               <Button color="primary">Share Link</Button>

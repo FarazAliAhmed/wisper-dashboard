@@ -272,7 +272,6 @@ const Business = () => {
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Verification Status</th>
-
                     <th>Created At</th>
                   </tr>
                 </thead>
