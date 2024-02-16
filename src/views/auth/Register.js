@@ -14,6 +14,7 @@ import {
 import { Link } from "react-router-dom";
 import AuthLayout from "../../layouts/AuthLayout";
 import checked from "../../assets/images/logos/checked.png";
+import "./Modal.css";
 
 import {
   formIsValid,
@@ -26,8 +27,15 @@ import { register } from "../../services/userService";
 import "./auth.scss";
 import authService from "../../services/authService";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import VerificationInput from "react-verification-input";
+import toast from "react-hot-toast";
+import { BeatLoader } from "react-spinners";
 
 const Register = () => {
+  const [pin, setPin] = useState("");
+  const [codeState, setCodeState] = useState("default");
+  const [codeMessage, setCodeMessage] = useState("");
+
   const [account, setAccount] = useState({
     name: "",
     business_name: "",
@@ -76,6 +84,36 @@ const Register = () => {
     const { name, value } = input;
     setAccount({ ...account, [name]: value });
     setErrors(validationErrors);
+  };
+
+  const handleConfirmCode = async (pinCode) => {
+    try {
+      const res = await authService.confirmEmail({
+        email: account.email,
+        token: pinCode,
+      });
+      setCodeMessage(res.data?.message);
+
+      setCodeState("success");
+    } catch (error) {
+      console.log(error, "ert");
+      setCodeMessage(error.response?.data);
+      setCodeState("error");
+      toast.error(`Error Confirm Code! ${error.response?.data}`);
+    }
+  };
+
+  const resendLinkFunc = async () => {
+    try {
+      setLoading(true);
+      const res = await authService.resendLink(account.email);
+      setLoading(false);
+      toast.success(res.data?.message);
+    } catch (error) {
+      console.log(error.response, "res");
+      setLoading(false);
+      toast.error("error sending confirmation link");
+    }
   };
 
   return (
@@ -194,7 +232,11 @@ const Register = () => {
             type="submit"
             className="submit-btn"
           >
-            SUBMIT
+            {loading ? (
+              <BeatLoader size={10} color="white" loading />
+            ) : (
+              <span>SUBMIT</span>
+            )}
           </Button>
 
           <small className="text-center text-muted mt-3">
@@ -225,14 +267,47 @@ const Register = () => {
 
             <h6>
               Congratulations on your successful registration! 🎉 Check your
-              email (including the spam folder) for a verification link. Simply
-              click on it to verify your email. We are excited to
-              have you onboard!
+              email (including the spam folder) or phone number for a
+              verification code and verify your email and phone number. We are
+              excited to have you onboard!
             </h6>
+
+            <div className="verify__container">
+              <VerificationInput
+                length={5}
+                validChars="0-9"
+                onComplete={(e) => {
+                  handleConfirmCode(e);
+                }}
+                onChange={(e) => {
+                  console.log(e, "ec");
+                  setPin(e);
+                }}
+                placeholder="_"
+                classNames={{
+                  container: "verification__container",
+                  character: "verification__character",
+                  characterInactive: "verification__character--inactive",
+                  characterSelected: "verification__character--selected",
+                }}
+              />
+              <p>
+                Didn't get a code?
+                <span
+                  className="resend__code"
+                  onClick={() => {
+                    resendLinkFunc();
+                  }}
+                >
+                  Click to resend
+                </span>
+              </p>
+            </div>
           </div>
         </ModalBody>
         <ModalFooter className="confirm-footer">
           <Button
+            color="secondary"
             onClick={() => {
               setModalState(!modalState);
               window.location = "/login";
@@ -240,6 +315,25 @@ const Register = () => {
           >
             Close
           </Button>
+
+          {codeState == "default" && (
+            <Button color="primary">
+              {5 - Number(pin.length)} digits left
+            </Button>
+          )}
+          {codeState == "error" && (
+            <Button color="danger">{codeMessage ?? "error"}</Button>
+          )}
+          {codeState == "success" && (
+            <Button
+              color="success"
+              onClick={() => {
+                window.location = "/login";
+              }}
+            >
+              Continue
+            </Button>
+          )}
         </ModalFooter>
       </Modal>
     </AuthLayout>
