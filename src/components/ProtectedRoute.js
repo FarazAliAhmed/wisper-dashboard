@@ -23,8 +23,13 @@ import {
   handleFailedRequest,
 } from "../utils";
 import authService, { getCurrentUser } from "../services/authService";
+import { isTokenExpired } from "../utils/tokenChecker";
 
 const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
+  const jwtToken = localStorage.getItem("token");
+  const isExpired = isTokenExpired(jwtToken);
+
+  console.log(isExpired, "jwt");
   const [account, setAccount] = useState({
     email: auth.getCurrentUser().email,
   });
@@ -37,6 +42,10 @@ const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
     if (!auth.getCurrentUser().confirmed) {
       setModalState(true);
     }
+    // if (isExpired) {
+    //   localStorage.removeItem("token");
+    //   history.push("/login");
+    // }
   }, []);
 
   const handleChange = ({ currentTarget: input }) => {
