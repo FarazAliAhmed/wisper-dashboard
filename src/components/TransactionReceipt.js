@@ -62,11 +62,17 @@ function TransactionReceipt({ receiptData, show, toggleShow }) {
           <strong>
             {" "}
             ₦
-            {receiptData.purchase_type == "data"
-              ? receiptData.data_volume
-              : receiptData.price}{" "}
+            {receiptData?.price}
+            {/* {receiptData?.data_volume} */}
           </strong>{" "}
           <br />
+          {/* {receiptData?.data_volume && (
+            <>
+              Data Volume :
+              <strong> {receiptData?.data_volume} MB </strong> <br />
+            </>
+          )} */}
+
           Reference Code:
           <strong>
             <Button

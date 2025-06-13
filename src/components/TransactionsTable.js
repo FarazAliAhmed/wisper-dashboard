@@ -306,7 +306,7 @@ const TransactionsTable = ({
                         </td>
                         <td>{tx.network_provider}</td>
                         {user?.type == "lite" &&
-                        user?.isAdmin == false ? null : (
+                          user?.isAdmin == false ? null : (
                           <td>
                             {tx.purchase_type == "data"
                               ? `bucket`
