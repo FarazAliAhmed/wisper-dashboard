@@ -233,7 +233,10 @@ const Register = () => {
             className="submit-btn"
           >
             {loading ? (
-              <BeatLoader size={10} color="white" loading />
+              <div className="d-flex align-items-center justify-content-center">
+                <BeatLoader size={10} color="white" loading />
+                <span className="ms-2">Creating Account...</span>
+              </div>
             ) : (
               <span>SUBMIT</span>
             )}
