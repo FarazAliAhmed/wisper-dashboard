@@ -32,6 +32,7 @@ const initialState = {
   network: "airtel",
   plan_id: "",
   phone_number: "",
+  is_ported: false,
 };
 
 const AllocateDataMA = () => {
@@ -115,7 +116,12 @@ const AllocateDataMA = () => {
     if (errorMessage) validationErrors[input.name] = errorMessage;
     else delete validationErrors[input.name];
 
-    const { name, value } = input;
+    const { name, type, value, checked } = input;
+
+    if (type === "checkbox") {
+      return setPlan({ ...plan, [name]: checked });
+    }
+
     setPlan({ ...plan, [name]: value });
     setErrors(validationErrors);
   };
@@ -159,8 +165,9 @@ const AllocateDataMA = () => {
                           Airtel
                         </option>
                         <option value="glo">GLO</option>
-                        <option value="mtn_sme">MTN SME</option>
-                        <option value="mtn_gifting">MTN GIFTING</option>
+                        {/* <option value="mtn_sme">MTN SME</option> */}
+                        {/* <option value="mtn_gifting">MTN GIFTING</option> */}
+                        <option value="mtn_gifting">MTN</option>
                         <option value="9mobile">9MOBILE</option>
                       </Input>
                     </FormGroup>
@@ -218,7 +225,19 @@ const AllocateDataMA = () => {
                       <FormFeedback>{errors.phone_number}</FormFeedback>
                     </FormGroup>
                   </Col>
+                  <Col md={12}>
+                    <FormGroup check>
+                      <Label check>Is this a ported number?</Label>
+                      <Input
+                        name="is_ported"
+                        onChange={handleChange}
+                        type="checkbox"
+                      />
+                    </FormGroup>
+                  </Col>
                 </Row>
+
+                <br />
 
                 <AllocateButton
                   setLoading={setLoading}
