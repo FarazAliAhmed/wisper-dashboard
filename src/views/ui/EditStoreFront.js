@@ -249,7 +249,17 @@ const EditStoreFront = () => {
         const gloPricesData = res?.data.filter(
           (item) => item?.network == "glo"
         );
-        setPrices(res?.data);
+        const allPrices = res?.data.filter((item) => item?.plan_type !== "sme");
+        const sortedData = allPrices.sort((a, b) => {
+          if (a.network < b.network) {
+            return -1;
+          }
+          if (a.network > b.network) {
+            return 1;
+          }
+          return 0;
+        });
+        setPrices(sortedData);
         setGloPrices(gloPricesData);
       });
     };
@@ -722,18 +732,17 @@ const EditStoreFront = () => {
         )}
         {navState == 2 && (
           <>
-            {user?.type !== "glo_dealer" ||
-              (user?.type !== "glo_agent" && (
-                <Row className="mt-1">
-                  <SFAirtimePricesTable
-                    transactions={prices}
-                    showHeader={true}
-                    showSubHeader={true}
-                    fetchPrice={fetchPrice}
-                    setFetchPrice={setFetchPrice}
-                  />
-                </Row>
-              ))}
+            {user?.type == "mega" || user?.type == "lite" ? (
+              <Row className="mt-1">
+                <SFAirtimePricesTable
+                  transactions={prices}
+                  showHeader={true}
+                  showSubHeader={true}
+                  fetchPrice={fetchPrice}
+                  setFetchPrice={setFetchPrice}
+                />
+              </Row>
+            ) : null}
 
             <Row className="mt-1">
               <SFPricesTable
@@ -769,15 +778,32 @@ const EditStoreFront = () => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              alignItems: "center",
+              alignItems: "flex-start",
               gap: "0.8rem",
-              textAlign: "center",
+              textAlign: "left",
             }}
           >
-            To access this feature, please complete your store front setup. It's
-            essential for tailoring our services to your needs and ensuring a
-            seamless experience
-            <Link to="/editStoreFront">
+            Edit your storefront seamlessly:
+            <ul>
+              <li>Update your store information in the "Information" tab.</li>
+              <li>Brand your store by clicking on the "Branding" tab.</li>
+              <li>
+                Set your selling prices for each data plan in the "Prices" tab.
+              </li>
+            </ul>
+            <Link
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "0.8rem",
+                textAlign: "left",
+                width: "100%",
+                textDecoration: "none",
+              }}
+              to="/editStoreFront"
+            >
               <Button color="primary">Edit Store Front</Button>
             </Link>
           </div>

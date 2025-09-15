@@ -125,7 +125,7 @@ export const validateProperty = (input) => {
 
   if (name === "airtime_volume") {
     if (value.trim() === "") return " Amount is required";
-    if (Number(value) < 50) return "Minimum amount is ₦50 ";
+    if (Number(value) < 100) return "Minimum amount is ₦100 ";
   }
 
   if (name === "storePin") {

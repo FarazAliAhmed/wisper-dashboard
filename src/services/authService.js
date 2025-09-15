@@ -23,8 +23,9 @@ export async function resetLink(email) {
   return res;
 }
 
-export async function confirmEmail(token) {
-  const res = await http.post(`${apiEndpoint}confirmEmail`, { token });
+export async function confirmEmail(body) {
+  console.log("ec", body);
+  const res = await http.post(`${apiEndpoint}confirmEmail`, body);
   return res;
 }
 

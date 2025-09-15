@@ -32,6 +32,7 @@ const initialState = {
   network: "airtel",
   plan_id: "",
   phone_number: "",
+  is_ported: false,
 };
 
 const AllocateDataMA = () => {
@@ -53,16 +54,53 @@ const AllocateDataMA = () => {
   //   parseDataPlans(plans)
   // }, [])
 
+  // const handleSubmit = async (e) => {
+  //   // e.preventDefault();
+  //   try {
+  //     setLoading(true);
+  //     const res = await allocateData(plan, user?.access_token);
+  //     setLoading(false);
+  //     setPlan(initialState);
+  //     // setServerResponse({status: true, message: "Data allocated successfully."});
+  //     setErrors({});
+  //     return { status: true, message: res.data.gateway_response };
+  //   } catch (error) {
+  //     console.log("error.response.data.message:", error.response.data.message);
+  //     setLoading(false);
+  //     const { status, message } = handleFailedRequest(error);
+  //     return { status, message };
+  //     // setServerResponse({ status, message });
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     // e.preventDefault();
     try {
       setLoading(true);
-      const res = await allocateData(plan, user?.access_token);
-      setLoading(false);
-      setPlan(initialState);
+
+      const { network, ...rest } = plan;
+      if (plan.network == "mtn_sme" || plan.network == "mtn_gifting") {
+        const res = await allocateData(
+          {
+            network: "mtn",
+            ...rest,
+          },
+          user?.access_token
+        );
+        setLoading(false);
+        setPlan(initialState);
+        // setServerResponse({status: true, message: "Data allocated successfully."});
+        setErrors({});
+        return { status: true, message: res.data.gateway_response };
+      } else {
+        const res = await allocateData(plan, user?.access_token);
+        setPlan(initialState);
+        // setServerResponse({status: true, message: "Data allocated successfully."});
+        setErrors({});
+        return { status: true, message: res.data.gateway_response };
+      }
+
       // setServerResponse({status: true, message: "Data allocated successfully."});
-      setErrors({});
-      return { status: true, message: res.data.gateway_response };
     } catch (error) {
       console.log("error.response.data.message:", error.response.data.message);
       setLoading(false);
@@ -78,7 +116,12 @@ const AllocateDataMA = () => {
     if (errorMessage) validationErrors[input.name] = errorMessage;
     else delete validationErrors[input.name];
 
-    const { name, value } = input;
+    const { name, type, value, checked } = input;
+
+    if (type === "checkbox") {
+      return setPlan({ ...plan, [name]: checked });
+    }
+
     setPlan({ ...plan, [name]: value });
     setErrors(validationErrors);
   };
@@ -122,7 +165,9 @@ const AllocateDataMA = () => {
                           Airtel
                         </option>
                         <option value="glo">GLO</option>
-                        <option value="mtn">MTN</option>
+                        {/* <option value="mtn_sme">MTN SME</option> */}
+                        {/* <option value="mtn_gifting">MTN GIFTING</option> */}
+                        <option value="mtn_gifting">MTN</option>
                         <option value="9mobile">9MOBILE</option>
                       </Input>
                     </FormGroup>
@@ -137,17 +182,29 @@ const AllocateDataMA = () => {
                         className="mb-3"
                         type="select"
                       >
-                        <option>---Select plan ---</option>
+                        <option>---Select plan---</option>
                         {dataPlans
-                          .filter(
-                            (singlePlan) => singlePlan.network === plan.network
-                          )
-                          .map((plan) => (
+                          .filter((singlePlan) => {
+                            if (plan.network === "mtn_gifting") {
+                              return (
+                                singlePlan.network === "mtn" &&
+                                singlePlan.plan_type === "gifting"
+                              );
+                            } else if (plan.network === "mtn_sme") {
+                              return (
+                                singlePlan.network === "mtn" &&
+                                singlePlan.plan_type === "sme"
+                              );
+                            } else {
+                              return singlePlan.network === plan.network;
+                            }
+                          })
+                          .map((filteredPlan) => (
                             <option
-                              key={`${plan.network}-${plan.dataId}`}
-                              value={plan.dataId}
+                              key={`${filteredPlan.network}-${filteredPlan.dataId}`}
+                              value={filteredPlan.dataId}
                             >
-                              {plan.size} ({plan.duration})
+                              {filteredPlan.size} ({filteredPlan.duration})
                             </option>
                           ))}
                       </Input>
@@ -168,7 +225,19 @@ const AllocateDataMA = () => {
                       <FormFeedback>{errors.phone_number}</FormFeedback>
                     </FormGroup>
                   </Col>
+                  <Col md={12}>
+                    <FormGroup check>
+                      <Label check>Is this a ported number?</Label>
+                      <Input
+                        name="is_ported"
+                        onChange={handleChange}
+                        type="checkbox"
+                      />
+                    </FormGroup>
+                  </Col>
                 </Row>
+
+                <br />
 
                 <AllocateButton
                   setLoading={setLoading}

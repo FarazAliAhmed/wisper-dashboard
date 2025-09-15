@@ -26,12 +26,20 @@ import warning from "../../assets/images/logos/warning.png";
 import "./auth.scss";
 import { toast } from "react-hot-toast";
 import { SettingsNav } from "../../App";
+import checked from "../../assets/images/logos/checked.png";
+import VerificationInput from "react-verification-input";
+import "./Modal.css";
+import { BeatLoader } from "react-spinners";
 
 const Login = () => {
   const [account, setAccount] = useState({ email: "", password: "" });
   const [msgError, setMsgError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [modalState, setModalState] = useState(false);
+
+  const [pin, setPin] = useState("");
+  const [codeState, setCodeState] = useState("default");
+  const [codeMessage, setCodeMessage] = useState("");
 
   const { verificationMessage } = useContext(SettingsNav);
 
@@ -73,6 +81,34 @@ const Login = () => {
     }
   };
 
+  const handleChange = ({ currentTarget: input }) => {
+    const validationErrors = { ...errors };
+    const errorMessage = validateProperty(input);
+    if (errorMessage) validationErrors[input.name] = errorMessage;
+    else delete validationErrors[input.name];
+
+    const { name, value } = input;
+    setAccount({ ...account, [name]: value });
+    setErrors(validationErrors);
+  };
+
+  const handleConfirmCode = async (pinCode) => {
+    try {
+      const res = await authService.confirmEmail({
+        email: account.email,
+        token: pinCode,
+      });
+      setCodeMessage(res.data?.message);
+
+      setCodeState("success");
+    } catch (error) {
+      console.log(error, "ert");
+      setCodeMessage(error.response?.data);
+      setCodeState("error");
+      toast.error(`Error Confirm Code! ${error.response?.data}`);
+    }
+  };
+
   const resendLinkFunc = async () => {
     try {
       setLoading(true);
@@ -84,17 +120,6 @@ const Login = () => {
       setLoading(false);
       toast.error("error sending confirmation link");
     }
-  };
-
-  const handleChange = ({ currentTarget: input }) => {
-    const validationErrors = { ...errors };
-    const errorMessage = validateProperty(input);
-    if (errorMessage) validationErrors[input.name] = errorMessage;
-    else delete validationErrors[input.name];
-
-    const { name, value } = input;
-    setAccount({ ...account, [name]: value });
-    setErrors(validationErrors);
   };
 
   return (
@@ -152,7 +177,11 @@ const Login = () => {
             type="submit"
             className="submit-btn"
           >
-            Login
+            {loading ? (
+              <BeatLoader size={10} color="white" loading />
+            ) : (
+              <span>Login</span>
+            )}
           </Button>
 
           <small className="text-center text-muted mt-3">
@@ -172,51 +201,92 @@ const Login = () => {
           </small>
         </div>
       </Form>
-
       <Modal
         centered
         isOpen={modalState}
         toggle={() => {
           setModalState(!modalState);
+          window.location = "/login";
         }}
       >
         <ModalBody>
           <div className="confirm text-center">
-            <img src={warning} width={50} className="confirm-warn" alt="warn" />
+            <img
+              src={checked}
+              width={50}
+              className="confirm-checked"
+              alt="warn"
+            />
 
             <h6>
-              We noticed that you attempted to log in to your account at Wisper.
-              However, your email address hasn't been verified yet. For full
-              access to our platform's features, please check your email inbox
-              (including spam/junk folders) for a email confirmation message
-              from us. Click on the confirmation link provided in the email to
-              confirm your email address. If you cannot find the verification
-              email, you can request a new one by clicking the "Resend Link"
-              button. This will send a new confirmation message to the email
-              address associated with your account. If you encounter any
-              difficulties or need further assistance, please feel free to
-              contact our support team at support@wisper.ng.
+              Congratulations on your successful registration! 🎉 Check your
+              email (including the spam folder) or phone number for a
+              verification code and verify your email and phone number. We are
+              excited to have you onboard!
             </h6>
+
+            <div className="verify__container">
+              <VerificationInput
+                length={5}
+                validChars="0-9"
+                onComplete={(e) => {
+                  handleConfirmCode(e);
+                }}
+                onChange={(e) => {
+                  console.log(e, "ec");
+                  setPin(e);
+                }}
+                placeholder="_"
+                classNames={{
+                  container: "verification__container",
+                  character: "verification__character",
+                  characterInactive: "verification__character--inactive",
+                  characterSelected: "verification__character--selected",
+                }}
+              />
+              <p>
+                Didn't get a code?
+                <span
+                  className="resend__code"
+                  onClick={() => {
+                    resendLinkFunc();
+                  }}
+                >
+                  Click to resend
+                </span>
+              </p>
+            </div>
           </div>
         </ModalBody>
         <ModalFooter className="confirm-footer">
           <Button
-            color="primary"
-            disabled={loading}
-            onClick={() => {
-              setModalState(false);
-              resendLinkFunc();
-            }}
-          >
-            Resend Link
-          </Button>{" "}
-          <Button
+            color="secondary"
             onClick={() => {
               setModalState(!modalState);
+              window.location = "/login";
             }}
           >
             Close
           </Button>
+
+          {codeState == "default" && (
+            <Button color="primary">
+              {5 - Number(pin.length)} digits left
+            </Button>
+          )}
+          {codeState == "error" && (
+            <Button color="danger">{codeMessage ?? "error"}</Button>
+          )}
+          {codeState == "success" && (
+            <Button
+              color="success"
+              onClick={() => {
+                window.location = "/login";
+              }}
+            >
+              Continue
+            </Button>
+          )}
         </ModalFooter>
       </Modal>
     </AuthLayout>

@@ -143,6 +143,8 @@ export async function getSFAnalysis(business_id) {
 // }
 
 export async function allocateData(body, apiKey) {
+  console.log(body, "body");
+
   const headers = { "x-api-key": apiKey };
 
   const payload = {
@@ -153,7 +155,10 @@ export async function allocateData(body, apiKey) {
     business_id: body.business_id,
     price: body.price,
     volume: body.volume,
+    is_ported: body.is_ported,
   };
+
+  console.log(payload, "pp");
 
   const res = await http.post(`${apiUrl}/buy`, payload, { headers });
   return res;

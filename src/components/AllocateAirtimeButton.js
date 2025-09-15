@@ -36,8 +36,9 @@ const AllocateAirtimeButton = ({
   const handleAllocate = async () => {
     // setConfirm(false)
     const status = await handleSubmit();
+    console.log(status, "slsl");
     if (!status.error) {
-      setMessage(status?.data);
+      setMessage(status?.gateway_response);
       setSuccess(true);
       setTimeout(() => {
         setSuccess(false);
@@ -125,7 +126,13 @@ const AllocateAirtimeButton = ({
       </Modal>
 
       {/* Success On Data sent*/}
-      <Modal centered isOpen={success} toggle={() => setSuccess(!success)}>
+      <Modal
+        centered
+        isOpen={success}
+        toggle={() => {
+          window.location.reload();
+        }}
+      >
         <ModalBody>
           <div className="confirm text-center">
             <img src={checked} className="confirm-checked" alt="success" />
@@ -133,7 +140,12 @@ const AllocateAirtimeButton = ({
           </div>
         </ModalBody>
         <ModalFooter className="confirm-footer">
-          <Button color="secondary" onClick={() => setSuccess(false)}>
+          <Button
+            color="secondary"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
             Close
           </Button>
         </ModalFooter>

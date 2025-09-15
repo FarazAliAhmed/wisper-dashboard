@@ -29,7 +29,7 @@ import toast from "react-hot-toast";
 // import tableData from "../../utils/plansTable";
 
 // const docs = "https://documenter.getpostman.com/view/17453703/UVksMZmU";
-const docs = "https://documenter.getpostman.com/view/25805035/2s9YeN2UJt";
+const docs = "https://documenter.getpostman.com/view/17477297/2sA3Qy58fX";
 
 const Documentation = () => {
   const { user } = useUser();
