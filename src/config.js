@@ -28,7 +28,8 @@
 // };
 
 // const { REACT_APP_DB_URL } = process.env;
-const REACT_APP_DB_URL = "https://wisperapi-prod.up.railway.app";
+// const REACT_APP_DB_URL = "https://wisperapi-prod.up.railway.app";
+const REACT_APP_DB_URL = "http://localhost:8000";
 
 module.exports = {
   // // Test URL

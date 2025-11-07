@@ -27,14 +27,14 @@ import { register } from "../../services/userService";
 import "./auth.scss";
 import authService from "../../services/authService";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-// import VerificationInput from "react-verification-input";
-// import toast from "react-hot-toast";
+import VerificationInput from "react-verification-input";
+import toast from "react-hot-toast";
 import { BeatLoader } from "react-spinners";
 
 const Register = () => {
-  // const [pin, setPin] = useState("");
-  // const [codeState, setCodeState] = useState("default");
-  // const [codeMessage, setCodeMessage] = useState("");
+  const [pin, setPin] = useState("");
+  const [codeState, setCodeState] = useState("default");
+  const [codeMessage, setCodeMessage] = useState("");
   const [account, setAccount] = useState({
     name: "",
     business_name: "",
@@ -91,35 +91,40 @@ const Register = () => {
     setErrors(validationErrors);
   };
 
-  // const handleConfirmCode = async (pinCode) => {
-  //   try {
-  //     const res = await authService.confirmEmail({
-  //       email: account.email,
-  //       token: pinCode,
-  //     });
-  //     setCodeMessage(res.data?.message);
+  const handleConfirmCode = async (pinCode) => {
+    try {
+      const res = await authService.confirmEmail({
+        email: account.email,
+        token: pinCode,
+      });
+      setCodeMessage(res.data?.message);
 
-  //     setCodeState("success");
-  //   } catch (error) {
-  //     console.log(error, "ert");
-  //     setCodeMessage(error.response?.data);
-  //     setCodeState("error");
-  //     toast.error(`Error Confirm Code! ${error.response?.data}`);
-  //   }
-  // };
+      setCodeState("success");
+    } catch (error) {
+      console.log(error, "ert");
+      // Handle both string error and object error with message property
+      const errorMessage =
+        typeof error.response?.data === "string"
+          ? error.response.data
+          : error.response?.data?.message || "Error confirming code";
+      setCodeMessage(errorMessage);
+      setCodeState("error");
+      toast.error(`Error Confirm Code! ${errorMessage}`);
+    }
+  };
 
-  // const resendLinkFunc = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const res = await authService.resendLink(account.email);
-  //     setLoading(false);
-  //     toast.success(res.data?.message);
-  //   } catch (error) {
-  //     console.log(error.response, "res");
-  //     setLoading(false);
-  //     toast.error("error sending confirmation link");
-  //   }
-  // };
+  const resendLinkFunc = async () => {
+    try {
+      setLoading(true);
+      const res = await authService.resendLink(account.email);
+      setLoading(false);
+      toast.success(res.data?.message);
+    } catch (error) {
+      console.log(error.response, "res");
+      setLoading(false);
+      toast.error("error sending confirmation link");
+    }
+  };
 
   return (
     <AuthLayout
@@ -258,50 +263,15 @@ const Register = () => {
         </div>
       </Form>
 
-      {/* Success Modal - Simple version */}
+      {/* Verification Modal */}
       <Modal
         centered
         isOpen={modalState}
         toggle={() => {
-          setModalState(!modalState);
-          window.location = "/login";
-        }}
-      >
-        <ModalBody>
-          <div className="confirm text-center">
-            <img
-              src={checked}
-              width={50}
-              className="confirm-checked"
-              alt="success"
-            />
-
-            <h6>Congratulations! Your registration was successful! 🎉</h6>
-            <p>
-              You can now log in to your account and start using our services.
-            </p>
-          </div>
-        </ModalBody>
-        <ModalFooter className="confirm-footer">
-          <Button
-            color="primary"
-            onClick={() => {
-              setModalState(!modalState);
-              window.location = "/login";
-            }}
-          >
-            Go to Login
-          </Button>
-        </ModalFooter>
-      </Modal>
-
-      {/* Original Verification Modal - Commented Out */}
-      {/* <Modal
-        centered
-        isOpen={modalState}
-        toggle={() => {
-          setModalState(!modalState);
-          window.location = "/login";
+          if (codeState === "success") {
+            setModalState(!modalState);
+            window.location = "/login";
+          }
         }}
       >
         <ModalBody>
@@ -354,15 +324,17 @@ const Register = () => {
           </div>
         </ModalBody>
         <ModalFooter className="confirm-footer">
-          <Button
-            color="secondary"
-            onClick={() => {
-              setModalState(!modalState);
-              window.location = "/login";
-            }}
-          >
-            Close
-          </Button>
+          {codeState !== "success" && (
+            <Button
+              color="secondary"
+              onClick={() => {
+                setModalState(!modalState);
+                window.location = "/login";
+              }}
+            >
+              Close
+            </Button>
+          )}
 
           {codeState == "default" && (
             <Button color="primary">
@@ -376,6 +348,7 @@ const Register = () => {
             <Button
               color="success"
               onClick={() => {
+                setModalState(!modalState);
                 window.location = "/login";
               }}
             >
@@ -383,7 +356,7 @@ const Register = () => {
             </Button>
           )}
         </ModalFooter>
-      </Modal> */}
+      </Modal>
     </AuthLayout>
   );
 };
