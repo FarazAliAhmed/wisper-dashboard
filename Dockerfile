@@ -24,20 +24,13 @@ FROM nginx:alpine
 # Copy built files to nginx
 COPY --from=builder /app/build /usr/share/nginx/html
 
-# Copy nginx configuration (optional, for SPA routing)
-RUN echo 'server { \
-    listen 80; \
-    server_name _; \
-    root /usr/share/nginx/html; \
-    index index.html; \
-    location / { \
-        try_files $uri $uri/ /index.html; \
-    } \
-}' > /etc/nginx/conf.d/default.conf
+# Copy startup script
+COPY start-nginx.sh /start-nginx.sh
+RUN chmod +x /start-nginx.sh
 
-# Expose port 80
+# Expose port (default to 80, Railway will override with PORT env var)
 EXPOSE 80
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start nginx with dynamic port configuration
+CMD ["/start-nginx.sh"]
 
