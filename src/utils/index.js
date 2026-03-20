@@ -56,6 +56,11 @@ export const validateProperty = (input) => {
       return "Phone number must be 11 characters";
   }
 
+  if (name === "kycNumber") {
+    if (value.trim() !== "" && value.trim().length !== 11)
+      return "BVN or NIN must be 11 digits";
+  }
+
   if (name === "phone_number") {
     if (value.trim() === "") return "Phone number is required";
     if (value.trim().length < 11 || value.trim().length > 11)

@@ -41,6 +41,8 @@ const Register = () => {
     email: "",
     mobile_number: "",
     address: "...",
+    kycNumber: "",
+    kycType: "bvn", // Add this: 'bvn' or 'nin'
     username: "",
     password: "",
   });
@@ -58,7 +60,31 @@ const Register = () => {
 
     try {
       setLoading(true);
-      const response = await register(account);
+      
+      // Build clean payload - only include allowed fields
+      const payload = {
+        name: account.name,
+        business_name: account.business_name,
+        email: account.email,
+        username: account.username,
+        password: account.password,
+        mobile_number: account.mobile_number,
+        address: account.address,
+      };
+      
+      // Add BVN or NIN based on user selection
+      if (account.kycNumber && account.kycNumber.trim()) {
+        const cleanKyc = account.kycNumber.replace(/\D/g, ''); // Remove non-digits
+        if (cleanKyc.length === 11) {
+          if (account.kycType === "nin") {
+            payload.nin = cleanKyc;
+          } else {
+            payload.bvn = cleanKyc; // Default to BVN
+          }
+        }
+      }
+
+      const response = await register(payload);
       setLoading(false);
       console.log(response, "res");
       
@@ -213,6 +239,44 @@ const Register = () => {
             type="text"
             name="address"
           />
+        </FormGroup>
+        <FormGroup className="mb-3">
+          <Label>BVN or NIN</Label>
+          <div className="mb-2">
+            <FormGroup check inline>
+              <Input
+                type="radio"
+                name="kycType"
+                value="bvn"
+                checked={account.kycType === "bvn"}
+                onChange={handleChange}
+              />
+              <Label check>BVN</Label>
+            </FormGroup>
+            <FormGroup check inline>
+              <Input
+                type="radio"
+                name="kycType"
+                value="nin"
+                checked={account.kycType === "nin"}
+                onChange={handleChange}
+              />
+              <Label check>NIN</Label>
+            </FormGroup>
+          </div>
+          <Input
+            value={account.kycNumber}
+            onChange={handleChange}
+            invalid={errors.kycNumber}
+            type="text"
+            name="kycNumber"
+            maxLength="11"
+            placeholder={`Enter your ${account.kycType.toUpperCase()}`}
+          />
+          <FormFeedback>{errors.kycNumber}</FormFeedback>
+          <small className="text-muted">
+            Enter 11-digit {account.kycType.toUpperCase()}. Optional but recommended for higher transaction limits.
+          </small>
         </FormGroup>
         <FormGroup className="mb-3">
           <Label>
