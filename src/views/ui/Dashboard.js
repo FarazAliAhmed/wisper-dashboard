@@ -74,7 +74,7 @@ const Dashboard = () => {
         </UncontrolledAlert> */}
         <h4>Balances</h4>
         {/***Top Cards***/}
-        {maintenance.notice && (
+        {maintenance?.notice && (
           <Row>
             <AdminNotifier maintenance={maintenance} />
           </Row>

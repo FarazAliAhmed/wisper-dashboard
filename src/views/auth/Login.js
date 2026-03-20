@@ -68,14 +68,11 @@ const Login = () => {
       console.log(error.response, "res");
       setLoading(false);
       const errorMessage = error.response?.data;
-      if (errorMessage == "Email not confirmed") {
-        setModalState(true);
-      } else {
-        setMsgError(error.response.data);
-        const { status, message } = handleFailedRequest(error);
-
-        setServerResponse({ status, message });
-      }
+      
+      // Since email confirmation is disabled, just show the error
+      setMsgError(error.response.data);
+      const { status, message } = handleFailedRequest(error);
+      setServerResponse({ status, message });
 
       // console.log(error);
     }

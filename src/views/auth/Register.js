@@ -61,8 +61,13 @@ const Register = () => {
       const response = await register(account);
       setLoading(false);
       console.log(response, "res");
-      setModalState(true);
-      // authService.loginWithJwt(response.headers["x-auth-token"]);
+      
+      // Auto-login or redirect to login page (no OTP required)
+      toast.success("Registration successful! You can now login.");
+      setTimeout(() => {
+        window.location = "/login";
+      }, 1500);
+      
       setErrors({});
     } catch (error) {
       setLoading(false);
