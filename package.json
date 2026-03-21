@@ -70,6 +70,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
+    "cross-env": "^10.1.0",
     "react-error-overlay": "^6.0.9"
   }
 }
