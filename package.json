@@ -69,6 +69,7 @@
     "node": "22.x"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.0",
     "react-error-overlay": "^6.0.9"
   }
 }
