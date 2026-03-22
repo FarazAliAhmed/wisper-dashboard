@@ -90,7 +90,7 @@ const AllocateDataMA = () => {
                             alignItems: "center",
                           }}
                         >
-                          <b>Account Name:</b> &nbsp;MFY / Wisper Communication
+                          <b>Account Name:</b> &nbsp;MFY / Wisper Media Solutions
                           Limited-{item.accountName}
                         </div>
                         <div
