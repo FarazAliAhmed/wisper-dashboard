@@ -13,13 +13,13 @@
     "static/js/5.94b09503.chunk.js": "/static/js/5.94b09503.chunk.js",
     "static/js/5.94b09503.chunk.js.map": "/static/js/5.94b09503.chunk.js.map",
     "main.css": "/static/css/main.41c4f7c6.chunk.css",
-    "main.js": "/static/js/main.fb47de93.chunk.js",
-    "main.js.map": "/static/js/main.fb47de93.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.0415a873.js",
-    "runtime-main.js.map": "/static/js/runtime-main.0415a873.js.map",
+    "main.js": "/static/js/main.ae2974d6.chunk.js",
+    "main.js.map": "/static/js/main.ae2974d6.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.225ddde1.js",
+    "runtime-main.js.map": "/static/js/runtime-main.225ddde1.js.map",
     "static/css/8.6486eae6.chunk.css": "/static/css/8.6486eae6.chunk.css",
-    "static/js/8.fe1a6587.chunk.js": "/static/js/8.fe1a6587.chunk.js",
-    "static/js/8.fe1a6587.chunk.js.map": "/static/js/8.fe1a6587.chunk.js.map",
+    "static/js/8.d90445d1.chunk.js": "/static/js/8.d90445d1.chunk.js",
+    "static/js/8.d90445d1.chunk.js.map": "/static/js/8.d90445d1.chunk.js.map",
     "static/js/9.491f7770.chunk.js": "/static/js/9.491f7770.chunk.js",
     "static/js/9.491f7770.chunk.js.map": "/static/js/9.491f7770.chunk.js.map",
     "static/js/10.17ea995c.chunk.js": "/static/js/10.17ea995c.chunk.js",
@@ -80,8 +80,8 @@
     "static/js/35.4520dfea.chunk.js.map": "/static/js/35.4520dfea.chunk.js.map",
     "static/js/36.bdb2e3b9.chunk.js": "/static/js/36.bdb2e3b9.chunk.js",
     "static/js/36.bdb2e3b9.chunk.js.map": "/static/js/36.bdb2e3b9.chunk.js.map",
-    "static/js/37.19081d67.chunk.js": "/static/js/37.19081d67.chunk.js",
-    "static/js/37.19081d67.chunk.js.map": "/static/js/37.19081d67.chunk.js.map",
+    "static/js/37.7509996d.chunk.js": "/static/js/37.7509996d.chunk.js",
+    "static/js/37.7509996d.chunk.js.map": "/static/js/37.7509996d.chunk.js.map",
     "static/js/38.bb4b2909.chunk.js": "/static/js/38.bb4b2909.chunk.js",
     "static/js/38.bb4b2909.chunk.js.map": "/static/js/38.bb4b2909.chunk.js.map",
     "static/js/39.df91cfbc.chunk.js": "/static/js/39.df91cfbc.chunk.js",
@@ -123,7 +123,7 @@
     "static/css/20.c01b2aa5.chunk.css.map": "/static/css/20.c01b2aa5.chunk.css.map",
     "static/css/8.6486eae6.chunk.css.map": "/static/css/8.6486eae6.chunk.css.map",
     "static/css/main.41c4f7c6.chunk.css.map": "/static/css/main.41c4f7c6.chunk.css.map",
-    "static/js/8.fe1a6587.chunk.js.LICENSE.txt": "/static/js/8.fe1a6587.chunk.js.LICENSE.txt",
+    "static/js/8.d90445d1.chunk.js.LICENSE.txt": "/static/js/8.d90445d1.chunk.js.LICENSE.txt",
     "static/media/Moniepoint-Logo.59b1901a.png": "/static/media/Moniepoint-Logo.59b1901a.png",
     "static/media/Sterling_Bank_Logo_Straight.png": "/static/media/Sterling_Bank_Logo_Straight.1ad0d8d0.png",
     "static/media/Wema-Bank.52d42494.png": "/static/media/Wema-Bank.52d42494.png",
@@ -156,10 +156,10 @@
     "static/media/wisperN.png": "/static/media/wisperN.054ef846.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.0415a873.js",
+    "static/js/runtime-main.225ddde1.js",
     "static/css/8.6486eae6.chunk.css",
-    "static/js/8.fe1a6587.chunk.js",
+    "static/js/8.d90445d1.chunk.js",
     "static/css/main.41c4f7c6.chunk.css",
-    "static/js/main.fb47de93.chunk.js"
+    "static/js/main.ae2974d6.chunk.js"
   ]
 }
