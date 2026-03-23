@@ -233,7 +233,7 @@ const AllocateData = () => {
                             } else if (plan.network === "mtn_sme") {
                               return (
                                 singlePlan.network === "mtn" &&
-                                singlePlan.plan_type === "sme"
+                                (singlePlan.plan_type === "sme" || singlePlan.plan_type === "data_transfer")
                               );
                             } else {
                               return singlePlan.network === plan.network;
