@@ -58,6 +58,7 @@ const AgentsBusinessFund = lazy(() => import("../views/ui/AgentsFunding.js"));
 const AgentsBusinessFundGLO = lazy(() =>
   import("../views/ui/AgentsFundingGLO.js")
 );
+const Landing = lazy(() => import("../pages/Landing.js"));
 
 const Routes = () => {
   const { user } = useUser();
@@ -68,7 +69,8 @@ const Routes = () => {
     <Router>
       <Suspense fallback={<Loader isLoading={true} />}>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/home" component={Home} />
           <AdminProtectedRoute path="/admin" component={Admin} />
           <ProtectedRoute path="/dashboard" component={Dashboard} />
           {/* <ProtectedRoute path="/packages/:id" component={Pricing} /> */}
