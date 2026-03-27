@@ -24,15 +24,17 @@
   top: 0;
   z-index: 1000;
   border-bottom: 1px solid #222;
+  width: 100%;
 }
 
 .nav-container {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  max-width: 1200px;
+  gap: 40px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 40px;
 }
 
 .nav-logo {
@@ -56,6 +58,7 @@
   display: flex;
   gap: 30px;
   list-style: none;
+  justify-content: center;
 }
 
 .nav-links a {
@@ -77,6 +80,7 @@
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s;
+  white-space: nowrap;
 }
 
 .nav-cta:hover {
@@ -352,15 +356,19 @@
 
 .footer-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px;
   margin-bottom: 40px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .footer-col h4 {
   margin-bottom: 20px;
   color: white;
   font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .footer-col ul {
@@ -368,10 +376,11 @@
 }
 
 .footer-col li {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   color: #888;
   cursor: pointer;
   transition: color 0.3s;
+  font-size: 0.95rem;
 }
 
 .footer-col li:hover {
@@ -382,6 +391,7 @@
   color: #888;
   line-height: 1.8;
   margin-bottom: 8px;
+  font-size: 0.95rem;
 }
 
 .footer-bottom {
@@ -389,10 +399,17 @@
   padding-top: 20px;
   border-top: 1px solid #222;
   color: #666;
+  font-size: 0.9rem;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 968px) {
+  .nav-container {
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    padding: 0 20px;
+  }
+  
   .nav-links {
     display: none;
   }
@@ -401,6 +418,13 @@
     display: block;
   }
   
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
   .hero h1 {
     font-size: 2rem;
   }
@@ -418,10 +442,6 @@
   
   .features-grid,
   .pricing-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .footer-grid {
     grid-template-columns: 1fr;
   }
 }
