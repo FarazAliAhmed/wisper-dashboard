@@ -3,6 +3,28 @@ import '../assets/css/landing.css';
 
 const Landing = () => {
   const [activeNetwork, setActiveNetwork] = useState('MTN');
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    businessName: ''
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Here you can add API call to save the data
+    console.log('Form submitted:', formData);
+    setSubmitted(true);
+  };
 
   const pricingData = {
     MTN: [
@@ -58,8 +80,7 @@ const Landing = () => {
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
-          <a href="/login" className="nav-cta">Login</a>
-          <button className="mobile-menu-btn">☰</button>
+          <button className="nav-cta" onClick={() => setShowSignupModal(true)}>Get Started</button>
         </div>
       </nav>
       {/* Hero Section */}
@@ -72,7 +93,7 @@ const Landing = () => {
               We are a registered telecommunication company that provides voice and data transmission services, 
               including Mobile Data and Airtime (VTU).
             </p>
-            <button className="cta-button">Get Started</button>
+            <button className="cta-button" onClick={() => setShowSignupModal(true)}>Get Started</button>
           </div>
         </div>
       </section>
@@ -120,7 +141,7 @@ const Landing = () => {
             Bring the 'easy-payments' experience closer to your network and earn a commission 
             for every transaction you perform for your customers.
           </p>
-          <button className="cta-button">Join Now</button>
+          <button className="cta-button" onClick={() => setShowSignupModal(true)}>Join Now</button>
         </div>
       </section>
 
@@ -162,7 +183,7 @@ const Landing = () => {
             We offer instant recharge of Airtime, Data bundle, CableTV (DStv, GOtv & Startimes), 
             Electricity Bill Payment and more.
           </p>
-          <button className="cta-button">Start Now</button>
+          <button className="cta-button" onClick={() => setShowSignupModal(true)}>Start Now</button>
         </div>
       </section>
 
@@ -170,21 +191,6 @@ const Landing = () => {
       <footer className="footer" id="contact">
         <div className="container">
           <div className="footer-grid">
-            <div className="footer-col">
-              <h4>XTES</h4>
-              <ul>
-                <li>About us</li>
-                <li>Contact us</li>
-                <li>FAQs</li>
-              </ul>
-            </div>
-            <div className="footer-col">
-              <h4>Legal</h4>
-              <ul>
-                <li>Terms and Condition</li>
-                <li>Privacy Policy</li>
-              </ul>
-            </div>
             <div className="footer-col">
               <h4>Contact</h4>
               <p>5 Carricks Court, Bosmak Haven Estate,</p>
@@ -194,10 +200,70 @@ const Landing = () => {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>© 2026 All rights reserved. Developed by A.D.E Developers</p>
+            <p>© 2026 All rights reserved. Developed by XTES Limited</p>
           </div>
         </div>
       </footer>
+
+      {/* Signup Modal */}
+      {showSignupModal && (
+        <div className="modal-overlay" onClick={() => setShowSignupModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            {!submitted ? (
+              <>
+                <button className="modal-close" onClick={() => setShowSignupModal(false)}>×</button>
+                <h2>Get Started with XTES</h2>
+                <p className="modal-subtitle">Fill in your details and our sales team will reach out to you</p>
+                <form onSubmit={handleSubmit}>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Full Name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email Address"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Phone Number"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="businessName"
+                    placeholder="Business Name (Optional)"
+                    value={formData.businessName}
+                    onChange={handleInputChange}
+                  />
+                  <button type="submit" className="submit-button">Submit</button>
+                </form>
+              </>
+            ) : (
+              <div className="success-message">
+                <div className="success-icon">✓</div>
+                <h2>Thank You!</h2>
+                <p>Someone from our sales support will reach out to you shortly.</p>
+                <button className="cta-button" onClick={() => {
+                  setShowSignupModal(false);
+                  setSubmitted(false);
+                  setFormData({ name: '', email: '', phone: '', businessName: '' });
+                }}>Close</button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
