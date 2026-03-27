@@ -93,7 +93,6 @@ const Landing = () => {
               We are a registered telecommunication company that provides voice and data transmission services, 
               including Mobile Data and Airtime (VTU).
             </p>
-            <button className="cta-button" onClick={() => setShowSignupModal(true)}>Get Started</button>
           </div>
         </div>
       </section>
