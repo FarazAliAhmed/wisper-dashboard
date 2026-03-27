@@ -1,24 +1,84 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../assets/css/landing.css';
 
 const Landing = () => {
+  const [activeNetwork, setActiveNetwork] = useState('MTN');
+
+  const pricingData = {
+    MTN: [
+      { data: '500MB', price: '₦450', duration: '1 Month' },
+      { data: '1GB', price: '₦700', duration: '1 Month' },
+      { data: '2GB', price: '₦1400', duration: '1 Month' },
+      { data: '3GB', price: '₦1900', duration: '1 Month' },
+      { data: '5GB', price: '₦3000', duration: '1 Month' },
+      { data: '10GB', price: '₦4500', duration: '1 Month' },
+    ],
+    GLO: [
+      { data: '200MB', price: '₦100', duration: '1 Month' },
+      { data: '500MB', price: '₦225', duration: '1 Month' },
+      { data: '1GB', price: '₦270', duration: '3 Days' },
+      { data: '2GB', price: '₦900', duration: '1 Month' },
+      { data: '3GB', price: '₦1350', duration: '1 Month' },
+      { data: '5GB', price: '₦2250', duration: '1 Month' },
+      { data: '10GB', price: '₦4500', duration: '1 Month' },
+    ],
+    '9MOBILE': [
+      { data: '500MB', price: '₦100', duration: '1 Month' },
+      { data: '1GB', price: '₦200', duration: '1 Month' },
+      { data: '1.5GB', price: '₦950', duration: '1 Month' },
+      { data: '2GB', price: '₦400', duration: '1 Month' },
+      { data: '3GB', price: '₦600', duration: '1 Month' },
+      { data: '5GB', price: '₦1000', duration: '1 Month' },
+      { data: '10GB', price: '₦2000', duration: '1 Month' },
+    ],
+    AIRTEL: [
+      { data: '100MB', price: '₦100', duration: '1 Month' },
+      { data: '300MB', price: '₦300', duration: '1 Month' },
+      { data: '500MB', price: '₦500', duration: '1 Month' },
+      { data: '1GB', price: '₦800', duration: '7 Days' },
+      { data: '2GB', price: '₦1500', duration: '1 Month' },
+      { data: '3GB', price: '₦2000', duration: '1 Month' },
+      { data: '4GB', price: '₦2500', duration: '1 Month' },
+      { data: '10GB', price: '₦4000', duration: '1 Month' },
+    ],
+  };
+
   return (
     <div className="landing-page">
+      {/* Navbar */}
+      <nav className="navbar">
+        <div className="nav-container">
+          <div className="nav-logo">
+            <img src="/xtes-logo.jpg" alt="XTES" />
+            <span>XTES</span>
+          </div>
+          <ul className="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <a href="/login" className="nav-cta">Login</a>
+          <button className="mobile-menu-btn">☰</button>
+        </div>
+      </nav>
       {/* Hero Section */}
-      <section className="hero">
+      <section className="hero" id="home">
         <div className="container">
-          <img src="/xtes-logo.jpg" alt="XTES Logo" className="hero-logo" />
-          <h1>Welcome To XTES</h1>
-          <p className="hero-subtitle">
-            We are a registered telecommunication company that provides voice and data transmission services, 
-            including Mobile Data and Airtime (VTU).
-          </p>
-          <button className="cta-button">Get Started</button>
+          <div className="hero-content">
+            <img src="/xtes-logo.jpg" alt="XTES Logo" className="hero-logo" />
+            <h1>Welcome To XTES</h1>
+            <p className="hero-subtitle">
+              We are a registered telecommunication company that provides voice and data transmission services, 
+              including Mobile Data and Airtime (VTU).
+            </p>
+            <button className="cta-button">Get Started</button>
+          </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section className="services">
+      <section className="services" id="services">
         <div className="container">
           <h2>Our Services</h2>
           <p className="section-subtitle">Awesome Features</p>
@@ -65,39 +125,31 @@ const Landing = () => {
       </section>
 
       {/* Pricing Section */}
-      <section className="pricing">
+      <section className="pricing" id="pricing">
         <div className="container">
           <h2>Pricing Plans</h2>
           <p className="section-subtitle">Valuable Data Plan And Prices</p>
           
           <div className="network-tabs">
-            <button className="tab active">MTN</button>
-            <button className="tab">GLO</button>
-            <button className="tab">9MOBILE</button>
-            <button className="tab">AIRTEL</button>
+            {Object.keys(pricingData).map((network) => (
+              <button
+                key={network}
+                className={`tab ${activeNetwork === network ? 'active' : ''}`}
+                onClick={() => setActiveNetwork(network)}
+              >
+                {network}
+              </button>
+            ))}
           </div>
 
           <div className="pricing-grid">
-            <div className="price-card">
-              <div className="data-amount">2GB</div>
-              <div className="price">₦1400</div>
-              <div className="duration">1 Month</div>
-            </div>
-            <div className="price-card">
-              <div className="data-amount">3GB</div>
-              <div className="price">₦1900</div>
-              <div className="duration">1 Month</div>
-            </div>
-            <div className="price-card">
-              <div className="data-amount">5GB</div>
-              <div className="price">₦3000</div>
-              <div className="duration">1 Month</div>
-            </div>
-            <div className="price-card">
-              <div className="data-amount">10GB</div>
-              <div className="price">₦4500</div>
-              <div className="duration">1 Month</div>
-            </div>
+            {pricingData[activeNetwork].map((plan, index) => (
+              <div key={index} className="price-card">
+                <div className="data-amount">{plan.data}</div>
+                <div className="price">{plan.price}</div>
+                <div className="duration">{plan.duration}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -115,7 +167,7 @@ const Landing = () => {
       </section>
 
       {/* Footer */}
-      <footer className="footer">
+      <footer className="footer" id="contact">
         <div className="container">
           <div className="footer-grid">
             <div className="footer-col">
@@ -135,7 +187,10 @@ const Landing = () => {
             </div>
             <div className="footer-col">
               <h4>Contact</h4>
-              <p>xtes@example.com</p>
+              <p>5 Carricks Court, Bosmak Haven Estate,</p>
+              <p>Harris Drive, Lekki, Lagos State.</p>
+              <p>+2347074728048</p>
+              <p>Support@xtes.app</p>
             </div>
           </div>
           <div className="footer-bottom">
