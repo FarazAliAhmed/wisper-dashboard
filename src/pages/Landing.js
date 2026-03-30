@@ -90,8 +90,8 @@ const Landing = () => {
             <img src="/xtes-logo.jpg" alt="XTES Logo" className="hero-logo" />
             <h1>Welcome To XTES</h1>
             <p className="hero-subtitle">
-              We are a registered telecommunication company that provides voice and data transmission services, 
-              including Mobile Data and Airtime (VTU).
+              We provide professional Web Development, Web Design, Mobile App Development, 
+              Software Development and comprehensive IT Services for businesses of all sizes.
             </p>
           </div>
         </div>
@@ -101,30 +101,54 @@ const Landing = () => {
       <section className="services" id="services">
         <div className="container">
           <h2>Our Services</h2>
-          <p className="section-subtitle">Awesome Features</p>
+          <p className="section-subtitle">What We Offer</p>
           
           <div className="features-grid">
             <div className="feature-card">
-              <h3>We Are Reliable</h3>
+              <h3>Web Development</h3>
               <p>
-                XTES is a fully optimized platform for reliability and dependability. 
-                You get 100% value for any transaction you carry with us.
+                Custom web applications built with modern technologies. 
+                We create responsive, scalable, and secure web solutions tailored to your business needs.
               </p>
             </div>
 
             <div className="feature-card">
-              <h3>We Are Automated</h3>
+              <h3>Mobile App Development</h3>
               <p>
-                We use cutting-edge technology to run our service. Our data delivery and 
-                wallet funding is automated. Airtime topup and data purchase are delivered instantly.
+                Native and cross-platform mobile applications for iOS and Android. 
+                We deliver high-performance apps with seamless user experiences.
               </p>
             </div>
 
             <div className="feature-card">
-              <h3>Customer Support</h3>
+              <h3>Software Development</h3>
               <p>
-                Our customer service is just a click away. Don't hesitate to consult us on anything. 
-                All transactions are attended to within 5-15 mins.
+                Enterprise software solutions and custom applications. 
+                We build robust systems that streamline your business operations and drive growth.
+              </p>
+            </div>
+
+            <div className="feature-card">
+              <h3>Web Design</h3>
+              <p>
+                Beautiful, user-friendly designs that convert visitors into customers. 
+                We create engaging interfaces that reflect your brand identity.
+              </p>
+            </div>
+
+            <div className="feature-card">
+              <h3>IT Consulting</h3>
+              <p>
+                Strategic technology guidance for your business. 
+                We help you make informed decisions about your IT infrastructure and digital transformation.
+              </p>
+            </div>
+
+            <div className="feature-card">
+              <h3>Technical Support</h3>
+              <p>
+                Reliable ongoing support and maintenance for your digital products. 
+                Our team ensures your systems run smoothly 24/7.
               </p>
             </div>
           </div>
@@ -134,55 +158,72 @@ const Landing = () => {
       {/* Become Agent Section */}
       <section className="become-agent">
         <div className="container">
-          <h2>Become An Agent</h2>
+          <h2>Partner With Us</h2>
           <p>
-            Join our network of outstanding entrepreneurs partnering with XTES. 
-            Bring the 'easy-payments' experience closer to your network and earn a commission 
-            for every transaction you perform for your customers.
+            Join our network of technology partners and resellers. 
+            We offer white-label solutions and partnership opportunities for agencies and businesses 
+            looking to expand their service offerings.
           </p>
-          <button className="cta-button" onClick={() => setShowSignupModal(true)}>Join Now</button>
+          <button className="cta-button" onClick={() => setShowSignupModal(true)}>Become a Partner</button>
         </div>
       </section>
 
-      {/* Pricing Section */}
+      {/* Pricing Section - Now showing service packages */}
       <section className="pricing" id="pricing">
         <div className="container">
-          <h2>Pricing Plans</h2>
-          <p className="section-subtitle">Valuable Data Plan And Prices</p>
+          <h2>Service Packages</h2>
+          <p className="section-subtitle">Flexible Solutions For Every Business</p>
           
-          <div className="network-tabs">
-            {Object.keys(pricingData).map((network) => (
-              <button
-                key={network}
-                className={`tab ${activeNetwork === network ? 'active' : ''}`}
-                onClick={() => setActiveNetwork(network)}
-              >
-                {network}
-              </button>
-            ))}
+          <div className="pricing-grid" style={{gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))'}}>
+            <div className="price-card">
+              <div className="data-amount">Starter</div>
+              <div className="price">From ₦150,000</div>
+              <div className="duration">Basic Website</div>
+              <p style={{fontSize: '14px', marginTop: '10px', color: '#666'}}>
+                Perfect for small businesses and startups
+              </p>
+            </div>
+            <div className="price-card">
+              <div className="data-amount">Professional</div>
+              <div className="price">From ₦500,000</div>
+              <div className="duration">Web Application</div>
+              <p style={{fontSize: '14px', marginTop: '10px', color: '#666'}}>
+                Custom web apps with advanced features
+              </p>
+            </div>
+            <div className="price-card">
+              <div className="data-amount">Enterprise</div>
+              <div className="price">From ₦1,500,000</div>
+              <div className="duration">Full Solution</div>
+              <p style={{fontSize: '14px', marginTop: '10px', color: '#666'}}>
+                Complete software systems and integrations
+              </p>
+            </div>
+            <div className="price-card">
+              <div className="data-amount">Mobile App</div>
+              <div className="price">From ₦800,000</div>
+              <div className="duration">iOS & Android</div>
+              <p style={{fontSize: '14px', marginTop: '10px', color: '#666'}}>
+                Native or cross-platform mobile apps
+              </p>
+            </div>
           </div>
-
-          <div className="pricing-grid">
-            {pricingData[activeNetwork].map((plan, index) => (
-              <div key={index} className="price-card">
-                <div className="data-amount">{plan.data}</div>
-                <div className="price">{plan.price}</div>
-                <div className="duration">{plan.duration}</div>
-              </div>
-            ))}
-          </div>
+          <p style={{textAlign: 'center', marginTop: '30px', color: '#666'}}>
+            All packages include consultation, development, testing, and deployment. 
+            Contact us for a custom quote based on your specific requirements.
+          </p>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="final-cta">
         <div className="container">
-          <h2>Get started with XTES today</h2>
+          <h2>Ready to Transform Your Business?</h2>
           <p>
-            We offer instant recharge of Airtime, Data bundle, CableTV (DStv, GOtv & Startimes), 
-            Electricity Bill Payment and more.
+            Let's build something amazing together. Contact us today for a free consultation 
+            and discover how our technology solutions can help your business grow.
           </p>
-          <button className="cta-button" onClick={() => setShowSignupModal(true)}>Start Now</button>
+          <button className="cta-button" onClick={() => setShowSignupModal(true)}>Get a Free Quote</button>
         </div>
       </section>
 
@@ -212,7 +253,7 @@ const Landing = () => {
               <>
                 <button className="modal-close" onClick={() => setShowSignupModal(false)}>×</button>
                 <h2>Get Started with XTES</h2>
-                <p className="modal-subtitle">Fill in your details and our sales team will reach out to you</p>
+                <p className="modal-subtitle">Tell us about your project and we'll get back to you within 24 hours</p>
                 <form onSubmit={handleSubmit}>
                   <input
                     type="text"
@@ -241,7 +282,7 @@ const Landing = () => {
                   <input
                     type="text"
                     name="businessName"
-                    placeholder="Business Name (Optional)"
+                    placeholder="Company/Project Name"
                     value={formData.businessName}
                     onChange={handleInputChange}
                   />
@@ -252,7 +293,7 @@ const Landing = () => {
               <div className="success-message">
                 <div className="success-icon">✓</div>
                 <h2>Thank You!</h2>
-                <p>Someone from our sales support will reach out to you shortly.</p>
+                <p>We've received your inquiry. Our team will contact you within 24 hours to discuss your project.</p>
                 <button className="cta-button" onClick={() => {
                   setShowSignupModal(false);
                   setSubmitted(false);
