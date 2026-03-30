@@ -89,11 +89,13 @@ const Landing = () => {
           <div className="hero-content">
             <img src="/xtes-logo.jpg" alt="XTES Logo" className="hero-logo" />
             <h1>Welcome To XTES</h1>
-            <p className="hero-subtitle">
-              We provide professional Web Development, Web Design, Mobile App Development, 
-              Software Development and comprehensive IT Services for businesses of all sizes.
-            </p>
-            <button className="cta-button" onClick={() => setShowSignupModal(true)}>Contact Us</button>
+            <div className="hero-description">
+              <p className="hero-subtitle">
+                We provide professional Web Development, Web Design, Mobile App Development, 
+                Software Development and comprehensive IT Services for businesses of all sizes.
+              </p>
+              <button className="cta-button" onClick={() => setShowSignupModal(true)}>Contact Us</button>
+            </div>
           </div>
         </div>
       </section>
