@@ -93,6 +93,7 @@ const Landing = () => {
               We provide professional Web Development, Web Design, Mobile App Development, 
               Software Development and comprehensive IT Services for businesses of all sizes.
             </p>
+            <button className="cta-button" onClick={() => setShowSignupModal(true)}>Contact Us</button>
           </div>
         </div>
       </section>
