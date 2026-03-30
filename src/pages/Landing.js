@@ -80,7 +80,7 @@ const Landing = () => {
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
-          <button className="nav-cta" onClick={() => setShowSignupModal(true)}>Get Started</button>
+          <button className="nav-cta" onClick={() => setShowSignupModal(true)}>Contact Us</button>
         </div>
       </nav>
       {/* Hero Section */}
@@ -164,7 +164,7 @@ const Landing = () => {
             We offer white-label solutions and partnership opportunities for agencies and businesses 
             looking to expand their service offerings.
           </p>
-          <button className="cta-button" onClick={() => setShowSignupModal(true)}>Become a Partner</button>
+          <button className="cta-button" onClick={() => setShowSignupModal(true)}>Contact Us</button>
         </div>
       </section>
 
@@ -223,7 +223,7 @@ const Landing = () => {
             Let's build something amazing together. Contact us today for a free consultation 
             and discover how our technology solutions can help your business grow.
           </p>
-          <button className="cta-button" onClick={() => setShowSignupModal(true)}>Get a Free Quote</button>
+          <button className="cta-button" onClick={() => setShowSignupModal(true)}>Contact Us</button>
         </div>
       </section>
 
@@ -252,7 +252,7 @@ const Landing = () => {
             {!submitted ? (
               <>
                 <button className="modal-close" onClick={() => setShowSignupModal(false)}>×</button>
-                <h2>Get Started with XTES</h2>
+                <h2>Contact Us</h2>
                 <p className="modal-subtitle">Tell us about your project and we'll get back to you within 24 hours</p>
                 <form onSubmit={handleSubmit}>
                   <input
