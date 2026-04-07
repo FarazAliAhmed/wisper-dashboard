@@ -390,11 +390,29 @@ input[type="number"] {
   }
   
   .navbar-brand img {
-    width: 60px !important;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50%;
+    object-fit: cover;
   }
   
   .navbar .btn {
     padding: 0.25rem 0.5rem;
     font-size: 1.2rem;
   }
+}
+
+// Logo styling for all screens
+.navbar-brand img {
+  border-radius: 8px;
+}
+
+// Sidebar logo styling
+.sidebarArea img {
+  border-radius: 8px;
+}
+
+// Auth layout logo styling
+.text-center img {
+  border-radius: 12px;
 }
