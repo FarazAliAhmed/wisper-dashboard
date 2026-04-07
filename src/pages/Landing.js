@@ -6,39 +6,32 @@ const Landing = () => {
 
   const pricingData = {
     MTN: [
-      { data: '500MB', price: '₦450', duration: '1 Month' },
-      { data: '1GB', price: '₦700', duration: '1 Month' },
-      { data: '2GB', price: '₦1400', duration: '1 Month' },
-      { data: '3GB', price: '₦1900', duration: '1 Month' },
-      { data: '5GB', price: '₦3000', duration: '1 Month' },
+      { data: '500MB', price: '₦500', duration: '1 Month' },
+      { data: '1GB', price: '₦800', duration: '1 Month' },
+      { data: '2GB', price: '₦1500', duration: '1 Month' },
+      { data: '3GB', price: '₦2500', duration: '1 Month' },
+      { data: '5GB', price: '₦3500', duration: '1 Month' },
       { data: '10GB', price: '₦4500', duration: '1 Month' },
     ],
     GLO: [
-      { data: '200MB', price: '₦100', duration: '1 Month' },
-      { data: '500MB', price: '₦225', duration: '1 Month' },
-      { data: '1GB', price: '₦270', duration: '3 Days' },
-      { data: '2GB', price: '₦900', duration: '1 Month' },
-      { data: '3GB', price: '₦1350', duration: '1 Month' },
-      { data: '5GB', price: '₦2250', duration: '1 Month' },
-      { data: '10GB', price: '₦4500', duration: '1 Month' },
+      { data: '1GB', price: '₦400', duration: '1 Month' },
+      { data: '2GB', price: '₦800', duration: '1 Month' },
+      { data: '3GB', price: '₦1200', duration: '1 Month' },
+      { data: '5GB', price: '₦2000', duration: '1 Month' },
+      { data: '10GB', price: '₦4000', duration: '1 Month' },
     ],
     '9MOBILE': [
-      { data: '500MB', price: '₦100', duration: '1 Month' },
-      { data: '1GB', price: '₦200', duration: '1 Month' },
-      { data: '1.5GB', price: '₦950', duration: '1 Month' },
-      { data: '2GB', price: '₦400', duration: '1 Month' },
-      { data: '3GB', price: '₦600', duration: '1 Month' },
-      { data: '5GB', price: '₦1000', duration: '1 Month' },
-      { data: '10GB', price: '₦2000', duration: '1 Month' },
+      { data: '1GB', price: '₦400', duration: '1 Month' },
+      { data: '2GB', price: '₦800', duration: '1 Month' },
+      { data: '3GB', price: '₦1200', duration: '1 Month' },
+      { data: '5GB', price: '₦2000', duration: '1 Month' },
+      { data: '10GB', price: '₦4000', duration: '1 Month' },
     ],
     AIRTEL: [
-      { data: '100MB', price: '₦100', duration: '1 Month' },
-      { data: '300MB', price: '₦300', duration: '1 Month' },
-      { data: '500MB', price: '₦500', duration: '1 Month' },
-      { data: '1GB', price: '₦800', duration: '7 Days' },
-      { data: '2GB', price: '₦1500', duration: '1 Month' },
-      { data: '3GB', price: '₦2000', duration: '1 Month' },
-      { data: '4GB', price: '₦2500', duration: '1 Month' },
+      { data: '1GB', price: '₦400', duration: '1 Month' },
+      { data: '2GB', price: '₦800', duration: '1 Month' },
+      { data: '3GB', price: '₦1200', duration: '1 Month' },
+      { data: '5GB', price: '₦2000', duration: '1 Month' },
       { data: '10GB', price: '₦4000', duration: '1 Month' },
     ],
   };
@@ -59,7 +52,6 @@ const Landing = () => {
             <li><a href="#contact">Contact</a></li>
           </ul>
           <a href="/login" className="nav-cta">Login</a>
-          <button className="mobile-menu-btn">☰</button>
         </div>
       </nav>
       {/* Hero Section */}
@@ -171,21 +163,6 @@ const Landing = () => {
         <div className="container">
           <div className="footer-grid">
             <div className="footer-col">
-              <h4>XTES</h4>
-              <ul>
-                <li>About us</li>
-                <li>Contact us</li>
-                <li>FAQs</li>
-              </ul>
-            </div>
-            <div className="footer-col">
-              <h4>Legal</h4>
-              <ul>
-                <li>Terms and Condition</li>
-                <li>Privacy Policy</li>
-              </ul>
-            </div>
-            <div className="footer-col">
               <h4>Contact</h4>
               <p>5 Carricks Court, Bosmak Haven Estate,</p>
               <p>Harris Drive, Lekki, Lagos State.</p>
@@ -194,7 +171,7 @@ const Landing = () => {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>© 2026 All rights reserved. Developed by A.D.E Developers</p>
+            <p>© 2026 All rights reserved. Developed by XTES Limited</p>
           </div>
         </div>
       </footer>
