@@ -206,8 +206,7 @@ const AllocateData = () => {
                           Airtel
                         </option>
                         <option value="glo">GLO</option>
-                        <option value="mtn_sme">MTN SME</option>
-                        <option value="mtn_gifting">MTN GIFTING</option>
+                        <option value="mtn_direct">MTN DIRECT</option>
                         <option value="9mobile">9MOBILE</option>
                       </Input>
                     </FormGroup>
@@ -225,15 +224,10 @@ const AllocateData = () => {
                         <option>---Select plan---</option>
                         {dataPlans
                           .filter((singlePlan) => {
-                            if (plan.network === "mtn_gifting") {
+                            if (plan.network === "mtn_direct") {
                               return (
                                 singlePlan.network === "mtn" &&
-                                singlePlan.plan_type === "gifting"
-                              );
-                            } else if (plan.network === "mtn_sme") {
-                              return (
-                                singlePlan.network === "mtn" &&
-                                (singlePlan.plan_type === "sme" || singlePlan.plan_type === "data_transfer")
+                                singlePlan.plan_type === "direct"
                               );
                             } else {
                               return singlePlan.network === plan.network;
