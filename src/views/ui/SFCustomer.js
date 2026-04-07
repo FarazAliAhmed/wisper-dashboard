@@ -9,7 +9,7 @@ import { FiShare } from "react-icons/fi";
 import { BsChevronRight } from "react-icons/bs";
 import { IoMdCall } from "react-icons/io";
 import toast from "react-hot-toast";
-import logo from "../../assets/images/logos/wisperN.png";
+import logo from "../../assets/images/logos/xt-logo.jpg";
 import {
   Card,
   CardBody,

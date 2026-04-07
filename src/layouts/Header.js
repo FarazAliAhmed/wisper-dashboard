@@ -13,7 +13,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "reactstrap";
-import wisperSmall from "../assets/images/logos/wisper-white.png";
+import xtLogo from "../assets/images/logos/xt-logo.jpg";
 import user1 from "../assets/images/users/user1.jpg";
 import { useUser } from "../context/userContext";
 import warning from "../assets/images/logos/warning.png";
@@ -55,7 +55,7 @@ const Header = ({ isAdmin }) => {
     <Navbar color={isAdmin ? "danger" : "primary"} dark expand="xs">
       <div className="d-flex align-items-center">
         <NavbarBrand href="/" className="d-lg-none">
-          <img src={wisperSmall} width={80} alt="wisper logo" />
+          <img src={xtLogo} width={80} alt="XT logo" />
         </NavbarBrand>
         <Button
           color={isAdmin ? "danger" : "primary"}

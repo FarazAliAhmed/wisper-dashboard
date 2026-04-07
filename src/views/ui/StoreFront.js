@@ -19,7 +19,7 @@ import {
 
 import "../../assets/scss/custom.scss";
 import { Link } from "react-router-dom";
-import logo from "../../assets/images/logos/wisperN.png";
+import logo from "../../assets/images/logos/xt-logo.jpg";
 import { FiShare } from "react-icons/fi";
 
 import TopCards from "../../components/dashboard/TopCards";

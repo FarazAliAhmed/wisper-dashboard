@@ -10,7 +10,7 @@ import {
   // NavLink,
   Button,
 } from "reactstrap";
-import wisperLogo from "../assets/images/logos/wisper.png";
+import xtLogo from "../assets/images/logos/xt-logo.jpg";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +22,7 @@ const Navigation = () => {
     <div className="m-auto">
       <Navbar color="light" expand="md" light>
         <NavbarBrand href="/">
-          <img src={wisperLogo} width={100} alt="wisper" />
+          <img src={xtLogo} width={100} alt="XT" />
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
