@@ -30,8 +30,9 @@ const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
   const isExpired = isTokenExpired(jwtToken);
 
   console.log(isExpired, "jwt");
+  const currentUser = auth.getCurrentUser();
   const [account, setAccount] = useState({
-    email: auth.getCurrentUser().email,
+    email: currentUser?.email || "",
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -39,7 +40,8 @@ const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
   const [modalValueState, setModalValueState] = useState(1);
 
   useEffect(() => {
-    if (!auth.getCurrentUser().confirmed) {
+    const user = auth.getCurrentUser();
+    if (user && !user.confirmed) {
       setModalState(true);
     }
     // if (isExpired) {
