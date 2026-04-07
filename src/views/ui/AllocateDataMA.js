@@ -204,7 +204,7 @@ const AllocateDataMA = () => {
                               key={`${filteredPlan.network}-${filteredPlan.dataId}`}
                               value={filteredPlan.dataId}
                             >
-                              {filteredPlan.size} ({filteredPlan.duration})
+                              {filteredPlan.size} - ₦{filteredPlan.price} ({filteredPlan.duration})
                             </option>
                           ))}
                       </Input>
