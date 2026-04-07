@@ -3,28 +3,6 @@ import '../assets/css/landing.css';
 
 const Landing = () => {
   const [activeNetwork, setActiveNetwork] = useState('MTN');
-  const [showSignupModal, setShowSignupModal] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    businessName: ''
-  });
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Here you can add API call to save the data
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-  };
 
   const pricingData = {
     MTN: [
@@ -80,7 +58,8 @@ const Landing = () => {
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
-          <button className="nav-cta" onClick={() => setShowSignupModal(true)}>Contact Us</button>
+          <a href="/login" className="nav-cta">Login</a>
+          <button className="mobile-menu-btn">☰</button>
         </div>
       </nav>
       {/* Hero Section */}
@@ -89,13 +68,11 @@ const Landing = () => {
           <div className="hero-content">
             <img src="/xtes-logo.jpg" alt="XTES Logo" className="hero-logo" />
             <h1>Welcome To XTES</h1>
-            <div className="hero-description">
-              <p className="hero-subtitle">
-                We provide professional Web Development, Web Design, Mobile App Development, 
-                Software Development and comprehensive IT Services for businesses of all sizes.
-              </p>
-              <button className="cta-button" onClick={() => setShowSignupModal(true)}>Contact Us</button>
-            </div>
+            <p className="hero-subtitle">
+              We are a registered telecommunication company that provides voice and data transmission services, 
+              including Mobile Data and Airtime (VTU).
+            </p>
+            <button className="cta-button">Get Started</button>
           </div>
         </div>
       </section>
@@ -104,54 +81,30 @@ const Landing = () => {
       <section className="services" id="services">
         <div className="container">
           <h2>Our Services</h2>
-          <p className="section-subtitle">What We Offer</p>
+          <p className="section-subtitle">Awesome Features</p>
           
           <div className="features-grid">
             <div className="feature-card">
-              <h3>Web Development</h3>
+              <h3>We Are Reliable</h3>
               <p>
-                Custom web applications built with modern technologies. 
-                We create responsive, scalable, and secure web solutions tailored to your business needs.
+                XTES is a fully optimized platform for reliability and dependability. 
+                You get 100% value for any transaction you carry with us.
               </p>
             </div>
 
             <div className="feature-card">
-              <h3>Mobile App Development</h3>
+              <h3>We Are Automated</h3>
               <p>
-                Native and cross-platform mobile applications for iOS and Android. 
-                We deliver high-performance apps with seamless user experiences.
+                We use cutting-edge technology to run our service. Our data delivery and 
+                wallet funding is automated. Airtime topup and data purchase are delivered instantly.
               </p>
             </div>
 
             <div className="feature-card">
-              <h3>Software Development</h3>
+              <h3>Customer Support</h3>
               <p>
-                Enterprise software solutions and custom applications. 
-                We build robust systems that streamline your business operations and drive growth.
-              </p>
-            </div>
-
-            <div className="feature-card">
-              <h3>Web Design</h3>
-              <p>
-                Beautiful, user-friendly designs that convert visitors into customers. 
-                We create engaging interfaces that reflect your brand identity.
-              </p>
-            </div>
-
-            <div className="feature-card">
-              <h3>IT Consulting</h3>
-              <p>
-                Strategic technology guidance for your business. 
-                We help you make informed decisions about your IT infrastructure and digital transformation.
-              </p>
-            </div>
-
-            <div className="feature-card">
-              <h3>Technical Support</h3>
-              <p>
-                Reliable ongoing support and maintenance for your digital products. 
-                Our team ensures your systems run smoothly 24/7.
+                Our customer service is just a click away. Don't hesitate to consult us on anything. 
+                All transactions are attended to within 5-15 mins.
               </p>
             </div>
           </div>
@@ -161,72 +114,55 @@ const Landing = () => {
       {/* Become Agent Section */}
       <section className="become-agent">
         <div className="container">
-          <h2>Partner With Us</h2>
+          <h2>Become An Agent</h2>
           <p>
-            Join our network of technology partners and resellers. 
-            We offer white-label solutions and partnership opportunities for agencies and businesses 
-            looking to expand their service offerings.
+            Join our network of outstanding entrepreneurs partnering with XTES. 
+            Bring the 'easy-payments' experience closer to your network and earn a commission 
+            for every transaction you perform for your customers.
           </p>
-          <button className="cta-button" onClick={() => setShowSignupModal(true)}>Contact Us</button>
+          <button className="cta-button">Join Now</button>
         </div>
       </section>
 
-      {/* Pricing Section - Now showing service packages */}
+      {/* Pricing Section */}
       <section className="pricing" id="pricing">
         <div className="container">
-          <h2>Service Packages</h2>
-          <p className="section-subtitle">Flexible Solutions For Every Business</p>
+          <h2>Pricing Plans</h2>
+          <p className="section-subtitle">Valuable Data Plan And Prices</p>
           
-          <div className="pricing-grid" style={{gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))'}}>
-            <div className="price-card">
-              <div className="data-amount">Starter</div>
-              <div className="price">From ₦150,000</div>
-              <div className="duration">Basic Website</div>
-              <p style={{fontSize: '14px', marginTop: '10px', color: '#666'}}>
-                Perfect for small businesses and startups
-              </p>
-            </div>
-            <div className="price-card">
-              <div className="data-amount">Professional</div>
-              <div className="price">From ₦500,000</div>
-              <div className="duration">Web Application</div>
-              <p style={{fontSize: '14px', marginTop: '10px', color: '#666'}}>
-                Custom web apps with advanced features
-              </p>
-            </div>
-            <div className="price-card">
-              <div className="data-amount">Enterprise</div>
-              <div className="price">From ₦1,500,000</div>
-              <div className="duration">Full Solution</div>
-              <p style={{fontSize: '14px', marginTop: '10px', color: '#666'}}>
-                Complete software systems and integrations
-              </p>
-            </div>
-            <div className="price-card">
-              <div className="data-amount">Mobile App</div>
-              <div className="price">From ₦800,000</div>
-              <div className="duration">iOS & Android</div>
-              <p style={{fontSize: '14px', marginTop: '10px', color: '#666'}}>
-                Native or cross-platform mobile apps
-              </p>
-            </div>
+          <div className="network-tabs">
+            {Object.keys(pricingData).map((network) => (
+              <button
+                key={network}
+                className={`tab ${activeNetwork === network ? 'active' : ''}`}
+                onClick={() => setActiveNetwork(network)}
+              >
+                {network}
+              </button>
+            ))}
           </div>
-          <p style={{textAlign: 'center', marginTop: '30px', color: '#666'}}>
-            All packages include consultation, development, testing, and deployment. 
-            Contact us for a custom quote based on your specific requirements.
-          </p>
+
+          <div className="pricing-grid">
+            {pricingData[activeNetwork].map((plan, index) => (
+              <div key={index} className="price-card">
+                <div className="data-amount">{plan.data}</div>
+                <div className="price">{plan.price}</div>
+                <div className="duration">{plan.duration}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="final-cta">
         <div className="container">
-          <h2>Ready to Transform Your Business?</h2>
+          <h2>Get started with XTES today</h2>
           <p>
-            Let's build something amazing together. Contact us today for a free consultation 
-            and discover how our technology solutions can help your business grow.
+            We offer instant recharge of Airtime, Data bundle, CableTV (DStv, GOtv & Startimes), 
+            Electricity Bill Payment and more.
           </p>
-          <button className="cta-button" onClick={() => setShowSignupModal(true)}>Contact Us</button>
+          <button className="cta-button">Start Now</button>
         </div>
       </section>
 
@@ -234,6 +170,21 @@ const Landing = () => {
       <footer className="footer" id="contact">
         <div className="container">
           <div className="footer-grid">
+            <div className="footer-col">
+              <h4>XTES</h4>
+              <ul>
+                <li>About us</li>
+                <li>Contact us</li>
+                <li>FAQs</li>
+              </ul>
+            </div>
+            <div className="footer-col">
+              <h4>Legal</h4>
+              <ul>
+                <li>Terms and Condition</li>
+                <li>Privacy Policy</li>
+              </ul>
+            </div>
             <div className="footer-col">
               <h4>Contact</h4>
               <p>5 Carricks Court, Bosmak Haven Estate,</p>
@@ -243,70 +194,10 @@ const Landing = () => {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>© 2026 All rights reserved. Developed by XTES Limited</p>
+            <p>© 2026 All rights reserved. Developed by A.D.E Developers</p>
           </div>
         </div>
       </footer>
-
-      {/* Signup Modal */}
-      {showSignupModal && (
-        <div className="modal-overlay" onClick={() => setShowSignupModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            {!submitted ? (
-              <>
-                <button className="modal-close" onClick={() => setShowSignupModal(false)}>×</button>
-                <h2>Contact Us</h2>
-                <p className="modal-subtitle">Tell us about your project and we'll get back to you within 24 hours</p>
-                <form onSubmit={handleSubmit}>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Full Name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                  />
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email Address"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                  />
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="Phone Number"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                  />
-                  <input
-                    type="text"
-                    name="businessName"
-                    placeholder="Company/Project Name"
-                    value={formData.businessName}
-                    onChange={handleInputChange}
-                  />
-                  <button type="submit" className="submit-button">Submit</button>
-                </form>
-              </>
-            ) : (
-              <div className="success-message">
-                <div className="success-icon">✓</div>
-                <h2>Thank You!</h2>
-                <p>We've received your inquiry. Our team will contact you within 24 hours to discuss your project.</p>
-                <button className="cta-button" onClick={() => {
-                  setShowSignupModal(false);
-                  setSubmitted(false);
-                  setFormData({ name: '', email: '', phone: '', businessName: '' });
-                }}>Close</button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 };

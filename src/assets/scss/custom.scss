@@ -390,8 +390,8 @@ input[type="number"] {
   }
   
   .navbar-brand img {
-    width: 50px !important;
-    height: 50px !important;
+    width: 45px !important;
+    height: 45px !important;
     border-radius: 50%;
     object-fit: cover;
   }
@@ -412,9 +412,28 @@ input[type="number"] {
   border-radius: 8px;
 }
 
-// Auth layout logo styling
+// Auth layout logo styling - reduce size significantly
 .text-center img {
   border-radius: 12px;
+  max-width: 55px !important;
+  
+  @media (max-width: 768px) {
+    max-width: 35px !important;
+  }
+}
+
+// Change auth page text colors to blue
+.auth-wrapper h4,
+.auth-wrapper h5 {
+  color: #0579c9 !important;
+}
+
+.auth-wrapper a {
+  color: #0579c9 !important;
+  
+  &:hover {
+    color: #0461a3 !important;
+  }
 }
 
 

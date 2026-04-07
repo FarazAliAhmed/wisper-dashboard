@@ -24,17 +24,15 @@
   top: 0;
   z-index: 1000;
   border-bottom: 1px solid #222;
-  width: 100%;
 }
 
 .nav-container {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 40px;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 20px;
 }
 
 .nav-logo {
@@ -58,7 +56,6 @@
   display: flex;
   gap: 30px;
   list-style: none;
-  justify-content: center;
 }
 
 .nav-links a {
@@ -80,7 +77,6 @@
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s;
-  white-space: nowrap;
 }
 
 .nav-cta:hover {
@@ -90,18 +86,21 @@
 
 .mobile-menu-btn {
   display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 /* Hero Section */
 .hero {
   background: #000;
   color: white;
-  padding: 120px 20px 100px;
+  padding: 120px 20px 80px;
   text-align: center;
   position: relative;
-  overflow: visible;
-  z-index: 2;
-  margin-bottom: 80px;
+  overflow: hidden;
 }
 
 .hero::before {
@@ -113,12 +112,11 @@
   bottom: 0;
   background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
   pointer-events: none;
-  z-index: 0;
 }
 
 .hero-content {
   position: relative;
-  z-index: 3;
+  z-index: 1;
 }
 
 .hero-logo {
@@ -139,17 +137,12 @@
 
 .hero-subtitle {
   font-size: 1.3rem;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
   line-height: 1.8;
   color: #ccc;
-}
-
-.hero-description {
-  max-width: 700px;
-  margin: 0 auto;
 }
 
 .cta-button {
@@ -162,9 +155,6 @@
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s;
-  position: relative;
-  z-index: 100;
-  margin-top: 20px;
 }
 
 .cta-button:hover {
@@ -177,8 +167,6 @@
 .services {
   padding: 80px 20px;
   background: #0a0a0a;
-  position: relative;
-  z-index: 1;
 }
 
 .services h2 {
@@ -364,19 +352,15 @@
 
 .footer-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 60px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
   margin-bottom: 40px;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .footer-col h4 {
   margin-bottom: 20px;
   color: white;
   font-size: 1.2rem;
-  font-weight: 600;
 }
 
 .footer-col ul {
@@ -384,11 +368,10 @@
 }
 
 .footer-col li {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   color: #888;
   cursor: pointer;
   transition: color 0.3s;
-  font-size: 0.95rem;
 }
 
 .footer-col li:hover {
@@ -399,7 +382,6 @@
   color: #888;
   line-height: 1.8;
   margin-bottom: 8px;
-  font-size: 0.95rem;
 }
 
 .footer-bottom {
@@ -407,17 +389,10 @@
   padding-top: 20px;
   border-top: 1px solid #222;
   color: #666;
-  font-size: 0.9rem;
 }
 
 /* Responsive */
-@media (max-width: 968px) {
-  .nav-container {
-    grid-template-columns: auto 1fr;
-    gap: 20px;
-    padding: 0 20px;
-  }
-  
+@media (max-width: 768px) {
   .nav-links {
     display: none;
   }
@@ -426,13 +401,6 @@
     display: block;
   }
   
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-}
-
-@media (max-width: 768px) {
   .hero h1 {
     font-size: 2rem;
   }
@@ -452,501 +420,8 @@
   .pricing-grid {
     grid-template-columns: 1fr;
   }
-}
-
-/* Modal */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  padding: 20px;
-}
-
-.modal-content {
-  background: #111;
-  padding: 40px;
-  border-radius: 10px;
-  max-width: 500px;
-  width: 100%;
-  position: relative;
-  border: 1px solid #333;
-}
-
-.modal-close {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  color: #888;
-  font-size: 2rem;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.modal-close:hover {
-  color: white;
-}
-
-.modal-content h2 {
-  color: white;
-  margin-bottom: 10px;
-  font-size: 2rem;
-}
-
-.modal-subtitle {
-  color: #888;
-  margin-bottom: 30px;
-  font-size: 0.95rem;
-}
-
-.modal-content form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.modal-content input {
-  padding: 15px;
-  border: 1px solid #333;
-  background: #000;
-  color: white;
-  border-radius: 5px;
-  font-size: 1rem;
-  transition: border-color 0.3s;
-}
-
-.modal-content input:focus {
-  outline: none;
-  border-color: #666;
-}
-
-.modal-content input::placeholder {
-  color: #666;
-}
-
-.submit-button {
-  background: white;
-  color: #000;
-  border: none;
-  padding: 15px;
-  font-size: 1.1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s;
-  margin-top: 10px;
-}
-
-.submit-button:hover {
-  background: #f0f0f0;
-  transform: translateY(-2px);
-}
-
-.success-message {
-  text-align: center;
-  padding: 20px;
-}
-
-.success-icon {
-  width: 80px;
-  height: 80px;
-  background: #22c55e;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-  color: white;
-  margin: 0 auto 20px;
-}
-
-.success-message h2 {
-  color: white;
-  margin-bottom: 15px;
-}
-
-.success-message p {
-  color: #aaa;
-  margin-bottom: 30px;
-  line-height: 1.6;
-}
-
-@media (max-width: 500px) {
-  .modal-content {
-    padding: 30px 20px;
+  
+  .footer-grid {
+    grid-template-columns: 1fr;
   }
-}
-
-/* Modal Styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  padding: 20px;
-}
-
-.modal-content {
-  background: #111;
-  padding: 40px;
-  border-radius: 10px;
-  max-width: 500px;
-  width: 100%;
-  position: relative;
-  border: 1px solid #333;
-}
-
-.modal-close {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  color: #888;
-  font-size: 2rem;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.modal-close:hover {
-  color: white;
-}
-
-.modal-content h2 {
-  color: white;
-  margin-bottom: 10px;
-  font-size: 1.8rem;
-}
-
-.modal-subtitle {
-  color: #888;
-  margin-bottom: 30px;
-  font-size: 0.95rem;
-}
-
-.modal-content form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.modal-content input {
-  padding: 15px;
-  border: 1px solid #333;
-  background: #000;
-  color: white;
-  border-radius: 5px;
-  font-size: 1rem;
-  transition: border-color 0.3s;
-}
-
-.modal-content input:focus {
-  outline: none;
-  border-color: #666;
-}
-
-.submit-button {
-  background: white;
-  color: #000;
-  border: none;
-  padding: 15px;
-  border-radius: 5px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  margin-top: 10px;
-}
-
-.submit-button:hover {
-  background: #f0f0f0;
-  transform: translateY(-2px);
-}
-
-.success-message {
-  text-align: center;
-  padding: 20px;
-}
-
-.success-icon {
-  width: 80px;
-  height: 80px;
-  background: #4caf50;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-  color: white;
-  margin: 0 auto 20px;
-}
-
-.success-message h2 {
-  color: white;
-  margin-bottom: 15px;
-}
-
-.success-message p {
-  color: #888;
-  margin-bottom: 30px;
-  line-height: 1.6;
-}
-
-/* Modal Styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-  padding: 20px;
-}
-
-.modal-content {
-  background: #111;
-  border: 1px solid #333;
-  border-radius: 10px;
-  padding: 40px;
-  max-width: 500px;
-  width: 100%;
-  position: relative;
-  color: white;
-}
-
-.modal-close {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  color: #888;
-  font-size: 2rem;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.modal-close:hover {
-  color: white;
-}
-
-.modal-content h2 {
-  margin-bottom: 10px;
-  font-size: 2rem;
-}
-
-.modal-subtitle {
-  color: #888;
-  margin-bottom: 30px;
-  font-size: 0.95rem;
-}
-
-.modal-content form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.modal-content input {
-  padding: 15px;
-  background: #000;
-  border: 1px solid #333;
-  border-radius: 5px;
-  color: white;
-  font-size: 1rem;
-  transition: border-color 0.3s;
-}
-
-.modal-content input:focus {
-  outline: none;
-  border-color: #666;
-}
-
-.modal-content input::placeholder {
-  color: #666;
-}
-
-.submit-button {
-  background: white;
-  color: #000;
-  border: none;
-  padding: 15px;
-  border-radius: 5px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  margin-top: 10px;
-}
-
-.submit-button:hover {
-  background: #f0f0f0;
-  transform: translateY(-2px);
-}
-
-.success-message {
-  text-align: center;
-  padding: 20px;
-}
-
-.success-icon {
-  width: 80px;
-  height: 80px;
-  background: #22c55e;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-  color: white;
-  margin: 0 auto 20px;
-}
-
-.success-message h2 {
-  margin-bottom: 15px;
-}
-
-.success-message p {
-  color: #aaa;
-  margin-bottom: 30px;
-  line-height: 1.6;
-}
-
-/* Modal Styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  padding: 20px;
-}
-
-.modal-content {
-  background: #111;
-  padding: 40px;
-  border-radius: 10px;
-  max-width: 500px;
-  width: 100%;
-  position: relative;
-  border: 1px solid #333;
-}
-
-.modal-close {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  color: #888;
-  font-size: 2rem;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.modal-close:hover {
-  color: white;
-}
-
-.modal-content h2 {
-  color: white;
-  margin-bottom: 10px;
-  font-size: 2rem;
-}
-
-.modal-subtitle {
-  color: #888;
-  margin-bottom: 30px;
-  font-size: 0.95rem;
-}
-
-.modal-content form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.modal-content input {
-  padding: 15px;
-  border: 1px solid #333;
-  background: #000;
-  color: white;
-  border-radius: 5px;
-  font-size: 1rem;
-  transition: border-color 0.3s;
-}
-
-.modal-content input:focus {
-  outline: none;
-  border-color: #666;
-}
-
-.submit-button {
-  background: white;
-  color: #000;
-  border: none;
-  padding: 15px;
-  border-radius: 5px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  margin-top: 10px;
-}
-
-.submit-button:hover {
-  background: #f0f0f0;
-  transform: translateY(-2px);
-}
-
-.success-message {
-  text-align: center;
-  padding: 20px;
-}
-
-.success-icon {
-  width: 80px;
-  height: 80px;
-  background: #4caf50;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-  color: white;
-  margin: 0 auto 20px;
-}
-
-.success-message h2 {
-  color: white;
-  margin-bottom: 15px;
-}
-
-.success-message p {
-  color: #888;
-  margin-bottom: 30px;
-  line-height: 1.6;
 }
