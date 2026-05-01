@@ -16,9 +16,8 @@ import {
 
 import AdminLayout from "../../layouts/AdminLayout";
 import {
-  adminMonifyCreditPurchase,
-  adminMonifyDebitPurchase,
-  adminMonifyPurchase,
+  adminPaymentPointCreditPurchase,
+  adminPaymentPointDebitPurchase,
   creditBusiness,
   debitBusiness,
   generateCreditPayment,
@@ -94,7 +93,7 @@ const AllocateData = () => {
 
         setIsSuccess(true);
         if (values.action_type === "credit") {
-          const genCred = await adminMonifyCreditPurchase({
+          const genCred = await adminPaymentPointCreditPurchase({
             business_id: values.business_id,
             amount: values.amount,
           });
@@ -114,7 +113,7 @@ const AllocateData = () => {
 
           // const val_MB = values.amount * 1000;
 
-          const debCred = await adminMonifyDebitPurchase({
+          const debCred = await adminPaymentPointDebitPurchase({
             business_id: values.business_id,
             amount: values.amount,
           });

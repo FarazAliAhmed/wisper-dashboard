@@ -34,6 +34,7 @@ const BuyBulkData = lazy(() => import("../views/ui/BuyBulkData"));
 const BuyBulkDataGLO = lazy(() => import("../views/ui/BuyBulkDataGLO"));
 const BucketHistory = lazy(() => import("../views/ui/BucketHistory.js"));
 const MonifyWallet = lazy(() => import("../views/ui/MonifyWallet.js"));
+const PaymentPointWallet = lazy(() => import("../views/ui/PaymentPointWallet.js"));
 const StoreFront = lazy(() => import("../views/ui/StoreFront.js"));
 const EditStoreFront = lazy(() => import("../views/ui/EditStoreFront.js"));
 const MegaFunding = lazy(() => import("../views/ui/MegaFunding"));
@@ -149,6 +150,7 @@ const Routes = () => {
           <Route path="/sf/:storeUserName" component={SFCustomer} />
 
           <ProtectedRoute path="/monifyWallet" component={MonifyWallet} />
+          <ProtectedRoute path="/paymentpointWallet" component={PaymentPointWallet} />
           <ProtectedRoute path="/storeFront" component={StoreFront} />
           <ProtectedRoute path="/editStoreFront" component={EditStoreFront} />
 

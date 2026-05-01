@@ -134,7 +134,7 @@ export const getAllWalletTransactions = async (
   { limit, offset, userId } = { limit: 50, offset: 0 }
 ) => {
   try {
-    const res = await http.get(`${apiUrl}/monnifyGetAll?limit=${limit}`);
+    const res = await http.get(`${apiUrl}/api/paymentpoint/admin/history?limit=${limit}`);
     return res.data;
   } catch (e) {
     return null;
@@ -182,9 +182,9 @@ export const generateCreditPayment = async (body) => {
   }
 };
 
-export const adminMonifyCreditPurchase = async (body) => {
+export const adminPaymentPointCreditPurchase = async (body) => {
   try {
-    const res = await http.post(`${adminUrl}/monnifyAdminAddBalance`, body);
+    const res = await http.post(`${adminUrl}/api/paymentpoint/admin/credit`, body);
 
     return res;
   } catch (e) {
@@ -192,9 +192,9 @@ export const adminMonifyCreditPurchase = async (body) => {
   }
 };
 
-export const adminMonifyDebitPurchase = async (body) => {
+export const adminPaymentPointDebitPurchase = async (body) => {
   try {
-    const res = await http.post(`${adminUrl}/monnifyAdminDebitBalance`, body);
+    const res = await http.post(`${adminUrl}/api/paymentpoint/admin/debit`, body);
 
     return res;
   } catch (e) {

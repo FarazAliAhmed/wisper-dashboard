@@ -164,8 +164,8 @@ const Landing = () => {
           <div className="footer-grid">
             <div className="footer-col">
               <h4>Contact</h4>
-              <p>5 Carricks Court, Bosmak Haven Estate,</p>
-              <p>Harris Drive, Lekki, Lagos State.</p>
+              <p>5 Kasumu Ekemode Street,</p>
+              <p>Victoria Island, Lagos State.</p>
               <p>+2347074728048</p>
               <p>Support@xtes.app</p>
             </div>

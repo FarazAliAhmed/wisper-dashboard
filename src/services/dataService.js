@@ -489,12 +489,12 @@ export async function getAgentsTransactions({ userId }) {
   }
 }
 
-export async function getMonifyTransactions(
+export async function getPaymentPointTransactions(
   { limit, offset, userId } = { limit: 50, offset: 0 }
 ) {
   try {
     const transactions = await http.get(
-      `${apiUrl}/getMonnifyTrx/${userId}?limit=${limit}`
+      `${apiUrl}/api/paymentpoint/history?userId=${userId}&limit=${limit}`
     );
     return transactions.data;
   } catch (error) {
@@ -502,13 +502,13 @@ export async function getMonifyTransactions(
   }
 }
 
-export async function PurchaseMonifyTransactions(
+export async function PurchasePaymentPointTransactions(
   filter,
   { limit, offset, userId } = { limit: 50, offset: 0 }
 ) {
   try {
     const transactions = await http.get(
-      `${apiUrl}/getMonnifyTrx/${userId}?limit=${limit}`
+      `${apiUrl}/api/paymentpoint/history?userId=${userId}&limit=${limit}`
     );
     return transactions.data;
   } catch (error) {

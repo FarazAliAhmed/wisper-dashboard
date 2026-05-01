@@ -6,8 +6,8 @@ import {
   FilterTransactionsV2,
   getMegaPurchaseTransactions,
   PurchaseMegaPriceTransactions,
-  getMonifyTransactions,
-  PurchaseMonifyTransactions,
+  getPaymentPointTransactions,
+  PurchasePaymentPointTransactions,
 } from "../services/dataService";
 import {
   Form,
@@ -111,7 +111,7 @@ const AdminMonifyHistory = ({ businessId }) => {
       if (!loading) {
         setLoading(true);
         const cFilter = cleanFilter(filter);
-        const resp = await PurchaseMonifyTransactions(cFilter, pagination);
+        const resp = await PurchasePaymentPointTransactions(cFilter, pagination);
         setTransactions(resp);
         setLoading(false);
         setIsOpen(false);
@@ -137,7 +137,7 @@ const AdminMonifyHistory = ({ businessId }) => {
     } else {
       if (!loading) {
         setLoading(true);
-        const resp = await getMonifyTransactions(pagination);
+        const resp = await getPaymentPointTransactions(pagination);
         setTransactions(resp);
         setLoading(false);
       }

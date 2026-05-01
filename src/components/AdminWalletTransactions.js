@@ -6,8 +6,8 @@ import {
   FilterTransactionsV2,
   getMegaPurchaseTransactions,
   PurchaseMegaPriceTransactions,
-  getMonifyTransactions,
-  PurchaseMonifyTransactions,
+  getPaymentPointTransactions,
+  PurchasePaymentPointTransactions,
 } from "../services/dataService";
 import {
   Form,

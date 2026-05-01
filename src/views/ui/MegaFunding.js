@@ -23,7 +23,6 @@ import { handleFailedRequest, parseDataPlans } from "../../utils";
 import sterling_logo from "../../assets/images/logos/Sterling_Bank_Logo_Straight.png";
 import wema_logo from "../../assets/images/logos/Wema-Bank.png";
 import moniepoint_logo from "../../assets/images/logos/Moniepoint-Logo.png";
-import monnify from "../../assets/images/logos/site-logo.svg";
 import { toast } from "react-hot-toast";
 
 // import dataPlans from "../../utils/plansTable";
@@ -49,7 +48,6 @@ const AllocateDataMA = () => {
         <Card body>
           <Row>
             <Row form>{/* <Col md={12}></Col> */}</Row>
-            {/* <img className="monnify__logo" src={monnify} /> */}
             <p>
               To add funds, make a payment to this dedicated account. Your
               wallet will be automatically credited.
@@ -90,7 +88,7 @@ const AllocateDataMA = () => {
                             alignItems: "center",
                           }}
                         >
-                          <b>Account Name:</b> &nbsp;MFY / Wisper Media Solutions
+                          <b>Account Name:</b> &nbsp;PaymentPoint / Wisper Media Solutions
                           Limited-{item.accountName}
                         </div>
                         <div
