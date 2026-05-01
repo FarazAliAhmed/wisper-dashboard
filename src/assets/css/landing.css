@@ -100,11 +100,11 @@
 .hero {
   background: #000;
   color: white;
-  padding: 120px 20px 120px;
+  padding: 120px 20px 150px;
   text-align: center;
   position: relative;
   overflow: visible;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 }
 
 .hero::before {
@@ -161,7 +161,8 @@
   transition: all 0.3s;
   position: relative;
   z-index: 10;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  display: inline-block;
 }
 
 .cta-button:hover {
