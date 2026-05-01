@@ -11,6 +11,7 @@ const Landing = () => {
       { data: '2GB', price: '₦1500', duration: '1 Month' },
       { data: '3GB', price: '₦2500', duration: '1 Month' },
       { data: '5GB', price: '₦3500', duration: '1 Month' },
+      { data: '7GB', price: '₦3500', duration: '1 Month' },
       { data: '10GB', price: '₦4500', duration: '1 Month' },
     ],
     GLO: [
