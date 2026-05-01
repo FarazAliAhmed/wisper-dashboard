@@ -19,6 +19,7 @@ const Landing = () => {
       { data: '2GB', price: '₦800', duration: '1 Month' },
       { data: '3GB', price: '₦1200', duration: '1 Month' },
       { data: '5GB', price: '₦2000', duration: '1 Month' },
+      { data: '7GB', price: '₦3500', duration: '1 Month' },
       { data: '10GB', price: '₦4000', duration: '1 Month' },
     ],
     '9MOBILE': [
@@ -26,6 +27,7 @@ const Landing = () => {
       { data: '2GB', price: '₦800', duration: '1 Month' },
       { data: '3GB', price: '₦1200', duration: '1 Month' },
       { data: '5GB', price: '₦2000', duration: '1 Month' },
+      { data: '7GB', price: '₦3500', duration: '1 Month' },
       { data: '10GB', price: '₦4000', duration: '1 Month' },
     ],
     AIRTEL: [
@@ -33,6 +35,7 @@ const Landing = () => {
       { data: '2GB', price: '₦800', duration: '1 Month' },
       { data: '3GB', price: '₦1200', duration: '1 Month' },
       { data: '5GB', price: '₦2000', duration: '1 Month' },
+      { data: '7GB', price: '₦3500', duration: '1 Month' },
       { data: '10GB', price: '₦4000', duration: '1 Month' },
     ],
   };
