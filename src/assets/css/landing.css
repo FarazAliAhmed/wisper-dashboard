@@ -100,10 +100,11 @@
 .hero {
   background: #000;
   color: white;
-  padding: 120px 20px 80px;
+  padding: 120px 20px 120px;
   text-align: center;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  margin-bottom: 40px;
 }
 
 .hero::before {
@@ -158,6 +159,9 @@
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s;
+  position: relative;
+  z-index: 10;
+  margin-bottom: 20px;
 }
 
 .cta-button:hover {
@@ -170,6 +174,8 @@
 .services {
   padding: 80px 20px;
   background: #0a0a0a;
+  position: relative;
+  z-index: 1;
 }
 
 .services h2 {
