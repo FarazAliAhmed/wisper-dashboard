@@ -75,7 +75,7 @@ const Routes = () => {
           <AdminProtectedRoute path="/admin" component={Admin} />
           <ProtectedRoute path="/dashboard" component={Dashboard} />
           {/* <ProtectedRoute path="/packages/:id" component={Pricing} /> */}
-          <ProtectedRoute path="/packages" component={ViewPricing} />
+          {/* <ProtectedRoute path="/packages" component={ViewPricing} /> */}
           {user?.type == "mega" || user?.type == "agent" ? (
             <ProtectedRoute path="/allocate" component={AllocateDataMA} />
           ) : user?.type == "glo_dealer" || user?.type == "glo_agent" ? (
