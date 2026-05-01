@@ -64,7 +64,7 @@ const Landing = () => {
               We are a registered telecommunication company that provides voice and data transmission services, 
               including Mobile Data and Airtime (VTU).
             </p>
-            <button className="cta-button">Get Started</button>
+            <button className="cta-button" onClick={() => window.location.href = '/register'}>Get Started</button>
           </div>
         </div>
       </section>
@@ -112,7 +112,7 @@ const Landing = () => {
             Bring the 'easy-payments' experience closer to your network and earn a commission 
             for every transaction you perform for your customers.
           </p>
-          <button className="cta-button">Join Now</button>
+          <button className="cta-button" onClick={() => window.location.href = '/register'}>Join Now</button>
         </div>
       </section>
 
@@ -154,7 +154,7 @@ const Landing = () => {
             We offer instant recharge of Airtime, Data bundle, CableTV (DStv, GOtv & Startimes), 
             Electricity Bill Payment and more.
           </p>
-          <button className="cta-button">Start Now</button>
+          <button className="cta-button" onClick={() => window.location.href = '/register'}>Start Now</button>
         </div>
       </section>
 
