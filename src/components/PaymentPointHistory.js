@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, CardTitle, Table, Spinner, Alert } from "reactstrap";
+import { Card, CardBody, CardTitle, Table, Spinner, Alert, Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input, FormFeedback } from "reactstrap";
 import axios from "axios";
 import { useUser } from "../context/userContext";
 import moment from "moment";
@@ -10,6 +10,12 @@ const PaymentPointHistory = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [accountDetails, setAccountDetails] = useState(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [kycData, setKycData] = useState({
+    kycType: "bvn",
+    kycNumber: "",
+  });
+  const [kycError, setKycError] = useState("");
 
   useEffect(() => {
     fetchAccountDetails();
@@ -59,17 +65,51 @@ const PaymentPointHistory = () => {
     }
   };
 
+  const handleKycChange = (e) => {
+    const { name, value } = e.target;
+    setKycData({ ...kycData, [name]: value });
+    
+    // Validate KYC number
+    if (name === "kycNumber" && value.trim() !== "") {
+      const cleanValue = value.replace(/\D/g, '');
+      if (cleanValue.length !== 11) {
+        setKycError("Must be 11 digits");
+      } else {
+        setKycError("");
+      }
+    }
+  };
+
+  const openCreateAccountModal = () => {
+    setShowCreateModal(true);
+    setKycData({ kycType: "bvn", kycNumber: "" });
+    setKycError("");
+  };
+
   const createVirtualAccount = async () => {
     try {
       setLoading(true);
+      
+      // Prepare payload
+      const payload = {
+        accountName: user?.name || user?.username,
+      };
+
+      // Add BVN or NIN if provided
+      if (kycData.kycNumber && kycData.kycNumber.trim()) {
+        const cleanKyc = kycData.kycNumber.replace(/\D/g, '');
+        if (cleanKyc.length === 11) {
+          if (kycData.kycType === "nin") {
+            payload.nin = cleanKyc;
+          } else {
+            payload.bvn = cleanKyc;
+          }
+        }
+      }
+
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/paymentpoint/create-account`,
-        {
-          accountName: user?.name || user?.username,
-          // Add BVN or NIN if available
-          // bvn: user?.bvn,
-          // nin: user?.nin,
-        },
+        payload,
         {
           headers: {
             Authorization: `Bearer ${user?.access_token}`,
@@ -79,6 +119,7 @@ const PaymentPointHistory = () => {
 
       if (response.data.success) {
         setAccountDetails(response.data.data);
+        setShowCreateModal(false);
         alert("PaymentPoint virtual account created successfully!");
       }
       setLoading(false);
@@ -98,6 +139,67 @@ const PaymentPointHistory = () => {
 
   return (
     <div>
+      {/* Create Account Modal */}
+      <Modal isOpen={showCreateModal} toggle={() => setShowCreateModal(false)} centered>
+        <ModalHeader toggle={() => setShowCreateModal(false)}>
+          Create PaymentPoint Virtual Account
+        </ModalHeader>
+        <ModalBody>
+          <Form>
+            <FormGroup>
+              <Label>BVN or NIN (Optional)</Label>
+              <div className="mb-2">
+                <FormGroup check inline>
+                  <Input
+                    type="radio"
+                    name="kycType"
+                    value="bvn"
+                    checked={kycData.kycType === "bvn"}
+                    onChange={handleKycChange}
+                  />
+                  <Label check>BVN</Label>
+                </FormGroup>
+                <FormGroup check inline>
+                  <Input
+                    type="radio"
+                    name="kycType"
+                    value="nin"
+                    checked={kycData.kycType === "nin"}
+                    onChange={handleKycChange}
+                  />
+                  <Label check>NIN</Label>
+                </FormGroup>
+              </div>
+              <Input
+                type="text"
+                name="kycNumber"
+                value={kycData.kycNumber}
+                onChange={handleKycChange}
+                maxLength="11"
+                placeholder={`Enter your ${kycData.kycType.toUpperCase()} (optional)`}
+                invalid={!!kycError}
+              />
+              <FormFeedback>{kycError}</FormFeedback>
+              <small className="text-muted d-block mt-2">
+                Enter 11-digit {kycData.kycType.toUpperCase()}. Optional but recommended for higher transaction limits.
+              </small>
+            </FormGroup>
+          </Form>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={() => setShowCreateModal(false)}>
+            Cancel
+          </Button>
+          <Button 
+            color="primary" 
+            onClick={createVirtualAccount}
+            disabled={loading || (kycData.kycNumber.trim() !== "" && kycError !== "")}
+          >
+            {loading ? "Creating..." : "Create Account"}
+          </Button>
+        </ModalFooter>
+      </Modal>
+
       {/* Account Details Card */}
       <Card className="mb-4">
         <CardBody>
@@ -110,10 +212,10 @@ const PaymentPointHistory = () => {
               </p>
               <button
                 className="btn btn-primary"
-                onClick={createVirtualAccount}
+                onClick={openCreateAccountModal}
                 disabled={loading}
               >
-                {loading ? "Creating..." : "Create Virtual Account"}
+                Create Virtual Account
               </button>
             </div>
           ) : (

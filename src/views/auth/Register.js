@@ -41,8 +41,6 @@ const Register = () => {
     email: "",
     mobile_number: "",
     address: "...",
-    kycNumber: "",
-    kycType: "bvn", // Add this: 'bvn' or 'nin'
     username: "",
     password: "",
   });
@@ -71,18 +69,6 @@ const Register = () => {
         mobile_number: account.mobile_number,
         address: account.address,
       };
-      
-      // Add BVN or NIN based on user selection
-      if (account.kycNumber && account.kycNumber.trim()) {
-        const cleanKyc = account.kycNumber.replace(/\D/g, ''); // Remove non-digits
-        if (cleanKyc.length === 11) {
-          if (account.kycType === "nin") {
-            payload.nin = cleanKyc;
-          } else {
-            payload.bvn = cleanKyc; // Default to BVN
-          }
-        }
-      }
 
       const response = await register(payload);
       setLoading(false);
@@ -240,44 +226,7 @@ const Register = () => {
             name="address"
           />
         </FormGroup>
-        <FormGroup className="mb-3">
-          <Label>BVN or NIN</Label>
-          <div className="mb-2">
-            <FormGroup check inline>
-              <Input
-                type="radio"
-                name="kycType"
-                value="bvn"
-                checked={account.kycType === "bvn"}
-                onChange={handleChange}
-              />
-              <Label check>BVN</Label>
-            </FormGroup>
-            <FormGroup check inline>
-              <Input
-                type="radio"
-                name="kycType"
-                value="nin"
-                checked={account.kycType === "nin"}
-                onChange={handleChange}
-              />
-              <Label check>NIN</Label>
-            </FormGroup>
-          </div>
-          <Input
-            value={account.kycNumber}
-            onChange={handleChange}
-            invalid={errors.kycNumber}
-            type="text"
-            name="kycNumber"
-            maxLength="11"
-            placeholder={`Enter your ${account.kycType.toUpperCase()}`}
-          />
-          <FormFeedback>{errors.kycNumber}</FormFeedback>
-          <small className="text-muted">
-            Enter 11-digit {account.kycType.toUpperCase()}. Optional but recommended for higher transaction limits.
-          </small>
-        </FormGroup>
+
         <FormGroup className="mb-3">
           <Label>
             Password{" "}
