@@ -130,6 +130,8 @@ const PaymentPointHistory = () => {
       if (response.data.success) {
         setAccountDetails(response.data.data);
         setShowCreateModal(false);
+        // Refetch from DB to get consistent data
+        await fetchAccountDetails();
         alert("PaymentPoint virtual account created successfully!");
       }
       setLoading(false);
