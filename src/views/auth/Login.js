@@ -50,6 +50,18 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false);
 
+  // Check for session expired parameter
+  const [sessionExpired, setSessionExpired] = useState(false);
+  
+  useState(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('session') === 'expired') {
+      setSessionExpired(true);
+      // Clear the URL parameter
+      window.history.replaceState({}, document.title, '/login');
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -121,6 +133,11 @@ const Login = () => {
 
   return (
     <AuthLayout headTitle="Login" tagline="Login to continue.">
+      {sessionExpired && (
+        <Alert color="warning">
+          Your session has expired. Please login again to continue.
+        </Alert>
+      )}
       {msgError && <Alert color="danger">{msgError}</Alert>}
       {/* {!serverResponse.status && (
         <Alert color="danger">{serverResponse.message}</Alert>
