@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Card } from "reactstrap";
 import { Link } from "react-router-dom";
-import xtLogo from "../assets/images/logos/xtremelogo.svg";
+import xtLogo from "../assets/images/logos/xt-logo.jpg";
 
 function AuthLayout({ headTitle, tagline, children }) {
   return (
@@ -10,7 +10,7 @@ function AuthLayout({ headTitle, tagline, children }) {
         <Col className="mx-auto mb-5" sm="9" md="7" lg="5">
           <div className="text-center mt-5">
             <Link to="/">
-              <img src={xtLogo} alt="XT logo" style={{ width: "240px", height: "auto" }} />
+              <img src={xtLogo} alt="XT logo" style={{ width: "390px", height: "auto", maxWidth: "100%" }} />
             </Link>
           </div>
           <Card body className="p-5 mb-5 mt-3 card-wrap">
