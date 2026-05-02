@@ -24,6 +24,7 @@ const PaymentPointHistory = () => {
 
   const fetchAccountDetails = async () => {
     try {
+      console.log('Fetching PaymentPoint account details...');
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/paymentpoint/account-details`,
         {
@@ -33,12 +34,20 @@ const PaymentPointHistory = () => {
         }
       );
 
-      if (response.data.success) {
+      console.log('Account details response:', response.data);
+
+      if (response.data.success && response.data.data) {
+        console.log('Setting account details:', response.data.data);
         setAccountDetails(response.data.data);
+      } else {
+        console.log('No account details in response');
+        setAccountDetails(null);
       }
     } catch (error) {
       console.error("Error fetching PaymentPoint account details:", error);
+      console.error("Error response:", error.response?.data);
       // Don't set error here, account might not exist yet
+      setAccountDetails(null);
     }
   };
 
