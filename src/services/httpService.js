@@ -20,14 +20,14 @@ axios.interceptors.response.use(null, (error) => {
         errorMessage.toLowerCase().includes('jwt') ||
         error.response.status === 401) {
       
-      console.error('Session expired. Please login again.');
+      console.error('Invalid or expired token detected. Logging out...');
       
       // Clear local storage
       localStorage.clear();
       sessionStorage.clear();
       
-      // Redirect to login page with message
-      window.location.href = '/login?session=expired';
+      // Redirect to login page
+      window.location.href = '/login';
       
       return Promise.reject(error);
     }
