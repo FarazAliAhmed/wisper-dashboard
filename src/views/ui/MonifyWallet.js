@@ -11,17 +11,37 @@ import { useAppState } from "../../context/appContext";
 import { useUser } from "../../context/userContext";
 import wallIcon from "../../assets/dashboard/walle.svg";
 import PaymentPointHistory from "../../components/PaymentPointHistory";
+import { getBalance } from "../../services/dataService";
 
 const Dashboard = () => {
   const { user } = useUser();
   const {
     currentBalance: { volume, unit, cash, mega_wallet },
+    setCurrentBalance,
   } = useAppState();
   const [balanceDisplay, setBalanceDisplay] = useState("");
+  const [liveCash, setLiveCash] = useState(null);
+
+  // Refetch balance fresh from server when wallet page loads
+  useEffect(() => {
+    const fetchLiveBalance = async () => {
+      try {
+        const res = await getBalance();
+        if (res && res.data) {
+          setLiveCash(res.data.wallet_balance);
+        }
+      } catch (e) {
+        // fallback to cached
+      }
+    };
+    fetchLiveBalance();
+  }, []);
 
   useEffect(() => {
     setBalanceDisplay(displayBalance(volume, unit, cash, mega_wallet, user));
   }, [volume, unit, cash, mega_wallet, user]);
+
+  const displayCash = liveCash !== null ? liveCash : cash;
 
   return (
     <FullLayout>
@@ -33,7 +53,7 @@ const Dashboard = () => {
               bg="bg-light-info text-info"
               title="Wallet"
               subtitle="Current Balance"
-              earning={`₦${cash}`}
+              earning={`₦${displayCash}`}
               icon={wallIcon}
             />
           </Col>
