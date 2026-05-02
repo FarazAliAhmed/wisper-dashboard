@@ -7,14 +7,17 @@ axios.interceptors.response.use(null, (error) => {
     error.response.status < 500;
 
   // Handle invalid/expired JWT tokens globally
-  if (error.response && error.response.status === 400) {
-    const errorMessage = error.response.data?.error || error.response.data?.message || '';
+  if (error.response && (error.response.status === 400 || error.response.status === 401)) {
+    const errorData = error.response.data;
+    const errorMessage = errorData?.error || errorData?.message || JSON.stringify(errorData);
+    
+    console.log('Auth error detected:', errorMessage);
     
     // Check if it's a token-related error
-    if (errorMessage.includes('Authorization Token is invalid') || 
-        errorMessage.includes('Authorization Token not provided') ||
-        errorMessage.includes('jwt expired') ||
-        errorMessage.includes('invalid token')) {
+    if (errorMessage.toLowerCase().includes('authorization') || 
+        errorMessage.toLowerCase().includes('token') ||
+        errorMessage.toLowerCase().includes('jwt') ||
+        error.response.status === 401) {
       
       console.error('Invalid or expired token detected. Logging out...');
       
@@ -22,20 +25,13 @@ axios.interceptors.response.use(null, (error) => {
       localStorage.clear();
       sessionStorage.clear();
       
-      // Redirect to login page
-      window.location.href = '/login';
+      // Redirect to login page after a short delay
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 1000);
       
       return Promise.reject(error);
     }
-  }
-
-  // Handle 401 Unauthorized - also force logout
-  if (error.response && error.response.status === 401) {
-    console.error('Unauthorized access. Logging out...');
-    localStorage.clear();
-    sessionStorage.clear();
-    window.location.href = '/login';
-    return Promise.reject(error);
   }
 
   if (!expectedError) {
