@@ -3,6 +3,7 @@ import { Card, CardBody, CardTitle, Table, Spinner, Alert, Modal, ModalHeader, M
 import axios from "axios";
 import { useUser } from "../context/userContext";
 import moment from "moment";
+import { getJwt } from "../services/authService";
 
 const PaymentPointHistory = () => {
   const { user } = useUser();
@@ -29,7 +30,7 @@ const PaymentPointHistory = () => {
         `${process.env.REACT_APP_API_URL}/api/paymentpoint/account-details`,
         {
           headers: {
-            Authorization: `Bearer ${user?.access_token}`,
+            Authorization: `Bearer ${getJwt()}`,
           },
         }
       );
@@ -58,7 +59,7 @@ const PaymentPointHistory = () => {
         `${process.env.REACT_APP_API_URL}/api/paymentpoint/history?limit=50`,
         {
           headers: {
-            Authorization: `Bearer ${user?.access_token}`,
+            Authorization: `Bearer ${getJwt()}`,
           },
         }
       );
@@ -121,7 +122,7 @@ const PaymentPointHistory = () => {
         payload,
         {
           headers: {
-            Authorization: `Bearer ${user?.access_token}`,
+            Authorization: `Bearer ${getJwt()}`,
           },
         }
       );
