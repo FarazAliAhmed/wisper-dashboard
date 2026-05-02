@@ -7,9 +7,9 @@ function AuthLayout({ headTitle, tagline, children }) {
   return (
     <Container>
       <Row>
-        <Col className="mx-auto text-center mt-5">
+        <Col className="mx-auto text-center mt-5 auth-logo">
           <Link to="/">
-            <img src={xtLogo} alt="XT logo" style={{ width: "300px", height: "auto", maxWidth: "90%" }} />
+            <img src={xtLogo} alt="XT logo" />
           </Link>
         </Col>
       </Row>

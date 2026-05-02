@@ -412,14 +412,11 @@ input[type="number"] {
   border-radius: 8px;
 }
 
-// Auth layout logo styling - reduce size significantly
-.text-center img {
+// Auth layout logo styling
+.auth-logo img {
   border-radius: 12px;
-  max-width: 55px !important;
-  
-  @media (max-width: 768px) {
-    max-width: 35px !important;
-  }
+  width: 300px;
+  max-width: 90%;
 }
 
 // Change auth page text colors to blue
