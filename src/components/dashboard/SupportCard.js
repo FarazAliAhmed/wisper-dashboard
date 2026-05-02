@@ -15,7 +15,7 @@ const SupportCard = () => {
           <Col sm="12" md="12" lg="12" className="chat-btn">
             <a
               className="cursor-pointer"
-              href="https://wa.me/2349041182322?text=I'm%20interested%20in%20your%20services."
+              href="https://wa.me/2347074728048?text=I'm%20interested%20in%20your%20services."
               target="_blank"
               rel="noopener noreferrer"
             >
