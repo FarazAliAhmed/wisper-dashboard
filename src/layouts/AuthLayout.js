@@ -7,12 +7,14 @@ function AuthLayout({ headTitle, tagline, children }) {
   return (
     <Container>
       <Row>
+        <Col className="mx-auto text-center mt-5">
+          <Link to="/">
+            <img src={xtLogo} alt="XT logo" style={{ width: "300px", height: "auto", maxWidth: "90%" }} />
+          </Link>
+        </Col>
+      </Row>
+      <Row>
         <Col className="mx-auto mb-5" sm="9" md="7" lg="5">
-          <div className="text-center mt-5">
-            <Link to="/">
-              <img src={xtLogo} alt="XT logo" style={{ width: "390px", height: "auto", maxWidth: "100%" }} />
-            </Link>
-          </div>
           <Card body className="p-5 mb-5 mt-3 card-wrap">
             <header className="pb-4 text-center">
               <h4>{headTitle}</h4>
