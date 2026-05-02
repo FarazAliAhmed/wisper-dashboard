@@ -99,13 +99,13 @@ const AllocateData = () => {
       }
       // setServerResponse({status: true, message: "Data allocated successfully."});
     } catch (error) {
-      toast.error("An Error Occured Try Again", {
+      const errorMsg = error.response?.data?.message || error.response?.data?.error || "An Error Occurred. Try Again";
+      toast.error(errorMsg, {
         position: toast.POSITION.TOP_RIGHT,
       });
       setLoading(false);
       const { status, message } = handleFailedRequest(error);
       return { status, message };
-      // setServerResponse({ status, message });
     }
   };
 
@@ -202,11 +202,9 @@ const AllocateData = () => {
                         type="select"
                       >
                         <option disabled>---Select network ---</option>
-                        <option selected value="airtel">
-                          Airtel
-                        </option>
+                        <option value="airtel">Airtel</option>
                         <option value="glo">GLO</option>
-                        <option value="mtn_direct">MTN DIRECT</option>
+                        <option value="mtn">MTN</option>
                         <option value="9mobile">9MOBILE</option>
                       </Input>
                     </FormGroup>
