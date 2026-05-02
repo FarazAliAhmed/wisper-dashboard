@@ -20,26 +20,34 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { allocateData } from "../../services/dataService";
 import { handleFailedRequest, parseDataPlans } from "../../utils";
-import sterling_logo from "../../assets/images/logos/Sterling_Bank_Logo_Straight.png";
-import wema_logo from "../../assets/images/logos/Wema-Bank.png";
-import moniepoint_logo from "../../assets/images/logos/Moniepoint-Logo.png";
 import { toast } from "react-hot-toast";
-
-// import dataPlans from "../../utils/plansTable";
+import axios from "axios";
+import { getJwt } from "../../services/authService";
 
 import "./../../assets/scss/custom.scss";
 
-const initialState = {
-  network: "airtel",
-  plan_id: "",
-  phone_number: "",
-};
-
 const AllocateDataMA = () => {
-  const [loading, setLoading] = useState(false);
   const { user } = useUser();
+  const [accountDetails, setAccountDetails] = useState(null);
 
-  const bankAccounts = user?.bankAccounts;
+  useEffect(() => {
+    const fetchAccountDetails = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/paymentpoint/account-details`,
+          { headers: { Authorization: `Bearer ${getJwt()}` } }
+        );
+        if (response.data.success && response.data.data) {
+          setAccountDetails(response.data.data);
+        }
+      } catch (error) {
+        // No account yet
+      }
+    };
+    fetchAccountDetails();
+  }, []);
+
+  const bankAccounts = accountDetails?.accounts || [];
 
   return (
     <FullLayout>
@@ -56,31 +64,12 @@ const AllocateDataMA = () => {
               </p>
             </p>
 
-            {bankAccounts &&
+            {bankAccounts.length > 0 ? (
               bankAccounts.map((item, index) => (
-                <Col md={12}>
+                <Col md={12} key={index}>
                   <Form className="mb-4">
                     <Row className="bank-details">
                       <Col>
-                        <div></div>
-                        {item.bankName == "Wema bank" && (
-                          <img className="wema__logo" src={wema_logo} alt="" />
-                        )}
-                        {item.bankName == "Sterling bank" && (
-                          <img
-                            className="sterling__logo"
-                            src={sterling_logo}
-                            alt=""
-                          />
-                        )}
-                        {item.bankName == "Moniepoint Microfinance Bank" && (
-                          <img
-                            className="moniepoint__logo"
-                            src={moniepoint_logo}
-                            alt=""
-                          />
-                        )}
-
                         <div
                           style={{
                             display: "flex",
@@ -88,8 +77,7 @@ const AllocateDataMA = () => {
                             alignItems: "center",
                           }}
                         >
-                          <b>Account Name:</b> &nbsp;PaymentPoint / Wisper Media Solutions
-                          Limited-{item.accountName}
+                          <b>Account Name:</b> &nbsp;{item.accountName}
                         </div>
                         <div
                           style={{
@@ -101,14 +89,9 @@ const AllocateDataMA = () => {
                           <b>Bank Name:</b> &nbsp; {item.bankName}
                           <CopyToClipboard
                             text={item.bankName}
-                            onCopy={() => {
-                              toast.success("Copied!");
-                            }}
+                            onCopy={() => toast.success("Copied!")}
                           >
-                            <MdOutlineContentCopy
-                              color="black"
-                              cursor={"pointer"}
-                            />
+                            <MdOutlineContentCopy color="black" cursor={"pointer"} />
                           </CopyToClipboard>
                         </div>
                         <div
@@ -118,40 +101,34 @@ const AllocateDataMA = () => {
                             alignItems: "center",
                           }}
                         >
-                          {" "}
                           <b>Account Number:</b>&nbsp; {item.accountNumber}
                           <CopyToClipboard
                             text={item.accountNumber}
-                            onCopy={() => {
-                              toast.success("Copied!");
-                            }}
+                            onCopy={() => toast.success("Copied!")}
                           >
-                            <MdOutlineContentCopy
-                              color="black"
-                              cursor={"pointer"}
-                            />
+                            <MdOutlineContentCopy color="black" cursor={"pointer"} />
                           </CopyToClipboard>
                         </div>
                       </Col>
                     </Row>
                   </Form>
                 </Col>
-              ))}
+              ))
+            ) : (
+              <Col md={12}>
+                <p className="text-muted">
+                  No virtual account found. Please create one from the Wallet page.
+                </p>
+              </Col>
+            )}
           </Row>
-          <p
-            style={{
-              color: "#333333",
-            }}
-          >
+          <p style={{ color: "#333333" }}>
             Please Note:
             <ul>
-              <li>
-                The account can only receive and send funds in Nigerian Naira
-                (NGN).
-              </li>
-              <li> It might take 5 minutes for the funds to reflect.</li>
-              <li> No need to contact support; it's automated.</li>
-              <li> Your updated balance will be available shortly.</li>
+              <li>The account can only receive and send funds in Nigerian Naira (NGN).</li>
+              <li>It might take 5 minutes for the funds to reflect.</li>
+              <li>No need to contact support; it's automated.</li>
+              <li>Your updated balance will be available shortly.</li>
             </ul>
           </p>
         </Card>

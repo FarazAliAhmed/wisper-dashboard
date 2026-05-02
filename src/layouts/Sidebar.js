@@ -64,11 +64,11 @@ const liteNav = [
   //   href: "/payments",
   //   icon: "bi bi-credit-card",
   // },
-  {
-    title: "Store Front",
-    href: "/storeFront",
-    icon: "bi bi-shop",
-  },
+  // {
+  //   title: "Store Front",
+  //   href: "/storeFront",
+  //   icon: "bi bi-shop",
+  // },
   // {
   //   title: "Edit Store Front",
   //   href: "/editStoreFront",
@@ -124,11 +124,11 @@ const agentsNav = [
   //   href: "/airtime",
   //   icon: "bi bi-bag",
   // },
-  {
-    title: "Store Front",
-    href: "/storeFront",
-    icon: "bi bi-shop",
-  },
+  // {
+  //   title: "Store Front",
+  //   href: "/storeFront",
+  //   icon: "bi bi-shop",
+  // },
   // {
   //   title: "Edit Store Front",
   //   href: "/editStoreFront",
@@ -214,11 +214,11 @@ const gloAgentsNav = [
   //   href: "/airtime",
   //   icon: "bi bi-bag",
   // },
-  {
-    title: "Store Front",
-    href: "/storeFront",
-    icon: "bi bi-shop",
-  },
+  // {
+  //   title: "Store Front",
+  //   href: "/storeFront",
+  //   icon: "bi bi-shop",
+  // },
   // {
   //   title: "Edit Store Front",
   //   href: "/editStoreFront",
@@ -314,11 +314,11 @@ const megaNav = [
     href: "/agents",
     icon: "bi bi-person-check",
   },
-  {
-    title: "Store Front",
-    href: "/storeFront",
-    icon: "bi bi-shop",
-  },
+  // {
+  //   title: "Store Front",
+  //   href: "/storeFront",
+  //   icon: "bi bi-shop",
+  // },
   // {
   //   title: "Edit Store Front",
   //   href: "/editStoreFront",
@@ -404,11 +404,11 @@ const gloMegaNav = [
     href: "/agents",
     icon: "bi bi-person-check",
   },
-  {
-    title: "Store Front",
-    href: "/storeFront",
-    icon: "bi bi-shop",
-  },
+  // {
+  //   title: "Store Front",
+  //   href: "/storeFront",
+  //   icon: "bi bi-shop",
+  // },
   // {
   //   title: "Edit Store Front",
   //   href: "/editStoreFront",
