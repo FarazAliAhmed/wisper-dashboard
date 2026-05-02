@@ -6,12 +6,13 @@ axios.interceptors.response.use(null, (error) => {
     error.response.status >= 400 &&
     error.response.status < 500;
 
-  // Handle invalid/expired JWT tokens globally
-  if (error.response && (error.response.status === 400 || error.response.status === 401)) {
+  // Handle invalid/expired JWT tokens globally (but not on login/register pages)
+  const currentPath = window.location.pathname;
+  const isAuthPage = currentPath.includes('/login') || currentPath.includes('/register') || currentPath.includes('/forgot-password');
+  
+  if (!isAuthPage && error.response && (error.response.status === 400 || error.response.status === 401)) {
     const errorData = error.response.data;
     const errorMessage = errorData?.error || errorData?.message || JSON.stringify(errorData);
-    
-    console.log('Auth error detected:', errorMessage);
     
     // Check if it's a token-related error
     if (errorMessage.toLowerCase().includes('authorization') || 
@@ -25,10 +26,8 @@ axios.interceptors.response.use(null, (error) => {
       localStorage.clear();
       sessionStorage.clear();
       
-      // Redirect to login page after a short delay
-      setTimeout(() => {
-        window.location.href = '/login';
-      }, 1000);
+      // Redirect to login page
+      window.location.href = '/login';
       
       return Promise.reject(error);
     }
