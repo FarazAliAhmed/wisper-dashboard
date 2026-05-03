@@ -28,7 +28,7 @@ const AdminWalletTransactionsTable = ({
   showHeader,
   showPageSettings = false,
 }) => {
-  const [transactionsData, setTransactionsData] = useState([...transactions]);
+  const [transactionsData, setTransactionsData] = useState([...(transactions || [])]);
 
   const { user } = useUser();
 
@@ -43,7 +43,7 @@ const AdminWalletTransactionsTable = ({
 
   const [show, setShow] = useState(false);
   const [receiptdata, setReceiptData] = useState({
-    ...transactionsData[0],
+    ...(transactionsData[0] || {}),
   });
 
   const toggleShow = () => {

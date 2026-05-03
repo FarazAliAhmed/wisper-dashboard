@@ -114,7 +114,7 @@ const AdminWalletTransactions = () => {
         setLoading(true);
         const cFilter = cleanFilter(filter);
         const resp = await getAllWalletTransactions(cFilter, pagination);
-        setTransactions(resp);
+        setTransactions(resp?.transactions || []);
         setLoading(false);
         setIsOpen(false);
       }
@@ -140,7 +140,7 @@ const AdminWalletTransactions = () => {
       if (!loading) {
         setLoading(true);
         const resp = await getAllWalletTransactions(pagination);
-        setTransactions(resp);
+        setTransactions(resp?.transactions || []);
         setLoading(false);
       }
     }
