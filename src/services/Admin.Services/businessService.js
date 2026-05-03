@@ -134,7 +134,7 @@ export const getAllWalletTransactions = async (
   { limit, offset, userId } = { limit: 50, offset: 0 }
 ) => {
   try {
-    const res = await http.get(`${apiUrl}/api/paymentpoint/admin/history?limit=${limit}`);
+    const res = await http.get(`${apiUrl}/paymentpoint/admin/history?limit=${limit}`);
     return res.data;
   } catch (e) {
     return null;
