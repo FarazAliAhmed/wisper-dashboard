@@ -56,7 +56,17 @@ const AllocateData = () => {
   const { user } = useUser();
 
   const { plans } = useAppState();
-  const dataPlans = parseDataPlans(plans);
+  const isDirector = user?.username?.toLowerCase() === "director";
+  // Special GLO bundle price for Director: N383 per GB (matches the API)
+  const dataPlans = parseDataPlans(plans).map((p) => {
+    const planData = plans.find((item) => item.plan_id == p.dataId);
+    if (isDirector && p.network === "glo" && planData) {
+      const volumeInMB =
+        planData.unit === "gb" ? planData.volume * 1024 : planData.volume;
+      return { ...p, amount: Math.round((volumeInMB / 1024) * 383) };
+    }
+    return p;
+  });
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
