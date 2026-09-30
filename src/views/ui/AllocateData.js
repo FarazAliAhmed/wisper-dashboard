@@ -63,7 +63,9 @@ const AllocateData = () => {
     if (isDirector && p.network === "glo" && planData) {
       const volumeInMB =
         planData.unit === "gb" ? planData.volume * 1024 : planData.volume;
-      return { ...p, amount: Math.round((volumeInMB / 1024) * 383) };
+      const amount =
+        volumeInMB === 200 ? 77 : Math.round((volumeInMB / 1024) * 383);
+      return { ...p, amount };
     }
     return p;
   });
