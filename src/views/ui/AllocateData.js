@@ -59,7 +59,7 @@ const AllocateData = () => {
   // Per-user GLO prices: N per GB keyed by plan validity (days); must match the API
   const GLO_SPECIAL_PRICES = {
     director: { 3: 328, 7: 342, 30: 383, fixed: { 200: 77, 500: 192 } },
-    uzobest: { 3: 329, 7: 344, 30: 387 },
+    uzobest: { 3: 329, 7: 344, 30: 387, fixed: { 200: 77.4, 500: 193.5 } },
   };
   const specialGlo = GLO_SPECIAL_PRICES[user?.username?.toLowerCase()];
   const dataPlans = parseDataPlans(plans).map((p) => {
