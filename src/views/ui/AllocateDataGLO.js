@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import AllocateButton from "../../components/AllocateButton";
 import { useUser } from "../../context/userContext";
+import { applySpecialPrices } from "../../utils/specialPricing";
 import { useAppState } from "../../context/appContext";
 
 import FullLayout from "../../layouts/FullLayout";
@@ -47,7 +48,7 @@ const AllocateDataGLO = () => {
   const { user } = useUser();
 
   const { plans } = useAppState();
-  const dataPlans = parseDataPlans(plans);
+  const dataPlans = parseDataPlans(applySpecialPrices(plans, user?.username));
 
   // useEffect(() => {
   //   parseDataPlans(plans)

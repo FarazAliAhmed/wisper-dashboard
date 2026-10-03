@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import AllocateButton from "../../components/AllocateButton";
 import { useUser } from "../../context/userContext";
+import { applySpecialPrices } from "../../utils/specialPricing";
 import { useAppState } from "../../context/appContext";
 import wallIcon from "../../assets/dashboard/walle.svg";
 
@@ -56,26 +57,7 @@ const AllocateData = () => {
   const { user } = useUser();
 
   const { plans } = useAppState();
-  // Per-user GLO prices: N per GB keyed by plan validity (days); must match the API
-  const GLO_SPECIAL_PRICES = {
-    director: { 3: 328, 7: 342, 30: 383, fixed: { 200: 77, 500: 192 } },
-    uzobest: { 3: 329, 7: 344, 30: 387, fixed: { 200: 77.4, 500: 193.5 } },
-  };
-  const specialGlo = GLO_SPECIAL_PRICES[user?.username?.toLowerCase()];
-  const dataPlans = parseDataPlans(plans).map((p) => {
-    const planData = plans.find((item) => item.plan_id == p.dataId);
-    if (specialGlo && p.network === "glo" && planData) {
-      const volumeInMB =
-        planData.unit === "gb" ? planData.volume * 1024 : planData.volume;
-      const perGB =
-        specialGlo[parseInt(planData.validity, 10)] || specialGlo[30];
-      if (specialGlo.fixed?.[volumeInMB])
-        return { ...p, amount: specialGlo.fixed[volumeInMB] };
-      if (volumeInMB >= 1024)
-        return { ...p, amount: Math.round((volumeInMB / 1024) * perGB) };
-    }
-    return p;
-  });
+  const dataPlans = parseDataPlans(applySpecialPrices(plans, user?.username));
 
   const handleSubmit = async (e) => {
     // e.preventDefault();

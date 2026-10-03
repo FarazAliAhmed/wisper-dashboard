@@ -12,6 +12,7 @@ import {
   ModalFooter,
 } from "reactstrap";
 import { useUser } from "../../context/userContext";
+import { applySpecialPrices } from "../../utils/specialPricing";
 import { useAppState } from "../../context/appContext";
 import { parseDataPlans } from "../../utils";
 import { MdOutlineContentCopy } from "react-icons/md";
@@ -53,12 +54,13 @@ const Documentation = () => {
   }, [user]);
 
   useEffect(() => {
-    const gloPlans = parseDataPlans(plans).filter(
+    const userPlans = applySpecialPrices(plans, user?.username);
+    const gloPlans = parseDataPlans(userPlans).filter(
       (item) => item?.network == "glo"
     );
-    setTableData(parseDataPlans(plans));
+    setTableData(parseDataPlans(userPlans));
     setGloTableData(gloPlans);
-  }, []);
+  }, [plans, user]);
 
   const handleSubmit = async () => {
     await getAccessToken(user?._id)
@@ -113,7 +115,7 @@ const Documentation = () => {
           <MdOutlineContentCopy
             style={{ cursor: "pointer" }}
             onClick={() => {
-              navigator.clipboard.writeText(user?.access_token);
+              navigator.clipboard.writeText(token);
               toast.success("copied");
             }}
           />

@@ -12,6 +12,7 @@ import {
   getStoreFront,
 } from "../services/dataService";
 import { useUser } from "./userContext";
+import { applySpecialPrices } from "../utils/specialPricing";
 // import { getMainBalance } from "../services/Admin.Services/businessService";
 // import { getMainBalance } from "../services/Admin.Services/businessService";
 
@@ -127,7 +128,7 @@ const AppStateProvider = ({ children }) => {
       }
 
       if (planRes) {
-        setPlans(planRes.data.plan);
+        setPlans(applySpecialPrices(planRes.data.plan, user?.username));
       }
 
       if (planResUser) {
