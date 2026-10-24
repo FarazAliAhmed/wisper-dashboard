@@ -13,6 +13,7 @@ import {
 import "../../assets/scss/custom.scss";
 import TopCards from "../../components/dashboard/TopCards";
 import FundCards from "../../components/dashboard/FundCards";
+import GloWalletCard from "../../components/dashboard/GloWalletCard";
 import SupportCard from "../../components/dashboard/SupportCard";
 import FullLayout from "../../layouts/FullLayout";
 import sterling_logo from "../../assets/images/logos/Sterling_Bank_Logo_Straight.png";
@@ -90,6 +91,11 @@ const Dashboard = () => {
                   earning={`₦${cash}`}
                   icon={wallIcon}
                 />
+              </Col>
+            )}
+            {user.type === "lite" && (
+              <Col sm="6" lg="4">
+                <GloWalletCard />
               </Col>
             )}
             {/* 

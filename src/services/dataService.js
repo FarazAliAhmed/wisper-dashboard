@@ -71,6 +71,24 @@ export async function getBankName(body) {
     return null;
   }
 }
+export async function getGloCredit() {
+  try {
+    const res = await http.get(`${apiUrl}/glo-credit`);
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function repayGloCredit(amount) {
+  // returns the axios error response so the message can be shown
+  try {
+    return await http.post(`${apiUrl}/glo-credit/repay`, amount ? { amount } : {});
+  } catch (error) {
+    return error.response;
+  }
+}
+
 export async function getBalance() {
   try {
     const res = await http.get(`${apiUrl}/balance`);
