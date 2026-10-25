@@ -75,8 +75,8 @@ const GloWalletCard = () => {
           <p className="mb-1">Amount owed: <strong>{naira(credit.owed)}</strong></p>
           <p className="mb-3">Naira wallet: {naira(credit.wallet_balance)}</p>
           <small className="text-muted">
-            The amount owed will be deducted from your naira wallet. After every {gb(credit.block_gb)} repaid,
-            another {gb(credit.block_gb)} is added to your GLO wallet automatically.
+            The amount owed will be deducted from your naira wallet, and the GB you repay is added back to
+            your GLO wallet instantly (credit limit {gb(credit.block_gb)}).
           </small>
           {message && <p className="mt-3 mb-0"><strong>{message}</strong></p>}
         </ModalBody>
