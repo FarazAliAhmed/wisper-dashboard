@@ -49,6 +49,7 @@ const Transactions = lazy(() => import("../views/admin/Transactions.Admin"));
 const Wallet = lazy(() => import("../views/admin/Wallet.Admin"));
 const Account = lazy(() => import("../views/admin/Account.Admin"));
 const Documentation = lazy(() => import("../views/admin/Documentation.Admin"));
+const GloCredit = lazy(() => import("../views/admin/GloCredit.Admin"));
 const TransactionsV2 = lazy(() =>
   import("../views/admin/TransactionsV2.Admin")
 );
@@ -128,6 +129,10 @@ const AdminRoutes = () => {
               <AdminProtectedRoute
                 path="/admin/bulkDataHistory"
                 component={BulkDataHistory}
+              />
+              <AdminProtectedRoute
+                path="/admin/gloWallets"
+                component={GloCredit}
               />
               <AdminProtectedRoute path="/admin/wallet" component={Wallet} />
               <AdminProtectedRoute

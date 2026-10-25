@@ -80,6 +80,15 @@ export async function getGloCredit() {
   }
 }
 
+export async function getAdminGloCredit() {
+  try {
+    const res = await http.get(`${adminUrl}/glo-credit`);
+    return res;
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function repayGloCredit(amount) {
   // returns the axios error response so the message can be shown
   try {

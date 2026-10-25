@@ -503,6 +503,11 @@ const adminNav = [
     icon: "bi bi-cash-stack",
   },
   {
+    title: "GLO Wallets",
+    href: "/admin/gloWallets",
+    icon: "bi bi-sim",
+  },
+  {
     title: "Credit & Debit",
     href: "/admin/modify-account",
     icon: "bi bi-wrench",
